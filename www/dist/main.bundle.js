@@ -858,7 +858,7 @@ module.exports = __webpack_require__.p + "cover.242103245e464567d40f.png";
 /***/ "../../../../../src/assets/imgs/img-sweet-q.png":
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "img-sweet-q.804223fbf32c8335f919.png";
+module.exports = __webpack_require__.p + "img-sweet-q.0b923f6b69f5e64faaec.png";
 
 /***/ }),
 
