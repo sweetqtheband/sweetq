@@ -1,0 +1,239 @@
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  
+    ga('create', 'UA-106947816-1', 'auto');      
+</script>
+<div class="sq-bg">
+    <div class="sq-wrapper">
+        <h1 class="sq-logo">
+            <div class="sq-logo-image">
+                <span class="visuallyhidden">Sweet Q</span>
+            </div>
+        </h1>
+        <div class="sq-ep sq-hero" *ngIf="release">             
+            
+        </div>
+        <div class="sq-ep sq-hero" *ngIf="!release">
+            <h2 class="sq-headline">{{ 'releaseMessage' | translate }}</h2>
+        </div>                
+        <div class="sq-platforms">
+            <div target="_blank" class="sq-button sq-spotify" (click)="showSpotifyModal()"  (showChange)="showSpotifyModal($event)">
+                <span class="sq-icon icon-spotify"></span>
+                <span class="sq-button-text" *ngIf="release">{{ 'listenInSpotify' | translate }}</span>
+            </div>                        
+            <div class="sq-platforms-icons">
+                <a class="sq-button {{release ? '' : 'disabled'}}" title="Spotify" *ngIf="!release">
+                    <span class="sq-icon icon-spotify"></span>
+                </a>
+                <a [target]="target" [href]="links.amazon" class="sq-button sq-amazon {{release ? '' : 'disabled'}}" title="Amazon">
+                    <span class="sq-icon icon-amazon"></span>
+                </a>
+                <a [target]="target" [href]="links.appleMusic" class="sq-button sq-apple-music {{release ? '' : 'disabled'}}" title="Apple Music">
+                    <span class="sq-icon icon-apple-music"></span>
+                </a>
+                <a [target]="target" [href]="links.googlePlay" class="sq-button sq-google-play {{release ? '' : 'disabled'}}" title="Google Play">
+                    <span class="sq-icon icon-google-play"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="sq-section gigs">
+    <div class="sq-wrapper">
+        <div class="sq-title-wrapper">
+            <div class="sq-subtitle">{{ 'nextGigs' | translate }}</div>
+        </div>
+        <div class="sq-gigs-list {{halfGigs ? 'half-width' : ''}}">          
+            <div class="sq-text" *ngIf="gigs && !gigs.length">
+                {{ 'stayTuned' | translate }}
+            </div>  
+            <div class="sq-item {{gig.expired ? 'old-gig' : ''}}" *ngFor="let gig of gigs" >
+                <div class="sq-gig-day">
+                    <span class="day">{{gig.day}}</span>
+                    <span class="month">{{gig.month}}</span>
+                </div>
+                <div class="sq-item-data">
+                    <div class="sq-title">
+                        <div class="sq-item-title">{{gig.venue}}</div>
+                    </div>
+                    <div class="sq-gig-info">
+                        <div class="sq-line">
+                            <div class="sq-text sq-city">
+                                {{gig.city}}
+                            </div>
+                            <div class="sq-line-space" *ngIf="gig.hour">·</div>
+                            <div class="sq-text sq-hour" *ngIf="gig.hour">
+                                {{gig.hour}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sq-participants" *ngIf="gig.bands.length">
+                        <div class="sq-line">
+                            <div class="sq-text" *ngFor="let band of gig.bands; first as isFirst">
+                                <div class="sq-line-space" *ngIf="!isFirst">/</div>                            
+                                <a class="sq-link" [href]="band.facebook ? band.facebook : '#'" target="_blank" title="{{(band.facebook ? 'goToItsFacebook' : (band.instagram ? 'goToItsInstagram' : null)) | translate}}" >{{band.name}}</a>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+                <div class="sq-item-aside" *ngIf="(gig.event || gig.tickets) && !gig.expired">                
+                    <div class="sq-aside-actions">
+                        <a class="sq-button rounded line-blue mini-padding" target="_blank" [href]="gig.tickets" *ngIf="gig.tickets" title="{{'buyTickets'|translate}}">
+                            <span class="sq-icon icon-gigs"></span>
+                        </a>
+                        <a class="sq-button rounded line-blue mini-padding" target="_blank" [href]="gig.event" *ngIf="gig.event">
+                            <span class="sq-button-text">+ info</span>
+                        </a>
+                    </div>            
+                </div>
+            </div>                   
+        </div>
+    </div>
+</div>
+
+<div class="sq-section videos">
+    <div class="sq-title-wrapper">
+        <div class="sq-subtitle">Vídeos</div>
+    </div>
+    <div class="sq-videos-list {{halfVideos ? 'flex-width' : ''}}">
+        <div class="sq-item">
+            <div class="sq-video cosasclaras"  (click)="showModal(null, 'cosasclaras')"  (showChange)="showModal($event, 'cosasclaras')">
+                <div class="sq-frame">
+                    <div class="sq-play-wrapper">
+                        <div class="sq-button sq-play">
+                            <span class="sq-icon icon-play"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sq-video-title">
+                    <div class="sq-video-title-text">{{ 'videoLabel.cosasclaras' | translate }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="sq-item">
+            <div class="sq-video nuevaera"  (click)="showModal(null, 'nuevaera')"  (showChange)="showModal($event, 'nuevaera')">
+                <div class="sq-frame">
+                    <div class="sq-play-wrapper">
+                        <div class="sq-button sq-play">
+                            <span class="sq-icon icon-play"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sq-video-title">
+                    <div class="sq-video-title-text">{{ 'videoLabel.nuevaera' | translate }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="sq-item">
+            <div class="sq-video mal"  (click)="showModal(null, 'mal')"  (showChange)="showModal($event, 'mal')">
+                <div class="sq-frame">
+                    <div class="sq-play-wrapper">
+                        <div class="sq-button sq-play">
+                            <span class="sq-icon icon-play"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sq-video-title">
+                    <div class="sq-video-title-text">{{ 'videoLabel.mal' | translate }}</div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
+
+<div class="sq-section notice concierto" *ngIf="gigHref">
+    <div class="sq-wrapper">
+        <div class="sq-half-columns">
+            <div class="sq-column column-left">
+                <div class="sq-image-wrapper square">
+                    <div class="sq-image image-cover"></div>
+                </div>
+            </div>
+            <div class="sq-column column-right">
+                <div class="sq-title-wrapper">
+                    <div class="sq-title"> {{'gig.date' | translate}}</div>
+                    <div class="sq-subtitle">{{ 'gig.title' | translate}}</div>
+                </div>
+                <div class="sq-text" [innerHTML]="'gig.text'| translate"></div>
+                <div class="sq-actions">
+                    <a target="_blank" [href]="gigHref" class="sq-button rounded solid-blue">
+                        <div class="sq-button-text">{{ 'gig.watchEvent' | translate}}</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="sq-section notice info">
+    <div class="sq-wrapper">
+        <div class="sq-half-columns">
+            <div class="sq-column column-left">
+                <div class="sq-image-wrapper square">
+                    <div class="sq-image image-cover">                        
+                    </div>
+                </div>
+            </div>
+            <div class="sq-column column-right">
+                <div class="sq-title-wrapper">
+                    <div class="sq-title"> {{'info.title' | translate}}</div>                    
+                    <div class="sq-subtitle"> {{'info.subtitle' | translate}}</div>                    
+                </div>
+                <div class="sq-text" [innerHTML]="'info.text'| translate"></div>
+                <!--
+                <div class="sq-actions" *ngIf="true === false">
+                    <a target="_blank" [href]="managementHref" class="sq-button rounded solid-blue">
+                        <div class="sq-button-text">{{ 'management.readMore' | translate}}</div>
+                    </a>
+                </div>
+            -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="sq-section kit">
+    <div class="sq-wrapper">
+        <div class="sq-half-columns">
+            <div class="sq-column column-right">
+                <div class="sq-title-wrapper">
+                    <div class="sq-subtitle">{{ 'pressKit.title' | translate }}</div>
+                </div>
+                <div class="sq-text" [innerHTML]="'pressKit.text'|translate"></div>
+                <div class="sq-actions">
+                    <a class="sq-button rounded solid-blue" title="{{ 'pressKit.download'|translate}}" target="_self" href="assets/press-kits/2023-sweetq-epk.zip">
+                        <div class="sq-button-text" [innerHTML]="'pressKit.button'|translate"></div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="sq-contact">
+    <div class="sq-contact-icons">        
+        <a target="_blank" class="sq-button sq-facebook" title="Facebook" href="https://www.facebook.com/sweetqtheband">
+            <span class="sq-icon icon-facebook"></span>
+        </a>
+        <a target="_blank" class="sq-button sq-twitter" title="Twitter" href="https://www.twitter.com/sweetqtheband">
+            <span class="sq-icon icon-twitter"></span>
+        </a>
+        <a target="_blank" class="sq-button sq-instagram" title="Instagram" href="https://www.instagram.com/sweetqtheband">
+            <span class="sq-icon icon-instagram"></span>
+        </a>
+        <a target="_blank" class="sq-button sq-youtube" title="Youtube" href="https://www.youtube.com/sweetqtheband">
+            <span class="sq-icon icon-youtube"></span>
+        </a>        
+        <a class="sq-button sq-mail" title="Email" href="mailto:hola@sweetq.es">
+            <span class="sq-icon icon-mail"></span>
+        </a>
+    </div>
+</div>
+
+<modal [(show)]="showVideo" [(url)]="videoUrl"></modal>
+
+<spotify [(show)]="playAlbum"></spotify>
