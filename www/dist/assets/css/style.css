@@ -493,7 +493,7 @@ padding-bottom: 22px;
 
 .sq-image-wrapper.square .sq-image {
     width: 100%;
-    padding-top: 100%;
+    padding-top: calc(100% + 30px);
 }
 
 .sq-aside-actions {
