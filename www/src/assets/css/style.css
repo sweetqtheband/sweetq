@@ -817,6 +817,12 @@ padding-bottom: 22px;
     .sq-section.notice.info {
         padding: 20px 20px 50px 20px;
     }
+    .sq-section .sq-title-wrapper {
+        text-align: center;
+    }
+    .sq-section.notice .sq-text {
+        padding: 0;
+    }
 }
 
 @media (max-width: 480px) {
