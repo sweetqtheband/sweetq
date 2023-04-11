@@ -851,7 +851,7 @@ module.exports = __webpack_require__.p + "cosasclaras.91d143804a8268372762.png";
 /***/ "../../../../../src/assets/imgs/cover.png":
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "cover.83449e3f8dd62b91d504.png";
+module.exports = __webpack_require__.p + "cover.ec95419c324c929b148c.png";
 
 /***/ }),
 
