@@ -1,0 +1,35 @@
+<div class="sq-bg">
+    <div class="sq-wrapper">
+        <h1 class="sq-logo">
+            <div class="sq-logo-image">
+                <span class="visuallyhidden">Sweet Q</span>
+            </div>
+        </h1>
+        <div class="sq-ep sq-hero" *ngIf="release">             
+            
+        </div>
+        <div class="sq-ep sq-hero" *ngIf="!release">
+            <h2 class="sq-headline">{{ 'releaseMessage' | translate }}</h2>
+        </div>                
+        <div class="sq-platforms">
+            <div target="_blank" class="sq-button sq-spotify" (click)="showSpotifyModal()"  (showChange)="showSpotifyModal($event)">
+                <span class="sq-icon icon-spotify"></span>
+                <span class="sq-button-text" *ngIf="release">{{ 'listenInSpotify' | translate }}</span>
+            </div>                        
+            <div class="sq-platforms-icons">
+                <a class="sq-button {{release ? '' : 'disabled'}}" title="Spotify" *ngIf="!release">
+                    <span class="sq-icon icon-spotify"></span>
+                </a>
+                <a [target]="target" [href]="links.amazon" class="sq-button sq-amazon {{release ? '' : 'disabled'}}" title="Amazon">
+                    <span class="sq-icon icon-amazon"></span>
+                </a>
+                <a [target]="target" [href]="links.appleMusic" class="sq-button sq-apple-music {{release ? '' : 'disabled'}}" title="Apple Music">
+                    <span class="sq-icon icon-apple-music"></span>
+                </a>
+                <a [target]="target" [href]="links.googlePlay" class="sq-button sq-google-play {{release ? '' : 'disabled'}}" title="Google Play">
+                    <span class="sq-icon icon-google-play"></span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

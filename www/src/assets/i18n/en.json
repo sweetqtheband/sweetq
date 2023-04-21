@@ -33,5 +33,10 @@
     "stayTuned": "At this time we haven't any gig scheduled soon. Stay tuned!",
     "buyTickets": "Buy tickets",
     "goToItsFacebook": "Go to its Facebook page",
-    "goToItsInstagram": "Go to its Instagram page"
+    "goToItsInstagram": "Go to its Instagram page",
+    "presave": {
+        "spotify": "Pre-save on Spotify",
+        "appleMusic": "Pre-add on Apple Music",
+        "deezer": "Pre-save on Deezer"
+    }
 }

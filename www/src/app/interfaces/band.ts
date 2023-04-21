@@ -1,5 +1,6 @@
 export interface Band {
     id: number,
     name: string,
-    facebook: string
+    facebook?: string,
+    instagram?: string
 }

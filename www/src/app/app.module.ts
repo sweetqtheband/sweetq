@@ -1,44 +1,29 @@
-import { NgModule, Pipe, PipeTransform } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {HttpClientModule, HttpClient} from '@angular/common/http';
-import { RouterModule, Routes } from '@angular/router';
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ModalComponent } from './modal.component';
-import { SpotifyComponent } from './spotify.component';
-import { GigsService } from './gigs.service';
-import { BandsService } from './bands.service';
-import { SwipeService } from './swipe.service';
-import { Angulartics2Module, Angulartics2GoogleAnalytics } from 'angulartics2';
-
-
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-
-@Pipe({ name: 'safe' })
-export class SafePipe implements PipeTransform {
-  constructor(private sanitizer: DomSanitizer) {}
-  transform(url) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
-  }
-} 
-
-
-const ROUTES: Routes = [
-  { path: '', component: AppComponent },
-];
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { LinksComponent } from '@views/links/links.component';
+import { NewsComponent } from '@views/news/news.component';
+import { Angulartics2Module } from 'angulartics2';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '/assets/i18n/', '.json?cb=' + new Date().getTime());
 }
 
-
-@NgModule({  
+@NgModule({
+  declarations: [
+    AppComponent,
+    LinksComponent, 
+    NewsComponent
+  ],
   imports: [
-    BrowserModule,   
-    HttpClientModule,    
-    RouterModule.forRoot(ROUTES),    
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,
@@ -46,10 +31,9 @@ export function HttpLoaderFactory(http: HttpClient) {
           deps: [HttpClient]
       }
     }),
-    Angulartics2Module.forRoot([ Angulartics2GoogleAnalytics ])    
+    Angulartics2Module.forRoot()  
   ],
-  declarations: [AppComponent, ModalComponent, SpotifyComponent, SafePipe],
-  bootstrap: [AppComponent],
-  providers: [GigsService, BandsService, SwipeService]
+  providers: [],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

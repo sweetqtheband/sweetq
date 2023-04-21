@@ -33,5 +33,10 @@
   "stayTuned": "Por el momento no tenemos conciertos a la vista. ¡Permanece atento!",
   "buyTickets": "Comprar entradas",
   "goToItsFacebook": "Ir a su página de Facebook",
-  "goToItsInstagram": "Ir a su página de Instagram"
+  "goToItsInstagram": "Ir a su página de Instagram",
+  "presave": {
+    "spotify": "Pre-save en Spotify",
+    "appleMusic": "Pre-add en Apple Music",
+    "deezer": "Pre-save en Deezer"
+  }
 }

@@ -1,5 +1,15 @@
 [{
     "id": 1,
+    "date": "2023-05-23",
+    "city": "Madrid",
+    "hour": "11:00 a 15:00",
+    "venue": "Zurich Rock'n'Roll Running Series Madrid",
+    "bands": [],
+    "event": "",
+    "tickets": ""
+},
+{
+    "id": 2,
     "date": "2023-05-05",
     "city": "Madrid",
     "hour": "21:00",

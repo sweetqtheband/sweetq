@@ -1,0 +1,49 @@
+<div class="sq-section videos">
+    <div class="sq-title-wrapper">
+        <div class="sq-subtitle">Vídeos</div>
+    </div>
+    <div class="sq-videos-list {{halfVideos ? 'flex-width' : ''}}">
+        <div class="sq-item">
+            <div class="sq-video cosasclaras"  (click)="showModal(null, 'cosasclaras')"  (showChange)="showModal($event, 'cosasclaras')">
+                <div class="sq-frame">
+                    <div class="sq-play-wrapper">
+                        <div class="sq-button sq-play">
+                            <span class="sq-icon icon-play"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sq-video-title">
+                    <div class="sq-video-title-text">{{ 'videoLabel.cosasclaras' | translate }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="sq-item">
+            <div class="sq-video nuevaera"  (click)="showModal(null, 'nuevaera')"  (showChange)="showModal($event, 'nuevaera')">
+                <div class="sq-frame">
+                    <div class="sq-play-wrapper">
+                        <div class="sq-button sq-play">
+                            <span class="sq-icon icon-play"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sq-video-title">
+                    <div class="sq-video-title-text">{{ 'videoLabel.nuevaera' | translate }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="sq-item">
+            <div class="sq-video mal"  (click)="showModal(null, 'mal')"  (showChange)="showModal($event, 'mal')">
+                <div class="sq-frame">
+                    <div class="sq-play-wrapper">
+                        <div class="sq-button sq-play">
+                            <span class="sq-icon icon-play"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sq-video-title">
+                    <div class="sq-video-title-text">{{ 'videoLabel.mal' | translate }}</div>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>
