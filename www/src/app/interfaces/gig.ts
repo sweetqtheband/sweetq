@@ -7,6 +7,8 @@ export interface Gig {
     city: string,
     hour: string,
     venue: string,
+    address?: string,
+    map?: string,
     bands: Band[],
     event: string,
     tickets: string;

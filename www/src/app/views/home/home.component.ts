@@ -13,6 +13,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
     public playAlbum = false;   
     public showVideo = false;
     public videoUrl = '';
+    public showMap = false;
+    public mapUrl = '';
     public gigHref = null;
    
     

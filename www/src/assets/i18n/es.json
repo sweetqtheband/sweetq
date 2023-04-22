@@ -12,7 +12,8 @@
     "date": "28 Oct",
     "title": "Concierto presentación",
     "text": "El 28 de octubre presentamos en directo <span class='bold'>‘La nueva era’</span> en la sala <span class='bold'>Maravillas Club</span> de Madrid.",
-    "watchEvent": "Ver evento"    
+    "watchEvent": "Ver evento",
+    "viewInGoogleMap": "Ver en Google Maps"   
   },
   "info": {
         "title": "El camino correcto",

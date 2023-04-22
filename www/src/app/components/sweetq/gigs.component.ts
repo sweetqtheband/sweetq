@@ -1,7 +1,9 @@
 import {    
     Component,      
     OnInit,
-    Input
+    Input,
+    Output,
+    EventEmitter
 } from '@angular/core';
 
 import { GigsService } from '@services/gigs.service';
@@ -15,7 +17,10 @@ import { Gig } from '@interfaces/gig';
 
 export class SweetQGigsComponent implements OnInit {                 
     @Input() halfGigs: boolean = false;
+    @Output() showMapEvent = new EventEmitter<any>();
 
+    public showMap:boolean = false;
+    public mapUrl?:string = '';  
     public gigs:Gig[] = [];      
     
     constructor(private gigsSvc: GigsService) {
@@ -31,5 +36,14 @@ export class SweetQGigsComponent implements OnInit {
       this.gigsSvc.getGigs().then(gigs => {      
         this.gigs = gigs.filter(gig => !gig.expired);    
       });    
+    }
+
+    showModal(gig:Gig):void {    
+      if (gig)
+      {
+        this.mapUrl = gig?.map;    
+        this.showMap = !!gig?.map;        
+        this.showMapEvent.emit({showMap: this.showMap, mapUrl: this.mapUrl});
+      }
     }
 }

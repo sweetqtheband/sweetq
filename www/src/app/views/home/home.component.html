@@ -1,5 +1,5 @@
 <sweetq-header (playAlbumEvent)="playAlbum = $event"></sweetq-header>
-<sweetq-gigs [halfGigs]="halfGigs"></sweetq-gigs>
+<sweetq-gigs (showMapEvent)="showMap = $event.showMap; mapUrl = $event.mapUrl" [halfGigs]="halfGigs"></sweetq-gigs>
 <sweetq-videos (showVideoEvent)="showVideo = $event.showVideo; videoUrl = $event.videoUrl" [halfVideos]="halfVideos"></sweetq-videos>
 
 <div class="sq-section notice concierto" *ngIf="gigHref">
@@ -56,6 +56,8 @@
 <sweetq-kit></sweetq-kit>
 
 <sweetq-footer></sweetq-footer>
+
+<map [(show)]="showMap" [url]="mapUrl"></map>
 
 <modal [(show)]="showVideo" [url]="videoUrl"></modal>
 

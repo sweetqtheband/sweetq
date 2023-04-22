@@ -1,0 +1,6 @@
+<div class="sq-modal" *ngIf="show">
+
+</div>
+<div class="sq-modal-preview" *ngIf="show" (click)="hideMap()">        
+    <iframe width="560" height="315" [src]="url | safe" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>    
+</div>

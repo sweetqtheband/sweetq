@@ -25,7 +25,12 @@
                             <div class="sq-text sq-hour" *ngIf="gig.hour">
                                 {{gig.hour}}
                             </div>
-                        </div>
+                        </div>                        
+                    </div>
+                    <div class="sq-gig-info" *ngIf="gig.address">                        
+                        <div title="{{'gig.viewInGoogleMap'|translate}}" class="sq-text sq-link sq-address {{ gig.map ? 'sq-link' : ''}}" *ngIf="gig.map" (click)="showModal(gig)">                            
+                            {{gig.address}}
+                        </div>                        
                     </div>
                     <div class="sq-participants" *ngIf="gig.bands.length">
                         <div class="sq-line">

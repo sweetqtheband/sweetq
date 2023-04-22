@@ -12,9 +12,9 @@ import { SweetQGigsComponent } from '@components/sweetq/gigs.component';
 import { SweetQVideosComponent } from '@components/sweetq/videos.component';
 import { SweetQKitComponent } from '@components/sweetq/kit.component';
 import { SweetQFooterComponent } from '@components/sweetq/footer.component';
+import { MapComponent } from '@components/map.component';
 import { HomeComponent } from './home.component';
 import { HomeRoutingModule } from './home.routes';
-
 
 // configures NgModule imports and exports
 @NgModule({
@@ -27,6 +27,7 @@ import { HomeRoutingModule } from './home.routes';
                  SweetQVideosComponent,
                  SweetQKitComponent,
                  SweetQFooterComponent,
+                 MapComponent,
                  ModalComponent, 
                  SpotifyComponent],
   providers: [GigsService, BandsService, SwipeService]

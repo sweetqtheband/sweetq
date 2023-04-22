@@ -646,7 +646,14 @@ padding-bottom: 22px;
     color: #c1c5cb;
 }
 .gigs .sq-item .sq-item-data .sq-participants .sq-text, 
-.gigs .sq-item .sq-item-data .sq-participants .sq-line-space, 
+.gigs .sq-item .sq-item-data .sq-participants .sq-line-space {
+    text-decoration: none;
+}
+
+.gigs .sq-item .sq-item-data .sq-gig-info .sq-link {
+    cursor: pointer;
+}
+
 .gigs .sq-item .sq-item-data .sq-participants .sq-text .sq-link {
     color: #24aeb8;
     text-decoration: none;
