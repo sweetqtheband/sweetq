@@ -12,7 +12,8 @@
         "date": "Oct 28",
         "title": "Opening concert",
         "text": "On october 28th we'll play an opening concert presenting <span class='bold'>‘La nueva era’</span> at Madrid's venue <span class='bold'>Maravillas Club</span>.",
-        "watchEvent": "Watch event"    
+        "watchEvent": "Watch event",
+        "viewInGoogleMap": "View in Google Maps"   
     },
     "info": {
         "title": "El camino correcto",
