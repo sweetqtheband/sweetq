@@ -340,6 +340,14 @@ body {
     top: calc(50% + 2px);
 }
 
+.sq-button.sq-spotify:active
+.sq-button.sq-spotify:visited,
+.sq-button.sq-spotify:focus,
+.sq-button.sq-spotify:hover,
+.sq-button.sq-spotify .sq-button-text {
+    color: #FFFFFF;
+}
+
 .sq-section .sq-title-wrapper {
     padding-bottom: 30px;
 }
@@ -524,6 +532,7 @@ padding-bottom: 22px;
 .sq-section.notice .sq-actions {
     padding-top: 32px;
 }
+
 .sq-section.notice .sq-image-wrapper {
     width: 75%;
     margin: 0 auto;

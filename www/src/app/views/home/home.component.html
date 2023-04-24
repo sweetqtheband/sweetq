@@ -40,14 +40,13 @@
                     <div class="sq-title"> {{'info.title' | translate}}</div>                    
                     <div class="sq-subtitle"> {{'info.subtitle' | translate}}</div>                    
                 </div>
-                <div class="sq-text" [innerHTML]="'info.text'| translate"></div>
-                <!--
-                <div class="sq-actions" *ngIf="true === false">
-                    <a target="_blank" [href]="managementHref" class="sq-button rounded solid-blue">
-                        <div class="sq-button-text">{{ 'management.readMore' | translate}}</div>
+                <div class="sq-text" [innerHTML]="'info.text'| translate"></div>                
+                <div class="sq-actions">
+                    <a target="_blank" [href]="presaveHref" class="sq-button sq-spotify">
+                        <span class="sq-icon icon-spotify"></span>
+                        <div class="sq-button-text">{{ 'info.button' | translate}}</div>
                     </a>
-                </div>
-            -->
+                </div>            
             </div>
         </div>
     </div>

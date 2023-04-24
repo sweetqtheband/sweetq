@@ -33,9 +33,7 @@ export class SweetQGigsComponent implements OnInit {
 
     async getGigs()
     {
-      this.gigsSvc.getGigs().then(gigs => {      
-        this.gigs = gigs.filter(gig => !gig.expired);    
-      });    
+      this.gigs = await this.gigsSvc.getGigs();
     }
 
     showModal(gig:Gig):void {    

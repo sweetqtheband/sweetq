@@ -16,6 +16,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
     public showMap = false;
     public mapUrl = '';
     public gigHref = null;
+    public presaveHref = "https://accounts.spotify.com/authorize?client_id=52bb6de395384e7bb580f44922501752&redirect_uri=https%3A%2F%2Fampl.ink%2Fpresave%2Fcallback%2Fspotify&scope=user-follow-modify+user-library-modify&response_type=code&state=MMe2M";
    
     
     constructor() {
