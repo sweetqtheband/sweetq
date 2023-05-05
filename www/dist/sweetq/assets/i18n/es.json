@@ -1,5 +1,5 @@
 {  
-  "releaseMessage": "Muy pronto podréis disfrutar de \"La nueva era\"",
+  "releaseMessage": "¡Ya podéis escuchar \"El camino correcto\"!",
   "listenInSpotify": "Escuchar en Spotify",
   "listenAlsoIn": "Disponible también en...",
   "videoLabel": {
@@ -17,7 +17,7 @@
   },
   "info": {
         "title": "El camino correcto",
-        "subtitle": "Lanzamiento 5 de mayo",
+        "subtitle": "Ya disponible",
         "text": "Estrenamos el single <span class='bold'>'El camino correcto'</span>, grabado en Madrid de la mano del productor Iker Arranz. Un tema indie optimista con una letra que nos anima a sobreponernos a todo y a avanzar hacia un futuro ilusionante. ¡Se el primero en escucharlo!",
         "button": "Haz presave"
     },
@@ -37,8 +37,13 @@
   "goToItsFacebook": "Ir a su página de Facebook",
   "goToItsInstagram": "Ir a su página de Instagram",
   "presave": {
-    "spotify": "Pre-save en Spotify",
+    "spotify": "Pre-save en Spotify",    
     "appleMusic": "Pre-add en Apple Music",
-    "deezer": "Pre-save en Deezer"
+    "deezer": "Pre-save en Deezer",
+    "done": {
+      "spotify": "¡Pre-save realizado correctamente!",
+      "appleMusic": "¡Pre-add realizado correctamente!",
+      "deezer": "Pre-save en Deezer realizado correctamente"
+    }
   }
 }
