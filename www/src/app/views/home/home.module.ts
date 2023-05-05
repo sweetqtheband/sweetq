@@ -15,6 +15,7 @@ import { SweetQFooterComponent } from '@components/sweetq/footer.component';
 import { MapComponent } from '@components/map.component';
 import { HomeComponent } from './home.component';
 import { HomeRoutingModule } from './home.routes';
+import { SpotifyService } from '@services/spotify.service';
 
 // configures NgModule imports and exports
 @NgModule({
@@ -30,6 +31,6 @@ import { HomeRoutingModule } from './home.routes';
                  MapComponent,
                  ModalComponent, 
                  SpotifyComponent],
-  providers: [GigsService, BandsService, SwipeService]
+  providers: [GigsService, BandsService, SwipeService, SpotifyService]
 })
 export class HomeViewModule { }

@@ -1,0 +1,5 @@
+<div class="sq-toasts">
+<div class="sq-toast" *ngFor="let toast of toasts" [ngClass]="toast.class">
+    {{toast.text | translate}}
+</div>
+</div>

@@ -1,0 +1,23 @@
+.sq-toasts {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    text-align: center;
+
+    .sq-toast {
+        &.hidden {
+            top: -20px;
+            opacity: 0;
+        }
+        top: 0px;
+        opacity: 1;
+        border-radius: 3px;
+        margin: 20px auto;
+        display: inline-block;
+        padding: 20px;       
+        position: relative; 
+        background-color: green;
+        transition: all .3s ease-in;
+        color: #FFFFFF;
+    }
+}

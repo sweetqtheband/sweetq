@@ -8,6 +8,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { LinksComponent } from '@views/links/links.component';
 import { NewsComponent } from '@views/news/news.component';
 import { Angulartics2Module } from 'angulartics2';
+import { ToastComponent } from '@components/toast.component';
+import { EventEmitterService } from '@services/eventEmitter.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -18,7 +20,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     LinksComponent, 
-    NewsComponent
+    NewsComponent,
+    ToastComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +36,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     Angulartics2Module.forRoot()  
   ],
-  providers: [],
+  providers: [EventEmitterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

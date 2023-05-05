@@ -41,12 +41,18 @@
                     <div class="sq-subtitle"> {{'info.subtitle' | translate}}</div>                    
                 </div>
                 <div class="sq-text" [innerHTML]="'info.text'| translate"></div>                
+                <!--
                 <div class="sq-actions">
-                    <a target="_blank" [href]="presaveHref" class="sq-button sq-spotify">
+                    <a target="_blank" *ngIf="spotifyPresaveUrl" [href]="spotifyPresaveUrl" (click)="setTabListener()" class="sq-button sq-spotify">
                         <span class="sq-icon icon-spotify"></span>
                         <div class="sq-button-text">{{ 'info.button' | translate}}</div>
                     </a>
+                    <div class="sq-button sq-spotify" *ngIf="!spotifyPresaveUrl" (click)="doPresave()">
+                        <span class="sq-icon icon-spotify"></span>
+                        <div class="sq-button-text">{{ 'info.button' | translate}}</div>
+                    </div>
                 </div>            
+            -->
             </div>
         </div>
     </div>
