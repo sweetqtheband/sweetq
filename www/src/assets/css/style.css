@@ -372,8 +372,8 @@ body {
     position: absolute;
     bottom: 40px;
     left: 50%;
-    transform: translateX(-50%);
-    min-width: 270px;
+    transform: translateX(-50%);    
+    min-width: 415px;
 }
 
 .sq-platforms .sq-text {
@@ -901,6 +901,10 @@ padding-bottom: 22px;
     }
     .sq-button .sq-icon {
         font-size: 30px;
+    }
+
+    .sq-platforms {
+        min-width: calc(100% - 40px);
     }
 }
 
