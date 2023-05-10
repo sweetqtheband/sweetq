@@ -47,7 +47,7 @@ export class GigsService {
           result[key].bands = bands;
         });      
 
-        resolve(result);
+        resolve(result.sort((a:any,b:any) => !a.expired && b.expired ? -1 : 1));
       });
     });
   }
