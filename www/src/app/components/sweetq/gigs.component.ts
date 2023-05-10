@@ -16,7 +16,6 @@ import { Gig } from '@interfaces/gig';
 })
 
 export class SweetQGigsComponent implements OnInit {                 
-    @Input() halfGigs: boolean = false;
     @Output() showMapEvent = new EventEmitter<any>();
 
     public showMap:boolean = false;
