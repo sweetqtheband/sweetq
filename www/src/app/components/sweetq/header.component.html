@@ -7,11 +7,11 @@
         </h1>
         <div class="sq-ep sq-hero" *ngIf="!release">             
             
-        </div>
-        <div class="sq-ep sq-hero" *ngIf="release">
-            <h2 class="sq-headline">{{ 'releaseMessage' | translate }}</h2>
-        </div>                
+        </div>           
         <div class="sq-platforms">
+            <div class="sq-ep sq-hero" *ngIf="release">
+                <h2 class="sq-headline">{{ 'releaseMessage' | translate }}</h2>
+            </div>     
             <iframe style="border-radius:12px" src="https://open.spotify.com/embed/album/0quqDx9Qf79Gt8GC4sZQn5?utm_source=generator&theme=0" width="100%" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
             <div class="sq-platforms-icons">
                 <a class="sq-button {{release ? '' : 'disabled'}}" title="Spotify" *ngIf="!release">
@@ -23,8 +23,8 @@
                 <a [target]="target" [href]="links.appleMusic" class="sq-button sq-apple-music {{release ? '' : 'disabled'}}" title="Apple Music">
                     <span class="sq-icon icon-apple-music"></span>
                 </a>
-                <a [target]="target" [href]="links.youtubeMusic" class="sq-button sq-google-play {{release ? '' : 'disabled'}}" title="Youtube Music">
-                    <span class="sq-icon icon-google-play"></span>
+                <a [target]="target" [href]="links.youtubeMusic" class="sq-button sq-youtube-music {{release ? '' : 'disabled'}}" title="Youtube Music">
+                    <span class="sq-icon icon-youtube-music"></span>
                 </a>
             </div>
         </div>
