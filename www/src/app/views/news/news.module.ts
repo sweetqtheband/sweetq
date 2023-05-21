@@ -1,7 +1,8 @@
-import { NgModule, CommonModule } from "@angular/common";
+import { CommonModule } from "@angular/common";
 import { NewsRoutingModule } from "./news.routes";
 import { TranslateModule } from '@ngx-translate/core';
 import { SafePipeModule } from '@components/pipes/safe.module';
+import { NgModule } from "@angular/core";
 
 // configures NgModule imports and exports
 @NgModule({

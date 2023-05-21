@@ -1,0 +1,80 @@
+@font-face {
+    font-family: 'titillium-web-light';
+    src: url('typos/titilliumweb-light-webfont.eot');
+    src: url('typos/titilliumweb-light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('typos/titilliumweb-light-webfont.woff2') format('woff2'),
+         url('typos/titilliumweb-light-webfont.woff') format('woff'),
+         url('typos/titilliumweb-light-webfont.ttf') format('truetype'),
+         url('typos/titilliumweb-light-webfont.svg#titillium_weblight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'titillium-web-regular';
+    src: url('typos/titilliumweb-regular-webfont.eot');
+    src: url('typos/titilliumweb-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('typos/titilliumweb-regular-webfont.woff2') format('woff2'),
+         url('typos/titilliumweb-regular-webfont.woff') format('woff'),
+         url('typos/titilliumweb-regular-webfont.ttf') format('truetype'),
+         url('typos/titilliumweb-regular-webfont.svg#titillium_webregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'titillium-web-semibold';
+    src: url('typos/titilliumweb-semibold-webfont.eot');
+    src: url('typos/titilliumweb-semibold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('typos/titilliumweb-semibold-webfont.woff2') format('woff2'),
+         url('typos/titilliumweb-semibold-webfont.woff') format('woff'),
+         url('typos/titilliumweb-semibold-webfont.ttf') format('truetype'),
+         url('typos/titilliumweb-semibold-webfont.svg#titillium_websemibold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'titillium-web-bold';    
+    src: url('typos/titilliumweb-bold-webfont.woff2') format('woff2'),
+         url('typos/titilliumweb-bold-webfont.woff') format('woff'),
+         url('typos/titilliumweb-bold-webfont.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+  font-family: "sweetq";
+  src:url("typos/sweetq.eot");
+  src:url("typos/sweetq.eot?#iefix") format("embedded-opentype"),
+    url("typos/sweetq.woff") format("woff"),
+    url("typos/sweetq.ttf") format("truetype"),
+    url("typos/sweetq.svg#sweetq") format("svg");
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'interstate-light';
+    src: url('typos/interstate_light_comp-webfont.eot');
+    src: url('typos/interstate_light_comp-webfont.eot?#iefix') format('embedded-opentype'),
+         url('typos/interstate_light_comp-webfont.woff2') format('woff2'),
+         url('typos/interstate_light_comp-webfont.woff') format('woff'),
+         url('typos/interstate_light_comp-webfont.ttf') format('truetype'),
+         url('typos/interstate_light_comp-webfont.svg#interstateregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'interstate-regular';
+    src: url('typos/interstate_regular_comp-webfont.eot');
+    src: url('typos/interstate_regular_comp-webfont.eot?#iefix') format('embedded-opentype'),
+         url('typos/interstate_regular_comp-webfont.woff2') format('woff2'),
+         url('typos/interstate_regular_comp-webfont.woff') format('woff'),
+         url('typos/interstate_regular_comp-webfont.ttf') format('truetype'),
+         url('typos/interstate_regular_comp-webfont.svg#interstateregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}

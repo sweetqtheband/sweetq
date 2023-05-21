@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { LinksComponent } from '@views/links/links.component';
 import { NewsComponent } from '@views/news/news.component';
 import { Angulartics2Module } from 'angulartics2';
 import { ToastComponent } from '@components/toast.component';
@@ -19,7 +18,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     AppComponent,
-    LinksComponent, 
     NewsComponent,
     ToastComponent
   ],
@@ -32,10 +30,11 @@ export function HttpLoaderFactory(http: HttpClient) {
           provide: TranslateLoader,
           useFactory: HttpLoaderFactory,
           deps: [HttpClient]
-      }
+      },
+      extend: true
     }),
     Angulartics2Module.forRoot()  
-  ],
+  ],  
   providers: [EventEmitterService],
   bootstrap: [AppComponent]
 })

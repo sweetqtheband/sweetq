@@ -19,6 +19,7 @@ export class SweetQVideosComponent {
     public showVideo:boolean = false;
     public videoUrl:string = '';  
     public videos:any = { 
+      caminocorrecto: "https://www.youtube.com/embed/5HU8pUNCpMs",
       nuevaera: "https://www.youtube.com/embed/YswuyL8c6ZA",
       mal: "https://www.youtube.com/embed/oiZOK9MxPNA",
       cosasclaras: "https://www.youtube.com/embed/1paz9-hyg30"

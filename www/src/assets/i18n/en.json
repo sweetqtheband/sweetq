@@ -3,6 +3,7 @@
     "listenInSpotify": "Listen in Spotify",
     "listenAlsoIn": "Also available in...",
     "videoLabel": {
+        "caminocorrecto": "Video - El camino correcto",
         "nuevaera": "Video - La nueva era",
         "mal": "Video - Mal",
         "cosasclaras": "Video - Las cosas claras"
@@ -45,5 +46,14 @@
           "appleMusic": "Pre-add done successfully!",
           "deezer": "Pre-save done successfully!"
         }
+    },
+    "links": {
+      "title": "Sweet Q",
+      "subtitle": "New single 'El camino correcto'",
+      "spotify": "Spotify",    
+      "appleMusic": "Apple Music",
+      "youtubeMusic": "Youtube Music",
+      "youtube": "Videoclip 'El camino correcto'",
+      "fib": "Vote us for FIB"   
     }
 }

@@ -4,6 +4,20 @@
     </div>
     <div class="sq-videos-list {{halfVideos ? 'flex-width' : ''}}">
         <div class="sq-item">
+            <div class="sq-video caminocorrecto"  (click)="showModal(null, 'caminocorrecto')"  (showChange)="showModal($event, 'caminocorrecto')">
+                <div class="sq-frame">
+                    <div class="sq-play-wrapper">
+                        <div class="sq-button sq-play">
+                            <span class="sq-icon icon-play"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="sq-video-title">
+                    <div class="sq-video-title-text">{{ 'videoLabel.caminocorrecto' | translate }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="sq-item">
             <div class="sq-video cosasclaras"  (click)="showModal(null, 'cosasclaras')"  (showChange)="showModal($event, 'cosasclaras')">
                 <div class="sq-frame">
                     <div class="sq-play-wrapper">
