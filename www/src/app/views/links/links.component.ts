@@ -38,10 +38,10 @@ export class LinksComponent {
       button: "secondary",
       link: "https://www.youtube.com/watch?v=5HU8pUNCpMs" 
     }, 
-    { type: "fib",       
-      text: "links.fib", 
+    { type: "pulpop",       
+      text: "links.pulpop", 
       button: "secondary",
-      link: "https://www.fib-risingstars.com/artists/732" 
+      link: "http://www.pulpop.es/concurso/semifinalistas/sweet_q" 
     }
   ];
 
