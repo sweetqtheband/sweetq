@@ -37,11 +37,6 @@ export class LinksComponent {
       text: "links.youtube", 
       button: "secondary",
       link: "https://www.youtube.com/watch?v=5HU8pUNCpMs" 
-    }, 
-    { type: "pulpop",       
-      text: "links.pulpop", 
-      button: "secondary",
-      link: "http://www.pulpop.es/concurso/semifinalistas/sweet_q" 
     }
   ];
 
