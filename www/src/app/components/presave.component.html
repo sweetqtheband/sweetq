@@ -1,0 +1,11 @@
+
+<div *ngFor="let platform of platforms ">
+  <a *ngIf="platform.presaveUrl" target="_blank" class="sq-button" [ngClass]="platform.class" [href]="platform.presaveUrl" (click)="setTabListener(platform)">
+      <span class="sq-icon icon-spotify"></span>
+      <div class="sq-button-text">{{ platform.text | translate}}</div>
+  </a>
+  <div *ngIf="!platform.presaveUrl" class="sq-button" [ngClass]="platform.class"  (click)="doPresave(platform)">
+      <span class="sq-icon" [ngClass]="platform.icon"></span>
+      <div class="sq-button-text">{{ platform.text | translate}}</div>
+  </div>
+</div>

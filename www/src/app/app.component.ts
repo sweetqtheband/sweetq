@@ -1,7 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Angulartics2GoogleAnalytics } from 'angulartics2';
-import * as moment from 'moment';
 
 @Component({
   selector: 'body',
@@ -18,10 +17,9 @@ export class AppComponent {
     translate: TranslateService) {
 
     translate.setDefaultLang('en');
-    let language = String(navigator.language).split("-");
+    let language = String(navigator.language).split("-")[0];
 
-    translate.use(language[0]);
-    moment.locale(language[0]);
+    translate.use(language);
     
     angulartics2GoogleAnalytics.startTracking();
   }  

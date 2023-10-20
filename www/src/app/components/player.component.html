@@ -1,0 +1,21 @@
+<div class="audio-player">
+  <div class="controls">
+    <div class="play-container">
+      <div class="toggle-play" [ngClass]="{'play': !track.isPlaying, 'pause': track.isPlaying}" (click)="playTrack()">
+      </div>
+    </div>
+    <div class="controls-container">
+      <div class="info-wrapper">
+        <div class="name">{{track.title}}</div>
+        <div class="time">
+          <div class="length">{{track.duration}}</div>
+        </div>
+      </div>
+      <div class="timeline-wrapper">
+        <div class="timeline" #timeline (click)="setTimeline"></div>
+        <div class="progress" #progress></div>
+      </div>
+    </div>
+  </div>
+  <audio preload="metadata" #audio></audio>
+</div>

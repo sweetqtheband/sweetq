@@ -48,7 +48,7 @@ export class SpotifyService {
 
   async getCode() {
     const storedCode = await this.table.get({type: 'spotify'});
-    return storedCode?.code || null;
+    return storedCode?.code ?? null;
   }
 
   getHeaders(asJson = false) {    
@@ -86,10 +86,13 @@ export class SpotifyService {
       const headers = this.getHeaders();
       
       returning = await new Promise((resolve:any) => {    
-        this.http.post(`${this.eps.base.accounts}${this.eps.api}${this.eps.token}`, body.toString(), {headers}).subscribe(async (result:any) => {
-          this.access_token = result.access_token;
-          await this.table.add({type: 'spotify_tk', code: JSON.stringify(result)});
-          resolve(result);
+        this.http.post(`${this.eps.base.accounts}${this.eps.api}${this.eps.token}`, body.toString(), {headers})
+        .subscribe((result:any) => {
+          (async () => {
+            this.access_token = result.access_token;
+            await this.table.add({type: 'spotify_tk', code: JSON.stringify(result)});
+            resolve(result);
+          })()
         })
       });
     }

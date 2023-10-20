@@ -78,3 +78,111 @@
     font-weight: normal;
     font-style: normal;
 }
+
+@font-face {
+    font-family: 'poppins';
+    src: url('typos/poppins_thin_250.eot');
+    src: url('typos/poppins_thin_250.eot?#iefix') format('embedded-opentype'),
+         url('typos/poppins_thin_250.woff2') format('woff2'),
+         url('typos/poppins_thin_250.woff') format('woff'),
+         url('typos/poppins_thin_250.ttf') format('truetype'),
+         url('typos/poppins_thin_250.svg#poppinsthin') format('svg');
+    font-weight: 250;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'poppins';
+    src: url('typos/poppins_extralight_275.eot');
+    src: url('typos/poppins_extralight_275.eot?#iefix') format('embedded-opentype'),
+         url('typos/poppins_extralight_275.woff2') format('woff2'),
+         url('typos/poppins_extralight_275.woff') format('woff'),
+         url('typos/poppins_extralight_275.ttf') format('truetype'),
+         url('typos/poppins_extralight_275.svg#poppinsextralight') format('svg');
+    font-weight: 275;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'poppins';
+    src: url('typos/poppins_light_300.eot');
+    src: url('typos/poppins_light_300.eot?#iefix') format('embedded-opentype'),
+         url('typos/poppins_light_300.woff2') format('woff2'),
+         url('typos/poppins_light_300.woff') format('woff'),
+         url('typos/poppins_light_300.ttf') format('truetype'),
+         url('typos/poppins_light_300.svg#poppinslight') format('svg');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'poppins';
+    src: url('typos/poppins_regular_400.eot');
+    src: url('typos/poppins_regular_400.eot?#iefix') format('embedded-opentype'),
+         url('typos/poppins_regular_400.woff2') format('woff2'),
+         url('typos/poppins_regular_400.woff') format('woff'),
+         url('typos/poppins_regular_400.ttf') format('truetype'),
+         url('typos/poppins_regular_400.svg#poppinsregular') format('svg');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'poppins';
+    src: url('typos/poppins_medium_500.eot');
+    src: url('typos/poppins_medium_500.eot?#iefix') format('embedded-opentype'),
+         url('typos/poppins_medium_500.woff2') format('woff2'),
+         url('typos/poppins_medium_500.woff') format('woff'),
+         url('typos/poppins_medium_500.ttf') format('truetype'),
+         url('typos/poppins_medium_500.svg#poppinsmedium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'poppins';
+    src: url('typos/poppins_semibold_600.eot');
+    src: url('typos/poppins_semibold_600.eot?#iefix') format('embedded-opentype'),
+         url('typos/poppins_semibold_600.woff2') format('woff2'),
+         url('typos/poppins_semibold_600.woff') format('woff'),
+         url('typos/poppins_semibold_600.ttf') format('truetype'),
+         url('typos/poppins_semibold_600.svg#poppinssemibold') format('svg');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'poppins';
+    src: url('typos/poppins_bold_700.eot');
+    src: url('typos/poppins_bold_700.eot?#iefix') format('embedded-opentype'),
+         url('typos/poppins_bold_700.woff2') format('woff2'),
+         url('typos/poppins_bold_700.woff') format('woff'),
+         url('typos/poppins_bold_700.ttf') format('truetype'),
+         url('typos/poppins_bold_700.svg#poppinsbold') format('svg');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'poppins';
+    src: url('typos/poppins_extrabold_800.eot');
+    src: url('typos/poppins_extrabold_800.eot?#iefix') format('embedded-opentype'),
+         url('typos/poppins_extrabold_800.woff2') format('woff2'),
+         url('typos/poppins_extrabold_800.woff') format('woff'),
+         url('typos/poppins_extrabold_800.ttf') format('truetype'),
+         url('typos/poppins_extrabold_800.svg#poppinsextrabold') format('svg');
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'poppins';
+    src: url('typos/poppins_black_900.eot');
+    src: url('typos/poppins_black_900.eot?#iefix') format('embedded-opentype'),
+         url('typos/poppins_black_900.woff2') format('woff2'),
+         url('typos/poppins_black_900.woff') format('woff'),
+         url('typos/poppins_black_900.ttf') format('truetype'),
+         url('typos/poppins_black_900.svg#poppinsblack') format('svg');
+    font-weight: 900;
+    font-style: normal;
+}

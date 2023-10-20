@@ -7,11 +7,11 @@ import { LinksComponent } from "./links.component";
 
 // configures NgModule imports and exports
 @NgModule({
-    imports: [ 
+    imports: [
         LinksRoutingModule, TranslateModule, CommonModule, SafePipeModule],
     exports: [],
     bootstrap: [],
-    declarations: [LinksComponent],   
+    declarations: [LinksComponent],
     providers: []
 })
 

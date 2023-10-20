@@ -46,16 +46,7 @@
                         <span class="sq-icon icon-spotify"></span>
                         <div class="sq-button-text">{{ 'info.button' | translate}}</div>
                     </a>
-                    <!--
-                    <a target="_blank" *ngIf="spotifyPresaveUrl" [href]="spotifyPresaveUrl" (click)="setTabListener()" class="sq-button sq-spotify">
-                        <span class="sq-icon icon-spotify"></span>
-                        <div class="sq-button-text">{{ 'info.button' | translate}}</div>
-                    </a>
-                    <div class="sq-button sq-spotify" *ngIf="!spotifyPresaveUrl" (click)="doPresave()">
-                        <span class="sq-icon icon-spotify"></span>
-                        <div class="sq-button-text">{{ 'info.button' | translate}}</div>
-                    </div>
-                    -->
+                    <presave></presave>
                 </div>            
             </div>
         </div>

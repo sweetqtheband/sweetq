@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { SpotifyService } from '@services/spotify.service';
 
   @Component({
     selector: 'home-view',
@@ -13,25 +12,20 @@ import { SpotifyService } from '@services/spotify.service';
     public playAlbum = false;   
     public showVideo = false;    
     public showMap = false;
-    public videoUrl = '';
-    public spotifyPresaveUrl = '';
+    public videoUrl = '';    
     public mapUrl = '';           
     public gigHref = null;
     public spotifyHref = "https://open.spotify.com/album/0quqDx9Qf79Gt8GC4sZQn5"
     public presaveHref = "https://accounts.spotify.com/authorize?client_id=52bb6de395384e7bb580f44922501752&redirect_uri=https%3A%2F%2Fampl.ink%2Fpresave%2Fcallback%2Fspotify&scope=user-follow-modify+user-library-modify&response_type=code&state=MMe2M";
    
     
-    constructor(private spotifySvc: SpotifyService) {        
+    constructor() {        
         this.windowResizeHandler = () => {
             this.setWidths();
-        }     
-        this.initialize();
+        }          
     }
 
-    async initialize() {
-      this.spotifyPresaveUrl = await this.spotifySvc.authorize();
-    }
-    
+
     setWidths()
     {
 
@@ -41,21 +35,6 @@ import { SpotifyService } from '@services/spotify.service';
       } else {
         this.halfVideos = true;
       }
-    }      
-
-    async doPresave() {      
-      this.spotifySvc.preSave();            
-    }
-
-    setTabListener() {
-      localStorage.setItem('tabOpened', '1');      
-      const interval = setInterval(() => {
-        if (localStorage.getItem('tabOpened') === '0') {
-          clearInterval(interval);
-          this.spotifySvc.preSave();
-        }
-      }, 300)
-      return true;
     }
    
     ngOnInit() {

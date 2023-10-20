@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BandsService } from '@services/bands.service';
-import * as moment from 'moment';
 import { Gig } from '@interfaces/gig';
 import { Band } from '@interfaces/band';
 
@@ -22,22 +21,22 @@ export class GigsService {
     return new Promise<Gig[]>((resolve, reject) => {   
       this.getBands();
 
-      let today = moment();
+      let today = new Date();
 
       this.get().subscribe((result:any) => {      
         Object.keys(result).forEach((value:string, key: number) => {
           let bands:Array<Band> = [];
 
-          let date = moment(result[key].date);
+          let date = new Date(result[key].date);
 
-          if (date.isBefore(today))
+          if (date < today)
           {
             result[key].expired = true;
           } else {
             result[key].expired = false
           }
-          result[key].day = date.format('DD');
-          result[key].month = date.format('MMM').replace(".", "");
+          result[key].day = date.toLocaleDateString(navigator.language, {day: '2-digit'})
+          result[key].month = date.toLocaleDateString(navigator.language, {month: 'short'});
           
           bands = result[key].bands.filter((bandId:any) => {
             let bandData = this.bands.find((band:any) => { return bandId == band.id});

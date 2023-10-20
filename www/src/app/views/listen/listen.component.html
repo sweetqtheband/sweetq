@@ -1,0 +1,66 @@
+<div class="listen--view">
+  <div class="listen--bg">
+    <div class="image"></div>
+    <div class="opacity"></div>
+  </div>
+  <div class="listen--viewport">
+    <div class="listen--content">
+      <div class="listen--wrapper">
+        <header>
+          <h1>
+            Sweet Q
+          </h1>
+          <div class="subtitle">
+            {{ 'listen.monthlyListeners' | translate:{ total: 492} }}
+          </div>
+        </header>
+        <section class="latest-release">
+          <h3>
+            {{ 'listen.latestRelease.label' | translate}}
+          </h3>
+          <div class="subtitle">
+            {{ 'listen.latestRelease.date' | translate}}
+          </div>
+          <div class="block">
+            <div class="flex-container">
+              <iframe style="border-radius:12px"
+                src="https://open.spotify.com/embed/track/5lMDE8Uv7hZuQkYaTwyXdX?utm_source=generator&theme=0"
+                width="100%" frameBorder="0" allowfullscreen=""
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"></iframe>
+            </div>
+            <div class="subtext">{{ 'listen.latestRelease.totalPlays' | translate:{ total: 9696} }}</div>
+          </div>
+        </section>
+        <section class="next-releases">
+          <div class="pill">
+            <div class="image"></div>
+            <div class="text">{{ 'listen.nextReleases.pillText' | translate }}</div>
+          </div>
+          <div class="songs" *ngIf="items.length > 0">
+            <player class="player" [track]="item" *ngFor="let item of items" [tid]="tid"></player>
+          </div>
+        </section>
+      </div>
+    </div>
+    <footer class="listen--footer">
+      <div class="listen--wrapper">
+        <div class="contact">
+          <h2>
+            {{ 'listen.contactUs' | translate}}
+          </h2>
+          <a href="tel:+34695520242">695 520 242 (Hari)</a>
+          <a href="mailto:hola@sweetq.es">hola@sweetq.es</a>
+        </div>
+        <div class="social-networks">
+          <a target="_blank" class="button spotify" title="Spotify"
+            href="https://open.spotify.com/intl-es/artist/74Vs2gSCwnlCiV4yjaFIMb"></a>
+          <a target="_blank" class="button youtube" title="Youtube" href="https://www.youtube.com/@sweetqtheband"></a>
+          <a target="_blank" class="button tiktok" title="Tiktok" href="https://www.tiktok.com/@sweetqtheband"></a>
+          <a target="_blank" class="button instagram" title="Instagram"
+            href="https://www.instagram.com/sweetqtheband"></a>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>

@@ -12,6 +12,7 @@ import { SweetQGigsComponent } from '@components/sweetq/gigs.component';
 import { SweetQVideosComponent } from '@components/sweetq/videos.component';
 import { SweetQKitComponent } from '@components/sweetq/kit.component';
 import { SweetQFooterComponent } from '@components/sweetq/footer.component';
+import { PresaveComponent } from '@components/presave.component';
 import { MapComponent } from '@components/map.component';
 import { HomeComponent } from './home.component';
 import { HomeRoutingModule } from './home.routes';
@@ -28,6 +29,7 @@ import { SpotifyService } from '@services/spotify.service';
                  SweetQVideosComponent,
                  SweetQKitComponent,
                  SweetQFooterComponent,
+                 PresaveComponent,
                  MapComponent,
                  ModalComponent, 
                  SpotifyComponent],

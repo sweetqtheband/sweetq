@@ -1,0 +1,89 @@
+:host {
+  --Blue: #5825FE;
+  --White: #FFFFFF;
+  --Coral: #FE85A6;
+  --indigo-30: #B191FE;
+  width: 100%;
+
+  .audio-player {
+    background: var(--Blue);
+    color: var(--White);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 14px;
+    gap: 16px;
+
+    .timeline {
+      background: rgba(18, 22, 25, 0.30);
+      width: 100%;
+      position: relative;
+      cursor: pointer;
+      height: 2px;
+
+      .progress {
+        background: var(--Coral);
+        width: 0%;
+        height: 100%;
+        transition: 0.25s;
+      }
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      gap: 16px;
+
+      .controls-container {
+        flex: auto;
+
+        .info-wrapper {
+          display: flex;
+          justify-content: space-between;
+          padding-bottom: 12px;
+
+          .name {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--White)
+          }
+
+          .time {
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--indigo-30)
+          }
+        }
+      }
+
+      .toggle-play {
+        transition: none;
+
+        cursor: pointer;
+        position: relative;
+        left: 0;
+        height: 32px;
+        width: 32px;
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        &.play {
+          background-image: url('/assets/imgs/play.svg');
+        }
+
+        &.pause {
+          background-image: url('/assets/imgs/pause.svg');
+        }
+      }
+
+      .time {
+        display: flex;
+
+        >* {
+          padding: 2px;
+        }
+      }
+    }
+  }
+}
