@@ -30,6 +30,14 @@ body {
     font-family: 'titillium-web-semibold';
 }
 
+.sq-view {
+    left: 0;
+    top: 0;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
 .sq-icon {
     background-position: center;
     background-repeat: no-repeat;
@@ -38,10 +46,6 @@ body {
 
 .sq-button .sq-icon.icon-gigs {
     font-size: 21px;
-}
-
-* {
-    transition: all .1s linear;
 }
 
 .sq-line > * {
