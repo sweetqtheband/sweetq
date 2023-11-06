@@ -66,7 +66,6 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     this.audio.addEventListener(
       "loadeddata",
       () => {
-        console.log(this.audio.duration)
         this.track.duration = this.getTimeCodeFromNum(
           String(this.audio.duration).split(".")[0]
         );
@@ -84,6 +83,7 @@ export class PlayerComponent implements OnInit, AfterViewInit {
 
       this.progressInterval = setInterval(() => {
         this.progress.style.width = this.audio.currentTime / this.audio.duration * 100 + "%";
+        console.log(this.progress.style.width);
         this.track.advance = this.getTimeCodeFromNum(this.audio.currentTime);
       }, 500);
 

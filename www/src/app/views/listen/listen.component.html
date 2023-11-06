@@ -11,7 +11,7 @@
             Sweet Q
           </h1>
           <div class="subtitle">
-            {{ 'listen.monthlyListeners' | translate:{ total: 492} }}
+            {{ 'listen.monthlyListeners' | translate:{ total: data.listeners} }}
           </div>
         </header>
         <section class="latest-release">
@@ -29,7 +29,7 @@
                 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                 loading="lazy"></iframe>
             </div>
-            <div class="subtext">{{ 'listen.latestRelease.totalPlays' | translate:{ total: 9696} }}</div>
+            <div class="subtext">{{ 'listen.latestRelease.totalPlays' | translate:{ total: data.plays} }}</div>
           </div>
         </section>
         <section class="next-releases">
