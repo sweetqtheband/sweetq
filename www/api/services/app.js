@@ -13,8 +13,11 @@ class AppService {
     // handling CORS
     this.app.use(cors())
     this.app.use((req, res, next) => {
-      res.header("Access-Control-Allow-Origin",
-        this.conf.origin);
+      const origin = req.headers.origin;
+      if (this.conf.origins.includes(origin)) {
+        res.setHeader('Access-Control-Allow-Origin', origin);
+      }
+      res.header('Access-Control-Allow-Methods', 'GET, OPTIONS');
       res.header("Access-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept, TID");
       next();
@@ -27,7 +30,7 @@ class AppService {
 
   launch() {
     this.app.listen(this.conf.port, () => {
-      console.log('Server listening on port 3000');
+      console.log(`Server listening on port ${this.conf.port}`);
     });
   }
 }
