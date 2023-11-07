@@ -28,7 +28,10 @@ const updateDb = async (artistId, trackId) => {
 }
 
 const updateDataFromSpotify = async (artistId, trackId) => {
-  const browser = await puppeteer.launch({ headless: 'new' });
+  const browser = await puppeteer.launch({
+    args: ['--no-sandbox'],
+    headless: 'new'
+  });
   const page = await browser.newPage();
   await page.goto(`https://open.spotify.com/intl-es/artist/${artistId}`);
   const title = await page.waitForSelector('[data-testid="entityTitle"]');
