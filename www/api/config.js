@@ -6,7 +6,7 @@ export default {
   },
   environments: {
     production: {
-      port: 80,
+      port: 3000,
       origin: "https://sweetq.es"
     },
     development: {
