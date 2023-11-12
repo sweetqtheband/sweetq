@@ -1,0 +1,89 @@
+[data-icon]:before {
+    font-family: "sweetq" !important;
+    content: attr(data-icon);
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    speak: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+    font-family: "sweetq" !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    speak: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-bandzaai:before {
+    content: "\61";
+}
+
+.icon-gigs:before {
+    content: "\62";
+}
+
+.icon-amazon:before {
+    content: "\63";
+}
+
+.icon-apple-music:before {
+    content: "\64";
+}
+
+.icon-facebook:before {
+    content: "\65";
+}
+
+.icon-google-play:before {
+    content: "\66";
+}
+
+.icon-instagram:before {
+    content: "\67";
+}
+
+.icon-mail:before {
+    content: "\68";
+}
+
+.icon-play:before {
+    content: "\69";
+}
+
+.icon-soundcloud:before {
+    content: "\6a";
+}
+
+.icon-spotify:before {
+    content: "\6b";
+}
+
+.icon-twitter:before {
+    content: "\6c";
+}
+
+.icon-youtube:before {
+    content: "\6d";
+}
+
+.icon-youtube-music:before {
+    content: "\6e";
+}
+
+.icon-amazon-music:before {
+    content: "\6f";
+}
+
+.icon-play:before {
+    content: "\70";
+}
