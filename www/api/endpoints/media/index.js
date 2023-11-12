@@ -4,7 +4,7 @@ import { authSvc } from "../../services/auth";
 const medias = [
   {
     id: '1',
-    title: 'Atrapado en el tiempo'
+    title: 'Lo siento, pero no'
   },
   {
     id: '2',
@@ -12,7 +12,7 @@ const medias = [
   },
   {
     id: '3',
-    title: 'Lo siento, pero no'
+    title: 'Atrapado en el tiempo'
   },
 ]
 
