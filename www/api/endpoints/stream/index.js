@@ -6,7 +6,7 @@ import fs from "fs";
 
 app.get('/stream*', (req, res) => {
   if (authSvc.auth(req, res)) {
-    const file = path.join(__dirname, '..', `media/${String(req.params['0']).replace("/", "")}.mp3`);
+    const file = path.join(__dirname, '..', `media/${String(req.params['0']).replace("/", "")}.wav`);
     const stat = fs.statSync(file);
     const total = stat.size;
     if (req.headers?.range) {

@@ -11,8 +11,8 @@
           <div class="length">{{track.duration}}</div>
         </div>
       </div>
-      <div class="timeline-wrapper">
-        <div class="timeline" #timeline (click)="setTimeline"></div>
+      <div class="timeline-wrapper" (click)="setTimeline($event)">
+        <div class="timeline" #timeline></div>
         <div class="progress" #progress></div>
       </div>
     </div>

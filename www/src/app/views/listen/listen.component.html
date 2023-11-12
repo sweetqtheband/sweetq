@@ -22,12 +22,9 @@
             {{ 'listen.latestRelease.date' | translate}}
           </div>
           <div class="block">
-            <div class="flex-container">
-              <iframe style="border-radius:12px"
-                src="https://open.spotify.com/embed/track/5lMDE8Uv7hZuQkYaTwyXdX?utm_source=generator&theme=0"
-                width="100%" frameBorder="0" allowfullscreen=""
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                loading="lazy"></iframe>
+            <div class="flex-container iframe">
+              <div id="embed-iframe" style="border-radius:12px" width="100%" frameBorder="0" allowfullscreen=""
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></div>
             </div>
             <div class="subtext">{{ 'listen.latestRelease.totalPlays' | translate:{ total: data.plays} }}</div>
           </div>

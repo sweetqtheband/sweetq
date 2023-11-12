@@ -1,12 +1,11 @@
 import {
   AfterViewInit,
-  Component, ElementRef, Input, OnInit, ViewChild
+  Component, ElementRef, Input, OnInit, Output, EventEmitter, ViewChild, HostListener
 } from '@angular/core';
 
 import { Media } from '@interfaces/media';
 import { StreamService } from '@services/stream.service';
 import { Nullable } from 'src/app/types';
-
 
 @Component({
   selector: 'player',
@@ -19,13 +18,16 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   @ViewChild('timeline') _timeline!: ElementRef<HTMLDivElement>;
   @ViewChild('progress') _progress!: ElementRef<HTMLDivElement>;
 
+
   @Input('tid') tId: Nullable<string> = null;
   @Input() track: Media = { id: '' };
+  @Output() onPlay = new EventEmitter<string>();
+
   public streamUrl: any = null;
   public isLoaded: boolean = false;
   private progressInterval: any;
 
-  constructor(private http: StreamService) {
+  constructor(private http: StreamService, private elementRef: ElementRef) {
   }
 
   get audio() {
@@ -37,7 +39,6 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   get progress() {
     return this._progress.nativeElement;
   }
-
   get headers(): any {
     return { TID: this.tId }
   }
@@ -76,14 +77,31 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     this.audio.load();
   }
 
+  onPlaying() {
+    const event: CustomEvent = new CustomEvent('onPlaying', {
+      bubbles: true,
+      detail: { id: this.track.id }
+    });
+
+    window.dispatchEvent(event);
+  }
+
+  @HostListener('window:onPlaying', ['$event'])
+  onPlayingListener({ detail }: any) {
+    if (this.track.id !== detail.id && !this.audio.paused) {
+      this.playTrack();
+    }
+  }
+
+
   playTrack() {
     if (this.audio.paused) {
+      this.onPlaying();
       this.track.isPlaying = true;
       this.audio.play();
 
       this.progressInterval = setInterval(() => {
         this.progress.style.width = this.audio.currentTime / this.audio.duration * 100 + "%";
-        console.log(this.progress.style.width);
         this.track.advance = this.getTimeCodeFromNum(this.audio.currentTime);
       }, 500);
 

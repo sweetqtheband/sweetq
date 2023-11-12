@@ -1,4 +1,4 @@
-import { OnInit, Component, HostBinding } from '@angular/core';
+import { OnInit, Component, HostBinding, HostListener } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { StreamService } from '@services/stream.service';
@@ -6,7 +6,6 @@ import { Media } from "@interfaces/media";
 import { Nullable } from 'src/app/types';
 import config from 'src/app/config';
 import { Data } from '@interfaces/data';
-
 
 @Component({
   selector: 'listen-view',
@@ -17,12 +16,13 @@ import { Data } from '@interfaces/data';
     './listen.component.scss'],
 })
 
-
 export class ListenComponent implements OnInit {
   @HostBinding('class.sq-view') sqView: boolean = true;
   public items: Media[] = [];
   public tid: Nullable<string> = null;
   public data: Data = { listeners: '-', plays: '-' };
+  private spotifyController: any = null;
+  private spotifyPlaying: Boolean = false;
   get headers(): any {
     return { TID: this.tid }
   }
@@ -31,6 +31,42 @@ export class ListenComponent implements OnInit {
     this.meta.removeTag('name="keywords"');
     this.meta.removeTag('name="description"');
     this.meta.updateTag({ name: 'robots', content: 'noindex' });
+
+  }
+
+  @HostListener('window:spotifyApiReady', ['$event'])
+  onSpotifyIframeApiReady({ detail: IFrameAPI }: any) {
+    const element = document.getElementById('embed-iframe');
+    const options = {
+      uri: 'spotify:track:5lMDE8Uv7hZuQkYaTwyXdX',
+      theme: 'dark',
+      height: '80',
+    };
+    const callback = (EmbedController: any) => {
+      window.spotifyIframeReady = true;
+      this.spotifyController = EmbedController;
+      EmbedController.addListener('playback_update', (e: any) => {
+        this.spotifyPlaying = !e.data.isPaused;
+        if (this.spotifyPlaying) {
+          const event: CustomEvent = new CustomEvent('onPlaying', {
+            bubbles: true,
+            detail: { id: 0 }
+          });
+
+          window.dispatchEvent(event);
+        }
+      });
+
+
+    };
+    IFrameAPI.createController(element, options, callback);
+  }
+
+  @HostListener('window:onPlaying', ['$event'])
+  trackPlaying({ detail }: any) {
+    if (+detail.id > 0 && this.spotifyPlaying) {
+      this.spotifyController.pause();
+    }
   }
 
   async ngOnInit(): Promise<any> {

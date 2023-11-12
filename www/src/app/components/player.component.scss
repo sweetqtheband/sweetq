@@ -16,12 +16,12 @@
 
     .timeline-wrapper {
       position: relative;
+      cursor: pointer;
 
       .timeline {
         background: rgba(18, 22, 25, 0.30);
         width: 100%;
         position: relative;
-        cursor: pointer;
         height: 2px;
       }
 
