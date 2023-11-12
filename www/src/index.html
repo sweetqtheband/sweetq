@@ -44,18 +44,42 @@
   <meta name="twitter:description"
     content="Un tema optimista que nos anima a sobreponernos a todo y a avanzar hacia un futuro ilusionante.">
   <meta name="twitter:image" content="https://www.sweetq.es/assets/imgs/sweetq-share.png">
-  <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
   <!-- Google Tag Manager -->
-  <script>(function (w, d, s, l, i) {
-      w[l] = w[l] || []; w[l].push({
-        'gtm.start':
-          new Date().getTime(), event: 'gtm.js'
-      }); var f = d.getElementsByTagName(s)[0],
-        j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-          'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-M4L9RFS');</script>
-  <!-- End Google Tag Manager -->
+  <script type="text/javascript">
+    (function (w) {
+      const spotifyCustomEvent = (IFrameAPI) => {
+        const event = new CustomEvent('spotifyApiReady', {
+          bubbles: true,
+          detail: IFrameAPI
+        });
 
+        w.dispatchEvent(event);
+
+        setTimeout(() => {
+          if (!window.spotifyIframeReady) {
+            spotifyCustomEvent(event);
+          }
+        }, 1000);
+      }
+      w.onSpotifyIframeApiReady = (IFrameAPI) => {
+        if (!w.spotifyIframeReady) {
+          setTimeout(() => {
+            spotifyCustomEvent(IFrameAPI);
+          }, 1000);
+        }
+      }
+    })(window)
+  </script>
+  <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
+  <script>(function (w, d, s, l, i) {
+        w[l] = w[l] || []; w[l].push({
+          'gtm.start':
+            new Date().getTime(), event: 'gtm.js'
+        }); var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+            'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-M4L9RFS');</script>
+  <!-- End Google Tag Manager -->
 </head>
 
 <body></body>

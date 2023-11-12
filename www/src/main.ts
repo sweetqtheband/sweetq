@@ -10,8 +10,6 @@ declare global {
   }
 }
 
-
-
 const spotifyCustomEvent = (IFrameAPI: any) => {
   const event: CustomEvent = new CustomEvent('spotifyApiReady', {
     bubbles: true,
