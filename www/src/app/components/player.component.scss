@@ -17,6 +17,7 @@
     .timeline-wrapper {
       position: relative;
       cursor: pointer;
+      padding: 4px 0;
 
       .timeline {
         background: rgba(18, 22, 25, 0.30);
@@ -28,10 +29,11 @@
       .progress {
         background: var(--Coral);
         width: 0%;
-        height: 100%;
+        height: 2px;
         transition: 0.25s;
         position: absolute;
-        top: 0;
+        top: 50%;
+        transform: translateY(-50%);
       }
     }
 
