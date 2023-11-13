@@ -230,11 +230,25 @@
               font-weight: 400;
               text-align: right;
 
-              @media screen and (max-width: 645px) {
+              @media screen and (max-width: 455px) {
                 right: unset;
-                top: unset;
-                left: 12px;
-                bottom: 12px;
+                top: 37px;
+                left: 135px;
+                font-size: 10px;
+              }
+
+              @media screen and (max-width: 408px) {
+                right: unset;
+                top: 37px;
+                left: 128px;
+                font-size: 9.5px;
+              }
+
+              @media screen and (max-width: 320px) {
+                right: unset;
+                top: 37px;
+                left: 128px;
+                font-size: 9px;
               }
             }
           }
