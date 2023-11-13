@@ -77,7 +77,6 @@ export class ListenComponent implements OnInit {
   }
 
   loadScript() {
-    console.log('preparing to load...')
     let node = document.createElement('script');
     node.src = "https://open.spotify.com/embed/iframe-api/v1";
     node.type = 'text/javascript';
