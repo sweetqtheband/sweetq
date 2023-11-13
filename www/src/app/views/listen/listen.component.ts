@@ -7,6 +7,14 @@ import { Nullable } from 'src/app/types';
 import config from 'src/app/config';
 import { Data } from '@interfaces/data';
 
+
+declare global {
+  interface Window {
+    onSpotifyIframeApiReady: any;
+    spotifyIframeReady: boolean
+  }
+}
+
 @Component({
   selector: 'listen-view',
   templateUrl: './listen.component.html',
@@ -21,8 +29,9 @@ export class ListenComponent implements OnInit {
   public items: Media[] = [];
   public tid: Nullable<string> = null;
   public data: Data = { listeners: '-', plays: '-' };
+  private loadApi: any;
   private spotifyController: any = null;
-  private spotifyPlaying: Boolean = false;
+  private spotifyPlaying: boolean = false;
   get headers(): any {
     return { TID: this.tid }
   }
@@ -34,8 +43,14 @@ export class ListenComponent implements OnInit {
 
   }
 
-  @HostListener('window:spotifyApiReady', ['$event'])
-  onSpotifyIframeApiReady({ detail: IFrameAPI }: any) {
+  @HostListener('window:onPlaying', ['$event'])
+  trackPlaying({ detail }: any) {
+    if (+detail.id > 0 && this.spotifyPlaying) {
+      this.spotifyController.pause();
+    }
+  }
+
+  onSpotifyIframeApiReady(IFrameAPI: any) {
     const element = document.getElementById('embed-iframe');
     const options = {
       uri: 'spotify:track:5lMDE8Uv7hZuQkYaTwyXdX',
@@ -57,19 +72,23 @@ export class ListenComponent implements OnInit {
         }
       });
 
-
     };
     IFrameAPI.createController(element, options, callback);
   }
 
-  @HostListener('window:onPlaying', ['$event'])
-  trackPlaying({ detail }: any) {
-    if (+detail.id > 0 && this.spotifyPlaying) {
-      this.spotifyController.pause();
-    }
+  loadScript() {
+    console.log('preparing to load...')
+    let node = document.createElement('script');
+    node.src = "https://open.spotify.com/embed/iframe-api/v1";
+    node.type = 'text/javascript';
+    node.async = true;
+    document.getElementsByTagName('head')[0].appendChild(node);
   }
 
   async ngOnInit(): Promise<any> {
+    (<any>window).onSpotifyIframeApiReady = this.onSpotifyIframeApiReady.bind(this);
+    this.loadScript();
+
     this.tid = this.route.snapshot.queryParams['tId'];
     this.data = await this.http.getData({
       params: {
