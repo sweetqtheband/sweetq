@@ -7,11 +7,11 @@ export default {
   environments: {
     production: {
       port: 3000,
-      origins: ["*"]
+      origin: "https://www.sweetq.es"
     },
     development: {
       port: 3000,
-      origins: ["http://localhost:4200"]
+      origin: "http://localhost:4200"
     }
   }
 }
