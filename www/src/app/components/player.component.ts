@@ -1,6 +1,13 @@
 import {
   AfterViewInit,
-  Component, ElementRef, Input, OnInit, Output, EventEmitter, ViewChild, HostListener
+  Component,
+  ElementRef,
+  Input,
+  OnInit,
+  Output,
+  EventEmitter,
+  ViewChild,
+  HostListener,
 } from '@angular/core';
 
 import { Media } from '@interfaces/media';
@@ -12,12 +19,10 @@ import { Nullable } from 'src/app/types';
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.scss'],
 })
-
 export class PlayerComponent implements OnInit, AfterViewInit {
   @ViewChild('audio') _audio!: ElementRef<HTMLAudioElement>;
   @ViewChild('timeline') _timeline!: ElementRef<HTMLDivElement>;
   @ViewChild('progress') _progress!: ElementRef<HTMLDivElement>;
-
 
   @Input('tid') tId: Nullable<string> = null;
   @Input() track: Media = { id: '' };
@@ -27,8 +32,7 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   public isLoaded: boolean = false;
   private progressInterval: any;
 
-  constructor(private http: StreamService, private elementRef: ElementRef) {
-  }
+  constructor(private http: StreamService, private elementRef: ElementRef) {}
 
   get audio() {
     return this._audio.nativeElement;
@@ -40,7 +44,7 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     return this._progress.nativeElement;
   }
   get headers(): any {
-    return { TID: this.tId }
+    return { TID: this.tId };
   }
 
   async ngOnInit(): Promise<void> {
@@ -49,14 +53,14 @@ export class PlayerComponent implements OnInit, AfterViewInit {
 
     this.streamUrl = await this.http.getStreamUrl({
       id: this.track.id,
-      headers: this.headers
+      headers: this.headers,
     });
     this.audio.src = String(this.streamUrl);
   }
 
   ngAfterViewInit(): void {
-    document.addEventListener("visibilitychange", (event) => {
-      if (document.visibilityState !== "visible") {
+    document.addEventListener('visibilitychange', (event) => {
+      if (document.visibilityState !== 'visible') {
         if (this.streamUrl) {
           URL.revokeObjectURL(this.streamUrl);
           this.streamUrl = null;
@@ -65,12 +69,13 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     });
 
     this.audio.addEventListener(
-      "loadeddata",
+      'loadeddata',
       () => {
+        console.log(this.audio.duration);
         this.track.duration = this.getTimeCodeFromNum(
-          String(this.audio.duration).split(".")[0]
+          String(this.audio.duration)
         );
-        this.audio.volume = .75;
+        this.audio.volume = 0.75;
       },
       false
     );
@@ -80,7 +85,7 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   onPlaying() {
     const event: CustomEvent = new CustomEvent('onPlaying', {
       bubbles: true,
-      detail: { id: this.track.id }
+      detail: { id: this.track.id },
     });
 
     window.dispatchEvent(event);
@@ -93,7 +98,6 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     }
   }
 
-
   playTrack() {
     if (this.audio.paused) {
       this.onPlaying();
@@ -101,10 +105,10 @@ export class PlayerComponent implements OnInit, AfterViewInit {
       this.audio.play();
 
       this.progressInterval = setInterval(() => {
-        this.progress.style.width = this.audio.currentTime / this.audio.duration * 100 + "%";
+        this.progress.style.width =
+          (this.audio.currentTime / this.audio.duration) * 100 + '%';
         this.track.advance = this.getTimeCodeFromNum(this.audio.currentTime);
       }, 500);
-
     } else {
       clearInterval(this.progressInterval);
       this.track.isPlaying = false;
@@ -114,13 +118,14 @@ export class PlayerComponent implements OnInit, AfterViewInit {
 
   setTimeline(e: MouseEvent) {
     const timelineWidth = window.getComputedStyle(this.timeline).width;
-    const timeToSeek = e.offsetX / parseInt(timelineWidth) * this.audio.duration;
+    const timeToSeek =
+      (e.offsetX / parseInt(timelineWidth)) * this.audio.duration;
     this.audio.currentTime = timeToSeek;
   }
 
   getTimeCodeFromNum(num: any) {
-    let seconds = Math.round(num);
-    let minutes = Math.round(seconds / 60);
+    let minutes = Math.floor(num / 60);
+    let seconds = Math.floor(num - minutes * 60);
 
     return `${minutes}:${String(seconds % 60).padStart(2, '0')}`;
   }
