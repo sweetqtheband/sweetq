@@ -71,7 +71,6 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     this.audio.addEventListener(
       'loadeddata',
       () => {
-        console.log(this.audio.duration);
         this.track.duration = this.getTimeCodeFromNum(
           String(this.audio.duration)
         );
