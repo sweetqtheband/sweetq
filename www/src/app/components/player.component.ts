@@ -48,6 +48,10 @@ export class PlayerComponent implements OnInit, AfterViewInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.getStreamUrl();
+  }
+
+  async getStreamUrl() {
     this.track.advance = '0:00';
     this.track.isPlaying = false;
 
@@ -79,6 +83,19 @@ export class PlayerComponent implements OnInit, AfterViewInit {
       false
     );
     this.audio.load();
+
+    this.audio.addEventListener('ended', () => {
+      this.audio.currentTime = 0;
+      this.progress.style.width = '0%';
+      this.track.ended = true;
+      this.stopPlay();
+
+      const event: CustomEvent = new CustomEvent('playNext', {
+        bubbles: true,
+        detail: { id: this.track.nextId },
+      });
+      window.dispatchEvent(event);
+    });
   }
 
   onPlaying() {
@@ -97,7 +114,18 @@ export class PlayerComponent implements OnInit, AfterViewInit {
     }
   }
 
-  playTrack() {
+  @HostListener('window:playNext', ['$event'])
+  playNextListener({ detail }: any) {
+    if (this.track.id === detail.id && !this.track.ended) {
+      this.playTrack();
+    }
+  }
+
+  async playTrack() {
+    if (!this.streamUrl) {
+      await this.getStreamUrl();
+    }
+
     if (this.audio.paused) {
       this.onPlaying();
       this.track.isPlaying = true;
@@ -109,10 +137,14 @@ export class PlayerComponent implements OnInit, AfterViewInit {
         this.track.advance = this.getTimeCodeFromNum(this.audio.currentTime);
       }, 500);
     } else {
-      clearInterval(this.progressInterval);
-      this.track.isPlaying = false;
-      this.audio.pause();
+      this.stopPlay();
     }
+  }
+
+  stopPlay() {
+    clearInterval(this.progressInterval);
+    this.track.isPlaying = false;
+    this.audio.pause();
   }
 
   setTimeline(e: MouseEvent) {
