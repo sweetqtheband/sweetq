@@ -369,6 +369,11 @@ body {
     padding-top: calc(100% + 30px);
 }
 
+.sq-image-wrapper.panoramic .sq-image {
+  width: 100%;
+  padding-top: 56.25%;
+}
+
 .sq-aside-actions {
     display: flex;
     align-items: center;
@@ -408,6 +413,20 @@ body {
     position: relative;
 }
 
+.sq-section.notice.video .sq-half-columns {
+  align-items: flex-start;
+}
+
+.sq-section.notice.video .column-left  {
+  padding-top: 24px;
+}
+
+.sq-section.notice.video.mercado-motores .sq-image.image-cover {
+  background-image: url('../imgs/mercadomotores.jpg');
+  position: relative;
+}
+
+.sq-section.notice.video .column-right,
 .sq-section.notice.info .column-right {
     text-align: left;
 }
