@@ -2,6 +2,7 @@
   "releaseMessage": "You can listen to \"El camino correcto\" now!",
   "listenInSpotify": "Listen in Spotify",
   "listenAlsoIn": "Also available in...",
+  "videos": "Videos",
   "videoLabel": {
     "caminocorrecto": "Video - El camino correcto",
     "nuevaera": "Video - La nueva era",
@@ -54,7 +55,8 @@
     "appleMusic": "Apple Music",
     "youtubeMusic": "Youtube Music",
     "youtube": "Videoclip 'El camino correcto'",
-    "pulpop": "Vote us for Pulpop"
+    "pulpop": "Vote us for Pulpop",
+    "mercadoMotores": "Full show Mercado de Motores"
   },
   "listen": {
     "monthlyListeners": "{{total}} monthly listeners",
@@ -68,5 +70,13 @@
       "pillText": "Listen our incoming singles exclusively!"
     },
     "contactUs": "Contact us!"
+  },
+  "video": {
+    "mercadoMotores": {
+      "title": "Mercado de Motores",
+      "subtitle": "Full show on Youtube",
+      "text": "You can already watch our latest full live show at Mercado de Motores in our Youtube channel. If you want to hear our new forthcoming releases in a live format... Don't miss it out!",
+      "button": "Watch on Youtube"
+    }
   }
 }

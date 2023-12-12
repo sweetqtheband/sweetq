@@ -1,0 +1,18 @@
+[
+  {
+    "type": "info",
+    "title": "info.title",
+    "subtitle": "info.subtitle",
+    "text": "info.text",
+    "button": "info.button",
+    "spotifyHref": "https://open.spotify.com/album/0quqDx9Qf79Gt8GC4sZQn5"
+  },
+  {
+    "type": "video mercado-motores",
+    "title": "video.mercadoMotores.title",
+    "subtitle": "video.mercadoMotores.subtitle",
+    "text": "video.mercadoMotores.text",
+    "button": "video.mercadoMotores.button",
+    "youtubeHref": "https://www.youtube.com/watch?v=YMRrlu4uK2Q"
+  }
+]

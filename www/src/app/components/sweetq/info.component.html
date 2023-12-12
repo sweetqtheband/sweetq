@@ -1,0 +1,30 @@
+<div class="sq-section notice" [class]="data.type">
+  <div class="sq-wrapper">
+    <div class="sq-half-columns">
+      <div class="sq-column column-left">
+        <div class="sq-image-wrapper" [class]="{'square': !data.youtubeHref, 'panoramic': data.youtubeHref}" (click)="showModal(null, data)"  (showChange)="showModal($event, data)">
+          <div class="sq-image image-cover">
+            <div class="sq-play-wrapper" *ngIf="data.youtubeHref">
+              <div class="sq-button sq-play">
+                <span class="sq-icon icon-play"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="sq-column column-right">
+        <div class="sq-title-wrapper">
+          <div class="sq-title"> {{data.title | translate}}</div>
+          <div class="sq-subtitle"> {{data.subtitle | translate}}</div>
+        </div>
+        <div class="sq-text" [innerHTML]="data.text | translate"></div>
+        <div class="sq-actions">
+          <a target="_blank" *ngIf="data.href || data.spotifyHref || data.youtubeHref" [href]="data.href || data.spotifyHref || data.youtubeHref" class="sq-button" [class]="{'rounded': !data.spotifyHref, 'solid-blue': '!data.spotifyHref', 'sq-spotify': data.spotifyHref}">
+            <span class="sq-icon" [class]="{'icon-spotify': data.spotifyHref}" *ngIf="data.spotifyHref"></span>
+            <div class="sq-button-text">{{  data.button | translate}}</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

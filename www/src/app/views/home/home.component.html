@@ -1,64 +1,9 @@
 <sweetq-header (playAlbumEvent)="playAlbum = $event"></sweetq-header>
 <sweetq-gigs (showMapEvent)="showMap = $event.showMap; mapUrl = $event.mapUrl"></sweetq-gigs>
-<sweetq-videos (showVideoEvent)="showVideo = $event.showVideo; videoUrl = $event.videoUrl" [halfVideos]="halfVideos"></sweetq-videos>
-
-<div class="sq-section notice concierto" *ngIf="gigHref">
-    <div class="sq-wrapper">
-        <div class="sq-half-columns">
-            <div class="sq-column column-left">
-                <div class="sq-image-wrapper square">
-                    <div class="sq-image image-cover"></div>
-                </div>
-            </div>
-            <div class="sq-column column-right">
-                <div class="sq-title-wrapper">
-                    <div class="sq-title"> {{'gig.date' | translate}}</div>
-                    <div class="sq-subtitle">{{ 'gig.title' | translate}}</div>
-                </div>
-                <div class="sq-text" [innerHTML]="'gig.text'| translate"></div>
-                <div class="sq-actions">
-                    <a target="_blank" [href]="gigHref" class="sq-button rounded solid-blue">
-                        <div class="sq-button-text">{{ 'gig.watchEvent' | translate}}</div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="sq-section notice info">
-    <div class="sq-wrapper">
-        <div class="sq-half-columns">
-            <div class="sq-column column-left">
-                <div class="sq-image-wrapper square">
-                    <div class="sq-image image-cover">                        
-                    </div>
-                </div>
-            </div>
-            <div class="sq-column column-right">
-                <div class="sq-title-wrapper">
-                    <div class="sq-title"> {{'info.title' | translate}}</div>                    
-                    <div class="sq-subtitle"> {{'info.subtitle' | translate}}</div>                    
-                </div>
-                <div class="sq-text" [innerHTML]="'info.text'| translate"></div>                
-                <div class="sq-actions">
-                    <a target="_blank" *ngIf="spotifyHref" [href]="spotifyHref" class="sq-button sq-spotify">
-                        <span class="sq-icon icon-spotify"></span>
-                        <div class="sq-button-text">{{ 'info.button' | translate}}</div>
-                    </a>
-                    <presave></presave>
-                </div>            
-            </div>
-        </div>
-    </div>
-</div>
-
+<sweetq-videos (showVideoEvent)="showVideo = $event.showVideo; videoUrl = $event.videoUrl" [halfVideos]="halfVideos" [showVideo]="showVideo"></sweetq-videos>
+<sweetq-info *ngFor="let new of news" [data]="new" (showVideoEvent)="showVideo = $event.showVideo; videoUrl = $event.videoUrl" [showVideo]="showVideo"></sweetq-info>
 <sweetq-kit></sweetq-kit>
-
 <sweetq-footer></sweetq-footer>
-
 <map [(show)]="showMap" [url]="mapUrl"></map>
-
-<modal [(show)]="showVideo" [url]="videoUrl"></modal>
-
+<modal [(show)]="showVideo" [url]="videoUrl" (showChange)="showChange($event)"></modal>
 <spotify [(show)]="playAlbum"></spotify>
