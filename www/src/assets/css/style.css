@@ -409,8 +409,9 @@ body {
 }
 
 .sq-section.notice.info .sq-image.image-cover {
-    background-image: url('../imgs/cover.png');    
+    background-image: url('../imgs/cover-atrapado.png');    
     position: relative;
+    background-position: center top;
 }
 
 .sq-section.notice.video .sq-half-columns {
@@ -424,6 +425,12 @@ body {
 .sq-section.notice.video.mercado-motores .sq-image.image-cover {
   background-image: url('../imgs/mercadomotores.jpg');
   position: relative;
+}
+
+.sq-section.notice.info.gig.reset .sq-image.image-cover {
+  background-image: url('../imgs/20240121.jpg');
+  position: relative;
+  padding-top: 156%;
 }
 
 .sq-section.notice.video .column-right,

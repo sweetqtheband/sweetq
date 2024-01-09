@@ -2,7 +2,7 @@
   <div class="sq-wrapper">
     <div class="sq-half-columns">
       <div class="sq-column column-left">
-        <div class="sq-image-wrapper" [class]="{'square': !data.youtubeHref, 'panoramic': data.youtubeHref}" (click)="showModal(null, data)"  (showChange)="showModal($event, data)">
+        <div class="sq-image-wrapper" [class]="{'square': !data.youtubeHref && !data.href, 'panoramic': data.youtubeHref}" (click)="showModal(null, data)"  (showChange)="showModal($event, data)">
           <div class="sq-image image-cover">
             <div class="sq-play-wrapper" *ngIf="data.youtubeHref">
               <div class="sq-button sq-play">

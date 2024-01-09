@@ -36,7 +36,7 @@
                         <div class="sq-line">
                             <div class="sq-text" *ngFor="let band of gig.bands; first as isFirst">
                                 <div class="sq-line-space" *ngIf="!isFirst">/</div>                            
-                                <a class="sq-link" [href]="band.facebook ? band.facebook : '#'" target="_blank" title="{{(band.facebook ? 'goToItsFacebook' : (band.instagram ? 'goToItsInstagram' : '')) | translate}}" >{{band.name}}</a>
+                                <a class="sq-link" [href]="band.link" target="_blank" title="{{(band.facebook ? 'goToItsFacebook' : (band.instagram ? 'goToItsInstagram' : '')) | translate}}" >{{band.name}}</a>
                             </div>                            
                         </div>
                     </div>

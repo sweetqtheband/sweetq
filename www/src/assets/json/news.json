@@ -5,14 +5,14 @@
     "subtitle": "info.subtitle",
     "text": "info.text",
     "button": "info.button",
-    "spotifyHref": "https://open.spotify.com/album/0quqDx9Qf79Gt8GC4sZQn5"
+    "spotifyHref": "https://push.fm/ps/sweet-q-atrapado-en-el-tiempo"
   },
   {
-    "type": "video mercado-motores",
-    "title": "video.mercadoMotores.title",
-    "subtitle": "video.mercadoMotores.subtitle",
-    "text": "video.mercadoMotores.text",
-    "button": "video.mercadoMotores.button",
-    "youtubeHref": "https://www.youtube.com/watch?v=YMRrlu4uK2Q"
+    "type": "info gig reset",
+    "title": "gig.title",
+    "subtitle": "gig.date",
+    "text": "gig.text",
+    "button": "gig.buyTickets",
+    "href": "https://www.hangar48.es/class/d21-sesion-de-tarde-sweet-q-y-jaleo/"
   }
 ]

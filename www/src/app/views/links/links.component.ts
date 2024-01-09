@@ -34,18 +34,18 @@ export class LinksComponent {
       link: 'https://music.youtube.com/playlist?list=OLAK5uy_nyRpPwsfhWIu5s23cXyI84gOU6zuvpi-U',
     },
     {
-      type: 'youtube',
-      icon: 'icon-youtube',
-      text: 'links.youtube',
+      type: 'spotify',
+      icon: 'icon-spotify',
+      text: 'links.presave.atrapado',
       button: 'secondary',
-      link: 'https://www.youtube.com/watch?v=5HU8pUNCpMs',
+      link: 'https://push.fm/ps/sweet-q-atrapado-en-el-tiempo',
     },
     {
-      type: 'youtube',
-      icon: 'icon-youtube',
-      text: 'links.mercadoMotores',
+      type: 'gig',
+      icon: 'icon-gigs',
+      text: 'links.tickets.20240121',
       button: 'secondary',
-      link: 'https://www.youtube.com/watch?v=YMRrlu4uK2Q',
+      link: 'https://www.giglon.com/todos?idEvent=domingo-21-sesion-de-tarde-sweet-q-y-jaleo',
     },
   ];
 

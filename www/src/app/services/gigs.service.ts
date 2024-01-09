@@ -23,8 +23,8 @@ export class GigsService {
 
       let today = new Date();
 
-      this.get().subscribe((result:any) => {      
-        Object.keys(result).forEach((value:string, key: number) => {
+      this.get().subscribe((result:any) => {              
+        Object.keys(result).forEach((value:string, key: number) => {          
           let bands:Array<Band> = [];
 
           let date = new Date(result[key].date);
@@ -38,12 +38,12 @@ export class GigsService {
           result[key].day = date.toLocaleDateString(navigator.language, {day: '2-digit'})
           result[key].month = date.toLocaleDateString(navigator.language, {month: 'short'});
           
-          bands = result[key].bands.filter((bandId:any) => {
-            let bandData = this.bands.find((band:any) => { return bandId == band.id});
+          bands = result[key].bands.map((bandId:any) => {            
+            let bandData = this.bands.find((band:any) => { return bandId == band.id});            
             return bandData;
-          })
-
-          result[key].bands = bands;
+          })          
+          
+          result[key].bands = bands;  
         });      
 
         resolve(result.sort((a:any,b:any) => !a.expired && b.expired ? -1 : 1));

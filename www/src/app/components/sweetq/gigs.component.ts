@@ -1,13 +1,13 @@
 import {    
     Component,      
     OnInit,
-    Input,
     Output,
     EventEmitter
 } from '@angular/core';
 
 import { GigsService } from '@services/gigs.service';
 import { Gig } from '@interfaces/gig';
+import { Band } from '@interfaces/band';
 
 
 @Component({
@@ -33,6 +33,14 @@ export class SweetQGigsComponent implements OnInit {
     async getGigs()
     {
       this.gigs = await this.gigsSvc.getGigs();
+      this.gigs = this.gigs.map((gig:Gig) : Gig => {
+          gig.bands = gig.bands.map((band:Band) : Band => {
+          band.link = band.facebook ?? band.instagram;
+          band.link = band.link ?? '#';
+          return band;
+        })
+        return gig;
+      });
     }
 
     showModal(gig:Gig):void {    
