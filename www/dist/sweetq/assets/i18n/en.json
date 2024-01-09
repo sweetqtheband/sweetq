@@ -11,17 +11,16 @@
   },
   "availableSince": "Available from october 16th in:",
   "gig": {
-    "date": "Oct 28",
-    "title": "Opening concert",
-    "text": "On october 28th we'll play an opening concert presenting <span class='bold'>‘La nueva era’</span> at Madrid's venue <span class='bold'>Maravillas Club</span>.",
-    "watchEvent": "Watch event",
-    "viewInGoogleMap": "View in Google Maps"
+    "date": "January 21st",
+    "title": "Reset Session: Sweet Q + Jaleo",
+    "text": "On january 21st we'll playing in <span class='bold'>Reset Sessions</span> together with <span class='bold'>Jaleo</span> at Madrid's venue <span class='bold'>Hangar 48</span>.",
+    "watchEvent": "Watch event"  
   },
   "info": {
-    "title": "El camino correcto",
-    "subtitle": "Already available",
-    "text": "At the end of 2023 spring Sweet Q will release the single <span class='bold'>'El camino correcto'</span>, recorded in Madrid by the hand of the producer Iker Arranz. An optimist indie track with lyrics that encourages us to overcome to everything and to move forward into an exciting future.",
-    "button": "Listen on Spotify"
+    "title": "Atrapado en el tiempo",
+    "subtitle": "Release on January 26th",
+    "text": "Next January 26th will be available on all platforms <span class='bold'>'Atrapado en el tiempo'</span>, the second single of our next LP. A powerful and reflective indie track that invites you to break with the daily monotony, transforming the down moments into opportunities for liberation. Its positive character will immerse you in the intensity of living each day as if it were the last. Be the first to listen to it!",
+    "button": "Spotify pre-save"
   },
   "pressKit": {
     "title": "Press kit",
@@ -56,7 +55,13 @@
     "youtubeMusic": "Youtube Music",
     "youtube": "Videoclip 'El camino correcto'",
     "pulpop": "Vote us for Pulpop",
-    "mercadoMotores": "Full show Mercado de Motores"
+    "mercadoMotores": "Full show Mercado de Motores",
+    "presave": {
+      "atrapado": "Pre-save 'Atrapado en el tiempo'"
+    },
+    "tickets": {
+      "20240121": "Tickets Reset Session January 21: Sweet Q + Jaleo"
+    }
   },
   "listen": {
     "monthlyListeners": "{{total}} monthly listeners",
