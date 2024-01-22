@@ -6,13 +6,5 @@
     "text": "info.text",
     "button": "info.button",
     "spotifyHref": "https://push.fm/ps/sweet-q-atrapado-en-el-tiempo"
-  },
-  {
-    "type": "info gig reset",
-    "title": "gig.title",
-    "subtitle": "gig.date",
-    "text": "gig.text",
-    "button": "gig.buyTickets",
-    "href": "https://www.hangar48.es/class/d21-sesion-de-tarde-sweet-q-y-jaleo/"
   }
 ]
