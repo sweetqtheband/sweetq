@@ -39,14 +39,7 @@ export class LinksComponent {
       text: 'links.presave.atrapado',
       button: 'secondary',
       link: 'https://push.fm/ps/sweet-q-atrapado-en-el-tiempo',
-    },
-    {
-      type: 'gig',
-      icon: 'icon-gigs',
-      text: 'links.tickets.20240121',
-      button: 'secondary',
-      link: 'https://www.giglon.com/todos?idEvent=domingo-21-sesion-de-tarde-sweet-q-y-jaleo',
-    },
+    }
   ];
 
   public primaryLinks = this.links.filter((link) => link.button === 'primary');
