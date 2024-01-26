@@ -1,5 +1,5 @@
 {
-  "releaseMessage": "¡Ya podéis escuchar \"El camino correcto\"!",
+  "releaseMessage": "¡Ya podéis escuchar \"Atrapado en el tiempo\"!",
   "listenInSpotify": "Escuchar en Spotify",
   "listenAlsoIn": "Disponible también en...",
   "videos": "Vídeos",
@@ -18,9 +18,9 @@
   },
   "info": {
     "title": "Atrapado en el tiempo",
-    "subtitle": "Estreno 26 de Enero",
-    "text": "El próximo 26 de enero estará disponible en todas las plataformas <span class='bold'>'Atrapado en el tiempo'</span>, el segundo single de nuestro próximo LP. Un tema indie potente y reflexivo que invita a romper con la monotonía diaria, transformando los momentos de bajón en oportunidades de liberación. Su carácter positivo te sumergirá en la intensidad de vivir cada día como si fuera el último. ¡Se el primero en escucharlo!",
-    "button": "Pre-save en Spotify"
+    "subtitle": "Ya disponible",
+    "text": "Ya podéis escuchar en todas las plataformas <span class='bold'>'Atrapado en el tiempo'</span>, el segundo single de nuestro próximo LP. Un tema indie potente y reflexivo que invita a romper con la monotonía diaria, transformando los momentos de bajón en oportunidades de liberación. Su carácter positivo te sumergirá en la intensidad de vivir cada día como si fuera el último.",
+    "button": "Escuchar en Spotify"
   },
   "pressKit": {
     "title": "Kit de prensa",
@@ -49,7 +49,7 @@
   },
   "links": {
     "title": "Sweet Q",
-    "subtitle": "'El camino correcto' nuevo single",
+    "subtitle": "'Atrapado en el tiempo' nuevo single",
     "spotify": "Spotify",
     "appleMusic": "Apple Music",
     "youtubeMusic": "Youtube Music",
@@ -67,8 +67,8 @@
     "monthlyListeners": "{{total}} oyentes mensuales",
     "latestRelease": {
       "label": "Último lanzamiento",
-      "date": "05 de mayo 2023",
-      "title": "El camino correcto",
+      "date": "26 de enero 2024",
+      "title": "Atrapado en el tiempo",
       "totalPlays": "{{total}} reproducciones"
     },
     "nextReleases": {

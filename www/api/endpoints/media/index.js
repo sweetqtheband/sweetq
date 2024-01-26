@@ -1,17 +1,13 @@
 import { app } from "../../services/app";
 import { authSvc } from "../../services/auth";
 
-const medias = [
+const medias = [  
   {
     id: '1',
-    title: 'Atrapado en el tiempo'
-  },
-  {
-    id: '2',
     title: 'Lo siento, pero no'
   },
   {
-    id: '3',
+    id: '2',
     title: '¿Qué vamos a hacer?'
   },
 ]

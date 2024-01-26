@@ -17,29 +17,22 @@ export class LinksComponent {
       icon: 'icon-spotify',
       text: 'links.spotify',
       button: 'primary',
-      link: 'spotify:album:0quqDx9Qf79Gt8GC4sZQn5',
+      link: 'spotify:album:6730lDQr9irWJXAf7lIYhw',
     },
     {
       type: 'appleMusic',
       icon: 'icon-apple-music',
       text: 'links.appleMusic',
       button: 'primary',
-      link: 'https://music.apple.com/es/album/el-camino-correcto-single/1681612169?ls=1',
+      link: 'https://music.apple.com/us/album/atrapado-en-el-tiempo-single/1724197909',
     },
     {
       type: 'youtubeMusic',
       icon: 'icon-youtube-music',
       text: 'links.youtubeMusic',
       button: 'primary',
-      link: 'https://music.youtube.com/playlist?list=OLAK5uy_nyRpPwsfhWIu5s23cXyI84gOU6zuvpi-U',
+      link: 'https://music.youtube.com/playlist?list=OLAK5uy_l4h3DFFhC189MnyMQAZ6eHNciv9LronLE',
     },
-    {
-      type: 'spotify',
-      icon: 'icon-spotify',
-      text: 'links.presave.atrapado',
-      button: 'secondary',
-      link: 'https://push.fm/ps/sweet-q-atrapado-en-el-tiempo',
-    }
   ];
 
   public primaryLinks = this.links.filter((link) => link.button === 'primary');

@@ -55,7 +55,7 @@ export class ListenComponent implements OnInit {
   onSpotifyIframeApiReady(IFrameAPI: any) {
     const element = document.getElementById('embed-iframe');
     const options = {
-      uri: 'spotify:track:5lMDE8Uv7hZuQkYaTwyXdX',
+      uri: 'spotify:track:6730lDQr9irWJXAf7lIYhw',
       theme: 'dark',
       height: '80',
     };
