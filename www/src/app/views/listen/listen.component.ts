@@ -27,8 +27,7 @@ export class ListenComponent implements OnInit {
   @HostBinding('class.sq-view') sqView: boolean = true;
   public items: Media[] = [];
   public tid: Nullable<string> = null;
-  public data: Data = { listeners: '-', plays: '-' };
-  private loadApi: any;
+  public data: Data = { listeners: '-', plays: '-' };  
   private spotifyController: any = null;
   private spotifyPlaying: boolean = false;
   get headers(): any {
@@ -55,7 +54,7 @@ export class ListenComponent implements OnInit {
   onSpotifyIframeApiReady(IFrameAPI: any) {
     const element = document.getElementById('embed-iframe');
     const options = {
-      uri: 'spotify:track:6730lDQr9irWJXAf7lIYhw',
+      uri: 'spotify:track:4N8LvpnnHhwwBJ5xobXYvr',
       theme: 'dark',
       height: '80',
     };
