@@ -11,6 +11,7 @@ export class SweetQVideosComponent {
 
   public videoUrl: string = '';
   public videos: KeyPair = {
+    atrapadoeneltiempo: 'https://www.youtube.com/embed/glVnYUQwPqE',
     caminocorrecto: 'https://www.youtube.com/embed/5HU8pUNCpMs',
     cosasclaras: 'https://www.youtube.com/embed/1paz9-hyg30',
     nuevaera: 'https://www.youtube.com/embed/YswuyL8c6ZA',

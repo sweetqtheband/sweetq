@@ -33,6 +33,13 @@ export class LinksComponent {
       button: 'primary',
       link: 'https://music.youtube.com/playlist?list=OLAK5uy_l4h3DFFhC189MnyMQAZ6eHNciv9LronLE',
     },
+    {
+      type: 'youtube',
+      icon: 'icon-youtube',
+      text: 'links.youtube',
+      button: 'secondary',
+      link: 'https://www.youtube.com/watch?v=glVnYUQwPqE',
+    },
   ];
 
   public primaryLinks = this.links.filter((link) => link.button === 'primary');
