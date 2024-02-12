@@ -4,6 +4,7 @@
   "listenAlsoIn": "Disponible también en...",
   "videos": "Vídeos",
   "videoLabel": {
+    "atrapadoeneltiempo": "Vídeo - Atrapado en el tiempo",
     "caminocorrecto": "Vídeo - El camino correcto",
     "nuevaera": "Vídeo - La nueva era",
     "mal": "Vídeo - Mal",
@@ -53,7 +54,7 @@
     "spotify": "Spotify",
     "appleMusic": "Apple Music",
     "youtubeMusic": "Youtube Music",
-    "youtube": "Videoclip 'El camino correcto'",
+    "youtube": "Videoclip 'Atrapado en el tiempo'",
     "pulpop": "Vótanos para el Pulpop",
     "mercadoMotores": "Concierto completo Mercado de Motores",
     "presave": {
