@@ -10,5 +10,17 @@
     "bands": [20],
     "event": "https://www.hangar48.es/class/d21-sesion-de-tarde-sweet-q-y-jaleo/",
     "tickets": "https://www.giglon.com/todos?idEvent=domingo-21-sesion-de-tarde-sweet-q-y-jaleo"
+  },
+  {
+    "id": 1,
+    "date": "2024-03-08 21:00",
+    "city": "Madrid",
+    "hour": "21:00",
+    "venue": "Sweet Q + Madame Christie",
+    "address": "Sala Vesta",    
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.3621509550676!2d-3.6956384!3d40.4229791!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42297c0e03ba33%3A0x28f0b82774563387!2sSALA%20VESTA!5e0!3m2!1ses!2ses!4v1708444057250!5m2!1ses!2ses",
+    "bands": [21],
+    "event": "https://www.facebook.com/events/899338568500501",
+    "tickets": "https://dice.fm/partner/vesta/event/6o8k2-sweet-q-madame-christie-en-madrid-8th-mar-sala-vesta-madrid-tickets"
   }
 ]

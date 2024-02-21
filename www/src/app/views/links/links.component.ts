@@ -40,6 +40,13 @@ export class LinksComponent {
       button: 'secondary',
       link: 'https://www.youtube.com/watch?v=glVnYUQwPqE',
     },
+    {
+      type: 'gig',
+      icon: 'icon-gigs',
+      text: 'links.tickets.20240308',
+      button: 'secondary',
+      link: 'https://dice.fm/partner/vesta/event/6o8k2-sweet-q-madame-christie-en-madrid-8th-mar-sala-vesta-madrid-tickets',
+    },
   ];
 
   public primaryLinks = this.links.filter((link) => link.button === 'primary');
