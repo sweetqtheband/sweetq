@@ -1,5 +1,5 @@
 {
-  "releaseMessage": "You can listen to \"El camino correcto\" now!",
+  "releaseMessage": "You can listen to \"Atrapado en el tiempo\" now!",
   "listenInSpotify": "Listen in Spotify",
   "listenAlsoIn": "Also available in...",
   "videos": "Videos",
@@ -12,10 +12,10 @@
   },
   "availableSince": "Available from october 16th in:",
   "gig": {
-    "date": "January 21st",
-    "title": "Reset Session: Sweet Q + Jaleo",
-    "text": "On january 21st we'll playing in <span class='bold'>Reset Sessions</span> together with <span class='bold'>Jaleo</span> at Madrid's venue <span class='bold'>Hangar 48</span>.",
-    "watchEvent": "Watch event"  
+    "date": "March 8th",
+    "title": "Sweet Q + Madame Christie",
+    "text": "On Friday, March 8th we'll present <span class='bold'>'Atrapado en el tiempo'</span> at sala <span class='bold'>Vesta</span> together with <span class='bold'>Madame Christie</span>. Do not miss the opportunity to experience this party full of intensity, emotions and good vibes.",
+    "buyTickets": "Buy tickets"  
   },
   "info": {
     "title": "Atrapado en el tiempo",
@@ -50,7 +50,7 @@
   },
   "links": {
     "title": "Sweet Q",
-    "subtitle": "New single 'El camino correcto'",
+    "subtitle": "New single 'Atrapado en el tiempo'",
     "spotify": "Spotify",
     "appleMusic": "Apple Music",
     "youtubeMusic": "Youtube Music",
@@ -61,15 +61,15 @@
       "atrapado": "Pre-save 'Atrapado en el tiempo'"
     },
     "tickets": {
-      "20240121": "Tickets Reset Session January 21: Sweet Q + Jaleo"
+      "20240121": "Tickets Vesta March 8: Sweet Q + Madame Christie"
     }
   },
   "listen": {
     "monthlyListeners": "{{total}} monthly listeners",
     "latestRelease": {
       "label": "Latest release",
-      "date": "May 5th, 2023",
-      "title": "El camino correcto",
+      "date": "January 26th, 2024",
+      "title": "Atrapado en el tiempo",
       "totalPlays": "{{total}} plays"
     },
     "nextReleases": {

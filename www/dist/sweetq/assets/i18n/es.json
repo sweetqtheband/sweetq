@@ -12,9 +12,9 @@
   },
   "availableSince": "Disponible a partir del 16 de octubre en:",
   "gig": {
-    "date": "21 Enero",
-    "title": "Reset Session: Sweet Q + Jaleo",
-    "text": "El 21 de enero tocaremos en las <span class='bold'>Reset Sessions</span> junto con <span class='bold'>Jaleo</span> en la sala <span class='bold'>Hangar 48</span> de Madrid.",
+    "date": "8 Marzo",
+    "title": "Sweet Q + Madame Christie",
+    "text": "El viernes 8 de marzo en Madrid presentaremos <span class='bold'>'Atrapado en el tiempo'</span> en la sala <span class='bold'>Vesta</span> junto a <span class='bold'>Madame Christie</span>. No os perdáis la ocasión de vivir esta fiesta repleta de intensidad, emociones y buen rollo.",
     "buyTickets": "Comprar entradas"    
   },
   "info": {
@@ -61,7 +61,7 @@
       "atrapado": "Pre-save 'Atrapado en el tiempo'"
     },
     "tickets": {
-      "20240121": "Entradas Reset Session 21 enero: Sweet Q + Jaleo"
+      "20240308": "Entradas Vesta 8 marzo: Sweet Q + Madame Christie"
     }
   },
   "listen": {
