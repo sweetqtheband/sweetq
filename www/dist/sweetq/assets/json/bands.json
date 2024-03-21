@@ -103,5 +103,25 @@
     "id": 21,
     "name": "Madame Christie",
     "instagram": "https://www.instagram.com/madame_christie"
+  },
+  {
+    "id": 22,
+    "name": "Atalaya Roja",
+    "instagram": "https://www.instagram.com/atalaya.roja.band"
+  },
+  {
+    "id": 23,
+    "name": "Nuevo Berlín",
+    "instagram": "https://www.instagram.com/nuevoberlinoficial"
+  },
+  {
+    "id": 24,
+    "name": "Deseo Blinsen",
+    "instagram": "https://www.instagram.com/deseoblinsen"
+  },
+  {
+    "id": 25,
+    "name": "Suena Babilonia",
+    "instagram": "https://www.instagram.com/suenababilonia"
   }
 ]

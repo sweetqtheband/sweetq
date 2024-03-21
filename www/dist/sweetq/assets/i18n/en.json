@@ -19,9 +19,9 @@
   },
   "info": {
     "title": "Atrapado en el tiempo",
-    "subtitle": "Release on January 26th",
-    "text": "Next January 26th will be available on all platforms <span class='bold'>'Atrapado en el tiempo'</span>, the second single of our next LP. A powerful and reflective indie track that invites you to break with the daily monotony, transforming the down moments into opportunities for liberation. Its positive character will immerse you in the intensity of living each day as if it were the last. Be the first to listen to it!",
-    "button": "Spotify pre-save"
+    "subtitle": "Already available",    
+    "text": "You can already listen in every platform <span class='bold'>'Atrapado en el tiempo'</span>, the second single of our next LP. A powerful and reflective indie track that invites you to break with the daily monotony, transforming the down moments into opportunities for liberation. Its positive character will immerse you in the intensity of living each day as if it were the last.",
+    "button": "Listen in Spotify"
   },
   "pressKit": {
     "title": "Press kit",
@@ -38,6 +38,14 @@
   "buyTickets": "Buy tickets",
   "goToItsFacebook": "Go to its Facebook page",
   "goToItsInstagram": "Go to its Instagram page",
+  "makingof": {
+    "atrapado": {
+      "title": "Behind the Scenes of 'Trapped in Time'",
+      "subtitle": "Premiere on Youtube",
+      "text": "Discover how the recording of our latest single took place and experience it from within. As if you were one more member of the band!",
+      "button": "Watch on Youtube"
+    }
+  },
   "presave": {
     "spotify": "Pre-save on Spotify",
     "appleMusic": "Pre-add on Apple Music",
@@ -46,7 +54,10 @@
       "spotify": "Pre-save done successfully!",
       "appleMusic": "Pre-add done successfully!",
       "deezer": "Pre-save done successfully!"
-    }
+    },
+    "title": "Lo siento, pero no",
+    "subtitle": "Release on March 29th",
+    "text": "On next March 29th we will be releasing <span class='bold'>'Lo siento, pero no'</span>, third single from our future record. A  rallying theme that boldly challenges intolerance with strength and clarity through direct and powerful lyrics. Be the first to listen!"
   },
   "links": {
     "title": "Sweet Q",
@@ -58,10 +69,13 @@
     "pulpop": "Vote us for Pulpop",
     "mercadoMotores": "Full show Mercado de Motores",
     "presave": {
-      "atrapado": "Pre-save 'Atrapado en el tiempo'"
+      "losiento": "Pre-save 'Lo siento, pero no'"
+    },
+    "makingof": {
+      "atrapado": "Making of 'Atrapado en el tiempo'"
     },
     "tickets": {
-      "20240121": "Tickets Vesta March 8: Sweet Q + Madame Christie"
+      "20240525": "Tickets El Perro May 25th: Nuevo Berlín + Sweet Q"
     }
   },
   "listen": {

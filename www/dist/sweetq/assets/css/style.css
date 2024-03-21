@@ -409,8 +409,52 @@ body {
     margin: 0 auto;
 }
 
+.sq-section.notice.info.cover .sq-image.image-cover {
+  position: relative;
+  background-image: unset;
+  height: 0px;
+}
+
+.sq-section.notice.info.cover .sq-image.image-cover:before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;  
+  position: relative;
+  background-position: center top;
+  background-size: cover;
+  z-index: 0;
+  padding-top: 100%;
+  transform: translateY(-100%);
+}
+.sq-section.notice.info.cover .sq-image.image-cover:after {
+  content: '';
+  display: block;  
+  position: absolute;
+  z-index: -1;
+  background-position: center top;
+  width: 90%;
+  height: 90%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-size: cover;
+  filter: blur(20px);
+  bottom: 0;  
+}
+
+.sq-section.notice.info.losiento .sq-image.image-cover:before,
+.sq-section.notice.info.losiento .sq-image.image-cover:after {
+  background-image: url('../imgs/cover/losiento.jpg');
+}
+
+.sq-section.notice.info.atrapado .sq-image.image-cover:before,
+.sq-section.notice.info.atrapado .sq-image.image-cover:after {
+  background-image: url('../imgs/cover/atrapado.jpg');
+}
+
 .sq-section.notice.info .sq-image.image-cover {
-    background-image: url('../imgs/cover-atrapado.png');    
+    
     position: relative;
     background-position: center top;
 }
@@ -423,9 +467,19 @@ body {
   padding-top: 24px;
 }
 
-.sq-section.notice.video.mercado-motores .sq-image.image-cover {
-  background-image: url('../imgs/mercadomotores.jpg');
+.sq-section.notice.video .sq-image.image-cover {
   position: relative;
+}
+
+.sq-section.notice.video.mercado-motores .sq-image.image-cover {
+  background-image: url('../imgs/youtube/makingof/atrapado.jpg');
+}
+
+.sq-section.notice.video.mercado-motores .sq-image.image-cover {
+  background-image: url('../imgs/youtube/live/mercadomotores.jpg'); 
+}
+.sq-section.notice.video.makingof.atrapado .sq-image.image-cover {
+  background-image: url('../imgs/youtube/makingof/atrapado.jpg');
 }
 
 .sq-section.notice.info.gig.reset .sq-image.image-cover {
@@ -537,6 +591,11 @@ body {
 .gigs .sq-item .sq-item-data .sq-gig-info .sq-text, 
 .gigs .sq-item .sq-item-data .sq-gig-info .sq-line-space {
     color: #c1c5cb;
+}
+
+.gigs .sq-item .sq-item-data .sq-participants .sq-line-space {
+  display: inline-block;
+  padding: 0px 5px;
 }
 .gigs .sq-item .sq-item-data .sq-participants .sq-text, 
 .gigs .sq-item .sq-item-data .sq-participants .sq-line-space {
