@@ -4,6 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SafePipeModule } from '@components/pipes/safe.module';
 import { NgModule } from "@angular/core";
 import { LinksComponent } from "./links.component";
+import { LinksService } from "@services/links.service";
 
 // configures NgModule imports and exports
 @NgModule({
@@ -12,7 +13,7 @@ import { LinksComponent } from "./links.component";
     exports: [],
     bootstrap: [],
     declarations: [LinksComponent],
-    providers: []
+    providers: [LinksService]
 })
 
 export class LinksViewModule { }

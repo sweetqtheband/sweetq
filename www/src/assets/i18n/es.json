@@ -15,7 +15,7 @@
     "date": "8 Marzo",
     "title": "Sweet Q + Madame Christie",
     "text": "El viernes 8 de marzo en Madrid presentaremos <span class='bold'>'Atrapado en el tiempo'</span> en la sala <span class='bold'>Vesta</span> junto a <span class='bold'>Madame Christie</span>. No os perdáis la ocasión de vivir esta fiesta repleta de intensidad, emociones y buen rollo.",
-    "buyTickets": "Comprar entradas"    
+    "buyTickets": "Comprar entradas"
   },
   "info": {
     "title": "Atrapado en el tiempo",
@@ -38,6 +38,14 @@
   "buyTickets": "Comprar entradas",
   "goToItsFacebook": "Ir a su página de Facebook",
   "goToItsInstagram": "Ir a su página de Instagram",
+  "makingof": {
+    "atrapado": {
+      "title": "Cómo se hizo 'Atrapado en el tiempo'",
+      "subtitle": "Estreno en Youtube",
+      "text": "Descubre cómo fue la grabación de nuestro último single y vive la experiencia desde dentro. ¡Como si fueses uno más de la banda!",
+      "button": "Ver en Youtube"      
+    }
+  },
   "presave": {
     "spotify": "Pre-save en Spotify",
     "appleMusic": "Pre-add en Apple Music",
@@ -46,7 +54,10 @@
       "spotify": "¡Pre-save realizado correctamente!",
       "appleMusic": "¡Pre-add realizado correctamente!",
       "deezer": "Pre-save en Deezer realizado correctamente"
-    }
+    },
+    "title": "Lo siento, pero no",
+    "subtitle": "Estreno 29 de marzo",
+    "text": "El próximo 29 de marzo estrenamos <span class='bold'>'Lo siento, pero no'</span>, tercer single de nuestro futuro disco. Un tema reivindicativo que desafía la intolerancia con fuerza y claridad mediante una letra directa y contundente. ¡Se el primero en escucharla!"    
   },
   "links": {
     "title": "Sweet Q",
@@ -58,10 +69,13 @@
     "pulpop": "Vótanos para el Pulpop",
     "mercadoMotores": "Concierto completo Mercado de Motores",
     "presave": {
-      "atrapado": "Pre-save 'Atrapado en el tiempo'"
+      "losiento": "Pre-save 'Lo siento, pero no'"
+    },
+    "makingof": {
+      "atrapado": "Cómo se hizo 'Atrapado en el tiempo'"
     },
     "tickets": {
-      "20240308": "Entradas Vesta 8 marzo: Sweet Q + Madame Christie"
+      "20240425": "Entradas El Perro 25 mayo: Nuevo Berlín + Sweet Q"
     }
   },
   "listen": {

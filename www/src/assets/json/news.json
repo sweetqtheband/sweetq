@@ -1,6 +1,14 @@
 [
+   {
+    "type": "info cover losiento",
+    "title": "presave.title",
+    "subtitle": "presave.subtitle",
+    "text": "presave.text",
+    "button": "presave.spotify",
+    "spotifyHref": "https://push.fm/ps/sweet-q-lo-siento-pero-no"
+  },
   {
-    "type": "info",
+    "type": "info cover atrapado",
     "title": "info.title",
     "subtitle": "info.subtitle",
     "text": "info.text",
@@ -8,11 +16,11 @@
     "spotifyHref": "https://open.spotify.com/album/6730lDQr9irWJXAf7lIYhw"
   },
   {
-    "type": "info gig reset",
-    "title": "gig.title",
-    "subtitle": "gig.date",
-    "text": "gig.text",
-    "button": "gig.buyTickets",
-    "href": "https://dice.fm/partner/vesta/event/6o8k2-sweet-q-madame-christie-en-madrid-8th-mar-sala-vesta-madrid-tickets"
-  }
+    "type": "info video makingof atrapado",
+    "title": "makingof.atrapado.title",
+    "subtitle": "makingof.atrapado.subtitle",
+    "text": "makingof.atrapado.text",
+    "button": "makingof.atrapado.button",
+    "youtubeHref": "https://www.youtube.com/watch?v=tmi4iQT9bp4"
+  } 
 ]

@@ -4,20 +4,20 @@
         <h1 class="sq-title">{{ 'links.title' | translate }}</h1>
         <h2 class="sq-subtitle">{{ 'links.subtitle' | translate }}</h2>
     </div>
-    <div class="sq-links">
+    <div class="sq-links" *ngIf="primaryLinks.length > 0">
         <div class="sq-primary-links">
             <a class="sq-button" target="_blank" [ngClass]="[link.type, link.button]" [href]="link.link" *ngFor="let link of primaryLinks" >
                 <div class="sq-button-content">
                     <span class="sq-icon-wrapper" [ngClass]="link.type" *ngIf="link.icon"><span class="sq-icon" [ngClass]="link.icon" ></span></span>
-                    <span class="sq-text">{{ link.text | translate }}</span>
+                    <span class="sq-text">{{ link.text! | translate }}</span>
                 </div>
             </a>
         </div>
-        <div class="sq-secondary-links">
+        <div class="sq-secondary-links"  *ngIf="secondaryLinks.length > 0">
             <a class="sq-button" target="_blank" [ngClass]="[link.type, link.button]" [href]="link.link" *ngFor="let link of secondaryLinks" >
                 <div class="sq-button-content">
                     <span class="sq-icon-wrapper" [ngClass]="link.type" *ngIf="link.icon"><span class="sq-icon" [ngClass]="link.icon" ></span></span>
-                    <span class="sq-text">{{ link.text | translate }}</span>
+                    <span class="sq-text">{{ link.text! | translate }}</span>
                 </div>
             </a>
         </div>
