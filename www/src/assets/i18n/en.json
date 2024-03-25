@@ -11,10 +11,10 @@
     "cosasclaras": "Video - Las cosas claras"
   },
   "availableSince": "Available from october 16th in:",
-  "gig": {
-    "date": "March 8th",
-    "title": "Sweet Q + Madame Christie",
-    "text": "On Friday, March 8th we'll present <span class='bold'>'Atrapado en el tiempo'</span> at sala <span class='bold'>Vesta</span> together with <span class='bold'>Madame Christie</span>. Do not miss the opportunity to experience this party full of intensity, emotions and good vibes.",
+  "gig": {    
+    "date": "April 21st",
+    "title": "Atalaya Roja + Sweet Q",
+    "text": "On Sunday, April 21st, we will be accompanying 'Atalaya Roja' at the presentation of their new work 'Cabo de las tormentas' in a very special morning concert. It'll be a vermouth session with appetizers, where children under 9 enter for free and those under 16 at a special price. So, if you have young children and want to make a different plan, we will be waiting for you!",
     "buyTickets": "Buy tickets"  
   },
   "info": {
@@ -75,6 +75,7 @@
       "atrapado": "Making of 'Atrapado en el tiempo'"
     },
     "tickets": {
+      "20240421": "Tickets Fun House April 21st: Atalaya Roja + Sweet Q",
       "20240525": "Tickets El Perro May 25th: Nuevo Berlín + Sweet Q"
     }
   },

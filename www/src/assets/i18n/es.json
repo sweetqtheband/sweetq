@@ -12,9 +12,9 @@
   },
   "availableSince": "Disponible a partir del 16 de octubre en:",
   "gig": {
-    "date": "8 Marzo",
-    "title": "Sweet Q + Madame Christie",
-    "text": "El viernes 8 de marzo en Madrid presentaremos <span class='bold'>'Atrapado en el tiempo'</span> en la sala <span class='bold'>Vesta</span> junto a <span class='bold'>Madame Christie</span>. No os perdáis la ocasión de vivir esta fiesta repleta de intensidad, emociones y buen rollo.",
+    "date": "21 Abril",
+    "title": "Atalaya Roja + Sweet Q",
+    "text": "El domingo 21 de abril acompañaremos a <span class='bold'>Atalaya Roja</span> en la presentación de su nuevo trabajo <span class='bold'>'Cabo de las tormentas'</span> en un concierto matinal muy especial. Una sesión vermú con aperitivos y donde los menores de 9 años entran gratis, así que si tenéis niños pequeños y queréis hacer un plan diferente, ¡os esperamos!",
     "buyTickets": "Comprar entradas"
   },
   "info": {
@@ -75,6 +75,7 @@
       "atrapado": "Cómo se hizo 'Atrapado en el tiempo'"
     },
     "tickets": {
+      "20240421": "Entradas Fun House 21 abril: Atalaya Roja + Sweet Q",
       "20240425": "Entradas El Perro 25 mayo: Nuevo Berlín + Sweet Q"
     }
   },
