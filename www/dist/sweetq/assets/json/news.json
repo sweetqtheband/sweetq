@@ -6,6 +6,14 @@
     "text": "presave.text",
     "button": "presave.spotify",
     "spotifyHref": "https://push.fm/ps/sweet-q-lo-siento-pero-no"
+  }, 
+  {
+    "type": "info gig g20240421",
+    "title": "gig.title",
+    "subtitle": "gig.date",
+    "text": "gig.text",
+    "button": "gig.buyTickets",
+    "href": "https://entradium.com/es/events/atalaya-roja-sweet-q-en-fun-house"
   },
   {
     "type": "info cover atrapado",
@@ -22,5 +30,5 @@
     "text": "makingof.atrapado.text",
     "button": "makingof.atrapado.button",
     "youtubeHref": "https://www.youtube.com/watch?v=tmi4iQT9bp4"
-  } 
+  }  
 ]

@@ -482,11 +482,19 @@ body {
   background-image: url('../imgs/youtube/makingof/atrapado.jpg');
 }
 
-.sq-section.notice.info.gig.reset .sq-image.image-cover {
-  background-image: url('../imgs/20240308.jpg');
-  position: relative;
-  /* padding-top: 156%; */
+.sq-section.notice.info.gig .sq-image.image-cover {
+  position: relative;  
+}
+.sq-section.notice.info.gig .sq-image.image-cover:before {
+  content: '';
+  position: relative;  
+  display: block;
+  background-size: cover;
   padding-top: 100%;
+}
+
+.sq-section.notice.info.gig.g20240421 .sq-image.image-cover:before {  
+  background-image: url('../imgs/gigs/20240421.jpg');
 }
 
 .sq-section.notice.video .column-right,
