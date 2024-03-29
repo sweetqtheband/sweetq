@@ -4,28 +4,21 @@
     "icon": "icon-spotify",
     "text": "links.spotify",
     "button": "primary",
-    "link": "spotify:album:6730lDQr9irWJXAf7lIYhw"
+    "link": "spotify:album:1qn9sJmcPGddxcMtvvrhZ6"
   },
   {
     "type": "appleMusic",
     "icon": "icon-apple-music",
     "text": "links.appleMusic",
     "button": "primary",
-    "link": "https://music.apple.com/us/album/atrapado-en-el-tiempo-single/1724197909"
+    "link": "https://music.apple.com/us/album/lo-siento-pero-no-single/1734913974"
   },
   {
     "type": "youtubeMusic",
     "icon": "icon-youtube-music",
     "text": "links.youtubeMusic",
     "button": "primary",
-    "link": "https://music.youtube.com/playlist?list=OLAK5uy_l4h3DFFhC189MnyMQAZ6eHNciv9LronLE"
-  },
-  {
-    "type": "spotify",
-    "icon": "icon-spotify",
-    "text": "links.presave.losiento",
-    "button": "secondary",
-    "link": "https://push.fm/ps/sweet-q-lo-siento-pero-no"
+    "link": "https://music.youtube.com/playlist?list=OLAK5uy_lZIu8ors0gQmxUV5Se2HdnuUt_f9VtTe4"
   },
   {
     "type": "gig",
@@ -33,13 +26,6 @@
     "text": "links.tickets.20240421",
     "button": "secondary",
     "link": "https://entradium.com/es/events/atalaya-roja-sweet-q-en-fun-house"
-  },
-  {
-    "type": "youtube",
-    "icon": "icon-youtube",
-    "text": "links.makingof.atrapado",
-    "button": "secondary",
-    "link": "https://www.youtube.com/watch?v=tmi4iQT9bp4"
   },
   {
     "type": "youtube",
