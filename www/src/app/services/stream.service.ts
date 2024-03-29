@@ -30,6 +30,7 @@ export class StreamService {
         .subscribe((res: any) => {
           resolve(
             res.data.map((track: any, index: number) => {
+              track.date = new Date(track.date);
               let nextId = index === res.data.length - 1 ? 0 : index + 1;
               track.ended = false;
               track.nextId = res.data[nextId].id;

@@ -1,0 +1,9 @@
+<h2>{{title}}</h2>
+<div class="songs" *ngIf="isReady">
+  <div class="album" *ngFor="let item of items" [class]="itemClass(item)" (click)="playItem(item.id)">
+    <div class="cover" [class]="{'empty': !item.cover}" [style]="itemStyle(item)">
+    </div>
+    <div class="title">{{item.title}}</div>
+    <div class="date">{{itemDate(item)}}</div>
+  </div>
+</div>

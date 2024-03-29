@@ -1,4 +1,13 @@
 {
+  "date": {
+    "months": ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"],
+    "formats": {
+      "short": {
+        "day": "%d %M %Y",
+        "month": "%M %Y"
+      }
+    }
+  },
   "releaseMessage": "¡Ya podéis escuchar \"Atrapado en el tiempo\"!",
   "listenInSpotify": "Escuchar en Spotify",
   "listenAlsoIn": "Disponible también en...",
@@ -99,5 +108,9 @@
       "text": "Ya podéis ver nuestro concierto completo en el Mercado de Motores en nuestro canal de Youtube. Si queréis escuchar nuestros próximos temas en formato directo... ¡No os lo perdáis!",
       "button": "Ver en Youtube"
     }
+  },
+  "albums": {
+    "released": "Últimos lanzamientos",
+    "upcoming": "Próximamente"
   }
 }

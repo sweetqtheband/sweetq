@@ -3,13 +3,18 @@ import { ListenRoutingModule } from './listen.routes';
 import { StreamService } from '@services/stream.service';
 import { CommonModule } from '@angular/common';
 import { ListenComponent } from './listen.component';
-import { PlayerComponent } from '@components/player.component';
+import { PlayerModule } from '@modules/player.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 // configures NgModule imports and exports
 @NgModule({
-  imports: [ListenRoutingModule, CommonModule, TranslateModule],
-  declarations: [ListenComponent, PlayerComponent],
-  providers: [StreamService]
+  imports: [
+    ListenRoutingModule,
+    CommonModule,
+    TranslateModule,
+    PlayerModule
+  ],
+  declarations: [ListenComponent],
+  providers: [StreamService],
 })
-export class ListenViewModule { }
+export class ListenViewModule {}

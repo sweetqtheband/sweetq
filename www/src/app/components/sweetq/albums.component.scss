@@ -1,0 +1,30 @@
+:host {
+  h2 {
+    font-size: var(--fontSizeXL);
+    color: var(--primaryTextColor);
+  }
+  .songs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--primaryTextColor);
+
+    .album {
+      cursor: pointer;
+
+      .cover {
+        width: 200px;
+        height: 200px;
+        background-size: cover;
+      }
+
+      &.current {
+        .cover {
+          width: 300px;
+          height: 300px;
+        }
+      }
+    }
+  }
+}

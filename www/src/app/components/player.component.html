@@ -1,4 +1,9 @@
-<div class="audio-player">
+<div class="audio-player">  
+  <div class="video" *ngIf="type === 'canvas' && track.isCurrent">
+    <video #video [autoplay]="true" [muted]="true" [loop]="true" height="100%">
+      <source [src]="trackVideo" type="video/mp4">
+    </video>
+  </div>
   <div class="controls">
     <div class="play-container">
       <div class="toggle-play" [ngClass]="{'play': !track.isPlaying, 'pause': track.isPlaying}" (click)="playTrack()">
