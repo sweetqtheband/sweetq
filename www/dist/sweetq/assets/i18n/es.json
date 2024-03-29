@@ -1,5 +1,5 @@
 {
-  "releaseMessage": "¡Ya podéis escuchar \"Atrapado en el tiempo\"!",
+  "releaseMessage": "¡Ya podéis escuchar \"Lo siento, pero no\"!",
   "listenInSpotify": "Escuchar en Spotify",
   "listenAlsoIn": "Disponible también en...",
   "videos": "Vídeos",
@@ -18,9 +18,9 @@
     "buyTickets": "Comprar entradas"
   },
   "info": {
-    "title": "Atrapado en el tiempo",
+    "title": "Lo siento, pero no",
     "subtitle": "Ya disponible",
-    "text": "Ya podéis escuchar en todas las plataformas <span class='bold'>'Atrapado en el tiempo'</span>, el segundo single de nuestro próximo LP. Un tema indie potente y reflexivo que invita a romper con la monotonía diaria, transformando los momentos de bajón en oportunidades de liberación. Su carácter positivo te sumergirá en la intensidad de vivir cada día como si fuera el último.",
+    "text": "Ya podéis escuchar en todas las plataformas <span class='bold'>'Lo siento, pero no'</span>, tercer single de nuestro futuro disco. Un tema reivindicativo que desafía la intolerancia con fuerza y claridad mediante una letra directa y contundente.",
     "button": "Escuchar en Spotify"
   },
   "pressKit": {
@@ -61,13 +61,11 @@
   },
   "links": {
     "title": "Sweet Q",
-    "subtitle": "'Atrapado en el tiempo' nuevo single",
+    "subtitle": "'Lo siento, pero no' nuevo single",
     "spotify": "Spotify",
     "appleMusic": "Apple Music",
     "youtubeMusic": "Youtube Music",
     "youtube": "Videoclip 'Atrapado en el tiempo'",
-    "pulpop": "Vótanos para el Pulpop",
-    "mercadoMotores": "Concierto completo Mercado de Motores",
     "presave": {
       "losiento": "Pre-save 'Lo siento, pero no'"
     },
@@ -83,8 +81,8 @@
     "monthlyListeners": "{{total}} oyentes mensuales",
     "latestRelease": {
       "label": "Último lanzamiento",
-      "date": "26 de enero 2024",
-      "title": "Atrapado en el tiempo",
+      "date": "29 de marzo 2024",
+      "title": "Lo siento, pero no",
       "totalPlays": "{{total}} reproducciones"
     },
     "nextReleases": {
