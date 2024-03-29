@@ -1,5 +1,5 @@
 {
-  "releaseMessage": "You can listen to \"Atrapado en el tiempo\" now!",
+  "releaseMessage": "You can listen to \"Lo siento, pero no\" now!",
   "listenInSpotify": "Listen in Spotify",
   "listenAlsoIn": "Also available in...",
   "videos": "Videos",
@@ -18,9 +18,9 @@
     "buyTickets": "Buy tickets"  
   },
   "info": {
-    "title": "Atrapado en el tiempo",
+    "title": "Lo siento, pero no",
     "subtitle": "Already available",    
-    "text": "You can already listen in every platform <span class='bold'>'Atrapado en el tiempo'</span>, the second single of our next LP. A powerful and reflective indie track that invites you to break with the daily monotony, transforming the down moments into opportunities for liberation. Its positive character will immerse you in the intensity of living each day as if it were the last.",
+    "text": "You can already listen in every platform <span class='bold'>'Lo siento, pero no'</span>, third single from our future record. A  rallying theme that boldly challenges intolerance with strength and clarity through direct and powerful lyrics.",
     "button": "Listen in Spotify"
   },
   "pressKit": {
@@ -61,13 +61,11 @@
   },
   "links": {
     "title": "Sweet Q",
-    "subtitle": "New single 'Atrapado en el tiempo'",
+    "subtitle": "New single 'Lo siento, pero no'",
     "spotify": "Spotify",
     "appleMusic": "Apple Music",
     "youtubeMusic": "Youtube Music",
     "youtube": "Videoclip 'Atrapado en el tiempo'",
-    "pulpop": "Vote us for Pulpop",
-    "mercadoMotores": "Full show Mercado de Motores",
     "presave": {
       "losiento": "Pre-save 'Lo siento, pero no'"
     },
@@ -83,8 +81,8 @@
     "monthlyListeners": "{{total}} monthly listeners",
     "latestRelease": {
       "label": "Latest release",
-      "date": "January 26th, 2024",
-      "title": "Atrapado en el tiempo",
+      "date": "March 29th, 2024",
+      "title": "Lo siento, pero no",
       "totalPlays": "{{total}} plays"
     },
     "nextReleases": {
