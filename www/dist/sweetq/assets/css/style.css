@@ -563,12 +563,12 @@ body {
     flex: 1;
 }
 .gigs .sq-item .sq-item-data .sq-title {
-    height: 28px;
+    min-height: 28px;
     position: relative;
 }
 .gigs .sq-item .sq-item-data .sq-gig-info, 
 .gigs .sq-item .sq-item-data .sq-participants {
-    height: 22px;
+    min-height: 22px;
     position: relative;
 }
 .gigs .sq-item .sq-item-data .sq-participants .sq-line {
@@ -624,6 +624,7 @@ body {
 }
 
 .sq-gig-day {
+    align-self: flex-start;
     text-align: center;
     padding: 0 4px;
 }
