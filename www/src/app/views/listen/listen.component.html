@@ -5,39 +5,40 @@
   </div>
   <div class="listen--viewport">
     <div class="listen--content">
-      <div class="listen--wrapper">
-        <header>
-          <h1>
-            Sweet Q
-          </h1>
-          <div class="subtitle">
-            {{ 'listen.monthlyListeners' | translate:{ total: data.listeners} }}
+      <div class="listen--wrapper">       
+        <div class="listen--panels">          
+          <div class="listen--panel video" [class]="{'playing': isPlaying}">
+            <header>
+              <div class="image"></div><h1>Sweet Q</h1>
+            </header>            
+            <section class="video-wrapper">
+              <button class="close-button" *ngIf="isPlaying" role="button" (click)="closePanel()"></button>
+              <div class="player default" *ngIf="!isInit">
+                <video [autoplay]="true" [muted]="true" [loop]="true" height="100%" #video>
+                  <source [src]="loadVideo" type="video/mp4">
+                </video>
+                <div class="video-overlay" *ngIf="!isInit && videoLoaded">
+                  <div class="toggle-play play"></div>
+                </div>
+              </div>
+              <div class="player" *ngIf="items.length > 0">
+                <player type="canvas" [track]="item" *ngFor="let item of items" [tid]="tid"></player>
+              </div>
+            </section>          
           </div>
-        </header>
-        <section class="latest-release">
-          <h3>
-            {{ 'listen.latestRelease.label' | translate}}
-          </h3>
-          <div class="subtitle">
-            {{ 'listen.latestRelease.date' | translate}}
+          <div class="listen--panel releases">
+            <header>
+              <div class="image"></div>
+              <h1>Sweet Q</h1>
+            </header>
+            <section class="next-releases">
+              <sweetq-albums (onPlay)="openPanel()" *ngIf="items.length > 0" [items]="albums.released" [initial-id]="initialId"
+                title="{{'albums.released' | translate}}"></sweetq-albums>
+              <sweetq-albums *ngIf="items.length > 0" [items]="albums.upcoming" [initial-id]="initialId"
+                title="{{'albums.upcoming' | translate}}"></sweetq-albums>
+            </section>
           </div>
-          <div class="block">
-            <div class="flex-container iframe">
-              <div id="embed-iframe" style="border-radius:12px" width="100%" frameBorder="0" allowfullscreen=""
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></div>
-            </div>
-            <div class="subtext">{{ 'listen.latestRelease.totalPlays' | translate:{ total: data.plays} }}</div>
-          </div>
-        </section>
-        <section class="next-releases">
-          <div class="pill">
-            <div class="image"></div>
-            <div class="text">{{ 'listen.nextReleases.pillText' | translate }}</div>
-          </div>
-          <div class="songs" *ngIf="items.length > 0">
-            <player class="player" [track]="item" *ngFor="let item of items" [tid]="tid"></player>
-          </div>
-        </section>
+        </div>
       </div>
     </div>
     <footer class="listen--footer">

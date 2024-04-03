@@ -47,7 +47,31 @@ export class PlayerComponent implements OnInit, AfterViewInit, DoCheck {
   private progressInterval: any;
 
   constructor(private http: StreamService, private elementRef: ElementRef) {}
-  
+
+  @HostListener('window:onPlaying', ['$event'])
+  onPlayingListener({ detail }: any) {
+    if (this.track.id !== detail.id) {
+      if (!this.audio.paused) this.stopPlay();
+      this.track.isCurrent = false;
+    }
+  }
+
+  @HostListener('window:playNext', ['$event'])
+  async playNextListener({ detail }: any) {
+    if (this.track.id === detail.id) {
+      await this.playTrack();
+      this.track.isCurrent = true;
+    } else {
+      this.stopPlay();
+      this.track.isCurrent = false;
+    }
+  }
+
+  @HostListener('window:stopPlay')
+  async stopPlayListener() {    
+      this.stopPlay();
+  }
+
   get video() {
     return this._video?.nativeElement || null;
   }
@@ -62,7 +86,7 @@ export class PlayerComponent implements OnInit, AfterViewInit, DoCheck {
   }
 
   get trackVideo() {
-    return `/assets/video/${this.track.id}.mp4`;
+    return `/assets/video/${this.track.video}`;
   }
   get headers(): any {
     return { TID: this.tId };
@@ -108,7 +132,7 @@ export class PlayerComponent implements OnInit, AfterViewInit, DoCheck {
           this.streamUrl = null;
         }
       }
-    });    
+    });
 
     this.audio.addEventListener(
       'loadeddata',
@@ -145,32 +169,12 @@ export class PlayerComponent implements OnInit, AfterViewInit, DoCheck {
     this.track.isCurrent = true;
     window.dispatchEvent(event);
   }
-
-  @HostListener('window:onPlaying', ['$event'])
-  onPlayingListener({ detail }: any) {
-    if (this.track.id !== detail.id) {
-      if (!this.audio.paused) this.stopPlay();
-      this.track.isCurrent = false;
-    }
-  }
-
-  @HostListener('window:playNext', ['$event'])
-  async playNextListener({ detail }: any) {
-    if (this.track.id === detail.id) {
-      await this.playTrack();
-      this.track.isCurrent = true;
-    } else {
-      this.stopPlay();
-      this.track.isCurrent = false;
-    }
-  }
-
   async playTrack() {
     try {
       if (!this.streamUrl) {
         await this.getStreamUrl();
       }
-      
+
       if (this.audio && this.audio.paused) {
         this.onPlaying();
         this.track.isPlaying = true;
@@ -187,7 +191,7 @@ export class PlayerComponent implements OnInit, AfterViewInit, DoCheck {
       } else {
         this.stopPlay();
       }
-    } catch(e) {
+    } catch (e) {
       console.log(this.track.id);
     }
   }
@@ -195,12 +199,10 @@ export class PlayerComponent implements OnInit, AfterViewInit, DoCheck {
   stopPlay() {
     clearInterval(this.progressInterval);
     this.track.isPlaying = false;
-    if (this.audio)
-    {
+    if (this.audio) {
       this.audio.pause();
     }
-    if (this.video)
-    {
+    if (this.video) {
       this.video.pause();
     }
   }

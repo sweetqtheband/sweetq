@@ -7,6 +7,7 @@ const medias = [
     title: "El camino correcto",
     date: "2023-05-05",
     cover: "caminocorrecto.jpg",
+    video: "caminocorrecto.mp4",
     status: "released",
   },
   {
@@ -14,6 +15,7 @@ const medias = [
     title: "Atrapado en el tiempo",
     date: "2024-01-26",
     cover: "atrapado.jpg",
+    video: "atrapado.mp4",
     status: "released",
   },
   {
@@ -21,13 +23,15 @@ const medias = [
     title: "Lo siento, pero no",
     date: "2024-03-29",
     cover: "losiento.jpg",
+    video: "losiento.mp4",
     status: "latest",
   },
   {
     id: "quevamos",
-    title: "¿Qué vamos a hacer?", 
+    title: "¿Qué vamos a hacer?",
     date: "2024-05-01",
     cover: "quevamos.jpg",
+    video: "default.mp4",
     status: "upcoming",
   },
   {
@@ -35,6 +39,7 @@ const medias = [
     title: "Ley de la atracción",
     date: "2024-07-01",
     cover: "ley.jpg",
+    video: "default.mp4",
     status: "upcoming",
   },
   {
@@ -42,6 +47,7 @@ const medias = [
     title: "Fiesta",
     date: "2024-09-01",
     cover: null,
+    video: "default.mp4",
     status: "upcoming",
   },
 ];

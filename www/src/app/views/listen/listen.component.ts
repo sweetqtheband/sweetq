@@ -1,18 +1,12 @@
-import { OnInit, Component, HostBinding, HostListener } from '@angular/core';
+import { OnInit, AfterViewInit, DoCheck, Component, ElementRef, HostBinding, Output, EventEmitter, HostListener, ViewChild } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { StreamService } from '@services/stream.service';
 import { Media } from '@interfaces/media';
 import { Nullable } from 'src/app/types';
-import config from 'src/app/config';
 import { Data } from '@interfaces/data';
-
-declare global {
-  interface Window {
-    onSpotifyIframeApiReady: any;
-    spotifyIframeReady: boolean;
-  }
-}
+import { Albums } from '@interfaces/albums';
+import { SystemService } from '@services/system.service';
 
 @Component({
   selector: 'listen-view',
@@ -23,81 +17,140 @@ declare global {
     './listen.component.scss',
   ],
 })
-export class ListenComponent implements OnInit {
+export class ListenComponent implements OnInit, AfterViewInit, DoCheck {
+  @ViewChild('video') _video!: ElementRef<HTMLVideoElement>;
+  @Output()
+  public onInteraction = new EventEmitter<boolean>();
+  @HostListener('onInteraction', ['$event'])
+  public onInteractionHandler(e: Event) {
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => {
+      this.initialId = this.defaultItem.id;
+    }, 100);
+  }
+  @HostListener('window:videoLoaded', ['$event'])
+  onVideoLoaded() {
+    if (this.video) {
+      this.video.pause();
+    }
+    this.isInit = true;
+  }
   @HostBinding('class.sq-view') sqView: boolean = true;
+
   public items: Media[] = [];
+  public albums: Albums = {
+    released: [],
+    upcoming: []
+  }
+  
   public tid: Nullable<string> = null;
-  public data: Data = { listeners: '-', plays: '-' };  
-  private spotifyController: any = null;
-  private spotifyPlaying: boolean = false;
+  public data: Data = { listeners: '-', plays: '-' };
+  public defaultItem: Media = { id: '' };
+  public timeout: any;
+  public isInit: boolean = false;
+  public handleInteraction: any = () => this.onInteraction.emit(true);
+  public interactionEvents: string[] = ['click', 'touchstart'];
+  public videoLoaded: boolean = false;
+  public initialId: string = '';
+  public isPlaying: boolean = false;
+
+  
+  constructor(
+    private el: ElementRef,
+    private meta: Meta,
+    private http: StreamService,
+    private system: SystemService,
+    private route: ActivatedRoute
+    ) {
+      this.meta.removeTag('name="keywords"');
+      this.meta.removeTag('name="description"');
+      this.meta.updateTag({ name: 'robots', content: 'noindex' });
+  }
+  
   get headers(): any {
     return { TID: this.tid };
   }
 
-  constructor(
-    private meta: Meta,
-    private http: StreamService,
-    private route: ActivatedRoute
-  ) {
-    this.meta.removeTag('name="keywords"');
-    this.meta.removeTag('name="description"');
-    this.meta.updateTag({ name: 'robots', content: 'noindex' });
+  get loadVideo() {
+    return `/assets/video/losiento.mp4`;
   }
 
-  @HostListener('window:onPlaying', ['$event'])
-  trackPlaying({ detail }: any) {
-    if (+detail.id > 0 && this.spotifyPlaying) {
-      this.spotifyController.pause();
+  get video() {
+    return this._video?.nativeElement || null;
+  }
+
+  get isMobile() {
+    return this.system.isMobile();
+  }
+
+  addInteractionSubscriptions() {
+    if (!this.isMobile) {
+      this.interactionEvents.forEach((eventName: string) =>
+        this.el.nativeElement
+          .querySelector('.video-wrapper')
+          .addEventListener(
+            eventName as keyof WindowEventMap,
+            this.handleInteraction,
+            true
+          )
+      );
     }
   }
 
-  onSpotifyIframeApiReady(IFrameAPI: any) {
-    const element = document.getElementById('embed-iframe');
-    const options = {
-      uri: `spotify:track:${config.listen.trackId}`,
-      theme: 'dark',
-      height: '80',
-    };
-    const callback = (EmbedController: any) => {
-      window.spotifyIframeReady = true;
-      this.spotifyController = EmbedController;
-      EmbedController.addListener('playback_update', (e: any) => {
-        this.spotifyPlaying = !e.data.isPaused;
-        if (this.spotifyPlaying) {
-          const event: CustomEvent = new CustomEvent('onPlaying', {
-            bubbles: true,
-            detail: { id: 0 },
-          });
-
-          window.dispatchEvent(event);
-        }
-      });
-    };
-    IFrameAPI.createController(element, options, callback);
-  }
-
-  loadScript() {
-    let node = document.createElement('script');
-    node.src = 'https://open.spotify.com/embed/iframe-api/v1';
-    node.type = 'text/javascript';
-    node.async = true;
-    document.getElementsByTagName('head')[0].appendChild(node);
+  removeInteractionSubscriptions() {
+    if (!this.isMobile) {
+      this.interactionEvents.forEach((eventName: string) =>
+        this.el.nativeElement
+          .querySelector('.video-wrapper')
+          .removeEventListener(
+            eventName as keyof WindowEventMap,
+            this.handleInteraction,
+            true
+          )
+      );
+    }
   }
 
   async ngOnInit(): Promise<any> {
-    (<any>window).onSpotifyIframeApiReady =
-      this.onSpotifyIframeApiReady.bind(this);
-    this.loadScript();
-
     this.tid = this.route.snapshot.queryParams['tId'];
-    this.data = await this.http.getData({
-      params: {
-        artistId: config.listen.artistId,
-        trackId: config.listen.trackId,
-      },
-      headers: this.headers,
-    });
-
+   
     this.items = await this.http.getMedia({ headers: this.headers });
+    
+    this.albums.released = this.items.filter(item => ['latest', 'released'].includes(item.status as string)).reverse();
+    this.albums.upcoming = this.items.filter((item) => item.status === 'upcoming');
+
+
+    const item = this.items.find((item) => item.status === 'latest');
+
+    if (item) {
+      this.defaultItem = item;
+    }
+  }
+
+  ngAfterViewInit() {
+    this.addInteractionSubscriptions();
+  }
+
+  onPlay() {
+    this.removeInteractionSubscriptions();
+  }
+
+  openPanel() {
+    this.isPlaying = true;
+  }
+  closePanel() {
+     const event: CustomEvent = new CustomEvent('stopPlay', {
+       bubbles: true,       
+     });
+     window.dispatchEvent(event);
+    this.isPlaying = false;
+  }
+
+  ngDoCheck(): void {
+    if (this.video && !this.videoLoaded) {
+      setTimeout(() => {
+        this.videoLoaded = true;
+      }, 300);
+    }
   }
 }

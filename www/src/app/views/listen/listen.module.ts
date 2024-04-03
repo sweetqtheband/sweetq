@@ -1,10 +1,14 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { ListenRoutingModule } from './listen.routes';
 import { StreamService } from '@services/stream.service';
 import { CommonModule } from '@angular/common';
-import { ListenComponent } from './listen.component';
-import { PlayerModule } from '@modules/player.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { PlayerModule } from '@modules/player.module';
+import { SweetQAlbumsModule } from '@modules/sweetq/albums.module';
+import { ListenComponent } from './listen.component';
+import { DateService } from '@services/date.service';
+import { SystemService } from '@services/system.service';
+
 
 // configures NgModule imports and exports
 @NgModule({
@@ -12,9 +16,11 @@ import { TranslateModule } from '@ngx-translate/core';
     ListenRoutingModule,
     CommonModule,
     TranslateModule,
-    PlayerModule
+    PlayerModule,
+    SweetQAlbumsModule
   ],
   declarations: [ListenComponent],
-  providers: [StreamService],
+  providers: [StreamService, SystemService, DateService],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ListenViewModule {}

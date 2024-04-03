@@ -1,29 +1,68 @@
-:host {
-  h2 {
+:host {  
+  h2 {    
     font-size: var(--fontSizeXL);
-    color: var(--primaryTextColor);
+    color: var(--primaryTextColor);      
+    box-sizing: border-box;
+    font-weight: 700;
+    @media screen and (max-width: 645px) {
+      font-size: var(--fontSizeL);
+    }
+  }
+  header {
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 40px;
+    min-height: 54px;
+    @media screen and (max-width: 645px) {          
+      padding-bottom: 26px;
+    }
   }
   .songs {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    gap: 56px;
+    overflow: auto;
+    scrollbar-width: none;
+    width: 100%;    
+    padding-right: calc(48px * 2);
+    box-sizing: border-box;    
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;        
 
     color: var(--primaryTextColor);
 
+    &.grab {      
+      .album {
+        cursor: grab;
+      }
+      &.grabbing {
+        cursor: grabbing;
+      }
+    }
+
     .album {
-      cursor: pointer;
+      cursor: pointer;                
 
       .cover {
         width: 200px;
         height: 200px;
         background-size: cover;
+        border-radius: 8px;
+
       }
 
-      &.current {
-        .cover {
-          width: 300px;
-          height: 300px;
-        }
+      .title {
+        padding-top: 24px;
+        font-size: var(--fontSizeM);
+        font-weight: 600;
+      }
+
+      .date {
+        color: var(--secondaryLightTextColor);
+        font-size: var(--fontSizeS);
+        line-height: var(--fontSizeXL);
+        padding-top: 6px;
       }
     }
   }

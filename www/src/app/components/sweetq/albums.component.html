@@ -1,5 +1,13 @@
-<h2>{{title}}</h2>
-<div class="songs" *ngIf="isReady">
+<header>
+  <h2>{{title}}</h2>
+</header>
+<div class="songs" *ngIf="isReady" #scroll 
+[class]="scrollClass()"
+(wheel)="onMouseWheel($event)"
+(mousedown)="onMouseDown($event)"
+(mouseup)="onMouseUp($event)"
+(mouseleave)="onMouseLeave($event)"
+(mousemove)="onMouseMove($event)">
   <div class="album" *ngFor="let item of items" [class]="itemClass(item)" (click)="playItem(item.id)">
     <div class="cover" [class]="{'empty': !item.cover}" [style]="itemStyle(item)">
     </div>

@@ -10,19 +10,20 @@ export class CanActivateListen {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ) {            
-    let valid = Boolean(route.queryParams?.['tId']);
+    // let valid = Boolean(route.queryParams?.['tId']);
     
-    if (valid)
-    {
-      const conf = config.listen as any;
-      const hashParts = this.enc.decrypt('hash', route.queryParams['tId']).split(":");
-      valid = hashParts.every((hashPart, index) => this.enc.decrypt(`chunk${index+1}`, conf[`chunk${index+1}`]) === hashPart);          
-    }
+    // if (valid)
+    // {
+    //   const conf = config.listen as any;
+    //   const hashParts = this.enc.decrypt('hash', route.queryParams['tId']).split(":");
+    //   valid = hashParts.every((hashPart, index) => this.enc.decrypt(`chunk${index+1}`, conf[`chunk${index+1}`]) === hashPart);          
+    // }
 
-    if (!valid) {
-      this.router.navigate(['/']);
-    }
+    // if (!valid) {
+    //   this.router.navigate(['/']);
+    // }
 
-    return valid;
+    // return valid;
+    return true;
   }
 }

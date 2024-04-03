@@ -1,9 +1,23 @@
 :host {
   --Dark: #121619;
   --White: #FFFFFF;
+  --LightWhite: rgba(255,255,255,0.6);
+  --Coral: #FE255F;
+  --light-opacity-30: rgba(255, 255, 255, 0.30);
   --neutral-50: #7D91A1;
   --indigo-30: #B191FE;
-  --indigo-opacity-10: rgba(88, 37, 254, 0.10);
+  --indigo-opacity-10: rgba(88, 37, 254, 0.10);  
+  --fontSize2XL: calc(36 / 16 * 1em);
+  --fontSizeXL: calc(24 / 16 * 1em);
+  --fontSizeL: calc(20 / 16 * 1em);
+  --fontSize2M: calc(19 / 16 * 1em);
+  --fontSizeM: calc(16 / 16 * 1em);
+  --fontSizeS: calc(12 / 16 * 1em);
+
+  --primaryTextColor: var(--White);
+  --secondaryTextColor: var(--Dark);
+  --secondaryLightTextColor: var(--LightWhite);
+  --timelineColor: var(--light-opacity-30);
 
   height: 100vh;
   font-family: 'poppins', sans-serif;
@@ -25,11 +39,18 @@
           width: 100%;
           background-image: url('/assets/imgs/sweetq-bg.webp');
           background-repeat: no-repeat;
-          background-position: 0% 400%;
+          background-position: 50%;
           background-size: cover;
           padding-top: 56.25%;
           z-index: 0;
           position: relative;
+          max-width: 1920px;
+
+          @media screen and (min-width: 1920px) {
+            padding-top: 1080px;
+            left: 50%;
+            transform: translateX(-50%);
+          }
 
           @media screen and (max-width: 645px) {
             background-size: 200%;
@@ -86,10 +107,37 @@
 
     &--wrapper {
       width: 100%;
-      max-width: 500px;
-      margin: 0 auto;
       text-align: center;
-      padding-top: calc(56.25% / 5);
+      padding-top: 17%;
+      display: flex;
+      flex-flow: column;
+      overflow: hidden;
+      @media screen and (min-width: 1920px) {
+        padding-top: 326px;
+      }
+    }
+    
+    
+    &--panels {
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-start;      
+      gap: 72px;      
+      position: relative;
+      overflow: hidden;
+      @media screen and (max-width: 1080px) {
+        width: 100%;
+      }
+      padding: 48px 0 48px 48px;
+      box-sizing: border-box;
+    }
+    &--panel {
+      &:first-child {
+        min-width: 363px;
+        flex: 1;
+      }
+      position: relative;      
+      overflow: hidden;
     }
 
     &--content {
@@ -108,15 +156,10 @@
         position: absolute;
         z-index: 0;
         bottom: 0;
-
-        @media screen and (max-width: 645px) {
-          border-bottom-left-radius: 24px;
-          border-bottom-right-radius: 24px;
-        }
       }
 
       & .listen--wrapper {
-        @media screen and (max-width: 645px) {
+        @media screen and (max-width: 645px) {          
           &:before {
             content: '';
             height: 30%;
@@ -125,9 +168,7 @@
             position: absolute;
             bottom: 0px;
             left: 0;
-            z-index: 1;
-            border-bottom-left-radius: 24px;
-            border-bottom-right-radius: 24px;
+            z-index: 1;            
           }
 
           &:after {
@@ -144,15 +185,29 @@
 
       }
 
-      header {
-        .subtitle {
-          text-transform: uppercase;
-          color: var(--indigo-30);
-          padding-bottom: 8px;
+      header {        
+        display: flex;
+        align-items: center;
+        padding-bottom: 30px;
+        gap: 24px;
+        position: relative;
+        z-index: 1;
+        .image{        
+          border-radius: 100%;
+          width: 64px;
+          height: 64px;
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-image: url('/assets/imgs/sweetq.webp');
         }
       }
 
-      header,
+      .releases {
+        header {
+          display: none
+        }
+      }
+
       section {
         padding: 24px;
         position: relative;
@@ -213,7 +268,7 @@
                 }
 
                 .title {
-                  color: var(--White);
+                  color: var(--primaryTextColor);
                   font-size: 16px;
                   font-weight: 600;
                 }
@@ -255,50 +310,69 @@
           }
         }
 
-        &.next-releases {
-          .pill {
-            padding: 6px;
-            position: relative;
-            border-radius: 30px 32px 32px 2px;
-            background-color: var(--White);
-            max-width: 280px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            line-height: normal;
-            margin: 4px auto 0;
+        &.video-wrapper {          
+          width: calc(100% - 14px);
+          aspect-ratio: 9 / 16;
+          position: relative;
+          margin: 0 auto;
+          padding: 0;
 
-            .image {
-              background-image: url('/assets/imgs/sweetq.webp');
+          .video-overlay {            
+            opacity: 1;
+            display: block;
+            position: absolute;            
+            top: 0;
+            left: 0;        
+            width: 100%;    
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.50);
+            color: var(--primaryTextColor);            
+            z-index: 1;
+
+            .toggle-play {
+              transition: none;          
+              cursor: pointer;
+              position: absolute;
+              left: 16px;              
+              bottom: 16px;
+              height: 18px;
+              width: 18px;
               background-repeat: no-repeat;
-              width: 40px;
-              height: 40px;
+              background-color: var(--White);
               border-radius: 100%;
-              background-size: cover;
+              padding: 11px;
+              background-position: center center;
+              background-size: 24px;
+          
+          
+              &.play {
+                background-image: url('/assets/imgs/controls/canvas/play.svg');
+              }
+          
+              &.pause {
+                background-image: url('/assets/imgs/controls/canvas/pause.svg');
+              }
             }
+          }
 
-            .text {
-              flex: 1;
-              color: var(--Dark);
-              font-size: 12px;
-              font-weight: 600;
-              text-align: left;
-              line-height: 18px;
-              padding-top: 4px;
-            }
+          .player {
+            height: 100%;          
+            width: 100%;
+            position: absolute; 
+            top: 0;
+            left: 0;
+            z-index: 2;
+            cursor: pointer;
+            border-radius: 8px;
+            overflow: hidden;
           }
         }
 
-        .songs {
-          padding: 24px 0 32px;
+        &.next-releases { 
+          padding: 0;                    
           display: flex;
-          align-items: center;
-          flex-flow: column;
-          gap: 16px;
-
-          .player {
-            flex: 1;
-          }
+          flex-direction: column;
+          gap: 64px;          
         }
       }
     }
@@ -322,7 +396,7 @@
         a,
         a:visited,
         a:link {
-          color: var(--Dark);
+          color: var(--secondaryTextColor);
           text-decoration: none;
           font-weight: 400;
           font-size: 12px;
@@ -360,21 +434,20 @@
   }
 
   h1 {
-    color: var(--White);
-    font-size: 43px;
-    font-weight: 600;
-    padding-top: 20%;
-    padding-bottom: 12px;
+    color: var(--primaryTextColor);
+    font-size: var(--fontSize2XL);
+    font-weight: 600;   
   }
 
   h2 {
-    color: var(--Dark);
+    color: var(--secondaryTextColor);
+    font-size: var(--fontSizeXL);
     font-weight: 700;
     font-size: 20px;
   }
 
-  h3 {
-    color: var(--White);
+  h3 {  
+    color: var(--primaryTextColor);
     font-weight: 600;
     font-size: 16px;
   }
@@ -382,5 +455,96 @@
   .subtitle {
     font-size: 11px;
     font-weight: 500;
+  }
+
+  @media screen and (max-width: 645px) {       
+    h1 {
+      font-size: var(--fontSize2M);
+    } 
+
+    .listen {            
+      &--wrapper {
+        padding-top: 0;
+        padding-bottom: 0;        
+        overflow: unset;
+        display: block;
+      }
+
+      &--panels {
+       padding: 0;
+       height: 100%;
+      }
+      &--panel {
+        height: 100%;
+        .video-wrapper {
+          height: 100%;
+          .player.default {
+            display: none;
+          }
+        }
+      }
+
+      &--viewport {
+        display: block;
+      }
+      &--content {
+        min-height: 100%;
+        section {
+          &.next-releases {
+            gap: 8px;
+          }
+        }
+      .releases {
+        padding: 24px 0 24px 24px;
+          header {            
+            display: flex;
+            padding-bottom: 0;
+          }
+        }        
+
+        .video {
+          position: absolute;
+          transform: translateX(100vw);
+          transition: transform 300ms ease-out;
+          z-index: 2;
+          width: 100%;
+          height: 100vh;
+          &.playing {
+            transform: translateX(0);            
+            .close-button {
+              transition: transform 300ms ease-in;
+              background-image: url('/assets/imgs/close.png');
+              background-size: 16px;
+              background-position: center center;
+              margin: 0;
+              background-repeat: no-repeat;
+              background-color: transparent;
+              outline: none;
+              border: 0px;
+              height: 16px;
+              width: 16px;
+              margin: 16px;
+              cursor: pointer;
+              position: absolute;
+              top: 0;
+              right: 0;
+              padding: 12px;
+              z-index: 3;
+            }
+          }
+
+          .video-wrapper {
+            width: 100%;
+            .player {
+              border-radius: 0;
+            }
+          }
+
+          header {            
+            display: none;
+          }
+        }
+      }    
+    }
   }
 }

@@ -3,6 +3,7 @@ export interface Media {
   title?: string;
   date?: Date,
   cover?: string;
+  video?: string;
   status?: string;
   duration?: string;
   advance?: string;
