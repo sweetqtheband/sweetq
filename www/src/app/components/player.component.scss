@@ -113,6 +113,11 @@
   .video {
     display: block;
     height: 100%;
+
+    video {
+      object-fit: cover;
+      height: 100%;
+    }
   }
   
   .audio-player {      
