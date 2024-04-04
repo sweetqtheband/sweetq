@@ -92,6 +92,19 @@ export class PlayerComponent implements OnInit, AfterViewInit, DoCheck {
     return { TID: this.tId };
   }
 
+  videoStyle(): Object {
+    const isHorizontal = window.innerHeight < window.innerWidth;
+    const prop9_16 = window.innerWidth / 0.5625;
+
+    return {
+      width:
+        isHorizontal || (!isHorizontal && prop9_16 > window.innerHeight)
+          ? '100%'
+          : null,
+      height: !isHorizontal && prop9_16 < window.innerHeight ? '100%' : null,
+    };
+  }
+
   async ngOnInit(): Promise<void> {
     this.getStreamUrl();
   }

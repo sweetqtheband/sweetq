@@ -503,7 +503,7 @@
         }        
 
         .video {
-          position: absolute;
+          position: fixed;
           transform: translateX(100vw);
           transition: transform 300ms ease-out;
           z-index: 2;

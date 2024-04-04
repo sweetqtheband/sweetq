@@ -1,6 +1,6 @@
 <div class="audio-player">  
   <div class="video" *ngIf="type === 'canvas' && track.isCurrent">
-    <video #video [autoplay]="true" [muted]="true" [loop]="true">
+    <video #video [autoplay]="true" [muted]="true" [loop]="true" [style]="videoStyle()">
       <source [src]="trackVideo" type="video/mp4">
     </video>
     <div class="video-overlay">

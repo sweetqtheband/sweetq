@@ -99,6 +99,7 @@
 :host(.canvas) {
   display: none;
   height: 100%;
+  width: 100%;    
   position: absolute;
   left: 0;
   top: 0;
@@ -107,7 +108,7 @@
   &.current {
     display: block;  
     position: absolute;     
-    z-index: 0;
+    z-index: 0;    
   }  
 
   .video {
@@ -115,8 +116,7 @@
     height: 100%;
 
     video {
-      object-fit: cover;
-      height: 100%;
+      object-fit: cover;      
     }
   }
   
