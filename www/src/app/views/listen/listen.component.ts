@@ -35,6 +35,13 @@ export class ListenComponent implements OnInit, AfterViewInit, DoCheck {
     }
     this.isInit = true;
   }
+
+  @HostListener('window:onPlaying')
+  onPlayingListener() {
+    this.removeInteractionSubscriptions();
+  }
+  
+
   @HostBinding('class.sq-view') sqView: boolean = true;
 
   public items: Media[] = [];

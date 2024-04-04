@@ -169,6 +169,22 @@ export class PlayerComponent implements OnInit, AfterViewInit, DoCheck {
     this.track.isCurrent = true;
     window.dispatchEvent(event);
   }
+
+  setMetadata() {    
+    if ("mediaSession" in navigator) {      
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: this.track.title,
+        album: "LP 2024",
+        artist: "Sweet Q",
+        artwork: [
+          {
+            src: `${window.location.origin}/assets/imgs/cover/${this.track.cover}`
+          },
+        ],
+      });
+    }
+  }
+
   async playTrack() {
     try {
       if (!this.streamUrl) {
@@ -179,6 +195,7 @@ export class PlayerComponent implements OnInit, AfterViewInit, DoCheck {
         this.onPlaying();
         this.track.isPlaying = true;
         await this.audio.play();
+        this.setMetadata();
         if (this.video) {
           this.video.play();
         }
