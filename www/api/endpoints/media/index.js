@@ -46,7 +46,7 @@ const medias = [
     id: "fiesta",
     title: "Fiesta",
     date: "2024-09-01",
-    cover: null,
+    cover: "fiesta.jpg",
     video: "default.mp4",
     status: "upcoming",
   },
