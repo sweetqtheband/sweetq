@@ -1,4 +1,13 @@
 {
+  "date": {
+    "months": ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"],
+    "formats": {
+      "short": {
+        "day": "%M %d %Y",
+        "month": "%M %Y"
+      }
+    }
+  },
   "releaseMessage": "You can listen to \"Lo siento, pero no\" now!",
   "listenInSpotify": "Listen in Spotify",
   "listenAlsoIn": "Also available in...",
@@ -11,11 +20,11 @@
     "cosasclaras": "Video - Las cosas claras"
   },
   "availableSince": "Available from october 16th in:",
-  "gig": {    
+  "gig": {
     "date": "April 21st",
     "title": "Atalaya Roja + Sweet Q",
     "text": "On Sunday, April 21st, we will be accompanying 'Atalaya Roja' at the presentation of their new work 'Cabo de las tormentas' in a very special morning concert. It'll be a vermouth session with appetizers, where children under 9 enter for free and those under 16 at a special price. So, if you have young children and want to make a different plan, we will be waiting for you!",
-    "buyTickets": "Buy tickets"  
+    "buyTickets": "Buy tickets"
   },
   "info": {
     "title": "Lo siento, pero no",
@@ -97,5 +106,9 @@
       "text": "You can already watch our latest full live show at Mercado de Motores in our Youtube channel. If you want to hear our new forthcoming releases in a live format... Don't miss it out!",
       "button": "Watch on Youtube"
     }
+  },
+  "albums": {
+    "released": "Latest releases",
+    "upcoming": "Upcoming"
   }
 }
