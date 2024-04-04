@@ -33,17 +33,19 @@ export class ListenComponent implements OnInit, AfterViewInit, DoCheck {
     if (this.video) {
       this.video.pause();
     }
+    this.showLoader = false;
     this.isInit = true;
   }
 
   @HostListener('window:onPlaying')
-  onPlayingListener() {
+  onPlayingListener() {    
     this.removeInteractionSubscriptions();
   }
   
 
   @HostBinding('class.sq-view') sqView: boolean = true;
 
+  public showLoader: boolean = true;
   public items: Media[] = [];
   public albums: Albums = {
     released: [],
@@ -148,6 +150,8 @@ export class ListenComponent implements OnInit, AfterViewInit, DoCheck {
 
   openPanel() {
     document.body.style.overflow = 'hidden';
+
+    this.showLoader = true;
 
     this.isPlaying = true;
   }

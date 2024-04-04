@@ -13,7 +13,8 @@
             </header>            
             <section class="video-wrapper">
               <button class="close-button" *ngIf="isPlaying" role="button" (click)="closePanel()"></button>
-              <div class="player default" *ngIf="!isInit">
+              <div class="loader" *ngIf="showLoader"></div>
+              <div class="player default" *ngIf="!isInit">                
                 <video [autoplay]="true" [muted]="true" [loop]="true" height="100%" #video>
                   <source [src]="loadVideo" type="video/mp4">
                 </video>
