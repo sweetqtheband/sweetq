@@ -149,18 +149,18 @@ export class ListenComponent implements OnInit, AfterViewInit, DoCheck {
   }
 
   openPanel() {
+    this.showLoader = true;    
     document.body.style.overflow = 'hidden';
-
-    this.showLoader = true;
-
-    this.isPlaying = true;
+    setTimeout(() => {
+      this.isPlaying = true;
+    }, 0);
   }
-  closePanel() {
+  closePanel() {    
     document.body.style.overflow = 'unset';
      const event: CustomEvent = new CustomEvent('stopPlay', {
        bubbles: true,       
      });
-     window.dispatchEvent(event);
+     window.dispatchEvent(event);    
     this.isPlaying = false;
   }
 

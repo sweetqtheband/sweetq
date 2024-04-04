@@ -35,7 +35,7 @@
             <section class="next-releases">
               <sweetq-albums (onPlay)="openPanel()" *ngIf="items.length > 0" [items]="albums.released" [initial-id]="initialId"
                 title="{{'albums.released' | translate}}"></sweetq-albums>
-              <sweetq-albums *ngIf="items.length > 0" [items]="albums.upcoming" [initial-id]="initialId"
+              <sweetq-albums (onPlay)="openPanel()" *ngIf="items.length > 0" [items]="albums.upcoming" [initial-id]="initialId"
                 title="{{'albums.upcoming' | translate}}"></sweetq-albums>
             </section>
           </div>

@@ -108,20 +108,26 @@ export class PlayerComponent implements OnInit, AfterViewInit, DoCheck {
   }
 
   ngDoCheck(): void {
-    if (this.video && !this.videoLoaded) {
-      this.videoLoaded = true;
-      this.video.addEventListener(
-        'loadeddata',
-        () => {
-          const event: CustomEvent = new CustomEvent('videoLoaded', {
-            bubbles: true,
-            detail: { id: this.track.id },
-          });
-          window.dispatchEvent(event);
-        },
-        false
-      );
+    if (this.video) {
+      if (!this.videoLoaded) {        
+        this.video.addEventListener(
+          'loadeddata',
+          () => {
+            this.videoLoaded = true;
+            this.emitVideoLoaded();
+          },
+          false
+        );
+      }
     }
+  }
+
+  emitVideoLoaded() {
+    const event: CustomEvent = new CustomEvent('videoLoaded', {
+      bubbles: true,
+      detail: { id: this.track.id },
+    });
+    window.dispatchEvent(event);
   }
 
   ngAfterViewInit(): void {
@@ -195,9 +201,12 @@ export class PlayerComponent implements OnInit, AfterViewInit, DoCheck {
         this.onPlaying();
         this.track.isPlaying = true;
         await this.audio.play();
-        this.setMetadata();
+        this.setMetadata();        
         if (this.video) {
           this.video.play();
+        }        
+        if (this.videoLoaded) {
+          this.emitVideoLoaded();
         }
 
         this.progressInterval = setInterval(() => {
