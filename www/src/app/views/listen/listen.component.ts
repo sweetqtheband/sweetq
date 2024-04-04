@@ -83,6 +83,10 @@ export class ListenComponent implements OnInit, AfterViewInit, DoCheck {
     return this.system.isMobile();
   }
 
+  get maxHeight() {
+    return window.innerHeight + 'px';
+  }
+
   addInteractionSubscriptions() {
     if (!this.isMobile) {
       this.interactionEvents.forEach((eventName: string) =>
@@ -136,9 +140,12 @@ export class ListenComponent implements OnInit, AfterViewInit, DoCheck {
   }
 
   openPanel() {
+    document.body.style.overflow = 'hidden';
+
     this.isPlaying = true;
   }
   closePanel() {
+    document.body.style.overflow = 'unset';
      const event: CustomEvent = new CustomEvent('stopPlay', {
        bubbles: true,       
      });
