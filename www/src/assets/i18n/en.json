@@ -42,7 +42,22 @@
     "title": "Coming soon...",
     "text": "Soon we will release our third videoclip 'Las cosas claras'. Stay tuned with our social networks!"
   },
-  "gigs": "Gigs",
+  "gigs": {
+    "label": "Gigs",
+    "viewInGoogleMap": "View in Google Maps",
+    "20240428": {
+      "date": "April 28th",
+      "title": "Sweet Q at Callao",
+      "text": "Next Sunday we'll be cheering once again for the runners of the <span class='bold'>Zurich Rock'n'Roll Running Series Madrid</span> from 11:00 in the morning in an unparalleled setting: Plaza de Callao in Madrid.",
+      "moreInfo": "Read news"
+    },
+    "20240525": {
+      "date": "May 25th",
+      "title": "Nuevo Berlín + Sweet Q",
+      "text": "On Saturday, April 25th, we'll be accompanying <span class='bold'>Nuevo Berlín</span> in the presentation of their new work <span class='bold'>'Camino a la Mitad'</span> at 'El Perro de la Parte de Atrás del Coche' venue. You can now buy advance tickets through Wegow. Don't miss it!",
+      "buyTickets": "Buy tickets"
+    }
+  },
   "stayTuned": "At this time we haven't any gig scheduled soon. Stay tuned!",
   "buyTickets": "Buy tickets",
   "goToItsFacebook": "Go to its Facebook page",
@@ -81,8 +96,7 @@
     "makingof": {
       "atrapado": "Making of 'Atrapado en el tiempo'"
     },
-    "tickets": {
-      "20240421": "Tickets Fun House April 21st: Atalaya Roja + Sweet Q",
+    "tickets": {      
       "20240525": "Tickets El Perro May 25th: Nuevo Berlín + Sweet Q"
     }
   },
