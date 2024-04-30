@@ -9,6 +9,7 @@ import { NewsComponent } from '@views/news/news.component';
 import { Angulartics2Module } from 'angulartics2';
 import { ToastComponent } from '@components/toast.component';
 import { EventEmitterService } from '@services/eventEmitter.service';
+import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -16,26 +17,25 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NewsComponent,
-    ToastComponent
-  ],
+  declarations: [AppComponent, NewsComponent, ToastComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
-          provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient]
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
       },
-      extend: true
+      extend: true,
     }),
-    Angulartics2Module.forRoot()  
-  ],  
-  providers: [EventEmitterService],
-  bootstrap: [AppComponent]
+    Angulartics2Module.forRoot(),
+  ],
+  providers: [
+    EventEmitterService,
+    { provide: LocationStrategy, useClass: PathLocationStrategy },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
