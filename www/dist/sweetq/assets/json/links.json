@@ -30,8 +30,15 @@
   {
     "type": "youtube",
     "icon": "icon-youtube",
-    "text": "links.youtube",
+    "text": "links.youtube.videoclip",
     "button": "secondary",
     "link": "https://www.youtube.com/watch?v=glVnYUQwPqE"
+  },
+  {
+    "type": "youtube",
+    "icon": "icon-youtube",
+    "text": "links.youtube.cover",
+    "button": "secondary",
+    "link": "https://www.youtube.com/watch?v=p3gqyMh9CNg"
   }
 ]

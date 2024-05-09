@@ -83,7 +83,10 @@
     "spotify": "Spotify",
     "appleMusic": "Apple Music",
     "youtubeMusic": "Youtube Music",
-    "youtube": "Videoclip 'Atrapado en el tiempo'",
+    "youtube": {
+      "videoclip": "Videoclip 'Atrapado en el tiempo'",
+      "cover": "Versionamos 'Zorra' de Nebulossa"
+    },
     "presave": {
       "losiento": "Pre-save 'Lo siento, pero no'"
     },
