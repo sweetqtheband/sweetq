@@ -49,6 +49,18 @@
   },
   {
     "id": 5,
+    "date": "2024-07-20",
+    "city": "Málaga",
+    "hour": null,
+    "venue": "Brisa en tu barrio",
+    "address": "Auditorio Playa Virginia",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3198.169609473131!2d-4.351918899999999!3d36.718487599999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd7259cc08a97bf7%3A0x8b3108e87faf015e!2sAuditorio%20Playa%20Virginia!5e0!3m2!1ses!2ses!4v1716888834754!5m2!1ses!2ses",
+    "bands": [26],
+    "event": null,
+    "tickets": null
+  },
+  {
+    "id": 6,
     "date": "2024-10-04 19:30",
     "city": "Madrid",
     "hour": "19:30",

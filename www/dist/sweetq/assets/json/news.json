@@ -8,11 +8,11 @@
     "spotifyHref": "https://open.spotify.com/album/1qn9sJmcPGddxcMtvvrhZ6"
   },
   {
-    "type": "info gig g20240525",
-    "title": "gigs.20240525.title",
-    "subtitle": "gigs.20240525.date",
-    "text": "gigs.20240525.text",
-    "button": "gigs.20240525.buyTickets",
-    "href": "https://www.wegow.com/us/concerts/concierto-de-nuevo-berlin-y-sweet-q-en-madrid"
+    "type": "info gig g20240720",
+    "title": "gigs.20240720.title",
+    "subtitle": "gigs.20240720.date",
+    "text": "gigs.20240720.text",
+    "button": "gigs.20240720.moreInfo",
+    "href": "https://www.elespanol.com/malaga/cultura/20240426/espectacular-presentacion-brisa-barrio-ciclo-conciertos-dinamizara-nuevo-malaga-verano/850665389_0.html"
   }
 ]

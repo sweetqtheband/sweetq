@@ -21,11 +21,18 @@
     "link": "https://music.youtube.com/playlist?list=OLAK5uy_lZIu8ors0gQmxUV5Se2HdnuUt_f9VtTe4"
   },
   {
-    "type": "gig",
-    "icon": "icon-gigs",
-    "text": "links.tickets.20240525",
+    "type": "contest",
+    "icon": "icon-fib",
+    "text": "links.contest.fib",
     "button": "secondary",
-    "link": "https://www.wegow.com/us/concerts/concierto-de-nuevo-berlin-y-sweet-q-en-madrid"
+    "link": "https://risingstars.fiberfib.com/artists/785"
+  },
+  {
+    "type": "vackstage",
+    "icon": "icon-vackstage",
+    "text": "links.vackstage.20240525",
+    "button": "secondary",
+    "link": "https://vackstage.com/es/indie-rock/nuevo-berlin-y-sweet-q"
   },
   {
     "type": "youtube",
@@ -33,12 +40,5 @@
     "text": "links.youtube.videoclip",
     "button": "secondary",
     "link": "https://www.youtube.com/watch?v=glVnYUQwPqE"
-  },
-  {
-    "type": "youtube",
-    "icon": "icon-youtube",
-    "text": "links.youtube.cover",
-    "button": "secondary",
-    "link": "https://www.youtube.com/watch?v=p3gqyMh9CNg"
   }
 ]

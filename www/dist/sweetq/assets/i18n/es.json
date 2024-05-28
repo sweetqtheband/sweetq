@@ -50,6 +50,12 @@
       "title": "Nuevo Berlín + Sweet Q",
       "text": "El sábado 25 de mayo acompañaremos a <span class='bold'>Nuevo Berlín</span> en la presentación de su nuevo trabajo <span class='bold'>'Camino a la Mitad'</span> en la sala <span class='bold'>'El Perro de la Parte de Atrás del Coche'</span>. Ya podéis adquirir las entradas anticipadas por Wegow ¡no os lo perdáis!",
       "buyTickets": "Comprar entradas"
+    },
+    "20240720": {
+      "date": "20 Julio",
+      "title": "Nos vemos en Málaga",
+      "text": "El sábado 20 de julio estaremos tocando en el <span class='bold'>Brisa en tu barrio</span> junto a <span class='bold'>Marsella</span>. Será nuestra primera vez en Málaga, así que esperamos veros a todos ese día en el <span class='bold'>Auditorio Playa Virginia</span> de El Palo. ¡No faltéis! ",
+      "moreInfo": "Ver noticia"
     }
   },
   "stayTuned": "Por el momento no tenemos conciertos a la vista. ¡Permanece atento!",
@@ -95,6 +101,12 @@
     },
     "tickets": {      
       "20240525": "Entradas El Perro 25 mayo: Nuevo Berlín + Sweet Q"
+    },
+    "contest": {
+      "fib": "¡Vótanos para tocar en el FIB!"
+    },
+    "vackstage": {
+      "20240525": "Ver concierto El Perro 25 mayo"
     }
   },
   "listen": {
