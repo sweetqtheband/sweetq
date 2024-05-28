@@ -1,6 +1,6 @@
 // Variables
 :host {
-    --headerBgImg1: url(/assets/imgs/links/header1.png);                
+    --headerBgImg1: url(/assets/imgs/links/header.webp);                
 }
 
 :host(.black) {
@@ -83,9 +83,15 @@
 
         .sq-button-content {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
-            margin: 0 auto;
+            width: 100%;
+
+            .sq-text {
+              flex: 1;
+              font-size: 16px;
+              padding: 0 45px;
+            }
         }
         .sq-primary-links {
             flex: 1;
@@ -106,8 +112,8 @@
             &.primary {
                 font-family: 'titillium-web-bold';
                 font-size: 18px;
-                border-radius: 2px;
-                border-width: 2px;             
+                border-radius: 4px;
+                border-width: 1px;             
                 border-color: var(--primaryColor);
                 color: var(--primaryColor);
             }
@@ -115,8 +121,8 @@
             &.secondary {
                 font-family: 'titillium-web-bold';
                 font-size: 18px;
-                border-radius: 10px;
-                border-width: 2px;             
+                border-radius: 4px;
+                border-width: 1px;             
                 border-color: var(--secondaryColor);
                 color: var(--secondaryColor);                
             }
@@ -125,8 +131,8 @@
                 position: relative;
                 display: block;
                 height: 38px;
-                width: 38px;
-                margin-right: px8(2);
+                width: 38px;                
+                position: absolute;
                 &.appleMusic,
                 &.youtubeMusic
                 {

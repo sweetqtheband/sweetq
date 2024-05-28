@@ -87,3 +87,21 @@
 .icon-play:before {
     content: "\70";
 }
+
+.icon-fib:before {
+  content: '';
+  display: block;
+  background-image: url(/assets/imgs/icons/fib.webp);
+  background-size: contain;
+  height: 100%;
+  width: 100%;
+}
+
+.icon-vackstage:before {
+  content: '';
+  display: block;
+  background-image: url(/assets/imgs/icons/vackstage.webp);
+  background-size: contain;
+  height: 100%;
+  width: 100%;
+}
