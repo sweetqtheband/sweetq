@@ -90,7 +90,7 @@
             .sq-text {
               flex: 1;
               font-size: 16px;
-              padding: 0 45px;
+              padding: 0 45px 0 0;
             }
         }
         .sq-primary-links {
@@ -132,7 +132,7 @@
                 display: block;
                 height: 38px;
                 width: 38px;                
-                position: absolute;
+                position: relative;
                 &.appleMusic,
                 &.youtubeMusic
                 {
