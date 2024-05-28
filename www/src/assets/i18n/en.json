@@ -32,38 +32,20 @@
     "button": "Download <span class='peso'>(5.4MB)</span>",
     "download": "Download press kit"
   },
-  "videoclip": {
-    "title": "Coming soon...",
-    "text": "Soon we will release our third videoclip 'Las cosas claras'. Stay tuned with our social networks!"
-  },
   "gigs": {
     "label": "Gigs",
-    "viewInGoogleMap": "View in Google Maps",
-    "20240428": {
-      "date": "April 28th",
-      "title": "Sweet Q at Callao",
-      "text": "Next Sunday we'll be cheering once again for the runners of the <span class='bold'>Zurich Rock'n'Roll Running Series Madrid</span> from 11:00 in the morning in an unparalleled setting: Plaza de Callao in Madrid.",
-      "moreInfo": "Read news"
-    },
-    "20240525": {
-      "date": "May 25th",
-      "title": "Nuevo Berlín + Sweet Q",
-      "text": "On Saturday, April 25th, we'll be accompanying <span class='bold'>Nuevo Berlín</span> in the presentation of their new work <span class='bold'>'Camino a la Mitad'</span> at <span class='bold'>'El Perro de la Parte de Atrás del Coche'</span> venue. You can now get your tickets through Wegow. Don't miss it!",
-      "buyTickets": "Buy tickets"
+    "viewInGoogleMap": "View in Google Maps",    
+    "20240720": {
+      "date": "July 20th",
+      "title": "See you in Málaga",
+      "text": "El sábado 20 de julio estaremos tocando en el <span class='bold'>Brisa en tu barrio</span> junto a <span class='bold'>Marsella</span>. Será nuestra primera vez en Málaga, así que esperamos veros a todos ese día en el <span class='bold'>Auditorio Playa Virginia</span> de El Palo. ¡No faltéis! ",
+      "moreInfo": "Ver noticia"
     }
   },
   "stayTuned": "At this time we haven't any gig scheduled soon. Stay tuned!",
   "buyTickets": "Buy tickets",
   "goToItsFacebook": "Go to its Facebook page",
-  "goToItsInstagram": "Go to its Instagram page",
-  "makingof": {
-    "atrapado": {
-      "title": "Behind the Scenes of 'Trapped in Time'",
-      "subtitle": "Premiere on Youtube",
-      "text": "Discover how the recording of our latest single took place and experience it from within. As if you were one more member of the band!",
-      "button": "Watch on Youtube"
-    }
-  },
+  "goToItsInstagram": "Go to its Instagram page",  
   "presave": {
     "spotify": "Pre-save on Spotify",
     "appleMusic": "Pre-add on Apple Music",
@@ -90,11 +72,11 @@
     "presave": {
       "losiento": "Pre-save 'Lo siento, pero no'"
     },
-    "makingof": {
-      "atrapado": "Making of 'Atrapado en el tiempo'"
+    "contest": {
+      "fib": "Vote for us to play at FIB!"
     },
-    "tickets": {
-      "20240525": "Tickets El Perro May 25th: Nuevo Berlín + Sweet Q"
+    "vackstage": {
+      "20240525": "View concert El Perro May 25th"
     }
   },
   "listen": {

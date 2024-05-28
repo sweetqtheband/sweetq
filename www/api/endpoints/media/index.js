@@ -29,7 +29,7 @@ const medias = [
   {
     id: "quevamos",
     title: "¿Qué vamos a hacer?",
-    date: "2024-05-01",
+    date: "2024-06-01",
     cover: "quevamos.jpg",
     video: "default.mp4",
     status: "upcoming",
@@ -37,7 +37,7 @@ const medias = [
   {
     id: "ley",
     title: "Ley de la atracción",
-    date: "2024-07-01",
+    date: "2024-09-01",
     cover: "ley.jpg",
     video: "default.mp4",
     status: "upcoming",
@@ -45,7 +45,7 @@ const medias = [
   {
     id: "fiesta",
     title: "Fiesta",
-    date: "2024-09-01",
+    date: "2024-11-01",
     cover: "fiesta.jpg",
     video: "default.mp4",
     status: "upcoming",
