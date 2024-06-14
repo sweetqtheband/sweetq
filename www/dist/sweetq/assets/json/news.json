@@ -1,11 +1,11 @@
 [ 
   {
-    "type": "info cover losiento",
-    "title": "info.title",
-    "subtitle": "info.subtitle",
-    "text": "info.text",
-    "button": "info.button",
-    "spotifyHref": "https://open.spotify.com/album/1qn9sJmcPGddxcMtvvrhZ6"
+    "type": "info cover quevamosahacer",
+    "title": "presave.title",
+    "subtitle": "presave.subtitle",
+    "text": "presave.text",
+    "button": "presave.spotify",
+    "spotifyHref": "https://push.fm/ps/sweet-q-que-vamos-a-hacer"
   },
   {
     "type": "info gig g20240720",

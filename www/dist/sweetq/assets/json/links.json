@@ -21,6 +21,13 @@
     "link": "https://music.youtube.com/playlist?list=OLAK5uy_lZIu8ors0gQmxUV5Se2HdnuUt_f9VtTe4"
   },
   {
+    "type": "spotify",
+    "icon": "icon-spotify",
+    "text": "links.presave.quevamosahacer",
+    "button": "primary",
+    "link": "https://push.fm/ps/sweet-q-que-vamos-a-hacer"
+  },
+  {
     "type": "contest",
     "icon": "icon-fib",
     "text": "links.contest.fib",
