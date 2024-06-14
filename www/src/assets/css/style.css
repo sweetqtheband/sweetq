@@ -453,6 +453,11 @@ body {
   background-image: url('../imgs/cover/atrapado.jpg');
 }
 
+.sq-section.notice.info.quevamosahacer .sq-image.image-cover:before,
+.sq-section.notice.info.quevamosahacer .sq-image.image-cover:after {
+  background-image: url('../imgs/cover/quevamos.jpg');
+}
+
 .sq-section.notice.info .sq-image.image-cover {
     
     position: relative;

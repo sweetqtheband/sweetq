@@ -54,10 +54,10 @@
       "spotify": "Pre-save done successfully!",
       "appleMusic": "Pre-add done successfully!",
       "deezer": "Pre-save done successfully!"
-    },
-    "title": "Lo siento, pero no",
-    "subtitle": "Release on March 29th",
-    "text": "On next March 29th we will be releasing <span class='bold'>'Lo siento, pero no'</span>, third single from our future record. A  rallying theme that boldly challenges intolerance with strength and clarity through direct and powerful lyrics. Be the first to listen!"
+    },    
+    "title": "¿Qué vamos a hacer?",
+    "subtitle": "Premieres on June 28",
+    "text": "On June 28, we premiere <span class='bold'>'¿Qué vamos a hacer?'</span>. A boy and a girl meet at a '90s party, they like each other, and when the night ends, expectations cross their path... discover what happens before anyone else!"
   },
   "links": {
     "title": "Sweet Q",
@@ -70,7 +70,7 @@
       "cover": "We covered 'Zorra' by Nebulossa"
     },
     "presave": {
-      "losiento": "Pre-save 'Lo siento, pero no'"
+      "quevamosahacer": "Pre-save '¿Qué vamos a hacer?'"
     },
     "contest": {
       "fib": "Vote for us to play at FIB!"
