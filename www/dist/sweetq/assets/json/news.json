@@ -6,6 +6,11 @@
     "text": "presave.text",
     "button": "presave.spotify",
     "spotifyHref": "https://push.fm/ps/sweet-q-que-vamos-a-hacer"
+  },{
+    "type": "info gig g20240629",
+    "title": "gigs.20240629.title",
+    "subtitle": "gigs.20240629.date",
+    "text": "gigs.20240629.text"    
   },
   {
     "type": "info gig g20240720",

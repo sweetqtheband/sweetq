@@ -4,6 +4,7 @@
     "formats": {
       "short": {
         "day": "%M %d %Y",
+        "text": "%M %d",
         "month": "%M %Y"
       }
     }
@@ -35,6 +36,11 @@
   "gigs": {
     "label": "Gigs",
     "viewInGoogleMap": "View in Google Maps",    
+    "20240629": {
+      "date": "June 29th",
+      "title": "FIB Finalists",
+      "text": "We are finalists of the <span class='bold'>FIB Heineken Rising Stars</span>! On Saturday, June 29th, the concerts will take place to see who will perform at FIB in the <span class='bold'>Sala Jerusalem</span> in Valencia. We are really excited and we want you all there. See you!"
+    },
     "20240720": {
       "date": "July 20th",
       "title": "See you in Málaga",
@@ -63,7 +69,9 @@
     "title": "Sweet Q",
     "subtitle": "New single 'Lo siento, pero no'",
     "spotify": "Spotify",
+    "spotifyAvailable": "Spotify link (available {{date}})",
     "appleMusic": "Apple Music",
+    "appleAvailable": "Apple Music link (available {{date}})",
     "youtubeMusic": "Youtube Music",
     "youtube": {
       "videoclip": "Music Video 'Atrapado en el tiempo'",

@@ -28,13 +28,6 @@
     "link": "https://push.fm/ps/sweet-q-que-vamos-a-hacer"
   },
   {
-    "type": "contest",
-    "icon": "icon-fib",
-    "text": "links.contest.fib",
-    "button": "secondary",
-    "link": "https://risingstars.fiberfib.com/artists/785"
-  },
-  {
     "type": "vackstage",
     "icon": "icon-vackstage",
     "text": "links.vackstage.20240525",
