@@ -29,10 +29,12 @@ const medias = [
   {
     id: "quevamos",
     title: "¿Qué vamos a hacer?",
-    date: "2024-06-01",
+    date: "2024-06-28",
     cover: "quevamos.jpg",
     video: "default.mp4",
     status: "upcoming",
+    spotifyId: "album/732Pm0mxnNeGec676x28vW",
+    appleId: "album/qué-vamos-a-hacer/1734913974",
   },
   {
     id: "ley",
@@ -55,5 +57,11 @@ const medias = [
 app.get('/media', (req, res) => {
   if (authSvc.auth(req, res)) {
     res.json({ data: medias });
+  }
+});
+
+app.get("/media/:trackId", (req, res) => {
+  if (authSvc.auth(req, res)) {
+    res.json({ data: medias.find(item => item.id === req.params.trackId) });
   }
 });

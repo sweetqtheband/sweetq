@@ -365,9 +365,11 @@ body {
     background-repeat: no-repeat;
 }
 
+sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {    
+  padding-top: calc(100% + 30px);
+}
 .sq-image-wrapper.square .sq-image {
-    width: 100%;
-    padding-top: calc(100% + 30px);
+  width: 100%;
 }
 
 .sq-image-wrapper.panoramic .sq-image {
@@ -506,6 +508,9 @@ body {
 }
 .sq-section.notice.info.gig.g20240720 .sq-image.image-cover:before {
   background-image: url('../imgs/gigs/20240720.jpg');
+}
+.sq-section.notice.info.gig.g20240629 .sq-image.image-cover:before {
+  background-image: url('../imgs/gigs/20240629.jpg');
 }
 
 .sq-section.notice.video .column-right,

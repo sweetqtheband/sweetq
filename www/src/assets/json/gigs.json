@@ -49,6 +49,18 @@
   },
   {
     "id": 5,
+    "date": "2024-06-29 19:00",
+    "city": "Valencia",
+    "hour": "19:00",
+    "venue": "Finales FIB Rising Stars",
+    "address": "Sala Jerusalem",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6160.416538768407!2d-0.3802138!3d39.4646234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd604f361ae0f8bb%3A0x781610caf591330d!2sSala%20Jerusalem!5e0!3m2!1ses!2ses!4v1719237598996!5m2!1ses!2ses",
+    "bands": [27, 28],
+    "event": null,
+    "tickets": null
+  },  
+  {
+    "id": 6,
     "date": "2024-07-20",
     "city": "Málaga",
     "hour": null,
@@ -60,7 +72,7 @@
     "tickets": null
   },
   {
-    "id": 6,
+    "id": 7,
     "date": "2024-10-04 19:30",
     "city": "Madrid",
     "hour": "19:30",

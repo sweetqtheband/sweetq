@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Media } from '@interfaces/media';
 
-type Options = { params?: any; headers?: any };
+type Options = { params?: any; headers?: any, trackId?: string|null };
 
 @Injectable()
 export class StreamService {
@@ -26,6 +26,32 @@ export class StreamService {
             })
           );
         });
+    });
+  }
+
+  getTrack({ params = null, headers = null, trackId = null }: Options = {}) {
+    return new Promise<Media>((resolve, reject) => {
+      if (trackId)
+      {
+        this.http
+          .get(`${this.apiUrl}/media/${trackId}`, { params, headers })
+          .subscribe((res: any) => {
+            const track = res.data;                    
+            track.date = new Date(track.date);            
+            track.ended = false;     
+            track.spotify = track.spotifyId ? {
+              url : `https://open.spotify.com/${track.spotifyId}`,
+              embedUrl : `https://open.spotify.com/embed/${track.spotifyId}`
+            } : null;
+            track.apple = track.appleId ? {
+              url: `https://music.apple.com/es/${track.appleId}`
+            } : null;
+
+            resolve(track);            
+          });
+      } else {
+        reject(new Error('No trackId sent'));
+      }
     });
   }
 

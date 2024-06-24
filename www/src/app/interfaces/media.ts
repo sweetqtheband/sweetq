@@ -1,7 +1,7 @@
 export interface Media {
   id: string;
   title?: string;
-  date?: Date,
+  date?: Date;
   cover?: string;
   video?: string;
   status?: string;
@@ -9,6 +9,8 @@ export interface Media {
   advance?: string;
   ended?: boolean;
   nextId?: number;
+  spotify?: any;
+  apple?: any;
   isPlaying?: boolean;
   isCurrent?: boolean;
 }

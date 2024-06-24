@@ -6,6 +6,9 @@ export default {
     artistId: '74Vs2gSCwnlCiV4yjaFIMb',
     trackId: '4N8LvpnnHhwwBJ5xobXYvr',
   },
+  track: {
+    id: "quevamos"
+  },
   spotify: {
     clientId: 'MDExNzEzNDkwZDY4NGYyNmFmOWRhYjRiNzc4OWI1YzU=',
     clientSecret: 'OTc5YTM2NTZiNWJmNGY0OGIzNzA2ZDA2OGM2OTY3NTU=',
