@@ -9,7 +9,7 @@
       }
     }
   },
-  "releaseMessage": "¡Ya podéis escuchar \"Lo siento, pero no\"!",
+  "releaseMessage": "¡Ya podéis escuchar \"¿Qué vamos a hacer?\"!",
   "listenInSpotify": "Escuchar en Spotify",
   "listenAlsoIn": "Disponible también en...",
   "videos": "Vídeos",
@@ -22,9 +22,9 @@
   },
   "availableSince": "Disponible a partir del 16 de octubre en:",
   "info": {
-    "title": "Lo siento, pero no",
+    "title": "¿Qué vamos a hacer?",
     "subtitle": "Ya disponible",
-    "text": "Ya podéis escuchar en todas las plataformas <span class='bold'>'Lo siento, pero no'</span>, tercer single de nuestro futuro disco. Un tema reivindicativo que desafía la intolerancia con fuerza y claridad mediante una letra directa y contundente.",
+    "text": "Ya podéis escuchar en todas las plataformas <span class='bold'>'¿Qué vamos a hacer?'</span>, el cuarto single de nuestro próximo LP. Un chico y una chica se conocen en una fiesta noventera, se gustan y cuando la noche acaba las expectativas se cruzan en su camino... ¡Descubre como termina la historia!",
     "button": "Escuchar en Spotify"
   },
   "pressKit": {
@@ -67,7 +67,7 @@
   },
   "links": {
     "title": "Sweet Q",
-    "subtitle": "'Lo siento, pero no' nuevo single",
+    "subtitle": "'¿Qué vamos a hacer?' nuevo single",
     "spotify": "Spotify",
     "spotifyAvailable": "Link Spotify (disponible {{date}})",
     "appleMusic": "Apple Music",
@@ -91,8 +91,8 @@
     "monthlyListeners": "{{total}} oyentes mensuales",
     "latestRelease": {
       "label": "Último lanzamiento",
-      "date": "29 de marzo 2024",
-      "title": "Lo siento, pero no",
+      "date": "28 de junio 2024",
+      "title": "¿Qué vamos a hacer?",
       "totalPlays": "{{total}} reproducciones"
     },
     "nextReleases": {

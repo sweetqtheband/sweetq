@@ -17,12 +17,12 @@ export class SweetQHeaderComponent implements OnInit {
   @Output() playAlbumEvent = new EventEmitter<boolean>();
 
   public links: any = {
-    spotify: 'https://open.spotify.com/album/6730lDQr9irWJXAf7lIYhw',
-    amazon: 'https://www.amazon.es/dp/B0CRHY3R62',
+    spotify: 'https://open.spotify.com/album/732Pm0mxnNeGec676x28vW',
+    amazon: 'https://www.amazon.es/dp/B0D5CLPNWC',
     appleMusic:
-      'https://music.apple.com/us/album/atrapado-en-el-tiempo-single/1724197909',
+      'https://music.apple.com/es/album/qu%C3%A9-vamos-a-hacer-single/1748711009',
     youtubeMusic:
-      'https://music.youtube.com/playlist?list=OLAK5uy_l4h3DFFhC189MnyMQAZ6eHNciv9LronLE',
+      'https://music.youtube.com/playlist?list=OLAK5uy_nhB8J7OncZwnuh1TiGl7xDJS8e1lc1l1g',
   };
 
   ngOnInit() {

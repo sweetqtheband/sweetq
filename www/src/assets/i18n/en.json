@@ -9,7 +9,7 @@
       }
     }
   },
-  "releaseMessage": "You can listen to \"Lo siento, pero no\" now!",
+  "releaseMessage": "You can listen to \"¿Qué vamos a hacer?\" now!",
   "listenInSpotify": "Listen in Spotify",
   "listenAlsoIn": "Also available in...",
   "videos": "Videos",
@@ -22,9 +22,9 @@
   },
   "availableSince": "Available from october 16th in:",
   "info": {
-    "title": "Lo siento, pero no",
+    "title": "¿Qué vamos a hacer?",
     "subtitle": "Already available",    
-    "text": "You can already listen in every platform <span class='bold'>'Lo siento, pero no'</span>, third single from our future record. A  rallying theme that boldly challenges intolerance with strength and clarity through direct and powerful lyrics.",
+    "text": "You can already listen in every platform <span class='bold'>'¿Qué vamos a hacer?'</span>, the fourth single from our future LP. A boy and a girl meet at a '90s party, they like each other, and when the night ends, expectations cross their path... find out how the story ends!",
     "button": "Listen in Spotify"
   },
   "pressKit": {
@@ -44,8 +44,8 @@
     "20240720": {
       "date": "July 20th",
       "title": "See you in Málaga",
-      "text": "El sábado 20 de julio estaremos tocando en el <span class='bold'>Brisa en tu barrio</span> junto a <span class='bold'>Marsella</span>. Será nuestra primera vez en Málaga, así que esperamos veros a todos ese día en el <span class='bold'>Auditorio Playa Virginia</span> de El Palo. ¡No faltéis! ",
-      "moreInfo": "Ver noticia"
+      "text": "On next July 20 we will be playing at <span class='bold'>Brisa en tu barrio</span> together with <span class='bold'>Marsella</span>. It will be our first time in Málaga, so we want to see you all that day at <span class='bold'>Auditorio Playa Virginia</span> in El Palo. Don't miss out! ",
+      "moreInfo": "More info"
     }
   },
   "stayTuned": "At this time we haven't any gig scheduled soon. Stay tuned!",
@@ -67,7 +67,7 @@
   },
   "links": {
     "title": "Sweet Q",
-    "subtitle": "New single 'Lo siento, pero no'",
+    "subtitle": "New single '¿Qué vamos a hacer?'",
     "spotify": "Spotify",
     "spotifyAvailable": "Spotify link (available {{date}})",
     "appleMusic": "Apple Music",
@@ -91,8 +91,8 @@
     "monthlyListeners": "{{total}} monthly listeners",
     "latestRelease": {
       "label": "Latest release",
-      "date": "March 29th, 2024",
-      "title": "Lo siento, pero no",
+      "date": "June 28th, 2024",
+      "title": "¿Qué vamos a hacer?",
       "totalPlays": "{{total}} plays"
     },
     "nextReleases": {

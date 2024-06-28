@@ -1,11 +1,11 @@
 [ 
   {
     "type": "info cover quevamosahacer",
-    "title": "presave.title",
-    "subtitle": "presave.subtitle",
-    "text": "presave.text",
-    "button": "presave.spotify",
-    "spotifyHref": "https://push.fm/ps/sweet-q-que-vamos-a-hacer"
+    "title": "info.title",
+    "subtitle": "info.subtitle",
+    "text": "info.text",
+    "button": "info.button",
+    "spotifyHref": "https://open.spotify.com/album/732Pm0mxnNeGec676x28vW"
   },{
     "type": "info gig g20240629",
     "title": "gigs.20240629.title",
