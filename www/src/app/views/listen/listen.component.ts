@@ -81,7 +81,7 @@ export class ListenComponent implements OnInit, AfterViewInit, DoCheck {
   }
 
   get loadVideo() {
-    return `/assets/video/losiento.mp4`;
+    return `/assets/video/quevamos.mp4`;
   }
 
   get video() {
