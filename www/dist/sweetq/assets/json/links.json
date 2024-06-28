@@ -4,28 +4,21 @@
     "icon": "icon-spotify",
     "text": "links.spotify",
     "button": "primary",
-    "link": "spotify:album:1qn9sJmcPGddxcMtvvrhZ6"
+    "link": "https://open.spotify.com/album/732Pm0mxnNeGec676x28vW"
   },
   {
     "type": "appleMusic",
     "icon": "icon-apple-music",
     "text": "links.appleMusic",
     "button": "primary",
-    "link": "https://music.apple.com/us/album/lo-siento-pero-no-single/1734913974"
+    "link": "https://music.apple.com/es/album/qu%C3%A9-vamos-a-hacer-single/1748711009"
   },
   {
     "type": "youtubeMusic",
     "icon": "icon-youtube-music",
     "text": "links.youtubeMusic",
     "button": "primary",
-    "link": "https://music.youtube.com/playlist?list=OLAK5uy_lZIu8ors0gQmxUV5Se2HdnuUt_f9VtTe4"
-  },
-  {
-    "type": "spotify",
-    "icon": "icon-spotify",
-    "text": "links.presave.quevamosahacer",
-    "button": "primary",
-    "link": "https://push.fm/ps/sweet-q-que-vamos-a-hacer"
+    "link": "https://music.youtube.com/playlist?list=OLAK5uy_nhB8J7OncZwnuh1TiGl7xDJS8e1lc1l1g"
   },
   {
     "type": "vackstage",
