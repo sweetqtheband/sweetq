@@ -3,8 +3,8 @@
         <div class="sq-subtitle">{{'videos' | translate}}</div>
     </div>
     <div class="sq-videos-list {{halfVideos ? 'flex-width' : ''}}">
-        <div class="sq-item" *ngFor="let video of (videos | keyvalue)">
-            <div class="sq-video" [class]="video.key"  (click)="showModal(null, video.key)"  (showChange)="showModal($event, video.key)">
+        <div class="sq-item" *ngFor="let video of videos">
+            <div class="sq-video" [class]="video.id"  (click)="showModal(null, video.url)"  (showChange)="showModal($event, video.url)">
                 <div class="sq-frame">
                     <div class="sq-play-wrapper">
                         <div class="sq-button sq-play">
@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="sq-video-title">
-                    <div class="sq-video-title-text">{{ 'videoLabel.' + video.key | translate }}</div>
+                    <div class="sq-video-title-text">{{ 'videoLabel.' + video.id | translate }}</div>
                 </div>
             </div>
         </div>

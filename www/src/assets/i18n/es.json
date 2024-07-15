@@ -14,10 +14,10 @@
   "listenAlsoIn": "Disponible también en...",
   "videos": "Vídeos",
   "videoLabel": {
+    "quevamosahacer": "Vídeo - ¿Qué vamos a hacer?",
     "atrapadoeneltiempo": "Vídeo - Atrapado en el tiempo",
     "caminocorrecto": "Vídeo - El camino correcto",
     "nuevaera": "Vídeo - La nueva era",
-    "mal": "Vídeo - Mal",
     "cosasclaras": "Vídeo - Las cosas claras"
   },
   "availableSince": "Disponible a partir del 16 de octubre en:",
@@ -74,7 +74,7 @@
     "appleAvailable": "Link Apple Music (disponible {{date}})",
     "youtubeMusic": "Youtube Music",
     "youtube": {
-      "videoclip": "Videoclip 'Atrapado en el tiempo'",
+      "videoclip": "Videoclip '¿Qué vamos a hacer?'",
       "cover": "Versionamos 'Zorra' de Nebulossa"
     },
     "presave": {

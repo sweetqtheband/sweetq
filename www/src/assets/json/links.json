@@ -21,17 +21,17 @@
     "link": "https://music.youtube.com/playlist?list=OLAK5uy_nhB8J7OncZwnuh1TiGl7xDJS8e1lc1l1g"
   },
   {
+    "type": "youtube",
+    "icon": "icon-youtube",
+    "text": "links.youtube.videoclip",
+    "button": "secondary",
+    "link": "https://www.youtube.com/watch?v=SI59qpNvZvs"
+  },
+  {
     "type": "vackstage",
     "icon": "icon-vackstage",
     "text": "links.vackstage.20240525",
     "button": "secondary",
     "link": "https://vackstage.com/es/indie-rock/sweet-q"
-  },
-  {
-    "type": "youtube",
-    "icon": "icon-youtube",
-    "text": "links.youtube.videoclip",
-    "button": "secondary",
-    "link": "https://www.youtube.com/watch?v=glVnYUQwPqE"
   }
 ]
