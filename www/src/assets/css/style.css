@@ -482,9 +482,6 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   background-image: url('../imgs/youtube/makingof/atrapado.jpg');
 }
 
-.sq-section.notice.video.mercado-motores .sq-image.image-cover {
-  background-image: url('../imgs/youtube/live/mercadomotores.jpg'); 
-}
 .sq-section.notice.video.makingof.atrapado .sq-image.image-cover {
   background-image: url('../imgs/youtube/makingof/atrapado.jpg');
 }
@@ -498,19 +495,11 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   display: block;
   background-size: cover;
   padding-top: 100%;
+  background-position: center top;
 }
 
-.sq-section.notice.info.gig.g20240428 .sq-image.image-cover:before {
-  background-image: url('../imgs/gigs/20240428.jpg');
-}
-.sq-section.notice.info.gig.g20240525 .sq-image.image-cover:before {
-  background-image: url('../imgs/gigs/20240525.jpg');
-}
-.sq-section.notice.info.gig.g20240720 .sq-image.image-cover:before {
-  background-image: url('../imgs/gigs/20240720.jpg');
-}
-.sq-section.notice.info.gig.g20240629 .sq-image.image-cover:before {
-  background-image: url('../imgs/gigs/20240629.jpg');
+.sq-section.notice.info.gig.g20240906 .sq-image.image-cover:before {
+  background-image: url('../imgs/gigs/20240906.jpg');
 }
 
 .sq-section.notice.video .column-right,
@@ -704,8 +693,8 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
 .sq-video.nuevaera .sq-frame {
     background-image: url('../imgs/nuevaera.png');
 }
-.sq-video.mal .sq-frame {
-    background-image: url('../imgs/mal.png');
+.sq-video.quevamosahacer .sq-frame {
+    background-image: url('../imgs/quevamosahacer.jpg');
 }
 .sq-video .sq-video-title {
     padding-top: 18px;

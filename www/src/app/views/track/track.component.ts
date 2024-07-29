@@ -1,13 +1,13 @@
 import { OnInit, Component, HostBinding } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StreamService } from '@services/stream.service';
 import { Media } from '@interfaces/media';
 import { Nullable } from 'src/app/types';
 import { Data } from '@interfaces/data';
 import { SystemService } from '@services/system.service';
-import config from 'src/app/config';
 import { DateService } from '@services/date.service';
+import { EncryptionService } from '@services/encryption.service';
 
 @Component({
   selector: 'track-view',
@@ -33,17 +33,20 @@ export class TrackComponent implements OnInit {
   public initialId: string = '';
   public isPlaying: boolean = false;
 
+  public trackId: Nullable<string> = null;
   
   constructor(
+    private router:Router,
     private meta: Meta,
     private http: StreamService,
     private system: SystemService,
     private route: ActivatedRoute,
-    private dateSvc: DateService
+    private dateSvc: DateService,
+    private enc: EncryptionService
     ) {
       this.meta.removeTag('name="keywords"');
       this.meta.removeTag('name="description"');
-      this.meta.updateTag({ name: 'robots', content: 'noindex' });
+      this.meta.updateTag({ name: 'robots', content: 'noindex' });                  
   }
   
   get headers(): any {
@@ -59,33 +62,39 @@ export class TrackComponent implements OnInit {
   }  
  
   async ngOnInit(): Promise<any> {
-    this.tid = this.route.snapshot.queryParams['tId'];
-   
-    this.item = await this.http.getTrack({ headers: this.headers, trackId: config.track.id });        
-    if (this.item.spotify) {
-      this.links.push({
-        type: "spotify",
-        icon: "icon-spotify",
-        text: "links.spotifyAvailable",
-        trParams: {
-          date: this.dateSvc.format("short.text", this.item.date)
-        },
-        button: "primary",
-        link: this.item.spotify.url
-      });
-    }
+    this.tid = this.route.snapshot.queryParams?.['tId'];
+    try {
+      this.trackId = this.enc.decrypt("track", decodeURI(this.route.snapshot.queryParams?.['track']));    
+    console.log(this.enc.encrypt("track", "ley"));
+    console.log(this.enc.encrypt('track', 'fiesta'));
+      this.item = await this.http.getTrack({ headers: this.headers, trackId: this.trackId });        
+      if (this.item.spotify) {
+        this.links.push({
+          type: "spotify",
+          icon: "icon-spotify",
+          text: "links.spotifyAvailable",
+          trParams: {
+            date: this.dateSvc.format("short.text", this.item.date)
+          },
+          button: "primary",
+          link: this.item.spotify.url
+        });
+      }
 
-    if (this.item.apple) {
-      this.links.push({
-        type: 'appleMusic',
-        icon: 'icon-apple-music',
-        text: 'links.appleAvailable',
-        trParams: {
-          date: this.dateSvc.format('short.text', this.item.date),
-        },
-        button: 'primary',
-        link: this.item.apple.url,
-      });
+      if (this.item.apple) {
+        this.links.push({
+          type: 'appleMusic',
+          icon: 'icon-apple-music',
+          text: 'links.appleAvailable',
+          trParams: {
+            date: this.dateSvc.format('short.text', this.item.date),
+          },
+          button: 'primary',
+          link: this.item.apple.url,
+        });
+      }
+    } catch (err) {
+      this.router.navigate(['/']);
     }
   }
 }

@@ -73,6 +73,18 @@
   },
   {
     "id": 7,
+    "date": "2024-09-06 20:00",
+    "city": "Madrid",
+    "hour": "20:00",
+    "venue": "Fiestas de La Melonera",
+    "address": "Explanada Multiusos de Arganzuela",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3038.655267056121!2d-3.7013632999999992!3d40.39433239999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422744f6ee46c5%3A0x58e048b0f77fcafa!2sExplanada%20Multiusos%20de%20Arganzuela!5e0!3m2!1ses!2ses!4v1722244035677!5m2!1ses!2ses",
+    "bands": [],
+    "event": null,
+    "tickets": null
+  },
+  {
+    "id": 8,
     "date": "2024-10-04 19:30",
     "city": "Madrid",
     "hour": "19:30",

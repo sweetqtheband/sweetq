@@ -52,6 +52,14 @@ const medias = [
     video: "default.mp4",
     status: "upcoming",
   },
+  {
+    id: "yaesnavidad",
+    title: "Ya es navidad",
+    date: "2024-12-01",
+    cover: "yaesnavidad.jpg",
+    video: "default.mp4",
+    status: "upcoming",
+  },
 ];
 
 app.get('/media', (req, res) => {

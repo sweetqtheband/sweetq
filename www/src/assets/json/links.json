@@ -33,5 +33,12 @@
     "text": "links.vackstage.20240525",
     "button": "secondary",
     "link": "https://vackstage.com/es/indie-rock/sweet-q"
+  },
+  {
+    "type": "vackstage",
+    "icon": "icon-vackstage",
+    "text": "links.vackstage.20240719",
+    "button": "secondary",
+    "link": "https://vackstage.com/es/entrevistas/sweet-q-en-sonidos-nuevos"
   }
 ]

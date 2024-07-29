@@ -36,17 +36,12 @@
   },
   "gigs": {
     "label": "Gigs",
-    "viewInGoogleMap": "View in Google Maps",    
-    "20240629": {
-      "date": "June 29th",
-      "title": "FIB Finalists",
-      "text": "We are finalists of the <span class='bold'>FIB Heineken Rising Stars</span>! On Saturday, June 29th, the concerts will take place to see who will perform at FIB in the <span class='bold'>Sala Jerusalem</span> in Valencia. We are really excited and we want you all there. See you!"
-    },
-    "20240720": {
-      "date": "July 20th",
-      "title": "See you in Málaga",
-      "text": "On next July 20 we will be playing at <span class='bold'>Brisa en tu barrio</span> together with <span class='bold'>Marsella</span>. It will be our first time in Málaga, so we want to see you all that day at <span class='bold'>Auditorio Playa Virginia</span> in El Palo. Don't miss out! ",
-      "moreInfo": "More info"
+    "viewInGoogleMap": "View in Google Maps",
+    "20240906": {
+      "date": "06 September",
+      "title": "Fiestas de la Melonera",
+      "text": "On Friday, September 6th at 8:00 PM, we look forward to seeing you all at the fairgrounds of the <span class='bold'>Fiestas de la Melonera</span> in the Arganzuela district. The party is guaranteed... See you there!",
+      "moreInfo": "See news"
     }
   },
   "stayTuned": "At this time we haven't any gig scheduled soon. Stay tuned!",
@@ -85,7 +80,8 @@
       "fib": "Vote for us to play at FIB!"
     },
     "vackstage": {
-      "20240525": "View concert El Perro May 25th"
+      "20240525": "View concert El Perro May 25th",
+      "20240719": "View interview in 'Sonidos Nuevos'"
     }
   },
   "listen": {
