@@ -14,11 +14,11 @@
   "listenAlsoIn": "Also available in...",
   "videos": "Videos",
   "videoLabel": {
+    "losiento": "Video - Lo siento, pero no",
     "quevamosahacer": "Video - ¿Qué vamos a hacer?",
     "atrapadoeneltiempo": "Video - Atrapado en el tiempo",
     "caminocorrecto": "Video - El camino correcto",
     "nuevaera": "Video - La nueva era",
-    "mal": "Video - Mal",
     "cosasclaras": "Video - Las cosas claras"
   },
   "availableSince": "Available from october 16th in:",
