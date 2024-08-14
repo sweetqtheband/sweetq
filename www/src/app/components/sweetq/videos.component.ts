@@ -10,11 +10,14 @@ export class SweetQVideosComponent {
 
   public videoUrl: string = '';
   public videos = [
-    { id: "quevamosahacer", url: 'https://www.youtube.com/embed/SI59qpNvZvs' },
-    { id: "atrapadoeneltiempo", url: 'https://www.youtube.com/embed/glVnYUQwPqE'},
-    { id: "caminocorrecto", url: 'https://www.youtube.com/embed/5HU8pUNCpMs'},
-    { id: "cosasclaras", url: 'https://www.youtube.com/embed/1paz9-hyg30'},
-    { id: "nuevaera", url: 'https://www.youtube.com/embed/YswuyL8c6ZA'},    
+    { id: 'losiento', url: 'https://www.youtube.com/embed/d6XO7a4ez_U' },
+    { id: 'quevamosahacer', url: 'https://www.youtube.com/embed/SI59qpNvZvs' },
+    {
+      id: 'atrapadoeneltiempo',
+      url: 'https://www.youtube.com/embed/glVnYUQwPqE',
+    },
+    { id: 'caminocorrecto', url: 'https://www.youtube.com/embed/5HU8pUNCpMs' },
+    { id: 'cosasclaras', url: 'https://www.youtube.com/embed/1paz9-hyg30' },
   ];
 
   showModal(value: any, video: string): void {

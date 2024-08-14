@@ -696,6 +696,9 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
 .sq-video.quevamosahacer .sq-frame {
     background-image: url('../imgs/quevamosahacer.jpg');
 }
+.sq-video.losiento .sq-frame {
+  background-image: url('../imgs/losiento.jpg');
+}
 .sq-video .sq-video-title {
     padding-top: 18px;
 }
