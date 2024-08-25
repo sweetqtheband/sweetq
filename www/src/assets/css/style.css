@@ -460,6 +460,11 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   background-image: url('../imgs/cover/quevamos.jpg');
 }
 
+.sq-section.notice.info.yaesnavidad .sq-image.image-cover:before,
+.sq-section.notice.info.yaesnavidad .sq-image.image-cover:after {
+  background-image: url('../imgs/cover/yaesnavidad.jpg');
+}
+
 .sq-section.notice.info .sq-image.image-cover {
     
     position: relative;
@@ -680,24 +685,21 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
 }
 
 .sq-video.atrapadoeneltiempo .sq-frame {
-  background-image: url('../imgs/atrapadoeneltiempo.png');
+  background-image: url('../imgs/youtube/videoclips/atrapadoeneltiempo.webp');
 }
 
 .sq-video.caminocorrecto .sq-frame {
-    background-image: url('../imgs/caminocorrecto.png');
+    background-image: url('../imgs/youtube/videoclips/caminocorrecto.webp');
 }
 
 .sq-video.cosasclaras .sq-frame {
-    background-image: url('../imgs/cosasclaras.png');
-}
-.sq-video.nuevaera .sq-frame {
-    background-image: url('../imgs/nuevaera.png');
+    background-image: url('../imgs/youtube/videoclips/cosasclaras.webp');
 }
 .sq-video.quevamosahacer .sq-frame {
-    background-image: url('../imgs/quevamosahacer.jpg');
+    background-image: url('../imgs/youtube/videoclips/quevamosahacer.webp');
 }
 .sq-video.losiento .sq-frame {
-  background-image: url('../imgs/losiento.jpg');
+  background-image: url('../imgs/youtube/videoclips/losiento.webp');
 }
 .sq-video .sq-video-title {
     padding-top: 18px;

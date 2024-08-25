@@ -65,8 +65,7 @@ export class TrackComponent implements OnInit {
     this.tid = this.route.snapshot.queryParams?.['tId'];
     try {
       this.trackId = this.enc.decrypt("track", decodeURI(this.route.snapshot.queryParams?.['track']));    
-    console.log(this.enc.encrypt("track", "ley"));
-    console.log(this.enc.encrypt('track', 'fiesta'));
+
       this.item = await this.http.getTrack({ headers: this.headers, trackId: this.trackId });        
       if (this.item.spotify) {
         this.links.push({
