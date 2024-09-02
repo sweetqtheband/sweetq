@@ -8,6 +8,7 @@
   --LightWhite: rgba(255,255,255,0.6);
   --Coral: #FE255F;
   --light-opacity-30: rgba(255, 255, 255, 0.30);
+  --light-opacity-5: rgba(255, 255, 255, 0.05);
   --neutral-50: #7D91A1;
   --indigo-30: #B191FE;
   --indigo-opacity-10: rgba(88, 37, 254, 0.10);  
@@ -23,10 +24,11 @@
   --secondaryLightTextColor: var(--LightWhite);
   --timelineColor: var(--light-opacity-30);
 
-  --backgroundColor: #16181A;
+  --backgroundColor: #16181A;  
   --imgBorderColor: rgba(255, 255, 255, .26);
   --primaryColor: #FFFFFF;
   --secondaryColor: rgba(255, 255, 255, .70);
+  --padding: 8px;
 
   height: 100vh;
   font-family: 'poppins', sans-serif;
@@ -117,7 +119,6 @@
     &--wrapper {
       width: 100%;
       text-align: center;
-      padding-top: 17%;
       display: flex;
       flex-flow: column;
       overflow: hidden;
@@ -137,12 +138,13 @@
       position: relative;
       overflow: hidden;
 
-      padding: 48px 0 48px 48px;
+      padding: 48px;
       box-sizing: border-box;
     }
     &--panel {
       &:first-child {
-        min-width: 100%;        
+        min-width: 100%;     
+        max-width: 1280px;
         flex: 1;
       }
       z-index: 1;
@@ -225,6 +227,30 @@
           width: 100%;
           height: 100%;
         }
+      }
+
+      .toggler {
+        padding: calc(var(--padding)* 8) 0;
+        ::ng-deep {
+          toggler-item {
+            padding: calc(var(--padding) * 2);
+            background-color: var(--light-opacity-5);
+            border-radius: var(--padding);
+            .title {
+              border-bottom: 0;
+            }
+            .content {
+              p {
+                padding-top: calc(var(--padding) * 2);
+                &:first-child {
+                  padding-top: 0;
+                }
+              }
+
+            }
+          }
+        }
+        
       }
 
       .releases {
@@ -454,6 +480,12 @@
             background: url('/assets/imgs/tiktok.svg') no-repeat center center;
           }
         }
+      }
+    }
+    &--view.long-wrapper {
+      .listen--content:after {
+      background: linear-gradient(0deg, #16181A 51%, transparent 50%);
+      height: 210%;
       }
     }
   }

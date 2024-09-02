@@ -8,19 +8,23 @@ import { SweetQAlbumModule } from '@modules/sweetq/album.module';
 import { TrackComponent } from './track.component';
 import { DateService } from '@services/date.service';
 import { SystemService } from '@services/system.service';
+import { TogglerModule } from '@modules/toggler.module';
+import { HomeViewModule } from '@views/home/home.module';
 
 
 // configures NgModule imports and exports
 @NgModule({
   imports: [
-   TrackRoutingModule,
+    TrackRoutingModule,
     CommonModule,
     TranslateModule,
     PlayerModule,
-    SweetQAlbumModule
+    SweetQAlbumModule,    
+    TogglerModule,
+    HomeViewModule
   ],
-  declarations:  [TrackComponent],
+  declarations: [TrackComponent],
   providers: [StreamService, SystemService, DateService],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class TrackViewModule {}

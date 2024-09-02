@@ -4,8 +4,10 @@
 html {
     width: 100%;
     height: 100%;
+    overflow: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: auto;
+    margin: 0;
 }
 
 body {
@@ -13,6 +15,9 @@ body {
     height: 100%;
     font-family: 'titillium-web-regular';
     color: #16181a;
+    margin: 0;
+    overflow: auto;
+    position: absolute;
 }
 
 .visuallyhidden {

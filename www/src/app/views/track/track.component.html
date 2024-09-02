@@ -1,4 +1,4 @@
-<div class="listen--view">
+<div class="listen--view" [ngClass]="{'long-wrapper': longWrapper}">
   <div class="listen--bg">
     <div class="image"></div>
     <div class="opacity"></div>
@@ -16,9 +16,23 @@
               <sweetq-album [item]="item"></sweetq-album>            
               <player type="overlay" [track]="item" [tid]="tid"></player>              
             </div>                                    
+            <toggler *ngIf="item?.description || item?.lyrics" (isOpen)="handleOpen($event)" class="toggler">
+              <toggler-item data-id="description" *ngIf="item?.description">
+                <div class="title" handler>{{ 'track.description' | translate}}</div>
+                {{item.description}}
+              </toggler-item>
+              <toggler-item data-id="lyrics" *ngIf="item?.lyrics" [open]="false">
+                <div class="title" handler>{{ 'track.lyrics' | translate}}</div>
+                <span [innerHTML]=item.lyrics></span>
+              </toggler-item>    
+              <toggler-item data-id="aboutUs" [open]="false">
+                <div class="title" handler>{{ 'aboutUs.title' | translate}}</div>
+                <span [innerHTML] = "'aboutUs.info'|translate"></span>
+              </toggler-item>
+            </toggler>
           </div>
-          <div class="listen--panel sq-links-wrapper">
-            <div class="sq-links" *ngIf="links.length > 0">
+          <div class="listen--panel sq-links-wrapper" *ngIf="links.length > 0">
+            <div class="sq-links">
               <div class="sq-primary-links">
                 <a class="sq-button" target="_blank" [ngClass]="[link.type, link.button]" [href]="link.link"
                   *ngFor="let link of links">
@@ -34,6 +48,7 @@
         </div>
       </div>
     </div>
+    <sweetq-kit></sweetq-kit>
     <footer class="listen--footer">
       <div class="listen--wrapper">
         <div class="contact">

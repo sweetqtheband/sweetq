@@ -23,7 +23,6 @@ import { NewsService } from '@services/news.service';
 // configures NgModule imports and exports
 @NgModule({
   imports: [HomeRoutingModule, TranslateModule, CommonModule, SafePipeModule],
-  exports: [],
   bootstrap: [],
   declarations: [
     HomeComponent,
@@ -34,6 +33,17 @@ import { NewsService } from '@services/news.service';
     SweetQKitComponent,
     SweetQFooterComponent,
     PresaveComponent,
+    MapComponent,
+    ModalComponent,
+    SpotifyComponent,
+  ],
+  exports: [    
+    SweetQHeaderComponent,
+    SweetQGigsComponent,
+    SweetQVideosComponent,
+    SweetQInfoComponent,
+    SweetQKitComponent,
+    SweetQFooterComponent,    
     MapComponent,
     ModalComponent,
     SpotifyComponent,

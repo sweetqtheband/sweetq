@@ -11,6 +11,8 @@ export interface Media {
   nextId?: number;
   spotify?: any;
   apple?: any;
+  description?: string|null;
+  lyrics?: string|null;
   isPlaying?: boolean;
   isCurrent?: boolean;
 }

@@ -108,5 +108,13 @@
   "albums": {
     "released": "Últimos lanzamientos",
     "upcoming": "Próximamente"
+  },
+  "track": {
+    "description": "Descripción",
+    "lyrics": "Letra"
+  },
+  "aboutUs": {
+    "title": "Sobre nosotros",
+    "info": "<p>Somos una banda madrileña de indie pop rock.</p><p>Nos encanta el arte, el cine, las grandes bandas sonoras, las series, la cultura pop... Todo esto influye a la hora de componer nuestros temas.</p><p>Nuestra música es el reflejo de nuestra forma de ser e intentamos que al escucharla experimentes con nosotros nuevas sensaciones o conectemos al sentir eso que te identifica.</p><p>Nos gusta lo que hacemos y queremos que formes parte de ello.</p>"
   }
 }

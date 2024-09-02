@@ -1,6 +1,19 @@
 {
   "date": {
-    "months": ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"],
+    "months": [
+      "january",
+      "february",
+      "march",
+      "april",
+      "may",
+      "june",
+      "july",
+      "august",
+      "september",
+      "october",
+      "november",
+      "december"
+    ],
     "formats": {
       "short": {
         "day": "%M %d %Y",
@@ -24,7 +37,7 @@
   "availableSince": "Available from october 16th in:",
   "info": {
     "title": "¿Qué vamos a hacer?",
-    "subtitle": "Already available",    
+    "subtitle": "Already available",
     "text": "You can already listen in every platform <span class='bold'>'¿Qué vamos a hacer?'</span>, the fourth single from our future LP. A boy and a girl meet at a '90s party, they like each other, and when the night ends, expectations cross their path... find out how the story ends!",
     "button": "Listen in Spotify"
   },
@@ -47,7 +60,7 @@
   "stayTuned": "At this time we haven't any gig scheduled soon. Stay tuned!",
   "buyTickets": "Buy tickets",
   "goToItsFacebook": "Go to its Facebook page",
-  "goToItsInstagram": "Go to its Instagram page",  
+  "goToItsInstagram": "Go to its Instagram page",
   "presave": {
     "spotify": "Pre-save on Spotify",
     "appleMusic": "Pre-add on Apple Music",
@@ -56,7 +69,7 @@
       "spotify": "Pre-save done successfully!",
       "appleMusic": "Pre-add done successfully!",
       "deezer": "Pre-save done successfully!"
-    },    
+    },
     "title": "¿Qué vamos a hacer?",
     "subtitle": "Premieres on June 28",
     "text": "On June 28, we premiere <span class='bold'>'¿Qué vamos a hacer?'</span>. A boy and a girl meet at a '90s party, they like each other, and when the night ends, expectations cross their path... discover what happens before anyone else!"
@@ -108,5 +121,13 @@
   "albums": {
     "released": "Latest releases",
     "upcoming": "Upcoming"
+  },
+  "track": {
+    "description": "Description",
+    "lyrics": "Lyrics"
+  },
+  "aboutUs": {
+    "title": "About us",
+    "info": "<p>We are a Madrid-based indie pop rock band.</p><p>We love art, cinema, great soundtracks, series, pop culture... All of this influences our songwriting.</p><p>Our music reflects who we are, and we try to make you experience new sensations with us or connect by feeling something that resonates with you.</p><p>We enjoy what we do and want you to be a part of it.</p>"
   }
 }
