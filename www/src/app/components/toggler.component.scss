@@ -44,8 +44,8 @@ $deep: "::ng-deep";
       .title {
         padding: var(--padding) 0;
         color: var(--primaryTextColor);       
-        line-height: var(--fontSizeXL);
-        font-size: var(--fontSizeXL);
+        line-height: var(--fontSizeL);
+        font-size: var(--fontSizeL);        
       }
 
       &.open {

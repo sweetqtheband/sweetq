@@ -426,8 +426,9 @@
           gap: 64px;          
         }
       }
-    }
 
+    }
+    
     &--footer {
       flex: auto;
       background-color: var(--White);
@@ -467,11 +468,11 @@
           &.spotify {
             background: url('/assets/imgs/spotify.svg') no-repeat center center;
           }
-
+          
           &.instagram {
             background: url('/assets/imgs/instagram.svg') no-repeat center center;
           }
-
+          
           &.youtube {
             background: url('/assets/imgs/youtube.svg') no-repeat center center;
           }
@@ -484,9 +485,9 @@
     }
     &--view.long-wrapper {
       .listen--content:after {
-      background: linear-gradient(0deg, #16181A 35%, transparent 45%);
+        background: linear-gradient(0deg, #16181A 35%, transparent 45%);
       height: 210%;
-      }
+    }
     }
   }
 
@@ -495,7 +496,7 @@
     font-size: var(--fontSize2XL);
     font-weight: 600;   
   }
-
+  
   h2 {
     color: var(--secondaryTextColor);
     font-size: var(--fontSizeXL);
@@ -512,6 +513,17 @@
   .subtitle {
     font-size: 11px;
     font-weight: 500;
+  }
+
+  sweetq-kit {
+    ::ng-deep {
+      .sq-subtitle {
+        font-family: 'poppins', sans-serif;
+        font-size: var(--fontSizeL); 
+        font-weight: 700; 
+        text-transform: capitalize;  
+      }
+    }
   }
 
   @media screen and (max-width: 645px) {       
