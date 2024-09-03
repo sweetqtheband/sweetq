@@ -16,7 +16,7 @@
               <sweetq-album [item]="item"></sweetq-album>            
               <player type="overlay" [track]="item" [tid]="tid"></player>              
             </div>                                    
-            <toggler *ngIf="item?.description || item?.lyrics" (isOpen)="handleOpen($event)" class="toggler">
+            <toggler (isOpen)="handleOpen($event)" class="toggler">
               <toggler-item data-id="description" *ngIf="item?.description">
                 <div class="title" handler>{{ 'track.description' | translate}}</div>
                 {{item.description}}

@@ -39,7 +39,8 @@ export default [
     "date": "2024-09-01",
     "cover": "ley.jpg",
     "video": "default.mp4",
-    "status": "upcoming"
+    "status": "upcoming",
+    "lyrics": "Yo, que siempre tengo algo que decir\nme dejas sin palabras y tú\ncon ese acento un tanto peculiar…\nme rompes, me desmontas\n\nY tú rozas mi pierna al irte a levantar,\nme mandas señales y yo\nque no creo en la ley de la atracción,\nsiento que\n\nQuiero conocerte, necesito ser consciente\nde que hay algo en tu mirada\nque parece hipnotizada\n\nQuiero que me beses, que me digas lo que sientes\ny decirte a la cara la verdad\n\nQuiero acercarme más y descubrir esos secretos \nen la intimidad\nQuiero acercarme más, corroborar que es una ley\nque puedo demostrar\nQuiero acercarme más, poderlo confirmar.\nPoder asimilar que somos víctimas \nde una pseudociencia muy real\n\nY aunque no te he visto antes\nsiento algo que me empuja fuerte\nen dirección a tí,\nte acerca más a mí…\nme hace sentir qué\n\nQuiero que me beses, que me digas lo que sientes\ny decirte a la cara la verdad\n\nQuiero acercarme más y descubrir esos secretos \nen la intimidad\nQuiero acercarme más, corroborar que es una ley\nque puedo demostrar\nQuiero acercarme más, poderlo confirmar.\nPoder asimilar que somos víctimas \nde una pseudociencia muy real\n\nParapapa, parapapa, para\nParapapa, parapapa, para\nParapapa, parapapa, para,\nParapa parapa.\n"
   },
   {
     "id": "fiesta",
