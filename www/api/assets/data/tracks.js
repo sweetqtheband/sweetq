@@ -40,6 +40,7 @@ export default [
     "cover": "ley.jpg",
     "video": "default.mp4",
     "status": "upcoming",
+    "description": "¿Qué pasa cuando alguien te desarma con solo una mirada? ¿Alguna vez has sentido una conexión que no puedes explicar?\n\n \"Ley de la atracción\" captura ese momento en el que todo cambia, donde el magnetismo entre dos personas es tan fuerte que no hay vuelta atrás y no sabes por qué. \n\nCon una producción brillante por parte de Iker Arranz, este tema te llevará a descubrir si la atracción es algo más que una simple teoría.",
     "lyrics": "Yo, que siempre tengo algo que decir\nme dejas sin palabras y tú\ncon ese acento un tanto peculiar…\nme rompes, me desmontas\n\nY tú rozas mi pierna al irte a levantar,\nme mandas señales y yo\nque no creo en la ley de la atracción,\nsiento que\n\nQuiero conocerte, necesito ser consciente\nde que hay algo en tu mirada\nque parece hipnotizada\n\nQuiero que me beses, que me digas lo que sientes\ny decirte a la cara la verdad\n\nQuiero acercarme más y descubrir esos secretos \nen la intimidad\nQuiero acercarme más, corroborar que es una ley\nque puedo demostrar\nQuiero acercarme más, poderlo confirmar.\nPoder asimilar que somos víctimas \nde una pseudociencia muy real\n\nY aunque no te he visto antes\nsiento algo que me empuja fuerte\nen dirección a tí,\nte acerca más a mí…\nme hace sentir qué\n\nQuiero que me beses, que me digas lo que sientes\ny decirte a la cara la verdad\n\nQuiero acercarme más y descubrir esos secretos \nen la intimidad\nQuiero acercarme más, corroborar que es una ley\nque puedo demostrar\nQuiero acercarme más, poderlo confirmar.\nPoder asimilar que somos víctimas \nde una pseudociencia muy real\n\nParapapa, parapapa, para\nParapapa, parapapa, para\nParapapa, parapapa, para,\nParapa parapa.\n"
   },
   {
@@ -48,7 +49,9 @@ export default [
     "date": "2024-11-01",
     "cover": "fiesta.jpg",
     "video": "default.mp4",
-    "status": "upcoming"
+    "status": "upcoming",
+    "description": "Prepárate para algo espectacular con \"Fiesta\", un tema de indie rock lleno de energía. \n\nEsta canción captura a la perfección esa adrenalina que sientes antes de una gran noche, donde todo puede pasar y las reglas no existen. \n\nDesde los primeros acordes, te invita a dejarlo todo en la pista y vivir el momento al máximo. \n\nCon un sonido eléctrico y una producción intensa de Iker Arranz, experimentarás la sensación de estar en el centro de la acción. ¿Listo para jugar sin reglas?",
+    "lyrics": "Es el día señalado y el lugar, \ntodos mis nervios están a flor de piel.\nVente lista y preparada para algo espectacular.\n\nA las diez abren las puertas y aquí estoy\nen la barra quitándome la presión\nsin saber qué nos deparará la noche…\nno me importa, hoy tu y yo vamos.\n\nA darlo todo en esta fiesta \ny si subes la apuesta voy a jugar.\nNo pienso desperdiciar mi oportunidad.\n\nA darlo todo en esta fiesta \njugando sin reglas hasta el final. \nHagamos que sea digno de recordar.\n\nLa locura se desata en el lugar,\ntodo el mundo está en un éxtasis total.\nLa electricidad se expande por tus labios\n¡Luces fuera!\n\nVoy a darlo todo en esta fiesta \ny si subes la apuesta voy a jugar.\nNo pienso desperdiciar mi oportunidad.\n\nA darlo todo en esta fiesta \njugando sin reglas hasta el final. \nHagamos que sea digno de recordar.\n\nVoy a darlo todo en esta fiesta.\nA darlo todo en esta fiesta."
   },
   {
     "id": "yaesnavidad",

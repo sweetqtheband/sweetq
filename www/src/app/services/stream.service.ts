@@ -39,6 +39,7 @@ export class StreamService {
             const track = res.data;                    
             track.date = new Date(track.date);            
             track.ended = false;   
+            track.description = track.description ? track.description.replaceAll("\n", "<br/>") : null;  
             track.lyrics = track.lyrics ? track.lyrics.replaceAll("\n", "<br/>") : null;  
             track.spotify = track.spotifyId ? {
               url : `https://open.spotify.com/${track.spotifyId}`,

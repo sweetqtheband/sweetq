@@ -19,7 +19,7 @@
             <toggler (isOpen)="handleOpen($event)" class="toggler">
               <toggler-item data-id="description" *ngIf="item?.description">
                 <div class="title" handler>{{ 'track.description' | translate}}</div>
-                {{item.description}}
+                <span [innerHTML]=item.description></span>
               </toggler-item>
               <toggler-item data-id="lyrics" *ngIf="item?.lyrics" [open]="false">
                 <div class="title" handler>{{ 'track.lyrics' | translate}}</div>
