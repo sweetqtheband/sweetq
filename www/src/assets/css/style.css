@@ -465,6 +465,16 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   background-image: url('../imgs/cover/quevamos.jpg');
 }
 
+.sq-section.notice.info.ley .sq-image.image-cover:before,
+.sq-section.notice.info.ley .sq-image.image-cover:after {
+  background-image: url('../imgs/cover/ley.jpg');
+}
+
+.sq-section.notice.info.fiesta .sq-image.image-cover:before,
+.sq-section.notice.info.fiesta .sq-image.image-cover:after {
+  background-image: url('../imgs/cover/fiesta.jpg');
+}
+
 .sq-section.notice.info.yaesnavidad .sq-image.image-cover:before,
 .sq-section.notice.info.yaesnavidad .sq-image.image-cover:after {
   background-image: url('../imgs/cover/yaesnavidad.jpg');
@@ -487,10 +497,11 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
 .sq-section.notice.video .sq-image.image-cover {
   position: relative;
 }
-
-.sq-section.notice.video.mercado-motores .sq-image.image-cover {
-  background-image: url('../imgs/youtube/makingof/atrapado.jpg');
+/*
+.sq-section.notice.video.fiestas-arganzuela .sq-image.image-cover {
+  background-image: url('../imgs/youtube/live/fiestasarganzuela.jpg');
 }
+*/
 
 .sq-section.notice.video.makingof.atrapado .sq-image.image-cover {
   background-image: url('../imgs/youtube/makingof/atrapado.jpg');
@@ -510,6 +521,10 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
 
 .sq-section.notice.info.gig.g20240906 .sq-image.image-cover:before {
   background-image: url('../imgs/gigs/20240906.jpg');
+}
+
+.sq-section.notice.info.gig.g20241004 .sq-image.image-cover:before {
+  background-image: url('../imgs/gigs/20241004.jpg');
 }
 
 .sq-section.notice.video .column-right,

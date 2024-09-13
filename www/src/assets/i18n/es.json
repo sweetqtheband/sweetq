@@ -37,10 +37,10 @@
   "gigs": {
     "label": "Conciertos",
     "viewInGoogleMap": "Ver en Google Maps",
-    "20240906": {
-      "date": "06 Septiembre",
-      "title": "Fiestas de la Melonera",
-      "text": "El viernes 06 de septiembre a las 20:00 os esperamos a todos en el recinto ferial de las <span class='bold'>Fiestas de la Melonera</span> del distrito de Arganzuela. La fiesta está garantizada...   ¡Nos vemos allí!",
+    "20241004": {
+      "date": "04 Octubre",
+      "title": "Primera Fila Fest",
+      "text": "El viernes 04 de octubre estaremos tocando en el <span class='bold'>Primera Fila Fest</span> en la sala <span>Fun House</span>. Muy pronto tendremos el link a las entradas disponibles, ¡permanece atento!",
       "moreInfo": "Ver noticia"
     }
   },
@@ -57,9 +57,9 @@
       "appleMusic": "¡Pre-add realizado correctamente!",
       "deezer": "Pre-save en Deezer realizado correctamente"
     },
-    "title": "¿Qué vamos a hacer?",
-    "subtitle": "Estreno 28 de junio",
-    "text": "El próximo 28 de junio estrenamos <span class='bold'>'¿Qué vamos a hacer?'</span>. Un chico y una chica se conocen en una fiesta noventera, se gustan y cuando la noche acaba las expectativas se cruzan en su camino... ¡descubre lo que pasa antes que nadie!"    
+    "title": "Ley de la atracción",
+    "subtitle": "Estreno 28 de septiembre",
+    "text": "El próximo 27 de septiembre estrenamos <span class='bold'>Ley de la atracción</span>. ¿Qué pasa cuando alguien te desarma con una sola mirada? Este tema captura ese momento en el que todo cambia, donde el magnetismo entre dos personas es tan fuerte que no hay vuelta atrás y no sabes por qué... ¡descubre si esta ley es algo más que una simple teoría!"
   },
   "links": {
     "title": "Sweet Q",
@@ -70,11 +70,11 @@
     "appleAvailable": "Link Apple Music (disponible {{date}})",
     "youtubeMusic": "Youtube Music",
     "youtube": {
-      "videoclip": "Videoclip '¿Qué vamos a hacer?'",
+      "videoclip": "Videoclip 'Lo siento, pero no'",
       "cover": "Versionamos 'Zorra' de Nebulossa"
     },
     "presave": {
-      "quevamosahacer": "Pre-save '¿Qué vamos a hacer?'"
+      "ley": "Pre-save 'Ley de la atracción'"
     },
     "contest": {
       "fib": "¡Vótanos para tocar en el FIB!"

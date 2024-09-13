@@ -21,24 +21,17 @@
     "link": "https://music.youtube.com/playlist?list=OLAK5uy_nhB8J7OncZwnuh1TiGl7xDJS8e1lc1l1g"
   },
   {
+    "type": "spotify",
+    "icon": "icon-spotify",
+    "text": "links.presave.ley",
+    "button": "secondary",
+    "link": "https://push.fm/ps/sweet-q-ley-de-la-atraccion"
+  },
+  {
     "type": "youtube",
     "icon": "icon-youtube",
     "text": "links.youtube.videoclip",
     "button": "secondary",
-    "link": "https://www.youtube.com/watch?v=SI59qpNvZvs"
-  },
-  {
-    "type": "vackstage",
-    "icon": "icon-vackstage",
-    "text": "links.vackstage.20240525",
-    "button": "secondary",
-    "link": "https://vackstage.com/es/indie-rock/sweet-q"
-  },
-  {
-    "type": "vackstage",
-    "icon": "icon-vackstage",
-    "text": "links.vackstage.20240719",
-    "button": "secondary",
-    "link": "https://vackstage.com/es/entrevistas/sweet-q-en-sonidos-nuevos"
+    "link": "https://www.youtube.com/watch?v=d6XO7a4ez_U"
   }
 ]

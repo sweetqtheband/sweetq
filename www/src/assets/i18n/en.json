@@ -1,19 +1,6 @@
 {
   "date": {
-    "months": [
-      "january",
-      "february",
-      "march",
-      "april",
-      "may",
-      "june",
-      "july",
-      "august",
-      "september",
-      "october",
-      "november",
-      "december"
-    ],
+    "months": ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"],
     "formats": {
       "short": {
         "day": "%M %d %Y",
@@ -50,10 +37,10 @@
   "gigs": {
     "label": "Gigs",
     "viewInGoogleMap": "View in Google Maps",
-    "20240906": {
-      "date": "06 September",
-      "title": "Fiestas de la Melonera",
-      "text": "On Friday, September 6th at 8:00 PM, we look forward to seeing you all at the fairgrounds of the <span class='bold'>Fiestas de la Melonera</span> in the Arganzuela district. The party is guaranteed... See you there!",
+    "20241004": {
+      "date": "04 October",
+      "title": "Primera Fila Fest",
+      "text": "On Friday, October 4th, we’ll be performing at the <span class='bold'>Primera Fila Fest</span> at <span>Fun House</span>. We’ll have the ticket link available very soon, so stay tuned!",
       "moreInfo": "See news"
     }
   },
@@ -70,9 +57,9 @@
       "appleMusic": "Pre-add done successfully!",
       "deezer": "Pre-save done successfully!"
     },
-    "title": "¿Qué vamos a hacer?",
-    "subtitle": "Premieres on June 28",
-    "text": "On June 28, we premiere <span class='bold'>'¿Qué vamos a hacer?'</span>. A boy and a girl meet at a '90s party, they like each other, and when the night ends, expectations cross their path... discover what happens before anyone else!"
+    "title": "Ley de la atracción",
+    "subtitle": "Premieres on September 27",
+    "text": "On September 27th, we’re releasing <span class='bold'>Ley de la atracción</span>. What happens when someone disarms you with just one look? This song captures that moment when everything changes, where the magnetism between two people is so strong that there’s no turning back, and you don’t even know why... find out if this law is more than just a simple theory!"
   },
   "links": {
     "title": "Sweet Q",
@@ -83,11 +70,11 @@
     "appleAvailable": "Apple Music link (available {{date}})",
     "youtubeMusic": "Youtube Music",
     "youtube": {
-      "videoclip": "Music Video 'Atrapado en el tiempo'",
+      "videoclip": "Music Video 'Lo siento, pero no'",
       "cover": "We covered 'Zorra' by Nebulossa"
     },
     "presave": {
-      "quevamosahacer": "Pre-save '¿Qué vamos a hacer?'"
+      "ley": "Pre-save 'Ley de la atracción'"
     },
     "contest": {
       "fib": "Vote for us to play at FIB!"
