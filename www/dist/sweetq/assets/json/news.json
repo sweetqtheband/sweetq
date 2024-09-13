@@ -1,16 +1,16 @@
 [ 
   {
-    "type": "info cover quevamosahacer",
-    "title": "info.title",
-    "subtitle": "info.subtitle",
-    "text": "info.text",
-    "button": "info.button",
-    "spotifyHref": "https://open.spotify.com/album/732Pm0mxnNeGec676x28vW"
+    "type": "info cover ley",
+    "title": "presave.title",
+    "subtitle": "presave.subtitle",
+    "text": "presave.text",
+    "button": "presave.spotify",
+    "spotifyHref": "https://push.fm/ps/sweet-q-ley-de-la-atraccion"
   },
   {
-    "type": "info gig g20240906",
-    "title": "gigs.20240906.title",
-    "subtitle": "gigs.20240906.date",
-    "text": "gigs.20240906.text"    
+    "type": "info gig g20241004",
+    "title": "gigs.20241004.title",
+    "subtitle": "gigs.20241004.date",
+    "text": "gigs.20241004.text"    
   }
 ]
