@@ -1,0 +1,25 @@
+.input-text,
+.input-password {  
+  position: relative;
+  max-width: 300px;
+  min-width: 100px;
+  cursor: pointer;
+  font-size: var(--controls-font-size);
+  border: solid 1px var(--border-color);
+  border-radius: var(--controls-border-radius);
+  min-height: var(--controls-height);
+  padding: var(--padding);
+  background-color: var(--light-bg-color);
+
+  &.disabled {
+    .select--selected {
+      user-select: none;
+      cursor: default;
+      opacity: .5;
+    }
+  }
+  &::placeholder,
+  &--placeholder {
+    color: var(--light-text-placeholder)
+  }
+}

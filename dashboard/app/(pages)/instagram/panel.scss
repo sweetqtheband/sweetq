@@ -1,0 +1,30 @@
+.panel-content {
+  text-align: center;
+}
+.image {
+  border-radius: 100%;
+}
+.fields {
+  display: flex;
+  padding: calc(var(--padding) * 2);
+  gap: var(--padding);
+  align-items: flex-start;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  flex-direction: column;
+  .input,
+  .select {
+    max-width: 500px;
+    width: 100%;
+  }
+  .field-wrapper {
+    max-width: 500px;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    gap: var(--padding);  
+    .select {
+      width: 100%;
+    }
+  }
+}

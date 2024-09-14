@@ -1,0 +1,34 @@
+.menu {
+  background-color: var(--dark-bg-color);
+  color: var(--dark-text-color);
+  min-height: var(--menu-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+
+  .left,
+  .right {
+    display: flex;
+    align-items: center;
+  }
+
+  ul {
+    display: flex;
+    align-items: center;
+    list-style-type: none;
+    li {
+      padding: calc(var(--padding) * 2);
+    }
+  }
+  img {
+    padding: var(--padding);
+    box-sizing: content-box;
+    cursor:pointer;
+  }
+
+  .button {
+    height: calc(calc(var(--controls-height) / 4) * 3)
+  }
+}  

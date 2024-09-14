@@ -1,0 +1,33 @@
+.switch {
+  display: flex;
+  align-items: center;
+  gap: var(--padding);
+  &-options {
+    display: flex;
+    border: solid 1px var(--border-color);
+    border-radius: calc(var(--controls-border-radius) * 10);
+    background-color: var(--light-bg-color-disabled);
+    color: var(--light-text-color-disabled);
+    label {
+      padding: var(--padding);
+      cursor: pointer;
+      
+      .radio {
+        position: absolute;
+        opacity: 0; 
+      }
+      &.checked {
+        background-color: var(--light-bg-color);
+        border-radius: calc(var(--controls-border-radius) * 10);
+        color: var(--light-text-color);
+      }
+
+      &:first-child.checked {
+        box-shadow: 0 0 0 1px var(--border-color);
+      }
+      &:last-child.checked {
+        box-shadow: 0 0 0 1px var(--border-color);
+      }
+    }
+  }
+}
