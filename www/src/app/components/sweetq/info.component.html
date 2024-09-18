@@ -20,7 +20,7 @@
         <div class="sq-text" [innerHTML]="data.text | translate"></div>
         <div class="sq-actions">
           <a target="_blank" *ngIf="data.href || data.spotifyHref || data.youtubeHref" [href]="data.href || data.spotifyHref || data.youtubeHref" class="sq-button" [class]="{'rounded': !data.spotifyHref, 'solid-blue': '!data.spotifyHref', 'sq-spotify': data.spotifyHref}">
-            <span class="sq-icon" [class]="{'icon-spotify': data.spotifyHref}" *ngIf="data.spotifyHref"></span>
+            <span class="sq-icon" [class]="{'icon-spotify': data.spotifyHref, 'icon-gigs': data.icon === 'icon-gigs', 'icon-youtube': data.icon === 'icon-youtube'}" *ngIf="data.spotifyHref || data.icon"></span>
             <div class="sq-button-text">{{  data.button | translate}}</div>
           </a>
         </div>

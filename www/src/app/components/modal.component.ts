@@ -10,7 +10,8 @@ import {
 
   @Component({
     selector: 'modal',
-    templateUrl: './modal.component.html',  
+    templateUrl: './modal.component.html', 
+    styleUrls: ['./modal.component.scss'], 
   })
   
   

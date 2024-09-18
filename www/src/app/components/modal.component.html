@@ -1,6 +1,8 @@
 <div class="sq-modal" *ngIf="show">
 
 </div>
-<div class="sq-modal-preview" *ngIf="show" (click)="hideVideo()">    
+<div class="sq-modal-preview" *ngIf="show" (click)="hideVideo()"> 
+  <div class="sq-modal-preview--wrapper">
     <iframe width="560" height="315" [src]="url | safe" allow="autoplay" frameborder="0" allowfullscreen></iframe>
+  </div>
 </div>

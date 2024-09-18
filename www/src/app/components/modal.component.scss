@@ -1,0 +1,11 @@
+:host {
+
+  .sq-modal-preview {
+    display: flex;
+    align-items: center;
+    &--wrapper {
+      width: 100%;
+      aspect-ratio: 16/9;            
+    }
+  }
+}

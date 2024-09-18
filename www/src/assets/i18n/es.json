@@ -40,8 +40,8 @@
     "20241004": {
       "date": "04 Octubre",
       "title": "Primera Fila Fest",
-      "text": "El viernes 04 de octubre estaremos tocando en el <span class='bold'>Primera Fila Fest</span> en la sala <span>Fun House</span>. Muy pronto tendremos el link a las entradas disponibles, ¡permanece atento!",
-      "moreInfo": "Ver noticia"
+      "text": "El viernes 04 de octubre estaremos tocando en el <span class='bold'>Primera Fila Fest</span> en la sala <span>Fun House</span>. Ya podéis comprar las entradas anticipadas, ¡no te lo pierdas!",
+      "button": "Comprar entradas"      
     }
   },
   "stayTuned": "Por el momento no tenemos conciertos a la vista. ¡Permanece atento!",
@@ -82,6 +82,9 @@
     "vackstage": {
       "20240525": "Ver concierto El Perro 25 mayo",
       "20240719": "Ven entrevista en 'Sonidos Nuevos'"
+    },
+    "gigs": {
+      "20241004": "Entradas Primera Fila Fest"
     }
   },
   "listen": {
@@ -98,10 +101,10 @@
     "contactUs": "¡Contáctanos!"
   },
   "video": {
-    "mercadoMotores": {
-      "title": "Mercado de Motores",
+    "fiestasArganzuela": {
+      "title": "Fiestas de Arganzuela 2024",
       "subtitle": "Concierto completo en Youtube",
-      "text": "Ya podéis ver nuestro concierto completo en el Mercado de Motores en nuestro canal de Youtube. Si queréis escuchar nuestros próximos temas en formato directo... ¡No os lo perdáis!",
+      "text": "Ya podéis ver nuestro concierto completo en las Fiestas de La Melonera de Arganzuela en nuestro canal de Youtube. Si queréis escuchar nuestros próximos temas en formato directo... ¡No os lo perdáis!",
       "button": "Ver en Youtube"
     }
   },

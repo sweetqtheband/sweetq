@@ -8,9 +8,21 @@
     "spotifyHref": "https://push.fm/ps/sweet-q-ley-de-la-atraccion"
   },
   {
+    "type": "video fiestas-arganzuela",
+    "title": "video.fiestasArganzuela.title",
+    "subtitle": "video.fiestasArganzuela.subtitle",
+    "text": "video.fiestasArganzuela.text",   
+    "button": "video.fiestasArganzuela.button", 
+    "icon": "icon-youtube",
+    "youtubeHref": "https://www.youtube.com/embed/wqQsUy_D-lU"
+  },
+  {
     "type": "info gig g20241004",
     "title": "gigs.20241004.title",
     "subtitle": "gigs.20241004.date",
-    "text": "gigs.20241004.text"    
+    "text": "gigs.20241004.text",   
+    "button": "gigs.20241004.button", 
+    "icon": "icon-gigs",
+    "href": "https://entradium.com/es/events/primera-fila-fest-vol-3-edicion-madrid-madrid/sessions/04-10-2024-44b63c14-a9f6-45fa-850b-9d9f21382f5c"
   }
 ]
