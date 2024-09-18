@@ -11,9 +11,7 @@
     "type": "video fiestas-arganzuela",
     "title": "video.fiestasArganzuela.title",
     "subtitle": "video.fiestasArganzuela.subtitle",
-    "text": "video.fiestasArganzuela.text",   
-    "button": "video.fiestasArganzuela.button", 
-    "icon": "icon-youtube",
+    "text": "video.fiestasArganzuela.text", 
     "youtubeHref": "https://www.youtube.com/embed/wqQsUy_D-lU"
   },
   {
