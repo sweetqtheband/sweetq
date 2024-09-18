@@ -343,6 +343,7 @@ body {
 
 .sq-half-columns .sq-column {
     flex: 1;
+    align-self: flex-start;
 }
 
 .sq-image-wrapper {
@@ -501,6 +502,9 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   background-image: url('../imgs/youtube/live/fiestasarganzuela.jpg');
 }
 
+.sq-section.notice.video.fiestas-arganzuela .column-left {
+  padding-top: 0px;
+}
 .sq-section.notice.video.makingof.atrapado .sq-image.image-cover {
   background-image: url('../imgs/youtube/makingof/atrapado.jpg');
 }
@@ -835,8 +839,9 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
         margin: 0 auto 38px auto;
         max-width: 200px;
     }
-    .sq-section.notice.info .sq-image-wrapper {
-        margin: 0 auto;
+
+    .sq-section.notice .sq-actions {
+      text-align: center;
     }
     .sq-section.notice.info {
         padding: 20px 20px 50px 20px;
