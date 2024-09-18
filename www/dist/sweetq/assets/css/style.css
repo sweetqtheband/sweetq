@@ -342,8 +342,11 @@ body {
 }
 
 .sq-half-columns .sq-column {
-    flex: 1;
-    align-self: flex-start;
+    flex: 1;  
+}
+
+.sq-half-columns .sq-column.column-left {
+  align-self: flex-start;
 }
 
 .sq-image-wrapper {
