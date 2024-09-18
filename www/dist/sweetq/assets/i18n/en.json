@@ -40,8 +40,8 @@
     "20241004": {
       "date": "04 October",
       "title": "Primera Fila Fest",
-      "text": "On Friday, October 4th, we’ll be performing at the <span class='bold'>Primera Fila Fest</span> at <span>Fun House</span>. We’ll have the ticket link available very soon, so stay tuned!",
-      "moreInfo": "See news"
+      "text": "On Friday, October 4th, we'll be performing at the <span class='bold'>Primera Fila Fest</span> at <span>Fun House</span>. You can now buy early tickets, don't miss it out!",
+      "button": "Buy tickets"
     }
   },
   "stayTuned": "At this time we haven't any gig scheduled soon. Stay tuned!",
@@ -82,7 +82,11 @@
     "vackstage": {
       "20240525": "View concert El Perro May 25th",
       "20240719": "View interview in 'Sonidos Nuevos'"
+    },
+    "gigs": {
+      "20241004": "Tickets for Primera Fila Fest"
     }
+
   },
   "listen": {
     "monthlyListeners": "{{total}} monthly listeners",
@@ -98,10 +102,10 @@
     "contactUs": "Contact us!"
   },
   "video": {
-    "mercadoMotores": {
-      "title": "Mercado de Motores",
+    "fiestasArganzuela": {
+      "title": "Fiestas de Arganzuela 2024",
       "subtitle": "Full show on Youtube",
-      "text": "You can already watch our latest full live show at Mercado de Motores in our Youtube channel. If you want to hear our new forthcoming releases in a live format... Don't miss it out!",
+      "text": "You can already watch our latest full live show at Fiestas de La Melonera in Arganzuela in our Youtube channel. If you want to hear our new forthcoming releases in a live format... Don't miss it out!",
       "button": "Watch on Youtube"
     }
   },

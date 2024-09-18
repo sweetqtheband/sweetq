@@ -28,10 +28,10 @@
     "link": "https://push.fm/ps/sweet-q-ley-de-la-atraccion"
   },
   {
-    "type": "youtube",
-    "icon": "icon-youtube",
-    "text": "links.youtube.videoclip",
+    "type": "gig",
+    "icon": "icon-gigs",
+    "text": "links.gigs.20241004",
     "button": "secondary",
-    "link": "https://www.youtube.com/watch?v=d6XO7a4ez_U"
+    "link": "https://entradium.com/es/events/primera-fila-fest-vol-3-edicion-madrid-madrid/sessions/04-10-2024-44b63c14-a9f6-45fa-850b-9d9f21382f5c"
   }
 ]
