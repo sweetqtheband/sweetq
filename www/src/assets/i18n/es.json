@@ -9,7 +9,7 @@
       }
     }
   },
-  "releaseMessage": "¡Ya podéis escuchar \"¿Qué vamos a hacer?\"!",
+  "releaseMessage": "¡Ya podéis escuchar \"Ley de la atracción\"!",
   "listenInSpotify": "Escuchar en Spotify",
   "listenAlsoIn": "Disponible también en...",
   "videos": "Vídeos",
@@ -23,9 +23,9 @@
   },
   "availableSince": "Disponible a partir del 16 de octubre en:",
   "info": {
-    "title": "¿Qué vamos a hacer?",
+    "title": "Ley de la atracción",
     "subtitle": "Ya disponible",
-    "text": "Ya podéis escuchar en todas las plataformas <span class='bold'>'¿Qué vamos a hacer?'</span>, el cuarto single de nuestro próximo LP. Un chico y una chica se conocen en una fiesta noventera, se gustan y cuando la noche acaba las expectativas se cruzan en su camino... ¡Descubre como termina la historia!",
+    "text": "Ya podéis escuchar en todas las plataformas <span class='bold'>'Ley de la atracción'</span>, el quinto single de nuestro próximo LP. ¿Qué pasa cuando alguien te desarma con una sola mirada? Este tema captura ese momento en el que todo cambia, donde el magnetismo entre dos personas es tan fuerte que no hay vuelta atrás y no sabes por qué... ¡descubre si esta ley es algo más que una simple teoría!",
     "button": "Escuchar en Spotify"
   },
   "pressKit": {
@@ -63,7 +63,7 @@
   },
   "links": {
     "title": "Sweet Q",
-    "subtitle": "'¿Qué vamos a hacer?' nuevo single",
+    "subtitle": "'Ley de la atracción' nuevo single",
     "spotify": "Spotify",
     "spotifyAvailable": "Link Spotify (disponible {{date}})",
     "appleMusic": "Apple Music",
@@ -71,7 +71,8 @@
     "youtubeMusic": "Youtube Music",
     "youtube": {
       "videoclip": "Videoclip 'Lo siento, pero no'",
-      "cover": "Versionamos 'Zorra' de Nebulossa"
+      "cover": "Versionamos 'Zorra' de Nebulossa",
+      "arganzuela": "Ver concierto 'Fiestas de Arganzuela 2024'"
     },
     "presave": {
       "ley": "Pre-save 'Ley de la atracción'"
@@ -91,8 +92,8 @@
     "monthlyListeners": "{{total}} oyentes mensuales",
     "latestRelease": {
       "label": "Último lanzamiento",
-      "date": "28 de junio 2024",
-      "title": "¿Qué vamos a hacer?",
+      "date": "27 de septiembre 2024",
+      "title": "Ley de la atracción",
       "totalPlays": "{{total}} reproducciones"
     },
     "nextReleases": {

@@ -4,28 +4,21 @@
     "icon": "icon-spotify",
     "text": "links.spotify",
     "button": "primary",
-    "link": "https://open.spotify.com/album/732Pm0mxnNeGec676x28vW"
+    "link": "https://open.spotify.com/album/2muhEidJ0souFsYvPd3ioU"
   },
   {
     "type": "appleMusic",
     "icon": "icon-apple-music",
     "text": "links.appleMusic",
     "button": "primary",
-    "link": "https://music.apple.com/es/album/qu%C3%A9-vamos-a-hacer-single/1748711009"
+    "link": "https://music.apple.com/es/album/ley-de-la-atracci%C3%B3n-single/1767473340"
   },
   {
     "type": "youtubeMusic",
     "icon": "icon-youtube-music",
     "text": "links.youtubeMusic",
     "button": "primary",
-    "link": "https://music.youtube.com/playlist?list=OLAK5uy_nhB8J7OncZwnuh1TiGl7xDJS8e1lc1l1g"
-  },
-  {
-    "type": "spotify",
-    "icon": "icon-spotify",
-    "text": "links.presave.ley",
-    "button": "secondary",
-    "link": "https://push.fm/ps/sweet-q-ley-de-la-atraccion"
+    "link": "https://music.youtube.com/playlist?list=OLAK5uy_mLRXuPUlh7lYzPYMEfS0sY5OF8VwTN_zg"
   },
   {
     "type": "gig",
@@ -33,5 +26,12 @@
     "text": "links.gigs.20241004",
     "button": "secondary",
     "link": "https://entradium.com/es/events/primera-fila-fest-vol-3-edicion-madrid-madrid/sessions/04-10-2024-44b63c14-a9f6-45fa-850b-9d9f21382f5c"
+  },
+  {
+    "type": "youtube",
+    "icon": "icon-youtube",
+    "text": "links.youtube.arganzuela",
+    "button": "secondary",
+    "link": "https://www.youtube.com/watch?v=wqQsUy_D-lU"
   }
 ]
