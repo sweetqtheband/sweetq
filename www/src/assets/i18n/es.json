@@ -1,6 +1,19 @@
 {
   "date": {
-    "months": ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"],
+    "months": [
+      "enero",
+      "febrero",
+      "marzo",
+      "abril",
+      "mayo",
+      "junio",
+      "julio",
+      "agosto",
+      "septiembre",
+      "octubre",
+      "noviembre",
+      "diciembre"
+    ],
     "formats": {
       "short": {
         "day": "%d %M %Y",
@@ -14,12 +27,11 @@
   "listenAlsoIn": "Disponible también en...",
   "videos": "Vídeos",
   "videoLabel": {
+    "ley": "Vídeo - Ley de la atracción",
     "losiento": "Vídeo - Lo siento, pero no",
     "quevamosahacer": "Vídeo - ¿Qué vamos a hacer?",
     "atrapadoeneltiempo": "Vídeo - Atrapado en el tiempo",
-    "caminocorrecto": "Vídeo - El camino correcto",
-    "nuevaera": "Vídeo - La nueva era",
-    "cosasclaras": "Vídeo - Las cosas claras"
+    "caminocorrecto": "Vídeo - El camino correcto"
   },
   "availableSince": "Disponible a partir del 16 de octubre en:",
   "info": {
@@ -37,17 +49,16 @@
   "gigs": {
     "label": "Conciertos",
     "viewInGoogleMap": "Ver en Google Maps",
-    "20241004": {
-      "date": "04 Octubre",
-      "title": "Primera Fila Fest",
-      "text": "El viernes 04 de octubre estaremos tocando en el <span class='bold'>Primera Fila Fest</span> en la sala <span>Fun House</span>. Ya podéis comprar las entradas anticipadas, ¡no te lo pierdas!",
-      "button": "Comprar entradas"      
+    "20241102": {
+      "date": "02 Noviembre",
+      "title": "IV Concurso de bandas de Vicálvaro",
+      "text": "El sábado 02 de noviembre estaremos tocando en el <span class='bold'>concurso de bandas de Vicálvaro</span> en la sala <span>ReviLive</span>. A partir de las 19:00 y hasta las 23:00, entrada gratuita. ¡No te lo pierdas!"
     }
   },
   "stayTuned": "Por el momento no tenemos conciertos a la vista. ¡Permanece atento!",
   "buyTickets": "Comprar entradas",
   "goToItsFacebook": "Ir a su página de Facebook",
-  "goToItsInstagram": "Ir a su página de Instagram",  
+  "goToItsInstagram": "Ir a su página de Instagram",
   "presave": {
     "spotify": "Pre-save en Spotify",
     "appleMusic": "Pre-add en Apple Music",
@@ -70,9 +81,8 @@
     "appleAvailable": "Link Apple Music (disponible {{date}})",
     "youtubeMusic": "Youtube Music",
     "youtube": {
-      "videoclip": "Videoclip 'Lo siento, pero no'",
-      "cover": "Versionamos 'Zorra' de Nebulossa",
-      "arganzuela": "Ver concierto 'Fiestas de Arganzuela 2024'"
+      "ley": "Videoclip 'Ley de la atracción'",
+      "arganzuela": "Ver directo 'Fiestas de Arganzuela 2024'"
     },
     "presave": {
       "ley": "Pre-save 'Ley de la atracción'"
@@ -106,6 +116,12 @@
       "title": "Fiestas de Arganzuela 2024",
       "subtitle": "Concierto completo en Youtube",
       "text": "Ya podéis ver nuestro concierto completo en las Fiestas de La Melonera de Arganzuela en nuestro canal de Youtube. Si queréis escuchar nuestros próximos temas en formato directo... ¡No os lo perdáis!",
+      "button": "Ver en Youtube"
+    },
+    "ley": {
+      "title": "Nuevo videoclip",
+      "subtitle": "Ley de la atracción",
+      "text": "Acabamos de lanzar nuestro videoclip de 'Ley de la atracción', grabado en el centro de Madrid con la colaboración de parejas reales que nos regalaron momentos únicos para dar vida a este tema. ¡Esperemos que te guste!",
       "button": "Ver en Youtube"
     }
   },

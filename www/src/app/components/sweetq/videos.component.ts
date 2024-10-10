@@ -10,6 +10,10 @@ export class SweetQVideosComponent {
 
   public videoUrl: string = '';
   public videos = [
+    {
+      id: 'ley',
+      url: 'https://www.youtube.com/embed/IN0iZTZkN2Q',
+    },
     { id: 'losiento', url: 'https://www.youtube.com/embed/d6XO7a4ez_U' },
     { id: 'quevamosahacer', url: 'https://www.youtube.com/embed/SI59qpNvZvs' },
     {
@@ -17,7 +21,6 @@ export class SweetQVideosComponent {
       url: 'https://www.youtube.com/embed/glVnYUQwPqE',
     },
     { id: 'caminocorrecto', url: 'https://www.youtube.com/embed/5HU8pUNCpMs' },
-    { id: 'cosasclaras', url: 'https://www.youtube.com/embed/1paz9-hyg30' },
   ];
 
   showModal(value: any, video: string): void {

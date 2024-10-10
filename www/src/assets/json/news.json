@@ -1,4 +1,4 @@
-[ 
+[
   {
     "type": "info cover ley",
     "title": "info.title",
@@ -8,19 +8,17 @@
     "spotifyHref": "https://open.spotify.com/album/2muhEidJ0souFsYvPd3ioU"
   },
   {
-    "type": "video fiestas-arganzuela",
-    "title": "video.fiestasArganzuela.title",
-    "subtitle": "video.fiestasArganzuela.subtitle",
-    "text": "video.fiestasArganzuela.text", 
-    "youtubeHref": "https://www.youtube.com/embed/wqQsUy_D-lU"
+    "type": "video ley",
+    "title": "video.ley.title",
+    "subtitle": "video.ley.subtitle",
+    "text": "video.ley.text",
+    "youtubeHref": "https://www.youtube.com/embed/IN0iZTZkN2Q"
   },
   {
-    "type": "info gig g20241004",
-    "title": "gigs.20241004.title",
-    "subtitle": "gigs.20241004.date",
-    "text": "gigs.20241004.text",   
-    "button": "gigs.20241004.button", 
-    "icon": "icon-gigs",
-    "href": "https://entradium.com/es/events/primera-fila-fest-vol-3-edicion-madrid-madrid/sessions/04-10-2024-44b63c14-a9f6-45fa-850b-9d9f21382f5c"
+    "type": "info gig g20241102",
+    "title": "gigs.20241102.title",
+    "subtitle": "gigs.20241102.date",
+    "text": "gigs.20241102.text",
+    "icon": "icon-gigs"
   }
 ]

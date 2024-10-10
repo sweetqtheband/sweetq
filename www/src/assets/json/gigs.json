@@ -58,7 +58,7 @@
     "bands": [27, 28],
     "event": null,
     "tickets": null
-  },  
+  },
   {
     "id": 6,
     "date": "2024-07-20",
@@ -94,6 +94,17 @@
     "bands": [24, 25],
     "event": null,
     "tickets": "https://entradium.com/es/events/primera-fila-fest-vol-3-edicion-madrid-madrid/sessions/04-10-2024-44b63c14-a9f6-45fa-850b-9d9f21382f5c"
+  },
+  {
+    "id": 9,
+    "date": "2024-11-02 19:00",
+    "city": "Madrid",
+    "hour": "19:00",
+    "venue": "IV Concurso de bandas de Vicálvaro",
+    "address": "ReviLive",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3038.3438392124685!2d-3.5935740877339737!3d40.40123307132298!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42251081e0ce13%3A0x978e66ebb6114cf8!2sReviLive!5e0!3m2!1ses!2ses!4v1728587869214!5m2!1ses!2ses",
+    "bands": [29, 30],
+    "event": null,
+    "tickets": null
   }
 ]
-
