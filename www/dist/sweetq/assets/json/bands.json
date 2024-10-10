@@ -128,7 +128,7 @@
     "id": 26,
     "name": "Marsella",
     "instagram": "https://www.instagram.com/suenamarsella"
-  },  
+  },
   {
     "id": 27,
     "name": "Time For Action",
@@ -138,5 +138,15 @@
     "id": 28,
     "name": "Roble",
     "instagram": "https://www.instagram.com/roble_musica"
+  },
+  {
+    "id": 29,
+    "name": "Beggars Blade",
+    "instagram": "https://www.instagram.com/beggarsblade_"
+  },
+  {
+    "id": 30,
+    "name": "Konga Kanibal",
+    "instagram": "https://www.instagram.com/kongakanibal"
   }
 ]

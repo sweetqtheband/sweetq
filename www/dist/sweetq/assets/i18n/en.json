@@ -1,6 +1,19 @@
 {
   "date": {
-    "months": ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"],
+    "months": [
+      "january",
+      "february",
+      "march",
+      "april",
+      "may",
+      "june",
+      "july",
+      "august",
+      "september",
+      "october",
+      "november",
+      "december"
+    ],
     "formats": {
       "short": {
         "day": "%M %d %Y",
@@ -14,12 +27,11 @@
   "listenAlsoIn": "Also available in...",
   "videos": "Videos",
   "videoLabel": {
+    "ley": "Video - Ley de la atracción",
     "losiento": "Video - Lo siento, pero no",
     "quevamosahacer": "Video - ¿Qué vamos a hacer?",
     "atrapadoeneltiempo": "Video - Atrapado en el tiempo",
-    "caminocorrecto": "Video - El camino correcto",
-    "nuevaera": "Video - La nueva era",
-    "cosasclaras": "Video - Las cosas claras"
+    "caminocorrecto": "Video - El camino correcto"
   },
   "availableSince": "Available from october 16th in:",
   "info": {
@@ -37,11 +49,10 @@
   "gigs": {
     "label": "Gigs",
     "viewInGoogleMap": "View in Google Maps",
-    "20241004": {
-      "date": "04 October",
-      "title": "Primera Fila Fest",
-      "text": "On Friday, October 4th, we'll be performing at the <span class='bold'>Primera Fila Fest</span> at <span>Fun House</span>. You can now buy early tickets, don't miss it out!",
-      "button": "Buy tickets"
+    "20241102": {
+      "date": "November 2nd",
+      "title": "IV Vicálvaro Band Contest",
+      "text": "On Saturday, November 2nd, we’ll be performing at the <span class='bold'>Vicálvaro Band Contest</span> at <span>ReviLive</span>. From 7:00 PM to 11:00 PM, free entry. Don’t miss it!"
     }
   },
   "stayTuned": "At this time we haven't any gig scheduled soon. Stay tuned!",
@@ -70,8 +81,7 @@
     "appleAvailable": "Apple Music link (available {{date}})",
     "youtubeMusic": "Youtube Music",
     "youtube": {
-      "videoclip": "Music Video 'Lo siento, pero no'",
-      "cover": "We covered 'Zorra' by Nebulossa",
+      "ley": "Music Video 'Ley de la atracción'",
       "arganzuela": "Watch 'Fiestas de Arganzuela 2024' live gig"
     },
     "presave": {
@@ -87,7 +97,6 @@
     "gigs": {
       "20241004": "Tickets for Primera Fila Fest"
     }
-
   },
   "listen": {
     "monthlyListeners": "{{total}} monthly listeners",
@@ -108,6 +117,12 @@
       "subtitle": "Full show on Youtube",
       "text": "You can already watch our latest full live show at Fiestas de La Melonera in Arganzuela in our Youtube channel. If you want to hear our new forthcoming releases in a live format... Don't miss it out!",
       "button": "Watch on Youtube"
+    },
+    "ley": {
+      "title": "New music video",
+      "subtitle": "Ley de la atracción",
+      "text": "We’ve just released our music video for 'Ley de la atracción', filmed in the heart of Madrid with the collaboration of real couples who shared unique moments with us to bring this song to life. We hope you like it!",
+      "button": "Watch on YouTube"
     }
   },
   "albums": {
