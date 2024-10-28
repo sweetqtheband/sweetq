@@ -1,0 +1,14 @@
+<div class="sq-section kit">
+    <div class="sq-wrapper">
+        <div class="sq-half-columns">
+            <div class="sq-column column-right">
+                <div class="sq-text" [innerHTML]="'file.download.title'|translate:{track: item.title}"></div>
+                <div class="sq-actions">
+                    <div class="sq-button rounded solid-blue"  (click)="download()">
+                        <div class="sq-button-text" [innerHTML]="'file.download.mp3'|translate"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -8,6 +8,7 @@ export interface Media {
   duration?: string;
   advance?: string;
   ended?: boolean;
+  download?:boolean
   nextId?: number;
   spotify?: any;
   apple?: any;

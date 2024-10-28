@@ -48,7 +48,10 @@
         </div>
       </div>
     </div>
-    <sweetq-kit></sweetq-kit>
+    <sweetq-track-download [item]="item" [tid]="tid" *ngIf="canDownload; else sweetqKit"></sweetq-track-download>
+    <ng-template #sweetqKit>
+      <sweetq-kit #sweetqKit></sweetq-kit>
+    </ng-template>
     <footer class="listen--footer">
       <div class="listen--wrapper">
         <div class="contact">

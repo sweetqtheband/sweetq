@@ -57,6 +57,22 @@ export class StreamService {
     });
   }
 
+  downloadTrack({ params = null, headers = null, trackId = null }: Options = {}) {
+    return new Promise<Blob>((resolve, reject) => {
+      if (trackId)
+      {
+        this.http
+          .get(`${this.apiUrl}/media/${trackId}/download`, { params, headers, responseType: 'blob' })
+          .subscribe((res:any) => {
+            resolve(res);
+          })
+      } else {
+        reject(new Error('No trackId sent'));
+      }
+    })
+  };
+
+
   async getStreamUrl({
     id,
     headers = null,

@@ -63,6 +63,10 @@ export class TrackComponent implements OnInit {
     return window.innerHeight + 'px';
   }
 
+  get canDownload() {
+    return +this.route.snapshot.queryParams?.['dl'] === 1 && this.item?.download;
+  }
+
   async ngOnInit(): Promise<any> {
     this.tid = this.route.snapshot.queryParams?.['tId'];
     try {

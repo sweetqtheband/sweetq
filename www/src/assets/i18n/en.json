@@ -136,5 +136,9 @@
   "aboutUs": {
     "title": "About us",
     "info": "<p>We are a Madrid-based indie pop rock band.</p><p>We love art, cinema, great soundtracks, series, pop culture... All of this influences our songwriting.</p><p>Our music reflects who we are, and we try to make you experience new sensations with us or connect by feeling something that resonates with you.</p><p>We enjoy what we do and want you to be a part of it.</p>"
+  },
+  "download": {
+    "title": "Download our track '{{track}}'",
+    "mp3": "Download MP3"
   }
 }

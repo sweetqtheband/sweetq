@@ -70,5 +70,6 @@ export default [
       "'Ya es Navidad' es un tema muy especial que mantiene la esencia cálida y nostálgica de la música navideña tradicional fusionándola con un estilo indie contemporáneo. La letra de la canción evoca sentimientos de esperanza y reencuentro, resonando con la atmósfera que se vive en las calles en estas fechas tan especiales.",
     lyrics:
       "Un año más ha pasado\ndime... ¿Qué ha sido de tí?\n¿Has conseguido aquello\nque te propusiste cumplir?\n\n¿Qué tal te ha ido la vida?\n¿Has encontrado el amor?\n¿Has cerrado las heridas\nque causaron tanto dolor?\n\nY ahora que el tiempo inunda las calles\nde gente, de luz y color\nvolvemos a vernos\n\nUna feliz navidad te deseo y espero que sea verdad,\nque tengo las ganas de verte de nuevo\ncuando pase otro año más\n\nLa magia regresará en navidad.\n\n¡Cuánto os he echado de menos!\nPuedo sentir el calor\nque transmiten los abrazos\nde la familia alrededor\n\nY ahora que huele a castañas asadas\npor toda la plaza mayor\nbrindamos por ello\n\nUna feliz navidad te deseo y espero que sea verdad,\nque tengo las ganas de verte de nuevo\ncuando pase otro año más\n\nVolver a reír, disfrutar el reencuentro\ndejando las penas atrás \ncon el año nuevo.\n\nNavidad, ya es navidad\nFeliz navidad\nNavidad, ya es navidad\nFeliz navidad\n\n(Navidad, ya es navidad)",
+    download: true
   },
 ];

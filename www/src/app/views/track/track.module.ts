@@ -10,6 +10,7 @@ import { DateService } from '@services/date.service';
 import { SystemService } from '@services/system.service';
 import { TogglerModule } from '@modules/toggler.module';
 import { HomeViewModule } from '@views/home/home.module';
+import { SweetQTrackDownloadModule } from '@modules/sweetq/track-download.module';
 
 
 // configures NgModule imports and exports
@@ -21,7 +22,8 @@ import { HomeViewModule } from '@views/home/home.module';
     PlayerModule,
     SweetQAlbumModule,    
     TogglerModule,
-    HomeViewModule
+    HomeViewModule,
+    SweetQTrackDownloadModule
   ],
   declarations: [TrackComponent],
   providers: [StreamService, SystemService, DateService],
