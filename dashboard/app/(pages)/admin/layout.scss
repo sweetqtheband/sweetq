@@ -1,0 +1,22 @@
+.viewport {
+  height: 100%;
+  width: 100%;
+
+  &.with-menu {
+    height: calc(100% - 48px);
+    top: 48px;
+    position: relative;
+    --panel-wrapper-height: calc(100% - 48px);
+    --panel-wrapper-top: 48px;
+  }
+
+  .video-reel {
+    width: 50px;
+    aspect-ratio: 9 / 16;
+  }
+
+  .align-center {
+    display: flex;
+    align-items: center;
+  }
+}

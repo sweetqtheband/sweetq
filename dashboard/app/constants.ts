@@ -1,4 +1,7 @@
-export const TREATMENTS = ['Persona', 'Colectivo']
+import { FieldTypesType } from '@/types/field-types';
+import { SizeType } from '@/types/size';
+
+export const TREATMENTS = ['Persona', 'Colectivo'];
 
 export const HTTP_STATUS_CODES = {
   OK: 200,
@@ -15,32 +18,57 @@ export const HTTP_STATUS_CODES = {
 };
 
 export const HTTP_ENCTYPES = {
-  FORMDATA: "multipart/form-data",
-  URLENCODED: "application/x-www-form-urlencoded; charset=UTF-8",
-  JSON: "application/json",
+  FORMDATA: 'multipart/form-data',
+  URLENCODED: 'application/x-www-form-urlencoded; charset=UTF-8',
+  JSON: 'application/json',
 };
 
 export const USER_PROFILES = {
-  ADMIN: "admin",
-  USER: "user",
+  ADMIN: 'admin',
+  USER: 'user',
 };
 
 export const TOKENS = {
-  ADMIN: "admin",
-  ACCESS: "access",
+  ADMIN: 'admin',
+  ACCESS: 'access',
 };
 
-
 export const STORAGE = {
-	SESSION: "session",
-	LOCAL: "local",
-	COOKIES: "cookies",
+  SESSION: 'session',
+  LOCAL: 'local',
+  COOKIES: 'cookies',
 };
 
 export const ERRORS = {
-  INVALID_CREDENTIALS: "Invalid credentials"
-}
+  INVALID_CREDENTIALS: 'Invalid credentials',
+};
 
 export const ACTIONS = {
-  DATA_UPDATE: "need-data-update",
+  DATA_UPDATE: 'need-data-update',
+};
+
+export const IMAGE_SIZES = {
+  sm: 24,
+  md: 48,
+  lg: 96,
+  xl: 192,
+};
+
+export const SIZES: Record<string, SizeType> = {
+  SM: 'sm',
+  MD: 'md',
+  LG: 'lg',
+  XL: 'xl',
+};
+
+export const FIELD_TYPES: Record<string, FieldTypesType> = {
+  HIDDEN: 'hidden',
+  TEXT: 'text',
+  UPLOADER: 'uploader',
+  IMAGE_UPLOADER: 'imageUploader',
+  VIDEO_UPLOADER: 'videoUploader',
+  DATE: 'date',
+  SELECT: 'select',
+  IMAGE: 'image',
+  VIDEO: 'video',
 };

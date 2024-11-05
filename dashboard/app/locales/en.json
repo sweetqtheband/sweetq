@@ -1,0 +1,19 @@
+{
+  "fields": {
+    "cover": "Cover",
+    "title": "Title",
+    "date": "Date",
+    "status": "Status",
+    "image": "Image",
+    "video": "Video"
+  },
+  "uploader": "Drag and drop a file here or click to select a file",
+  "save": "Save",
+  "tracks": {
+    "status": {
+      "released": "Released",
+      "latest": "Latest release",
+      "upcoming": "Upcoming"
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "fields": {
+    "cover": "Portada",
+    "title": "Título",
+    "date": "Fecha",
+    "status": "Estado",
+    "image": "Imagen",
+    "video": "Vídeo"
+  },
+  "uploader": "Arrastra y suelta un archivo aquí o haz clic para seleccionar un archivo",
+  "save": "Guardar",
+  "tracks": {
+    "status": {
+      "released": "Lanzado",
+      "latest": "Último lanzamiento",
+      "upcoming": "Próximamente"
+    }
+  }
+}

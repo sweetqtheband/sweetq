@@ -117,6 +117,6 @@ export const Auth = {
     Auth.user = null;
     Storage.remove("user", STORAGE.COOKIES);
     Storage.remove("auth-token", STORAGE.COOKIES);
-    location.href = "/login";
+    location.href = "/admin/login";
   },
 };

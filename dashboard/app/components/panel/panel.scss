@@ -1,8 +1,8 @@
 .panel {
   position: fixed;
-  height: 100%;
+  height: var(--panel-wrapper-height, 100%);
   width: 100%;
-  top: 0;
+  top: var(--panel-wrapper-top, 0);
   opacity: 0;
   transition: opacity 1ms linear 200ms;
   pointer-events: none;
@@ -12,8 +12,8 @@
     background-color: var(--light-bg-color);
     border-left: solid 1px var(--border-color);
     position: fixed;
-    height: 100%;
-    top: 0;
+    height: var(--panel-wrapper-height, 100%);
+    top: var(--panel-wrapper-top, 0);
     transform: translateX(100vw);
   }
 
@@ -26,44 +26,46 @@
     opacity: 0;
   }
 
-  &.open {    
+  .panel-wrapper {
+    width: 60vw;
+    padding: calc(var(--padding) * 4) calc(var(--padding) * 2)
+      calc(var(--padding) * 2);
+
+    .close {
+      position: fixed;
+      top: calc(var(--padding) * 3);
+      transform: translateY(-50%);
+      right: var(--padding);
+      cursor: pointer;
+    }
+
+    footer {
+      width: calc(100% - calc(var(--padding) * 2));
+      position: fixed;
+      bottom: 0;
+      padding: calc(var(--padding) * 2);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+  }
+
+  &.open {
     pointer-events: all;
     opacity: 1;
     transition: opacity 0s linear;
+
     .panel-wrapper {
       transition: transform 200ms ease-in;
       transform: translateX(40vw);
-      width: 60vw;
-      padding: calc(var(--padding) * 2);
-      .close {
-        position: fixed;
-        top: calc(var(--padding) * 2);
-        transform: translateY(-50%);
-        height: 24px;
-        width: 24px;
-        right: calc(var(--padding) * 2);
-        background: url('/icons/panel-close.svg') no-repeat center;
-        background-size: 100%;    
-        cursor: pointer;
-      }
-
-      footer {
-        width: calc( 100% - calc(var(--padding) * 2));
-        position: fixed;
-        bottom: 0;
-        padding: calc(var(--padding) * 2); 
-        display: flex;
-        align-items: center; 
-        justify-content: flex-end;
-      }
     }
 
     .panel-overlay {
       transition: opacity 200ms ease-in;
       background-color: var(--dark-bg-color);
-      opacity: .2;
+      opacity: 0.2;
     }
-    
+
     &.resizing {
       .panel-wrapper {
         transition: unset;
