@@ -1,4 +1,8 @@
+import { Options as options, Types as types } from '@/app/services/tracks';
 import { NextRequest } from 'next/server';
+import { putItem } from '../../db';
+import { HTTP_STATUS_CODES } from '@/app/constants';
+import { revalidatePath } from 'next/cache';
 
 export const config = {
   api: {
@@ -7,11 +11,22 @@ export const config = {
 };
 
 const collection = 'tracks';
-const idx = 'title';
 
-export async function PUT(req: NextRequest) {
-  const formData = await req.formData();
+interface Params {
+  params: {
+    id: string;
+  };
+}
 
-  console.log(formData);
-  return Response.json({ status: 'ok' });
+export async function PUT(req: NextRequest, { params }: Params) {
+  const { id } = params;
+
+  try {
+    const item = await putItem({ id, req, collection, types, options });
+    revalidatePath(`/admin/${collection}`);
+
+    return Response.json({ data: item }, { status: HTTP_STATUS_CODES.OK });
+  } catch (err) {
+    return Response.json({ err }, { status: HTTP_STATUS_CODES.ERROR });
+  }
 }

@@ -1,19 +1,19 @@
 {
   "date": {
-    "months": [
-      "enero",
-      "febrero",
-      "marzo",
-      "abril",
-      "mayo",
-      "junio",
-      "julio",
-      "agosto",
-      "septiembre",
-      "octubre",
-      "noviembre",
-      "diciembre"
-    ],
+    "months": {
+      "0": "enero",
+      "1": "febrero",
+      "2": "marzo",
+      "3": "abril",
+      "4": "mayo",
+      "5": "junio",
+      "6": "julio",
+      "7": "agosto",
+      "8": "septiembre",
+      "9": "octubre",
+      "10": "noviembre",
+      "11": "diciembre"
+    },
     "formats": {
       "short": {
         "day": "%d %M %Y",
@@ -68,9 +68,9 @@
       "appleMusic": "¡Pre-add realizado correctamente!",
       "deezer": "Pre-save en Deezer realizado correctamente"
     },
-    "title": "Ley de la atracción",
-    "subtitle": "Estreno 27 de septiembre",
-    "text": "El próximo 27 de septiembre estrenamos <span class='bold'>Ley de la atracción</span>. ¿Qué pasa cuando alguien te desarma con una sola mirada? Este tema captura ese momento en el que todo cambia, donde el magnetismo entre dos personas es tan fuerte que no hay vuelta atrás y no sabes por qué... ¡descubre si esta ley es algo más que una simple teoría!"
+    "title": "Ya es Navidad",
+    "subtitle": "Estreno 06 de diciembre",
+    "text": "Este año tenemos una sorpresa muy especial para ti. El 6 de diciembre inauguramos oficialmente las fiestas navideñas con nuestro villancico <span class='bold'>'Ya es Navidad'</span>. ¡Haz presave!"
   },
   "links": {
     "title": "Sweet Q",
@@ -85,7 +85,7 @@
       "arganzuela": "Ver directo 'Fiestas de Arganzuela 2024'"
     },
     "presave": {
-      "ley": "Pre-save 'Ley de la atracción'"
+      "yaesnavidad": "Pre-save 'Ya es Navidad'"
     },
     "contest": {
       "fib": "¡Vótanos para tocar en el FIB!"

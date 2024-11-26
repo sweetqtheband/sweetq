@@ -1,4 +1,13 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { Media } from '@interfaces/media';
 import { DateService } from '@services/date.service';
 
@@ -20,24 +29,22 @@ export class SweetQAlbumsComponent implements OnChanges {
   constructor(private dateSvc: DateService) {}
 
   scrollTo(delta: number) {
-    
     const scroll = this._scroll.nativeElement;
-    const els:any[] = [].slice.call(scroll.children);
-    const elWidth = els.length > 1 ? els.at(1).offsetLeft - scroll.scrollLeft : els.at(0).clientWidth;    
+    const els: any[] = [].slice.call(scroll.children);
+    const elWidth =
+      els.length > 1
+        ? els.at(1).offsetLeft - scroll.scrollLeft
+        : els.at(0).clientWidth;
 
-    const advance =
-      els.length > 1 ? els.at(1).offsetLeft * delta : 0;
+    const advance = els.length > 1 ? els.at(1).offsetLeft * delta : 0;
 
     let left = Math.round(scroll.scrollLeft + advance);
-    
-    
-    if (left < elWidth)
-    {
-      left = 0;        
+
+    if (left < elWidth) {
+      left = 0;
     } else if (els.length > 2 && left > els.at(-2).offsetLeft) {
       left = els.at(-2).offsetLeft;
     }
-
 
     scroll.scrollTo({ left, behavior: 'smooth' });
   }
@@ -45,7 +52,7 @@ export class SweetQAlbumsComponent implements OnChanges {
   onMouseWheel(e: WheelEvent) {
     e.preventDefault();
 
-    this.scrollTo(e.deltaY > 0 ? 1 : -1);    
+    this.scrollTo(e.deltaY > 0 ? 1 : -1);
   }
   onMouseUp(e: MouseEvent) {
     e.preventDefault();
@@ -64,9 +71,9 @@ export class SweetQAlbumsComponent implements OnChanges {
   }
   onMouseMove(e: MouseEvent) {
     e.preventDefault();
-    if (this.isGrabbed) {            
-      this.isGrabbing = true;      
-      this.scrollTo(e.movementX > 0 ? -1 : 1);      
+    if (this.isGrabbed) {
+      this.isGrabbing = true;
+      this.scrollTo(e.movementX > 0 ? -1 : 1);
     }
   }
 

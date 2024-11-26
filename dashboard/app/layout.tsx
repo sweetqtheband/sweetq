@@ -29,7 +29,7 @@ export default function RootLayout({
       state: SetStateAction<{ open: boolean; resizing: boolean }>
     ) => setWindowState(state);
 
-    window.addEventListener('resize', (e: any) => {
+    const resizeHandler = (e: any) => {
       e.preventDefault();
       if (!isResizing) {
         isResizing = true;
@@ -51,7 +51,13 @@ export default function RootLayout({
           isResizing = false;
         }, 1000);
       }
-    });
+    };
+
+    window.addEventListener('resize', resizeHandler);
+
+    return () => {
+      window.removeEventListener('resize', resizeHandler);
+    };
   }, [windowState]);
 
   return (

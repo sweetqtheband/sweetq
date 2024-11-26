@@ -44,6 +44,8 @@ export const ERRORS = {
 };
 
 export const ACTIONS = {
+  ADD: 'add',
+  SAVE: 'save',
   DATA_UPDATE: 'need-data-update',
 };
 
@@ -61,6 +63,11 @@ export const SIZES: Record<string, SizeType> = {
   XL: 'xl',
 };
 
+export const SORT: Record<string, number> = {
+  ASC: 1,
+  DESC: -1,
+};
+
 export const FIELD_TYPES: Record<string, FieldTypesType> = {
   HIDDEN: 'hidden',
   TEXT: 'text',
@@ -69,6 +76,27 @@ export const FIELD_TYPES: Record<string, FieldTypesType> = {
   VIDEO_UPLOADER: 'videoUploader',
   DATE: 'date',
   SELECT: 'select',
+  MULTISELECT: 'multiSelect',
   IMAGE: 'image',
   VIDEO: 'video',
+  HOUR: 'hour',
+  CITY: 'city',
+  NONE: 'none',
 };
+
+export const FIELD_DEFAULTS: Record<string, any> = {
+  COUNTRY: '205',
+};
+
+export const TAG_TYPES: (
+  | 'red'
+  | 'magenta'
+  | 'purple'
+  | 'blue'
+  | 'cyan'
+  | 'teal'
+  | 'green'
+  | 'gray'
+  | 'cool-gray'
+  | 'warm-gray'
+)[] = ['red', 'magenta', 'purple', 'blue', 'cyan', 'teal', 'green', 'gray'];

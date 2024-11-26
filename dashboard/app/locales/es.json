@@ -1,19 +1,111 @@
 {
+  "actions": {
+    "add": "Añadir",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "back": "Volver",
+    "upload": "Subir",
+    "preview": "Vista previa",
+    "search": "Buscar",
+    "clear": "Limpiar",
+    "filter": "Filtrar",
+    "selected": "Seleccionado",
+    "selecteds": "Seleccionados",
+    "selectAll": "Seleccionar todo",
+    "unselectAll": "Deseleccionar todo",
+    "actions": "Acciones",
+    "action": "Acción",
+    "confirm": "Confirmar",
+    "confirmDelete": "¿Estás seguro de que quieres eliminar este elemento?",
+    "confirmDeleteSelected": "¿Estás seguro de que quieres eliminar los elementos seleccionados?"
+  },
+  "date": {
+    "formats": {
+      "short": {
+        "date": "%D/%m/%Y",
+        "day": "%d %M %Y",
+        "text": "%d de %M",
+        "month": "%M %Y"
+      }
+    },
+    "months": {
+      "0": "enero",
+      "1": "febrero",
+      "2": "marzo",
+      "3": "abril",
+      "4": "mayo",
+      "5": "junio",
+      "6": "julio",
+      "7": "agosto",
+      "8": "septiembre",
+      "9": "octubre",
+      "10": "noviembre",
+      "11": "diciembre"
+    }
+  },
   "fields": {
+    "bands": "Bandas",
+    "button": "Botón",
+    "buttonText": "Texto del botón",
     "cover": "Portada",
     "title": "Título",
+    "subtitle": "Subtítulo",
+    "name": "Nombre",
     "date": "Fecha",
+    "hour": "Hora",
+    "link": "Enlace",
+    "limit": "Límite",
+    "linkType": "Tipo de enlace",
     "status": "Estado",
     "image": "Imagen",
-    "video": "Vídeo"
+    "video": "Vídeo",
+    "venue": "Sala",
+    "city": "Ciudad",
+    "state": "Provincia",
+    "country": "País",
+    "address": "Dirección",
+    "map": "URL embed de Google Maps",
+    "event": "URL de evento / noticia relacionada",
+    "tickets": "URL de venta de entradas",
+    "type": "Tipo",
+    "social": {
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "x": "X",
+      "youtube": "YouTube",
+      "spotify": "Spotify",
+      "web": "Web"
+    }
   },
-  "uploader": "Arrastra y suelta un archivo aquí o haz clic para seleccionar un archivo",
-  "save": "Guardar",
+  "news": {
+    "types": {
+      "news": "Noticia",
+      "release": "Lanzamiento",
+      "gig": "Concierto"
+    }
+  },
+  "routes": {
+    "instagram": "Instagram",
+    "gmail": "Gmail",
+    "gigs": "Conciertos",
+    "tracks": "Pistas",
+    "videos": "Vídeos",
+    "news": "Noticias",
+    "contact": "Contacto",
+    "bands": "Bandas"
+  },
+  "status": {
+    "published": "Publicado",
+    "unpublished": "Despublicado"
+  },
   "tracks": {
     "status": {
       "released": "Lanzado",
       "latest": "Último lanzamiento",
       "upcoming": "Próximamente"
     }
-  }
+  },
+  "uploader": "Arrastra y suelta un archivo aquí o haz clic para seleccionar un archivo"
 }

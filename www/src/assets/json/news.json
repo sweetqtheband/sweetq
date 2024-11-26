@@ -1,11 +1,11 @@
 [
   {
-    "type": "info cover ley",
-    "title": "info.title",
-    "subtitle": "info.subtitle",
-    "text": "info.text",
-    "button": "info.button",
-    "spotifyHref": "https://open.spotify.com/album/2muhEidJ0souFsYvPd3ioU"
+    "type": "info cover yaesnavidad",
+    "title": "presave.title",
+    "subtitle": "presave.subtitle",
+    "text": "presave.text",
+    "button": "presave.spotify",
+    "spotifyHref": "https://push.fm/ps/sweet-q-ya-es-navidad"
   },
   {
     "type": "video ley",
@@ -13,12 +13,5 @@
     "subtitle": "video.ley.subtitle",
     "text": "video.ley.text",
     "youtubeHref": "https://www.youtube.com/embed/IN0iZTZkN2Q"
-  },
-  {
-    "type": "info gig g20241102",
-    "title": "gigs.20241102.title",
-    "subtitle": "gigs.20241102.date",
-    "text": "gigs.20241102.text",
-    "icon": "icon-gigs"
   }
 ]

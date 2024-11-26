@@ -4,12 +4,15 @@ import { Tracks } from '@/app/services/tracks';
 import type { Track } from '@/types/track';
 import i18n from '@/app/services/translate';
 import TracksView from './view';
+import { getActionsTranslations } from '@/app/services/_list';
 
-export default async function TracksPage() {
+export default async function TracksPage({
+  searchParams,
+}: Readonly<{ searchParams?: URLSearchParams }>) {
   await i18n.init();
 
-  const data = await Tracks.getAll();
-  const items: Track[] = Tracks.parseAll(data.items);
+  const data = await Tracks.getAll(searchParams);
+  const items: Track[] = await Tracks.parseAll(data.items);
 
   const headers = [
     { key: 'image', header: i18n.t('fields.cover') },
@@ -20,7 +23,7 @@ export default async function TracksPage() {
 
   const translations = {
     ...Tracks.getTranslations(i18n, Tracks),
-    save: i18n.t('save'),
+    ...getActionsTranslations(i18n),
   };
 
   return (
@@ -29,6 +32,7 @@ export default async function TracksPage() {
       translations={translations}
       headers={headers}
       total={data.total}
+      limit={data?.next?.limit}
       pages={data.pages}
       fields={Tracks.fields}
     />

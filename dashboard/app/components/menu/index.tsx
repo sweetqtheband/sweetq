@@ -1,12 +1,11 @@
 'use client';
 
-import { Route } from '@/types/route.d';
 import Link from 'next/link';
 
 import './menu.scss';
 import Image from 'next/image';
 import { Auth } from '@/app/services/auth';
-import { useEffect, useState } from 'react';
+import { MouseEventHandler, useEffect, useState } from 'react';
 import { ACTIONS, STORAGE } from '@/app/constants';
 import { Storage } from '@/app/services/storage';
 import { Update } from '@/app/services/update';
@@ -21,27 +20,16 @@ import {
   HeaderSideNavItems,
   SideNav,
   SideNavItems,
-  SkipToContent,
   Theme,
 } from '@carbon/react';
 import { Power, UpdateNow } from '@carbon/react/icons';
+import { routes } from '@/app/(pages)/admin/routes';
 
-export default function MenuComponent() {
-  const routes: Route[] = [
-    {
-      text: 'Instagram',
-      path: '/admin/instagram',
-    },
-    {
-      text: 'Gmail',
-      path: '/admin/gmail',
-    },
-    {
-      text: 'Tracks',
-      path: '/admin/tracks',
-    },
-  ];
-
+export default function MenuComponent({
+  translations,
+}: Readonly<{
+  translations: Record<string, string>;
+}>) {
   const [needUpdate, setNeedUpdate] = useState(false);
   const logoutHandler = () => {
     Auth.logout();
@@ -58,7 +46,13 @@ export default function MenuComponent() {
   return (
     <Theme theme="g100">
       <HeaderContainer
-        render={({ isSideNavExpanded, onClickSideNavExpand }) => (
+        render={({
+          isSideNavExpanded,
+          onClickSideNavExpand,
+        }: Readonly<{
+          isSideNavExpanded: boolean;
+          onClickSideNavExpand: any;
+        }>) => (
           <Header aria-label="Sweet Q Dashboard">
             <HeaderMenuButton
               aria-label={isSideNavExpanded ? 'Close menu' : 'Open menu'}
@@ -69,7 +63,7 @@ export default function MenuComponent() {
             <HeaderNavigation aria-label="Sweet Q Dashboard">
               {routes.map((route) => (
                 <HeaderMenuItem key={route.path} href={route.path} as={Link}>
-                  {route.text}
+                  {translations[route.text]}
                 </HeaderMenuItem>
               ))}
             </HeaderNavigation>
@@ -97,7 +91,7 @@ export default function MenuComponent() {
                       href={route.path}
                       as={Link}
                     >
-                      {route.text}
+                      {translations[route.text]}
                     </HeaderMenuItem>
                   ))}
                 </HeaderSideNavItems>

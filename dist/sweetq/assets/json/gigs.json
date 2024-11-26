@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "date": "2024-03-08 21:00",
+    "city": "Madrid",
+    "hour": "21:00",
+    "venue": "Sweet Q + Madame Christie",
+    "address": "Sala Vesta",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.3621509550676!2d-3.6956384!3d40.4229791!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42297c0e03ba33%3A0x28f0b82774563387!2sSALA%20VESTA!5e0!3m2!1ses!2ses!4v1708444057250!5m2!1ses!2ses",
+    "bands": [21],
+    "event": "https://www.facebook.com/events/899338568500501",
+    "tickets": "https://dice.fm/partner/vesta/event/6o8k2-sweet-q-madame-christie-en-madrid-8th-mar-sala-vesta-madrid-tickets"
+  },
+  {
+    "id": 2,
+    "date": "2024-04-21 13:00",
+    "city": "Madrid",
+    "hour": "13:00",
+    "venue": "Atalaya Roja + Sweet Q",
+    "address": "Fun House",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3036.983055592305!2d-3.7011369000000003!3d40.4313741!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42288af1a198e3%3A0xa3e349b77417e9e9!2sFun%20House!5e0!3m2!1ses!2ses!4v1711014526803!5m2!1ses!2ses",
+    "bands": [22],
+    "event": null,
+    "tickets": "https://entradium.com/es/events/atalaya-roja-sweet-q-en-fun-house"
+  },
+  {
+    "id": 3,
+    "date": "2024-04-28 11:00",
+    "city": "Madrid",
+    "hour": "11:00",
+    "venue": "Zurich Rock'n'Roll Running Series Madrid",
+    "address": "Plaza de Callao",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.5006875396157!2d-3.708486222301044!3d40.419910871439114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42287c516491eb%3A0xa53f91991ef7794c!2sPl.%20del%20Callao%2C%20Centro%2C%2028013%20Madrid!5e0!3m2!1ses!2ses!4v1713967972034!5m2!1ses!2ses",
+    "bands": [],
+    "event": null,
+    "tickets": null
+  },
+  {
+    "id": 4,
+    "date": "2024-05-25 21:00",
+    "city": "Madrid",
+    "hour": "21:00",
+    "venue": "Nuevo Berlín + Sweet Q",
+    "address": "El Perro de la Parte de Atrás del Coche",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.3947121181004!2d-3.706448922301062!3d40.422257971438725!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42287d45b7e65f%3A0xee76b4babb779be0!2sEl%20Perro%20de%20la%20Parte%20de%20Atr%C3%A1s%20del%20Coche!5e0!3m2!1ses!2ses!4v1711014732662!5m2!1ses!2ses",
+    "bands": [23],
+    "event": null,
+    "tickets": "https://www.wegow.com/es/compra/concierto-de-nuevo-berlin-y-sweet-q-en-madrid"
+  },
+  {
+    "id": 5,
+    "date": "2024-06-29 19:00",
+    "city": "Valencia",
+    "hour": "19:00",
+    "venue": "Finales FIB Rising Stars",
+    "address": "Sala Jerusalem",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6160.416538768407!2d-0.3802138!3d39.4646234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd604f361ae0f8bb%3A0x781610caf591330d!2sSala%20Jerusalem!5e0!3m2!1ses!2ses!4v1719237598996!5m2!1ses!2ses",
+    "bands": [27, 28],
+    "event": null,
+    "tickets": null
+  },
+  {
+    "id": 6,
+    "date": "2024-07-20",
+    "city": "Málaga",
+    "hour": null,
+    "venue": "Brisa en tu barrio",
+    "address": "Auditorio Playa Virginia",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3198.169609473131!2d-4.351918899999999!3d36.718487599999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd7259cc08a97bf7%3A0x8b3108e87faf015e!2sAuditorio%20Playa%20Virginia!5e0!3m2!1ses!2ses!4v1716888834754!5m2!1ses!2ses",
+    "bands": [26],
+    "event": null,
+    "tickets": null
+  },
+  {
+    "id": 7,
+    "date": "2024-09-06 20:00",
+    "city": "Madrid",
+    "hour": "20:00",
+    "venue": "Fiestas de La Melonera",
+    "address": "Explanada Multiusos de Arganzuela",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3038.655267056121!2d-3.7013632999999992!3d40.39433239999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422744f6ee46c5%3A0x58e048b0f77fcafa!2sExplanada%20Multiusos%20de%20Arganzuela!5e0!3m2!1ses!2ses!4v1722244035677!5m2!1ses!2ses",
+    "bands": [],
+    "event": null,
+    "tickets": null
+  },
+  {
+    "id": 8,
+    "date": "2024-10-04 19:30",
+    "city": "Madrid",
+    "hour": "19:30",
+    "venue": "Primera Fila Fest Madrid",
+    "address": "Fun House",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3036.983055592305!2d-3.7011369000000003!3d40.4313741!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42288af1a198e3%3A0xa3e349b77417e9e9!2sFun%20House!5e0!3m2!1ses!2ses!4v1711014526803!5m2!1ses!2ses",
+    "bands": [24, 25],
+    "event": null,
+    "tickets": "https://entradium.com/es/events/primera-fila-fest-vol-3-edicion-madrid-madrid/sessions/04-10-2024-44b63c14-a9f6-45fa-850b-9d9f21382f5c"
+  },
+  {
+    "id": 9,
+    "date": "2024-11-02 19:00",
+    "city": "Madrid",
+    "hour": "19:00",
+    "venue": "IV Concurso de bandas de Vicálvaro",
+    "address": "ReviLive",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3038.3438392124685!2d-3.5935740877339737!3d40.40123307132298!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42251081e0ce13%3A0x978e66ebb6114cf8!2sReviLive!5e0!3m2!1ses!2ses!4v1728587869214!5m2!1ses!2ses",
+    "bands": [29, 30],
+    "event": null,
+    "tickets": null
+  }
+]

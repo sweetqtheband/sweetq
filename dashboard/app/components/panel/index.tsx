@@ -17,26 +17,8 @@ export default function PanelComponent({
 }>) {
   const windowState = useContext(WindowContext);
   const [isOpen, setIsOpen] = useState(false);
-  const [isResizing, setIsResizing] = useState(windowState.resizing);
+  const [isResizing, setIsResizing] = useState(windowState?.resizing);
   const animatedRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const element = animatedRef.current;
-
-    if (element) {
-      // Escuchar el evento 'animationend'
-      const handleAnimationEnd = () => {
-        // Coloca aquí la acción que deseas realizar al terminar la animación
-      };
-
-      element.addEventListener('animationend', handleAnimationEnd);
-
-      // Limpieza del evento cuando el componente se desmonte
-      return () => {
-        element.removeEventListener('animationend', handleAnimationEnd);
-      };
-    }
-  }, []);
 
   useEffect(() => {
     setIsOpen(!!children);
@@ -61,7 +43,7 @@ export default function PanelComponent({
   }, [forceClose, onClose]);
 
   useEffect(() => {
-    setIsResizing(windowState.resizing);
+    setIsResizing(windowState?.resizing ?? false);
   }, [windowState]);
 
   const classes = getClasses({

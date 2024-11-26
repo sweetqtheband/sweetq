@@ -1,0 +1,34 @@
+import { Options as options, Types as types } from '@/app/services/gigs';
+import { NextRequest } from 'next/server';
+import { getList, postItem } from '@/app/(pages)/api/db';
+import { HTTP_STATUS_CODES, SORT } from '@/app/constants';
+import { revalidatePath } from 'next/cache';
+
+const collection = 'gigs';
+const idx = 'date';
+
+export async function GET(req: NextRequest) {
+  return Response.json(
+    await getList({
+      req,
+      collection,
+      idx,
+      sort: SORT.DESC,
+      sortReplace: { datehour: 'date' },
+    })
+  );
+}
+
+export async function POST(req: NextRequest) {
+  try {
+    const item = await postItem({ req, collection, types, options });
+    revalidatePath(`/admin/${collection}`);
+
+    return Response.json({ data: item }, { status: HTTP_STATUS_CODES.OK });
+  } catch (err: Error | any) {
+    return Response.json(
+      { err: err?.message },
+      { status: HTTP_STATUS_CODES.ERROR }
+    );
+  }
+}

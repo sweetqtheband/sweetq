@@ -14,6 +14,7 @@ class TranslateClass {
 
   public id: string = uuid();
   public i18n: I18n | null = null;
+  public locale: string = 'es';
 
   public static getInstance() {
     if (!TranslateClass.instance) {
@@ -23,6 +24,7 @@ class TranslateClass {
   }
 
   async init(locale: string = 'es'): Promise<void> {
+    this.locale = locale;
     if (!this.i18n) {
       await i18next.init({
         lng: locale,

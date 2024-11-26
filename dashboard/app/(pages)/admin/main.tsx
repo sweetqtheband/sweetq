@@ -2,13 +2,16 @@
 
 import { Menu } from '@/app/components';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { Auth } from '../../services/auth';
 import { Layout } from '../../services/layout';
+import Loader from './loading';
 
 export default function Main({
+  translations,
   children,
 }: Readonly<{
+  translations: Record<string, string>;
   children: React.ReactNode;
 }>) {
   const pathname = usePathname();
@@ -33,8 +36,14 @@ export default function Main({
   const viewportClass = showMenu ? 'viewport with-menu' : 'viewport';
   return (
     <>
-      {showMenu && showViewport ? <Menu></Menu> : null}
-      {showViewport ? <div className={viewportClass}>{children}</div> : null}
+      {showMenu && showViewport ? (
+        <Menu translations={translations}></Menu>
+      ) : null}
+      {showViewport ? (
+        <Suspense fallback={<Loader />}>
+          <div className={viewportClass}>{children}</div>
+        </Suspense>
+      ) : null}
     </>
   );
 }

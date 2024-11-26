@@ -1,3 +1,7 @@
+body {
+  height: 100%;
+  width: 100%;
+}
 .viewport {
   height: 100%;
   width: 100%;
@@ -18,5 +22,25 @@
   .align-center {
     display: flex;
     align-items: center;
+  }
+
+  .cds--data-table-container {
+    z-index: 0;
+  }
+  .cds--list-box {
+    min-width: 120px;
+    &__menu-item__option {
+      overflow: unset;
+    }
+  }
+
+  .cds--multiselect {
+    position: relative;
+    .cds--popover-container {
+      position: absolute;
+      top: 4px;
+      right: 48px;
+      z-index: 1;
+    }
   }
 }

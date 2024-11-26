@@ -1,5 +1,6 @@
 export enum FieldTypes {
   image = 'image',
+  city = 'city',
   hidden = 'hidden',
   text = 'text',
   uploader = 'uploader',
@@ -7,7 +8,10 @@ export enum FieldTypes {
   videoUploader = 'videoUploader',
   date = 'date',
   select = 'select',
+  multiSelect = 'mutiSelect',
   video = 'video',
+  hour = 'hour',
+  none = 'none',
 }
 
 export type FieldTypesType = keyof typeof FieldTypes;
