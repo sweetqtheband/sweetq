@@ -68,9 +68,9 @@
       "appleMusic": "Pre-add done successfully!",
       "deezer": "Pre-save done successfully!"
     },
-    "title": "Ley de la atracción",
-    "subtitle": "Premieres on September 27",
-    "text": "On September 27th, we’re releasing <span class='bold'>Ley de la atracción</span>. What happens when someone disarms you with just one look? This song captures that moment when everything changes, where the magnetism between two people is so strong that there’s no turning back, and you don’t even know why... find out if this law is more than just a simple theory!"
+    "title": "Ya es Navidad",
+    "subtitle": "Avaiable on December 6th",
+    "text": "This year, we have a very special surprise for you. On December 6th, we officially kick off the holiday season with our carol ‘Ya es Navidad’. Make sure to pre-save it!"
   },
   "links": {
     "title": "Sweet Q",
@@ -85,7 +85,7 @@
       "arganzuela": "Watch 'Fiestas de Arganzuela 2024' live gig"
     },
     "presave": {
-      "ley": "Pre-save 'Ley de la atracción'"
+      "yaesnavidad": "'Ya es Navidad' presave"
     },
     "contest": {
       "fib": "Vote for us to play at FIB!"
