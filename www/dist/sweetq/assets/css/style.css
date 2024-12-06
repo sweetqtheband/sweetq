@@ -69,7 +69,7 @@ body {
   max-height: 768px;
   min-height: 500px;
   color: #fff;
-  background-image: url("../imgs/img-sweet-q.png");
+  background-image: url("../imgs/img-sweetq.webp");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -523,8 +523,8 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   background-position: center top;
 }
 
-.sq-section.notice.info.gig.g20241102 .sq-image.image-cover:before {
-  background-image: url("../imgs/gigs/20241102.jpg");
+.sq-section.notice.info.gig.g20240103 .sq-image.image-cover:before {
+  background-image: url("../imgs/gigs/20240103.jpg");
 }
 
 .sq-section.notice.info.gig.g20241004 .sq-button .sq-button-text {
@@ -776,7 +776,7 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
 
 @media (max-width: 767px) {
   .sq-bg {
-    background-image: url("../imgs/img-sweet-q-mobile.jpg");
+    background-image: url("../imgs/img-sweetq-mobile.webp");
   }
 
   .sq-button .sq-icon.icon-play {

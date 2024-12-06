@@ -1,17 +1,17 @@
 [
   {
     "type": "info cover yaesnavidad",
-    "title": "presave.title",
-    "subtitle": "presave.subtitle",
-    "text": "presave.text",
-    "button": "presave.spotify",
-    "spotifyHref": "https://push.fm/ps/sweet-q-ya-es-navidad"
+    "title": "info.title",
+    "subtitle": "info.subtitle",
+    "text": "info.text",
+    "button": "info.button",
+    "spotifyHref": "https://open.spotify.com/album/62V1DcmJGqry4z7m8FS011"
   },
   {
-    "type": "video ley",
-    "title": "video.ley.title",
-    "subtitle": "video.ley.subtitle",
-    "text": "video.ley.text",
-    "youtubeHref": "https://www.youtube.com/embed/IN0iZTZkN2Q"
+    "type": "info gig g20240103",
+    "title": "gigs.20240103.title",
+    "subtitle": "gigs.20240103.date",
+    "text": "gigs.20240103.text",
+    "href": "https://www.mondosonoro.com/noticias-actualidad-musical/guerra-bandas-2025-actual-festival/"
   }
 ]
