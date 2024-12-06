@@ -1,9 +1,4 @@
-import {    
-  Component,  
-  EventEmitter,  
-  Output,
-  OnInit
-} from '@angular/core';
+import { Component, EventEmitter, Output, OnInit } from '@angular/core';
 
 @Component({
   selector: 'sweetq-header',
@@ -17,12 +12,12 @@ export class SweetQHeaderComponent implements OnInit {
   @Output() playAlbumEvent = new EventEmitter<boolean>();
 
   public links: any = {
-    spotify: 'https://open.spotify.com/album/2muhEidJ0souFsYvPd3ioU',
-    amazon: 'https://www.amazon.es/dp/B0DGJPDRTT',
+    spotify: 'https://open.spotify.com/album/62V1DcmJGqry4z7m8FS011',
+    amazon: 'https://www.amazon.es/dp/B0DNMZJTLX',
     appleMusic:
-      'https://music.apple.com/es/album/ley-de-la-atracci%C3%B3n-single/1767473340',
+      'https://music.apple.com/es/album/ya-es-navidad-single/1780778113',
     youtubeMusic:
-      'https://music.youtube.com/playlist?list=OLAK5uy_mLRXuPUlh7lYzPYMEfS0sY5OF8VwTN_zg',
+      'https://music.youtube.com/playlist?list=OLAK5uy_kW9XvM5q-0b3uzxCRc6GP8wenP-VN1NSw',
   };
 
   ngOnInit() {

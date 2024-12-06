@@ -106,5 +106,29 @@
     "bands": [29, 30],
     "event": null,
     "tickets": null
+  },
+  {
+    "id": 10,
+    "date": "2025-01-03 19:00",
+    "city": "Logroño",
+    "hour": "19:00",
+    "venue": "Guerra de bandas Festival Actual",
+    "address": "Sala Fundición",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5886.639821185906!2d-2.452277!3d42.4634843!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd5aab13050a6a71%3A0x5ee4c72f814ce70d!2sSala%20Fundici%C3%B3n!5e0!3m2!1ses!2ses!4v1733492292398!5m2!1ses!2ses",
+    "bands": [31, 32, 33, 34],
+    "event": null,
+    "tickets": null
+  },
+  {
+    "id": 11,
+    "date": "2025-02-14 21:00",
+    "city": "Madrid",
+    "hour": "21:00",
+    "venue": "Sweet Q + Delparaíso",
+    "address": "El Perro de la Parte de Atrás del Coche",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.3947121181004!2d-3.706448922301062!3d40.422257971438725!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42287d45b7e65f%3A0xee76b4babb779be0!2sEl%20Perro%20de%20la%20Parte%20de%20Atr%C3%A1s%20del%20Coche!5e0!3m2!1ses!2ses!4v1711014732662!5m2!1ses!2ses",
+    "bands": [35],
+    "event": null,
+    "tickets": null
   }
 ]

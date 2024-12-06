@@ -39,7 +39,7 @@ export default [
     date: "2024-09-01",
     cover: "ley.jpg",
     video: "ley.mp4",
-    status: "latest",
+    status: "released",
     spotifyId: "album/2muhEidJ0souFsYvPd3ioU",
     appleId: "album/ley-de-la-atracción-single/1767473340",
     description:
@@ -53,7 +53,9 @@ export default [
     date: "2024-12-06",
     cover: "yaesnavidad.jpg",
     video: "default.mp4",
-    status: "upcoming",
+    status: "latest",
+    spotifyId: "album/62V1DcmJGqry4z7m8FS011",
+    appleId: "album/ya-es-navidad-single//1780778113",
     description:
       "'Ya es Navidad' es un tema muy especial que mantiene la esencia cálida y nostálgica de la música navideña tradicional fusionándola con un estilo indie contemporáneo. La letra de la canción evoca sentimientos de esperanza y reencuentro, resonando con la atmósfera que se vive en las calles en estas fechas tan especiales.",
     lyrics:
