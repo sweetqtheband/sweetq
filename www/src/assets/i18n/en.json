@@ -22,7 +22,7 @@
       }
     }
   },
-  "releaseMessage": "You can listen to \"Ya es Navidad\" now!",
+  "releaseMessage": "You can listen to \"Ley de la atracción\" now!",
   "listenInSpotify": "Listen in Spotify",
   "listenAlsoIn": "Also available in...",
   "videos": "Videos",
@@ -35,9 +35,9 @@
   },
   "availableSince": "Available from october 16th in:",
   "info": {
-    "title": "Ya es Navidad",
+    "title": "Ley de la atracción",
     "subtitle": "Already available",
-    "text": "Can you hear those jingle bells? <span class='bold'>'Ya es Navidad'</span> is our song for this Christmas and we wanted it to sound like all those moments that really matter, the ones that make these dates have a special place in your heart. We hope you listen to it a lot these days and happy holidays!",
+    "text": "You can already listen in every platform <span class='bold'>'Ley de la atracción'</span>, the fifth single from our future LP. What happens when someone disarms you with just one look? This song captures that moment when everything changes, where the magnetism between two people is so strong that there’s no turning back, and you don’t even know why... find out if this law is more than just a simple theory!",
     "button": "Listen in Spotify"
   },
   "pressKit": {
@@ -50,10 +50,9 @@
     "label": "Gigs",
     "viewInGoogleMap": "View in Google Maps",
     "20240103": {
-      "date": "January 3rd",
-      "title": "Festival Actual battle of bands",
-      "text": "We are kicking off 2025 in the best possible way. This January 3rd we will be in Logroño at the <span class='bold'>Sala Fundición</span> playing in the <span class='bold'>battle of bands of the Festival Actual</span>. Starting at 19:00 and free entry. See you in La Rioja!",
-      "button": "More info"
+      "date": "February 14th",
+      "title": "Sweet Q + Delparaíso",
+      "text": "Live a very special Valentine's Day with us. Next February 14th we return to <span class='bold'>El Perro Club</span> accompanying <span class='bold'>Delparaíso</span> in their visit to Madrid. If you want to listen to our new 2025 songs... Don't miss it out!"
     }
   },
   "stayTuned": "At this time we haven't any gig scheduled soon. Stay tuned!",
@@ -75,7 +74,7 @@
   },
   "links": {
     "title": "Sweet Q",
-    "subtitle": "New single 'Ya es Navidad'",
+    "subtitle": "New single 'Ley de la atracción'",
     "spotify": "Spotify",
     "spotifyAvailable": "Spotify link (available {{date}})",
     "appleMusic": "Apple Music",
@@ -103,8 +102,8 @@
     "monthlyListeners": "{{total}} monthly listeners",
     "latestRelease": {
       "label": "Latest release",
-      "date": "December 6th, 2024",
-      "title": "Ya es Navidad",
+      "date": "September 27th, 2024",
+      "title": "Ley de la atracción",
       "totalPlays": "{{total}} plays"
     },
     "nextReleases": {

@@ -39,7 +39,7 @@ export default [
     date: "2024-09-01",
     cover: "ley.jpg",
     video: "ley.mp4",
-    status: "released",
+    status: "latest",
     spotifyId: "album/2muhEidJ0souFsYvPd3ioU",
     appleId: "album/ley-de-la-atracción-single/1767473340",
     description:
@@ -53,7 +53,7 @@ export default [
     date: "2024-12-06",
     cover: "yaesnavidad.jpg",
     video: "default.mp4",
-    status: "latest",
+    status: "released",
     spotifyId: "album/62V1DcmJGqry4z7m8FS011",
     appleId: "album/ya-es-navidad-single//1780778113",
     description:
