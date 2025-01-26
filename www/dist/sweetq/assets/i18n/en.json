@@ -22,6 +22,12 @@
       }
     }
   },
+  "time": {
+    "short": {
+      "min": "min",
+      "sec": "s"
+    }
+  },
   "releaseMessage": "You can listen to \"Ley de la atracción\" now!",
   "listenInSpotify": "Listen in Spotify",
   "listenAlsoIn": "Also available in...",
@@ -124,6 +130,11 @@
       "text": "We’ve just released our music video for 'Ley de la atracción', filmed in the heart of Madrid with the collaboration of real couples who shared unique moments with us to bring this song to life. We hope you like it!",
       "button": "Watch on YouTube"
     }
+  },
+  "album": {
+    "label": "Album",
+    "styles": "Indie, Pop, Rock",
+    "tracks": "tracks"
   },
   "albums": {
     "released": "Latest releases",

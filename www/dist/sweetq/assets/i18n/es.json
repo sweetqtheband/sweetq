@@ -22,6 +22,12 @@
       }
     }
   },
+  "time": {
+    "short": {
+      "min": "min",
+      "sec": "s"
+    }
+  },
   "releaseMessage": "¡Ya podéis escuchar \"Ley de la atracción\"!",
   "listenInSpotify": "Escuchar en Spotify",
   "listenAlsoIn": "Disponible también en...",
@@ -124,6 +130,11 @@
       "text": "Acabamos de lanzar nuestro videoclip de 'Ley de la atracción', grabado en el centro de Madrid con la colaboración de parejas reales que nos regalaron momentos únicos para dar vida a este tema. ¡Esperemos que te guste!",
       "button": "Ver en Youtube"
     }
+  },
+  "album": {
+    "label": "Álbum",
+    "styles": "Indie, Pop, Rock",
+    "tracks": "canciones"
   },
   "albums": {
     "released": "Últimos lanzamientos",
