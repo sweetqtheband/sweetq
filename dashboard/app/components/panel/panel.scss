@@ -6,6 +6,7 @@
   opacity: 0;
   transition: opacity 1ms linear 200ms;
   pointer-events: none;
+  z-index: 1;
 
   &-wrapper {
     transition: transform 200ms ease-out;

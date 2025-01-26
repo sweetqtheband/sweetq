@@ -1,0 +1,10 @@
+import { Model } from '@/app/models/{{plural}}';
+import { BaseSvc } from './_base';
+import { Collection, Document } from 'mongodb';
+
+/**
+ * {{entity}} service
+ */
+export const {{plural}}Svc = (collection: Collection<Document>) => ({
+  ...BaseSvc(collection, Model),
+});

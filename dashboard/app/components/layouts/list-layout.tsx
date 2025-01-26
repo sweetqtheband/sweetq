@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 import ListTable from './list-table';
 import ListPanel from './list-panel';
 import { SizeType } from '@/types/size';
@@ -19,7 +19,9 @@ export default function ListLayout({
   onDelete = async () => true,
   translations = {},
   fields = {},
+  filters = {},
   methods = {},
+  renders = {},
 }: Readonly<{
   items?: any[];
   headers?: any[];
@@ -32,7 +34,9 @@ export default function ListLayout({
   onDelete?: (ids: string[]) => Promise<boolean>;
   translations?: Record<string, string>;
   fields?: Record<string, any>;
+  filters?: Record<string, any>;
   methods?: Record<string, any>;
+  renders?: Record<string, any>;
 }>) {
   const [item, setItem] = useState(null);
 
@@ -56,8 +60,10 @@ export default function ListLayout({
         total={total}
         limit={limit}
         pages={pages}
+        filters={filters}
         translations={translations}
         fields={fields}
+        renders={renders}
       />
       <ListPanel
         id={id}
@@ -67,6 +73,7 @@ export default function ListLayout({
         translations={translations}
         fields={fields}
         methods={methods}
+        renders={renders}
       />
     </>
   );

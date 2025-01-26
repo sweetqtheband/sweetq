@@ -1,27 +1,58 @@
-<div class="audio-player">  
+<div class="audio-player">
   <div class="video" *ngIf="type === 'canvas' && track.isCurrent">
-    <video #video [autoplay]="true" [muted]="true" [loop]="true" [style]="videoStyle()">
-      <source [src]="trackVideo" type="video/mp4">
+    <video
+      #video
+      [autoplay]="true"
+      [muted]="true"
+      [loop]="true"
+      [style]="videoStyle()"
+    >
+      <source [src]="trackVideo" type="video/mp4" />
     </video>
-    <div class="video-overlay">
-      
-    </div>
+    <div class="video-overlay"></div>
   </div>
-  <div class="controls">
+  <div
+    class="controls"
+    [ngClass]="{
+      'is-active': track.isCurrent,
+      'is-playing': track.isPlaying,
+      'is-paused': !track.isPlaying
+    }"
+  >
     <div class="play-container">
-      <div class="toggle-play" [ngClass]="{'play': !track.isPlaying, 'pause': track.isPlaying}" (click)="playTrack()">
-      </div>
+      <div
+        *ngIf="!index"
+        class="toggle-play"
+        [ngClass]="{ play: !track.isPlaying, pause: track.isPlaying }"
+        (click)="playTrack()"
+      ></div>
     </div>
     <div class="controls-container">
       <div class="info-wrapper">
-        <div class="name">{{track.title}}</div>
+        <div class="name" (click)="playTrack()">
+          <div
+            *ngIf="index && index > 0"
+            class="toggle-play"
+            [ngClass]="{ play: !track.isPlaying, pause: track.isPlaying }"
+          ></div>
+          <div *ngIf="index && index > 0" class="index">{{ index }}</div>
+          {{ track.title }}
+        </div>
         <div class="time">
-          <div class="length">{{track.duration}}</div>
+          <div class="length">{{ track.duration }}</div>
         </div>
       </div>
-      <div class="timeline-wrapper" (click)="setTimeline($event)">
+      <div
+        class="timeline-wrapper"
+        (touchstart)="onDragStart($event)"
+        (touchmove)="onDragging($event)"
+        (touchend)="onDragEnd($event)"
+        (mousedown)="onDragStart($event)"
+        (mousemove)="onDragging($event)"
+        (mouseup)="onDragEnd($event)"
+      >
         <div class="timeline" #timeline></div>
-        <div class="progress" #progress></div>
+        <div class="progress" [style.width.%]="progressWidth" #progress></div>
       </div>
     </div>
   </div>

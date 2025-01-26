@@ -1,25 +1,26 @@
 {
   "actions": {
-    "add": "Añadir",
-    "edit": "Editar",
-    "delete": "Eliminar",
-    "cancel": "Cancelar",
-    "save": "Guardar",
-    "back": "Volver",
-    "upload": "Subir",
-    "preview": "Vista previa",
-    "search": "Buscar",
-    "clear": "Limpiar",
-    "filter": "Filtrar",
-    "selected": "Seleccionado",
-    "selecteds": "Seleccionados",
-    "selectAll": "Seleccionar todo",
-    "unselectAll": "Deseleccionar todo",
-    "actions": "Acciones",
     "action": "Acción",
+    "actions": "Acciones",
+    "add": "Añadir",
+    "back": "Volver",
+    "cancel": "Cancelar",
+    "clear": "Limpiar",
+    "close": "Cerrar",
     "confirm": "Confirmar",
     "confirmDelete": "¿Estás seguro de que quieres eliminar este elemento?",
-    "confirmDeleteSelected": "¿Estás seguro de que quieres eliminar los elementos seleccionados?"
+    "confirmDeleteSelected": "¿Estás seguro de que quieres eliminar los elementos seleccionados?",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "filter": "Filtrar",
+    "preview": "Vista previa",
+    "save": "Guardar",
+    "search": "Buscar",
+    "selectAll": "Seleccionar todo",
+    "selected": "Seleccionado",
+    "selecteds": "Seleccionados",
+    "unselectAll": "Deseleccionar todo",
+    "upload": "Subir"
   },
   "date": {
     "formats": {
@@ -46,10 +47,12 @@
     }
   },
   "fields": {
+    "alias": "Alias",
     "bands": "Bandas",
     "button": "Botón",
     "buttonText": "Texto del botón",
     "cover": "Portada",
+    "color": "Color",
     "title": "Título",
     "subtitle": "Subtítulo",
     "name": "Nombre",
@@ -70,6 +73,11 @@
     "event": "URL de evento / noticia relacionada",
     "tickets": "URL de venta de entradas",
     "type": "Tipo",
+    "username": "Nombre de usuario",
+    "treatment": "Tratamiento",
+    "shortName": "Nombre corto",
+    "fullName": "Nombre completo",
+    "tags": "Etiquetas",
     "social": {
       "facebook": "Facebook",
       "instagram": "Instagram",
@@ -86,6 +94,15 @@
       "gig": "Concierto"
     }
   },
+  "pages": {
+    "instagram": {
+      "title": "Instagram",
+      "description": "{{total}} seguidores"
+    },
+    "gigs": {
+      "title": "Conciertos"
+    }
+  },
   "routes": {
     "instagram": "Instagram",
     "gmail": "Gmail",
@@ -94,7 +111,8 @@
     "videos": "Vídeos",
     "news": "Noticias",
     "contact": "Contacto",
-    "bands": "Bandas"
+    "bands": "Bandas",
+    "tags": "Etiquetas"
   },
   "status": {
     "published": "Publicado",
@@ -107,5 +125,23 @@
       "upcoming": "Próximamente"
     }
   },
-  "uploader": "Arrastra y suelta un archivo aquí o haz clic para seleccionar un archivo"
+  "treatments": {
+    "person": "Persona",
+    "collective": "Colectivo"
+  },
+  "uploader": "Arrastra y suelta un archivo aquí o haz clic para seleccionar un archivo",
+  "colors": {
+    "red": "Rojo",
+    "magenta": "Magenta",
+    "purple": "Morado",
+    "blue": "Azul",
+    "cyan": "Cian",
+    "teal": "Aguamarina",
+    "green": "Verde",
+    "gray": "Gris",
+    "cool-gray": "Gris frío",
+    "warm-gray": "Gris cálido",
+    "high-contrast": "Alto contraste",
+    "outline": "Delineado"
+  }
 }

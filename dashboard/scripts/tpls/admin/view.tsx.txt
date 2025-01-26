@@ -1,0 +1,21 @@
+'use client';
+
+import ListLayout from '@/app/components/layouts/list-layout';
+import { {{entity}} } from '@/app/services/{{plural}}';
+import { useRouter } from 'next/navigation';
+
+export default function {{entity}}View(params: Readonly<any>) {
+  const router = useRouter();
+  const methods = {{entity}}.getMethods(router);
+  const renders = {{entity}}.getRenders();
+
+  return (
+    <ListLayout
+      {...params}
+      methods={methods}
+      renders={renders}
+      onSave={methods.onSave}
+      onDelete={methods.onDelete}
+    />
+  );
+}

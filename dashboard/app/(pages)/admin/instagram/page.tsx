@@ -1,62 +1,49 @@
-"use server";
+'use server';
 
-import  PageTable from "./table";
-import  PagePanel from "./panel";
-import config from "@/app/config";
-import { Followers } from "@/app/services/followers";
-import PageFilters from "./filters";
-import "./page.scss";
-import TableCell from "./table-cell";
+import { Followers } from '@/app/services/followers';
+import type { Follower } from '@/types/follower';
+import i18n from '@/app/services/translate';
+import InstagramView from './view';
+import { getActionsTranslations } from '@/app/services/_list';
 
 export default async function InstagramPage({
   searchParams,
-}: Readonly<{
-  searchParams?: {
-    query?: string;
-    country_id?: string;
-    state_id?: string;
-    city_id?: string;
-    follower_id?: string;
-    page?: string;
-    limit?: string;
+}: Readonly<{ searchParams?: URLSearchParams }>) {
+  await i18n.init();
+
+  const data = await Followers.getAll(searchParams);
+  const items: Follower[] = await Followers.parseAll(data.items, i18n);
+
+  const headers = [
+    { key: 'profile_pic_url', header: i18n.t('fields.image') },
+    { key: 'full_name', header: i18n.t('fields.name') },
+    { key: 'short_name', header: i18n.t('fields.alias') },
+    { key: 'username', header: i18n.t('fields.username') },
+    { key: 'country', header: i18n.t('fields.country') },
+    { key: 'state', header: i18n.t('fields.state') },
+    { key: 'tags', header: i18n.t('fields.tags') },
+  ];
+
+  const translations = {
+    ...Followers.getTranslations(i18n, Followers),
+    ...getActionsTranslations(i18n),
+    title: i18n.t('pages.instagram.title'),
+    description: i18n.t('pages.instagram.description', { total: data.total }),
   };
-}>) {    
-  const limit = Number(searchParams?.limit) || config.table.limit;
-  const currentPage = Number(searchParams?.page) || 0;
-  const query = searchParams?.query ? String(searchParams?.query) : '';
-  const cursor = limit * currentPage;  
-  const countryId = String(searchParams?.country_id ?? 205);
-  const stateId = searchParams?.state_id ? String(searchParams?.state_id) : -1;  
-  const cityId = searchParams?.city_id ? String(searchParams?.city_id) : -1;  
-  const followerId = searchParams?.follower_id ? String(searchParams?.follower_id) : null;    
 
-
-  const {total, pages, items: followers} = await Followers.getAll(query, limit, cursor); 
-
-  const follower = followerId ? followers.find((item:Record<string, unknown>) => item.id === followerId) : null;
-
-  const items = followers.map((follower: any) => ({
-    ...follower,
-    render: (
-      <TableCell follower={follower}></TableCell>
-    ),
-  }));  
+  const fields = await Followers.getFields({ searchParams, i18n });
+  const filters = await Followers.getFilters({ searchParams, i18n });
 
   return (
-    <>
-      <PageTable 
-        items={items}     
-        total={total}
-        pages={pages}>
-        <PageFilters 
-          countryId={countryId}
-          stateId={stateId}
-          cityId={cityId}>
-        </PageFilters>      
-      </PageTable>         
-      <PagePanel
-      data={follower}>
-      </PagePanel>
-    </>
-  )
+    <InstagramView
+      items={items}
+      translations={translations}
+      headers={headers}
+      total={data.total}
+      limit={data?.next?.limit}
+      pages={data.pages}
+      filters={filters}
+      fields={fields}
+    />
+  );
 }

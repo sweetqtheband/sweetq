@@ -1,6 +1,6 @@
-import express from 'express';
-import cors from 'cors';
-import config from '../config';
+import express from "express";
+import cors from "cors";
+import config from "../config";
 
 class AppService {
   get conf() {
@@ -11,10 +11,12 @@ class AppService {
     this.app = express();
 
     // handling CORS
-    this.app.use(cors())
+    this.app.use(cors());
     this.app.use((req, res, next) => {
-      res.header("Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept, TID");
+      res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept, TID"
+      );
       next();
     });
   }

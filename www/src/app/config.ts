@@ -6,10 +6,14 @@ export default {
     artistId: '74Vs2gSCwnlCiV4yjaFIMb',
     trackId: '4N8LvpnnHhwwBJ5xobXYvr',
   },
+  album: {
+    quesolonosquedeganar:
+      'U2FsdGVkX18kGdsP%2FlmM09h6bkVJ8f6Fn4fGgSw%2F7mWfRXAf6owVRwd806Ix3QRI',
+  },
   track: {
-    ley: "U2FsdGVkX19Sb1m01jh3uhEUh58HS9Ao9%2Fpjod4uEvE%3D",
-    fiesta: "U2FsdGVkX1%2FrKv2bU9NnftdBaRRbRmgMxCD0ezKQV8w%3D",
-    yaesnavidad: "U2FsdGVkX1%2FwRkUZ922wbzCat2AjSUbyMnw195dLZWg%3D",
+    ley: 'U2FsdGVkX19Sb1m01jh3uhEUh58HS9Ao9%2Fpjod4uEvE%3D',
+    fiesta: 'U2FsdGVkX1%2FrKv2bU9NnftdBaRRbRmgMxCD0ezKQV8w%3D',
+    yaesnavidad: 'U2FsdGVkX1%2FwRkUZ922wbzCat2AjSUbyMnw195dLZWg%3D',
   },
   spotify: {
     clientId: 'MDExNzEzNDkwZDY4NGYyNmFmOWRhYjRiNzc4OWI1YzU=',

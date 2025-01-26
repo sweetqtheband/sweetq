@@ -8,10 +8,22 @@ export const getAll = async (client: AxiosInstance, searchParams?: any) => {
   const sort = searchParams?.sort ? String(searchParams?.sort) : '';
   const sortDir = searchParams?.sortDir ? String(searchParams?.sortDir) : '';
   const cursor = limit * currentPage;
+  const filters: Record<string, any> = Object.entries(searchParams).reduce(
+    (acc, [key, value]) => {
+      const match = key.match(/^filters\[(.+)\]$/); // Detectar claves como 'filters[...]'
+      if (match) {
+        const filterKey = match[1]; // Extraer el nombre del filtro (e.g., "treatment")
+        acc[filterKey] = String(value).split(','); // Añadirlo al objeto `filters`
+      }
+      return acc;
+    },
+    {} as Record<string, any> // Inicializar como objeto vacío
+  );
 
   const params: any = {
     limit,
     cursor,
+    filters: filters || {},
   };
 
   if (query) {
@@ -22,15 +34,29 @@ export const getAll = async (client: AxiosInstance, searchParams?: any) => {
     params.sort = sort;
     params.sortDir = sortDir;
   }
-  const response = await client.get('', { params });
 
+  const response = await GET(client, '', params);
   return response.data;
 };
 
-export const POST = async (client: AxiosInstance, data: any) => {
+export const GET = async (
+  client: AxiosInstance,
+  url: string,
+  params: Record<string, any> = {}
+) => {
+  const response = await client.get(url, { params });
+  return response;
+};
+
+export const POST = async (
+  client: AxiosInstance,
+  data: any,
+  url: string = ''
+) => {
   const response = await client.request({
     method: 'post',
     data,
+    url,
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -38,8 +64,13 @@ export const POST = async (client: AxiosInstance, data: any) => {
   return response;
 };
 
-export const PUT = async (client: AxiosInstance, id: string, data: any) => {
-  const response = await client.put(id, data, {
+export const PUT = async (
+  client: AxiosInstance,
+  id: string,
+  data: any,
+  url: string = ''
+) => {
+  const response = await client.put(url + id, data, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
@@ -47,9 +78,13 @@ export const PUT = async (client: AxiosInstance, id: string, data: any) => {
   return response;
 };
 
-export const DELETE = async (client: AxiosInstance, ids: string | string[]) => {
+export const DELETE = async (
+  client: AxiosInstance,
+  ids: string | string[],
+  url: string = ''
+) => {
   const response = await (ids instanceof Array
-    ? Promise.all(ids.map((id) => client.delete(id)))
-    : client.delete(ids));
+    ? Promise.all(ids.map((id) => client.delete(url + id)))
+    : client.delete(url + ids));
   return response;
 };

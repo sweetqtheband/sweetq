@@ -1,4 +1,4 @@
-import { Db, FindOptions, MongoClient } from 'mongodb';
+import { Db, MongoClient } from 'mongodb';
 import type { NextRequest } from 'next/server';
 import { v4 as uuid } from 'uuid';
 import config from '@/app/config';
@@ -65,9 +65,8 @@ export const getList = async ({
   queryObj?: Record<string, any>;
   sortReplace?: Record<string, any>;
 }>) => {
-  const limit = config.table.limit;
-
   const col = await getCollection(collection);
+  const svc = FactorySvc(collection, col);
   const qp = req.nextUrl.searchParams;
   let sortField = qp.get('sort') || idx;
   const sortDir = Number(qp.get('sortDir')) || sort;
@@ -76,39 +75,91 @@ export const getList = async ({
     sortField = sortReplace[sortField];
   }
 
-  const params: FindOptions = {
-    limit: Number(qp.get('limit')) || limit,
-    skip: Number(qp.get('cursor')) || 0,
-  };
+  const limit = Number(qp.get('limit')) || config.table.limit;
+  const skip = Number(qp.get('cursor')) || 0;
 
-  const query = qp.get('query');
+  if (!queryObj.$or) {
+    const query = qp.get('query');
 
-  if (query) {
-    queryObj.$or = [
-      {
-        [idx]: { $regex: query, $options: 'i' },
-      },
-    ];
+    if (query) {
+      queryObj.$or = [
+        {
+          [idx]: { $regex: query, $options: 'i' },
+        },
+      ];
+    }
+  }
+
+  const filters: Record<string, any> = {};
+  qp.forEach((value, key) => {
+    const match = key.match(/^filters\[(.+?)\](?:\[(\d+)\])?$/);
+    if (match) {
+      const [, filterKey, index] = match;
+
+      const modelizedValue = svc.modelize({ [filterKey]: value })[filterKey];
+      if (index !== undefined) {
+        filters[filterKey] = filters[filterKey] || [];
+        filters[filterKey][+index] =
+          modelizedValue instanceof Array
+            ? modelizedValue.at(0)
+            : modelizedValue;
+      } else {
+        filters[filterKey] = modelizedValue;
+      }
+    }
+  });
+
+  if (Object.keys(filters).length > 0) {
+    if (!queryObj.$and) {
+      queryObj.$and = [];
+    }
+
+    Object.keys(filters).forEach((key) => {
+      if (Array.isArray(filters[key])) {
+        queryObj.$and.push({ [key]: { $in: filters[key] } });
+      } else {
+        queryObj.$and.push({ [key]: filters[key] });
+      }
+    });
   }
 
   const total = await col.countDocuments(queryObj);
 
-  const pages = Math.floor(total / Number(qp.get('limit')));
+  const pages = Math.floor(total / Number(qp.get('limit'))) + 1;
 
   const items = await col
-    .find(queryObj, params)
+    .find(queryObj)
     .sort({ [sortField]: sortDir === SORT.ASC ? 1 : -1 })
+    .limit(limit)
+    .skip(skip)
     .collation({ locale: 'es', caseLevel: true })
     .toArray();
 
+  const parsedItems = await Promise.all(
+    items.map(async (item) => svc.parse(item))
+  );
+
   const data = {
     total,
-    items,
+    items: parsedItems,
     pages,
-    next: params,
-    last: (pages - 1) * Number(params.limit) || 10,
+    next: { limit, cursor: skip + limit },
+    last: (pages - 1) * Number(limit) || 10,
   };
   return data;
+};
+
+export const getItem = async ({
+  query,
+  collection,
+}: Readonly<{
+  query: object;
+  collection: string;
+}>) => {
+  const col = await getCollection(collection);
+  const svc = FactorySvc(collection, col);
+
+  return svc.findOne(query);
 };
 
 export const postItem = async ({
@@ -136,7 +187,7 @@ export const postItem = async ({
     }
   });
 
-  return svc.create({ ...formDataToObject(formData) });
+  return svc.create({ ...formDataToObject(formData, types) });
 };
 
 export const putItem = async ({
@@ -145,12 +196,14 @@ export const putItem = async ({
   collection,
   types,
   options,
+  avoidUnset = false,
 }: Readonly<{
   id: string;
   req: NextRequest;
   collection: string;
   types: Record<string, any>;
   options: Record<string, any>;
+  avoidUnset?: boolean;
 }>) => {
   const col = await getCollection(collection);
   const svc = FactorySvc(collection, col);
@@ -178,5 +231,40 @@ export const putItem = async ({
     }
   });
 
-  return svc.update({ ...formDataToObject(formData), _id: id });
+  return svc.update(
+    { ...formDataToObject(formData, types), _id: id },
+    avoidUnset
+  );
+};
+
+export const deleteItem = async ({
+  id,
+  req,
+  collection,
+  types,
+  options,
+}: Readonly<{
+  id: string;
+  req: NextRequest;
+  collection: string;
+  types: Record<string, any>;
+  options: Record<string, any>;
+}>) => {
+  const col = await getCollection(collection);
+  const svc = FactorySvc(collection, col);
+  const item = await svc.getById(id);
+
+  Object.keys(types).forEach(async (key) => {
+    if (
+      [FIELD_TYPES.IMAGE_UPLOADER, FIELD_TYPES.VIDEO_UPLOADER].includes(
+        types[key]
+      )
+    ) {
+      if ('path' in options[key]) {
+        await uploadSvc.deleteS3(item[key]);
+      }
+    }
+  });
+
+  return svc.remove(id);
 };

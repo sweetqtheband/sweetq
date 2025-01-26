@@ -1,6 +1,7 @@
 body {
   height: 100%;
   width: 100%;
+  --cds-popover-background-color: #fff;
 }
 .viewport {
   height: 100%;
@@ -25,7 +26,7 @@ body {
   }
 
   .cds--data-table-container {
-    z-index: 0;
+    z-index: 1;
   }
   .cds--list-box {
     min-width: 120px;
@@ -42,5 +43,18 @@ body {
       right: 48px;
       z-index: 1;
     }
+  }
+
+  .cds--table-toolbar {
+    z-index: 2;
+  }
+  .cds--popover-content {
+    padding: 1rem;
+  }
+  .cds--flex {
+    display: flex;
+    align-items: center;
+    gap: var(--padding);
+    width: 100%;
   }
 }

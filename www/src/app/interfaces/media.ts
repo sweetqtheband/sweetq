@@ -8,12 +8,14 @@ export interface Media {
   duration?: string;
   advance?: string;
   ended?: boolean;
-  download?:boolean
+  download?: boolean;
   nextId?: number;
+  previousId?: number;
   spotify?: any;
   apple?: any;
-  description?: string|null;
-  lyrics?: string|null;
+  description?: string | null;
+  lyrics?: string | null;
   isPlaying?: boolean;
   isCurrent?: boolean;
+  fileSize?: number;
 }

@@ -7,13 +7,15 @@ import { Media } from '@interfaces/media';
   styleUrls: ['./album.component.scss'],
 })
 export class SweetQAlbumComponent {
-  @Input('item') item: Media = {id: ""};
+  @Input('item') item: Media = { id: '' };
 
   itemStyle(item: Media): Object {
-    return {
-      'background-image': item.cover
-        ? `url("/assets/imgs/cover/${item.cover}")`
-        : null,
-    };
+    const root = document.documentElement; // Elemento raíz (html)
+    root.style.setProperty(
+      '--background-image',
+      item.cover ? `url("/assets/imgs/cover/${item.cover}")` : null
+    ); // Cambiar la variable CSS
+
+    return {};
   }
 }

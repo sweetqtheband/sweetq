@@ -26,7 +26,8 @@ const fields = {
 let options: Record<string, any>[] = [];
 
 // Get options
-const getOptions = async (params: any = null) => {
+const getOptions = async (params: any = {}) => {
+  params.limit = 10000;
   return {
     options: [
       ...options,

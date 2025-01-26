@@ -1,8 +1,6 @@
 import { FieldTypesType } from '@/types/field-types';
 import { SizeType } from '@/types/size';
 
-export const TREATMENTS = ['Persona', 'Colectivo'];
-
 export const HTTP_STATUS_CODES = {
   OK: 200,
   CREATED: 201,
@@ -77,16 +75,34 @@ export const FIELD_TYPES: Record<string, FieldTypesType> = {
   DATE: 'date',
   SELECT: 'select',
   MULTISELECT: 'multiSelect',
+  CHECKBOX: 'checkbox',
   IMAGE: 'image',
   VIDEO: 'video',
   HOUR: 'hour',
+  FILTER_COUNTRY: 'filterCountry',
+  FILTER_STATE: 'filterState',
+  FILTER_CITY: 'filterCity',
   CITY: 'city',
   NONE: 'none',
+  LABEL: 'label',
+  DATE_LABEL: 'dateLabel',
+};
+
+export const IG = {
+  USER: 'instagram:user',
+  TOKEN: 'instagram:authToken',
+  EXPIRES: 'instagram:expires',
+};
+export const RENDER_TYPES: Record<string, string> = {
+  TAG: 'tag',
+  COLOR: 'color',
 };
 
 export const FIELD_DEFAULTS: Record<string, any> = {
   COUNTRY: '205',
 };
+
+export const TREATMENTS = ['treatments.person', 'treatments.collective'];
 
 export const TAG_TYPES: (
   | 'red'

@@ -1,0 +1,37 @@
+'use server';
+
+import { {{entity}} } from '@/app/services/{{plural}}';
+import type { {{type}} } from '@/types/{{singular}}';
+import i18n from '@/app/services/translate';
+import {{entity}}View from './view';
+import { getActionsTranslations } from '@/app/services/_list';
+
+export default async function {{entity}}Page({
+  searchParams,
+}: Readonly<{ searchParams: URLSearchParams }>) {
+  await i18n.init();
+
+  const data = await {{entity}}.getAll(searchParams);
+  const items: {{type}}[] = await {{entity}}.parseAll(data.items);
+
+  const headers = [
+    { key: 'name', header: i18n.t('fields.name'), default: true },
+  ];
+
+  const translations = {
+    ...{{entity}}.getTranslations(i18n, {{entity}}),
+    ...getActionsTranslations(i18n),
+  };
+
+  return (
+    <{{entity}}View
+      items={items}
+      translations={translations}
+      headers={headers}
+      total={data.total}
+      limit={data?.next?.limit}
+      pages={data.pages}
+      fields={{{entity}}.fields}
+    />
+  );
+}

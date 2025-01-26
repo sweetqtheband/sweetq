@@ -18,6 +18,10 @@ export const routes: Route[] = [
     path: '/admin/gigs',
   },
   {
+    text: 'tags',
+    path: '/admin/tags'
+  },
+  {
     text: 'bands',
     path: '/admin/bands',
   },

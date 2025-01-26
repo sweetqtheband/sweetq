@@ -14,6 +14,10 @@ export const BaseSvc = (model: Collection<Document>, Model: Function) => {
     findOne: async (query: Record<string, any>) => model.findOne(query),
     getById: async (value: string) =>
       model.findOne({ _id: new ObjectId(value) }),
+    getAllById: async (values: string[]) =>
+      model
+        .find({ _id: { $in: values.map((value) => new ObjectId(value)) } })
+        .toArray(),
     /**
      * Parse user before returning
      * @param {Object} user
@@ -29,6 +33,7 @@ export const BaseSvc = (model: Collection<Document>, Model: Function) => {
 
   return {
     ...instance,
+    modelize: (value: any) => Model(value),
     parse: async (item: Record<string, any>) => {
       const obj = {
         ...item,
@@ -45,32 +50,47 @@ export const BaseSvc = (model: Collection<Document>, Model: Function) => {
 
       return instance.parse({ value: { ...created } });
     },
-    update: async (item: Record<string, any>) => {
+    update: async (item: Record<string, any>, avoidUnset: Boolean = false) => {
       const dbObj = await instance.getById(item._id);
       const obj = await instance.parse({ value: { ...item } });
 
       delete obj._id;
 
-      const unsetObj = dbObj
-        ? Object.keys(dbObj)
-            .filter((key) => !(key in obj) && key !== '_id')
-            .reduce(
-              (acc: Record<string, string>, key: string) => (
-                (acc[key] = ''), acc
-              ),
-              {}
-            )
-        : [];
+      const modifiers: Record<string, any> = {
+        $set: obj,
+      };
+
+      if (!avoidUnset) {
+        modifiers['$unset'] = dbObj
+          ? Object.keys(dbObj)
+              .filter((key) => !(key in obj) && key !== '_id')
+              .reduce(
+                (acc: Record<string, string>, key: string) => (
+                  (acc[key] = ''), acc
+                ),
+                {}
+              )
+          : [];
+      }
 
       await instance.model.findOneAndUpdate(
         { _id: new ObjectId(item._id) },
-        { $set: obj, $unset: unsetObj },
+        modifiers,
         {
           includeResultMetadata: true,
         }
       );
 
       return instance.parse({ value: obj });
+    },
+    remove: async (id: string) => {
+      const dbObj = await instance.getById(id);
+
+      if (dbObj) {
+        await instance.model.deleteOne({ _id: new ObjectId(id) });
+      }
+
+      return instance.parse({ value: dbObj });
     },
   };
 };

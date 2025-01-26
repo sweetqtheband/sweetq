@@ -74,4 +74,36 @@ export default [
     lyrics:
       "Es el día señalado y el lugar, \ntodos mis nervios están a flor de piel.\nVente lista y preparada para algo espectacular.\n\nA las diez abren las puertas y aquí estoy\nen la barra quitándome la presión\nsin saber qué nos deparará la noche…\nno me importa, hoy tu y yo vamos.\n\nA darlo todo en esta fiesta \ny si subes la apuesta voy a jugar.\nNo pienso desperdiciar mi oportunidad.\n\nA darlo todo en esta fiesta \njugando sin reglas hasta el final. \nHagamos que sea digno de recordar.\n\nLa locura se desata en el lugar,\ntodo el mundo está en un éxtasis total.\nLa electricidad se expande por tus labios\n¡Luces fuera!\n\nVoy a darlo todo en esta fiesta \ny si subes la apuesta voy a jugar.\nNo pienso desperdiciar mi oportunidad.\n\nA darlo todo en esta fiesta \njugando sin reglas hasta el final. \nHagamos que sea digno de recordar.\n\nVoy a darlo todo en esta fiesta.\nA darlo todo en esta fiesta.",
   },
+  {
+    id: "sacameabailar",
+    title: "Sácame a bailar",
+    date: "2025",
+    cover: "sacameabailar.jpg",
+    video: "default.mp4",
+    status: "upcoming",
+  },
+  {
+    id: "golpedesuerte",
+    title: "Golpe de suerte",
+    date: "2025",
+    cover: "golpedesuerte.jpg",
+    video: "default.mp4",
+    status: "upcoming",
+  },
+  {
+    id: "quieromas",
+    title: "Quiero más",
+    date: "2025",
+    cover: "quieromas.jpg",
+    video: "default.mp4",
+    status: "upcoming",
+  },
+  {
+    id: "nohabriasidoasi",
+    title: "No habría sido así",
+    date: "2025",
+    cover: "nohabriasidoasi.jpg",
+    video: "default.mp4",
+    status: "upcoming",
+  },
 ];

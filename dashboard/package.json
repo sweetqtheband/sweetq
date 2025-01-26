@@ -2,12 +2,18 @@
   "name": "dashboard",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "update": "node update.mjs"
+    "update": "node update.mjs",
+    "sq": "node scripts/swq.js",
+    "expose": "ngrok http 3000  --url=overly-awaited-leech.ngrok-free.app"
+  },
+  "bin": {
+    "swq": "scripts/swq.js"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.685.0",
@@ -35,11 +41,15 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/yargs": "^17.0.33",
     "dotenv": "^16.4.5",
     "eslint": "^8",
     "eslint-config-next": "14.2.3",
+    "fs-extra": "^11.2.0",
     "puppeteer": "^22.8.0",
     "sass": "^1.75.0",
-    "typescript": "^5"
+    "ts-node": "^10.9.2",
+    "typescript": "^5",
+    "yargs": "^17.7.2"
   }
 }

@@ -30,6 +30,11 @@ const routes: Routes = [
       import('@views/track/track.module').then((m) => m.TrackViewModule),
   },
   {
+    path: 'album',
+    loadChildren: () =>
+      import('@views/album/album.module').then((m) => m.AlbumViewModule),
+  },
+  {
     path: '404',
     loadChildren: () =>
       import('@views/not-found/not-found.module').then(
@@ -41,6 +46,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

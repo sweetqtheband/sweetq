@@ -1,6 +1,8 @@
 export enum FieldTypes {
   image = 'image',
-  city = 'city',
+  filter_country = 'filterCountry',
+  filter_state = 'filterState',
+  filter_city = 'filterCity',
   hidden = 'hidden',
   text = 'text',
   uploader = 'uploader',
@@ -9,9 +11,19 @@ export enum FieldTypes {
   date = 'date',
   select = 'select',
   multiSelect = 'mutiSelect',
+  checkbox = 'checkbox',
+  filterCheckbox = 'filterCheckbox',
+  filterMultiSelect = 'filterMultiSelect',
+  filterCountry = 'filterCountry',
+  filterState = 'filterState',
+  filterCity = 'filterCity',
+  city = 'city',
   video = 'video',
   hour = 'hour',
   none = 'none',
+  label = 'label',
+  tag = 'tag',
+  dateLabel = 'dateLabel',
 }
 
 export type FieldTypesType = keyof typeof FieldTypes;

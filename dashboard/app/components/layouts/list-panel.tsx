@@ -16,6 +16,7 @@ export default function ListPanel({
   translations = {},
   fields = {},
   methods = {},
+  renders = {},
 }: Readonly<{
   id: string;
   data: any;
@@ -24,6 +25,7 @@ export default function ListPanel({
   translations?: Record<string, any>;
   fields?: Record<string, any>;
   methods?: Record<string, any>;
+  renders?: Record<string, any>;
 }>) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -271,6 +273,7 @@ export default function ListPanel({
                 methods,
                 params,
                 pathname,
+                renders,
                 replace,
                 ref: ref[field],
                 onAddFileHandler,

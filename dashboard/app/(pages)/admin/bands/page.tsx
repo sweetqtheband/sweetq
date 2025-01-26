@@ -15,7 +15,7 @@ export default async function BandsPage({
   const items: Band[] = await Bands.parseAll(data.items);
 
   const headers = [
-    { key: 'name', header: i18n.t('fields.name') },
+    { key: 'name', header: i18n.t('fields.name'), default: true },
     { key: 'facebook', header: i18n.t('fields.social.facebook') },
     { key: 'instagram', header: i18n.t('fields.social.instagram') },
   ];

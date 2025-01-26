@@ -1,0 +1,113 @@
+<div class="listen--view" [ngClass]="{ 'long-wrapper': longWrapper }">
+  <div class="listen--bg">
+    <div class="image"></div>
+  </div>
+  <div class="listen--viewport">
+    <div class="listen--content">
+      <div class="listen--wrapper">
+        <div class="listen--panels">
+          <div class="listen--panel album">
+            <header>
+              <h1>SWEET Q</h1>
+              <div class="subtitle">
+                {{ "album.styles" | translate }}
+              </div>
+            </header>
+            <div class="album-wrapper" *ngIf="album.id !== ''">
+              <sweetq-album [item]="album"></sweetq-album>
+              <div class="album-info">
+                <div class="label">{{ "album.label" | translate }}</div>
+                <div class="title">{{ album.title }}</div>
+                <div class="album-data">
+                  {{ album.date }}
+                  <span class="separator"></span>
+                  {{ album.tracks?.length }} {{ "album.tracks" | translate }},
+                  {{ duration }}
+                </div>
+              </div>
+            </div>
+            <div class="tracks">
+              <player
+                type="album"
+                [track]="item"
+                *ngFor="let item of album.tracks; let i = index"
+                [tid]="tid"
+                [index]="i + 1"
+                [album]="album"
+                (ready)="handleReady($event)"
+              ></player>
+            </div>
+          </div>
+          <div class="listen--panel sq-links-wrapper" *ngIf="links.length > 0">
+            <div class="sq-links">
+              <div class="sq-primary-links">
+                <a
+                  class="sq-button"
+                  target="_blank"
+                  [ngClass]="[link.type, link.button]"
+                  [href]="link.link"
+                  *ngFor="let link of links"
+                >
+                  <div class="sq-button-content">
+                    <span
+                      class="sq-icon-wrapper"
+                      [ngClass]="link.type"
+                      *ngIf="link.icon"
+                      ><span class="sq-icon" [ngClass]="link.icon"></span
+                    ></span>
+                    <span
+                      class="sq-text"
+                      translate
+                      [translateParams]="link.trParams"
+                      >{{ link.text! }}</span
+                    >
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #sweetqKit>
+      <sweetq-kit #sweetqKit></sweetq-kit>
+    </ng-template>
+    <footer class="listen--footer">
+      <div class="listen--wrapper">
+        <div class="contact">
+          <h2>
+            {{ "listen.contactUs" | translate }}
+          </h2>
+          <a href="tel:+34695520242">695 520 242 (Hari)</a>
+          <a href="mailto:hola@sweetq.es">hola@sweetq.es</a>
+        </div>
+        <div class="social-networks">
+          <a
+            target="_blank"
+            class="button spotify"
+            title="Spotify"
+            href="https://open.spotify.com/intl-es/artist/74Vs2gSCwnlCiV4yjaFIMb"
+          ></a>
+          <a
+            target="_blank"
+            class="button youtube"
+            title="Youtube"
+            href="https://www.youtube.com/@sweetqtheband"
+          ></a>
+          <a
+            target="_blank"
+            class="button tiktok"
+            title="Tiktok"
+            href="https://www.tiktok.com/@sweetqtheband"
+          ></a>
+          <a
+            target="_blank"
+            class="button instagram"
+            title="Instagram"
+            href="https://www.instagram.com/sweetqtheband"
+          ></a>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>

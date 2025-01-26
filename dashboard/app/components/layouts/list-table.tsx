@@ -1,15 +1,23 @@
 'use client';
 
+import Loader from '@/app/(pages)/admin/loading';
 import config from '@/app/config';
-import { ACTIONS, IMAGE_SIZES, SIZES, SORT } from '@/app/constants';
-import { getClasses } from '@/app/utils';
+import { ACTIONS, IMAGE_SIZES, SORT } from '@/app/constants';
+import useTableRenderComplete from '@/app/hooks/table';
+import { renderField } from '@/app/render';
+import { renderItem } from '@/app/renderItem';
+import { getClasses, uuid } from '@/app/utils';
 import type { SizeType } from '@/types/size.d';
 import {
   Button,
   DataTable,
   DataTableRow,
   Dropdown,
+  IconButton,
+  Modal,
   PaginationNav,
+  Popover,
+  PopoverContent,
   Stack,
   Table,
   TableBatchAction,
@@ -24,14 +32,15 @@ import {
   TableSelectRow,
   TableToolbar,
   TableToolbarContent,
+  TableToolbarSearch,
 } from '@carbon/react';
-import { Add, TrashCan } from '@carbon/react/icons';
-import { clear } from 'console';
+import { Add, Filter, TrashCan } from '@carbon/react/icons';
 import Image from 'next/image';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
 let timeout: NodeJS.Timeout;
+let imageTimeout: NodeJS.Timeout;
 
 export default function ListTable({
   id = 'item.id',
@@ -45,6 +54,8 @@ export default function ListTable({
   onDelete = async () => true,
   translations = {},
   fields = {},
+  filters = {},
+  renders = {},
 }: Readonly<{
   id?: string;
   items: any[];
@@ -57,38 +68,132 @@ export default function ListTable({
   onDelete?: (ids: string[]) => Promise<boolean>;
   translations?: Record<string, any>;
   fields?: Record<string, any>;
+  filters?: Record<string, any>;
+  renders?: Record<string, any>;
 }>) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
 
+  const tableId = uuid();
   const tableRef = useRef<HTMLDivElement>(null);
 
-  const rows = items.map((item) => ({
+  const tableRows = items.map((item) => ({
     ...item,
     id: !item.id ? item._id : item.id,
   }));
 
+  const [deleteOpen, setDeleteOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [deleteRows, setDeleteRows] = useState<any[]>([]);
+  const [filtersOpen, setFiltersOpen] = useState<boolean>(false);
+  const [internalState, setInternalState] = useState<Record<string, any>>({});
+  const [formState, setFormState] = useState<Record<string, any>>({});
+  const [filtering, setFiltering] = useState<boolean>(false);
+
+  const params = new URLSearchParams(searchParams);
+
+  const paramFiltersObj = Object.fromEntries(
+    params.entries().filter(([key]) => key.includes('filters'))
+  );
+
+  if (Object.keys(paramFiltersObj).length > 0) {
+    Object.keys(paramFiltersObj).forEach((key: string) => {
+      const filterName = key.match(/filters\[(.*)\]/)?.[1];
+      if (filterName && !formState[filterName]) {
+        setFormState({
+          ...formState,
+          [filterName]: paramFiltersObj[key].split(','),
+        });
+      }
+    });
+  } else {
+    const currentFormState = { ...formState };
+    let setForm = false;
+    Object.keys(filters).forEach((filterName) => {
+      if (currentFormState[filterName]) {
+        delete currentFormState[filterName];
+        setForm = true;
+      }
+    });
+
+    if (setForm) {
+      setFormState(currentFormState);
+    }
+  }
+
+  const onInternalStateHandler = (field: string, value: any) => {
+    setInternalState({
+      ...internalState,
+      [field]: value,
+    });
+  };
+
+  useTableRenderComplete(tableId, () => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 300);
+  });
+
+  useEffect(() => {
+    setFiltering(
+      Object.keys(filters).reduce((isFiltering, filterName) => {
+        if (internalState[filterName]) {
+          if (
+            Object.values(internalState[filterName]).filter((value) => value)
+              .length
+          ) {
+            return true;
+          }
+        }
+        return isFiltering;
+      }, false) || Object.keys(paramFiltersObj).length > 0
+    );
+  }, [internalState, filters, paramFiltersObj]);
+
   const renderCell = (
-    item: Record<string, any>,
-    field: Record<string, any>
+    row: Record<string, any>,
+    field: Record<string, any>,
+    item: Record<string, any>
   ) => {
     if (field.value) {
       const fieldName = field.id.split(':')[1];
-      const isImage = field.value.match(/\.(png|gif|jpg|jpeg|webp|svg)$/i);
+
+      const isImage = String(field.value).match(
+        /\.(png|gif|jpg|jpeg|webp|svg)/i
+      );
+
+      const defaultValue =
+        item.relations?.[fieldName]?.[translations.locale] || field.value;
 
       const value = translations.options?.[fieldName]
         ? translations.options?.[fieldName][field.value]
-        : field.value;
+        : defaultValue;
 
       const image = () => (
         <Image
           src={value}
-          alt={item.id}
+          alt={row.id}
           height={IMAGE_SIZES[imageSize]}
           width={IMAGE_SIZES[imageSize]}
         />
       );
+
+      if (renders[fieldName]) {
+        const func =
+          typeof renders[fieldName] === 'function'
+            ? renders[fieldName]
+            : renders[fieldName].render;
+
+        if (typeof func === 'function') {
+          const render = func(fieldName, value, item);
+          return render instanceof Array ? (
+            <>{render.map((renderedItem) => renderItem(renderedItem))}</>
+          ) : (
+            renderItem(render)
+          );
+        }
+      }
 
       return isImage ? image() : value;
     } else {
@@ -113,13 +218,14 @@ export default function ListTable({
   const [sortable, setSortable] = useState(headers.map(() => false));
   const [allSelected, setAllSelected] = useState(false);
   const [fitTable, setFitTable] = useState(false);
+  const [itemsShown, setItemsShown] = useState(config.table.shown);
 
   const tableRowClickHandler = (id: string | number, target: HTMLElement) => {
     if (
       !target.classList.contains('cds--checkbox') &&
       !target.classList.contains('cds--table-column-checkbox')
     ) {
-      const row = rows.find((row) => row.id === id);
+      const row = tableRows.find((row) => row.id === id);
       onItemClick(row);
     }
   };
@@ -128,8 +234,19 @@ export default function ListTable({
     onItemClick(ACTIONS.ADD);
   };
 
-  const tableDeleteHandler = (selectedRows: any[]) => () => {
-    onDelete(selectedRows.map((row) => row.id));
+  const tableDeleteHandler = (selectedRows: any[]) => {
+    if (!deleteOpen) {
+      setDeleteOpen(true);
+      setDeleteRows(selectedRows);
+    } else {
+      onDelete(selectedRows.map((row) => row.id));
+      setDeleteOpen(false);
+    }
+  };
+
+  const tableDeleteClear = () => {
+    setDeleteOpen(false);
+    setDeleteRows([]);
   };
 
   const tableRowSortHandler = (index: number) => {
@@ -192,6 +309,33 @@ export default function ListTable({
     return id;
   };
 
+  const tableSearchTranslate = (id: string) => {
+    if (id === 'carbon.table.toolbar.search.placeholder') {
+      return translations.filter;
+    }
+    if (id === 'carbon.table.toolbar.search.label') {
+      return translations.search;
+    }
+
+    return id;
+  };
+
+  const onTableSearch = (value: string) => {
+    const params = new URLSearchParams(searchParams);
+
+    setIsLoading(true);
+
+    if (value) {
+      params.set('query', value);
+      params.set('page', '0');
+    } else {
+      params.delete('query');
+      params.delete('page');
+    }
+
+    replace(`${pathname}?${params.toString()}`);
+  };
+
   const onSelectAllHandler = (
     rows: DataTableRow<any[]>[],
     selectRow: Function
@@ -211,7 +355,7 @@ export default function ListTable({
     }
   };
 
-  const onLimitChangeHandler = ({ selectedItem }) => {
+  const onLimitChangeHandler = ({ selectedItem }: any) => {
     const params = new URLSearchParams(searchParams);
 
     params.delete('page');
@@ -222,16 +366,27 @@ export default function ListTable({
   };
 
   const onPaginationChangeHandler = (page: number) => {
+    setIsLoading(true);
     const params = new URLSearchParams(searchParams);
 
     params.set('page', String(page));
 
     replace(`${pathname}?${params.toString()}`);
   };
+  useEffect(() => {
+    if (isLoading) {
+      clearTimeout(imageTimeout);
+      imageTimeout = setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
+    }
+  }, [isLoading]);
 
   useEffect(() => {
     const resizeHandler = () => {
-      setFitTable(checkRowsForWindowSize(rows));
+      setFitTable(checkRowsForWindowSize(tableRows));
+      const max = Math.floor(window.innerWidth / 48 - 5);
+      setItemsShown(max);
     };
 
     window.addEventListener('resize', resizeHandler);
@@ -244,9 +399,10 @@ export default function ListTable({
     return () => {
       window.removeEventListener('resize', resizeHandler);
     };
-  }, [tableRef, rows]);
+  }, [tableRef, tableRows]);
   const classes = getClasses({
     'table-wrapper': true,
+    'with-title': !!translations.title,
     'max-top': fitTable,
   });
 
@@ -259,9 +415,101 @@ export default function ListTable({
     limitItems.find((item) => item.id === limit)
   );
 
+  const defaultCell = headers.find((header) => header.default);
+
+  const renderFilters = () => {
+    const filterFields = Object.keys(filters);
+
+    if (filterFields.length > 0) {
+      return (
+        <Popover
+          align={'bottom-right'}
+          open={filtersOpen}
+          isTabTip
+          autoAlign
+          onRequestClose={() => setFiltersOpen(false)}
+        >
+          <IconButton
+            label={translations.filter}
+            kind={filtering ? 'tertiary' : 'ghost'}
+            aria-expanded={filtersOpen}
+            onClick={() => {
+              setFiltersOpen(!filtersOpen);
+            }}
+          >
+            <Filter />
+          </IconButton>
+          <PopoverContent>
+            {filterFields.map((field: string) => {
+              const handleFilter = (field: string, value: any) => {
+                setIsLoading(true);
+                const params = new URLSearchParams(searchParams);
+                if (value instanceof Array) {
+                  if (value.length > 0) {
+                    params.set(`filters[${field}]`, value.join(','));
+                  } else {
+                    params.delete(`filters[${field}]`);
+                  }
+                } else if (value) {
+                  params.set(`filters[${field}]`, value);
+                } else {
+                  params.delete(`filters[${field}]`);
+                }
+
+                replace(`${pathname}?${params.toString()}`);
+
+                const currentState = {
+                  ...formState,
+                };
+
+                delete currentState[field];
+
+                if (value) {
+                  setFormState({
+                    ...currentState,
+                    [field]: value,
+                  });
+                } else {
+                  setFormState({
+                    ...currentState,
+                  });
+                }
+              };
+
+              const handleFilterInternalState = (field: string, value: any) => {
+                onInternalStateHandler(field, value);
+                handleFilter(field, null);
+              };
+
+              return (
+                <div key={`filter-${field}`}>
+                  {renderField({
+                    ...filters[field],
+                    translations,
+                    field,
+                    formState,
+                    internalState,
+                    onInternalStateHandler: handleFilterInternalState,
+                    onInputHandler: handleFilter,
+                  })}
+                </div>
+              );
+            })}
+          </PopoverContent>
+        </Popover>
+      );
+    }
+
+    return null;
+  };
+
   return (
-    <div className={classes} ref={tableRef}>
-      <DataTable headers={headers} rows={rows} stickyHeader={true}>
+    <div
+      className={classes}
+      ref={tableRef}
+      onKeyDown={(ev) => ev.key === 'Escape' && setFiltersOpen(false)}
+    >
+      <DataTable headers={headers} rows={tableRows} stickyHeader={true}>
         {({
           rows,
           headers,
@@ -270,7 +518,6 @@ export default function ListTable({
           getToolbarProps,
           getSelectionProps,
           selectRow,
-          selectAll,
           selectedRows,
         }) => {
           const batchActionProps = {
@@ -281,21 +528,21 @@ export default function ListTable({
             }),
           };
           return (
-            <TableContainer {...getTableContainerProps()}>
+            <TableContainer
+              title={translations.title}
+              description={translations.description}
+              {...getTableContainerProps()}
+            >
               <TableToolbar {...getToolbarProps()}>
-                <TableBatchActions
-                  {...batchActionProps}
-                  translateWithId={tableBatchActionsTranslate}
-                >
-                  <TableBatchAction
-                    tabIndex={batchActionProps.shouldShowBatchActions ? 0 : -1}
-                    renderIcon={TrashCan}
-                    onClick={tableDeleteHandler(selectedRows)}
-                  >
-                    {translations.delete}
-                  </TableBatchAction>
-                </TableBatchActions>
                 <TableToolbarContent>
+                  <TableToolbarSearch
+                    tabIndex={batchActionProps.shouldShowBatchActions ? -1 : 0}
+                    translateWithId={tableSearchTranslate}
+                    onChange={(evt: any) => {
+                      onTableSearch(evt.target.value);
+                    }}
+                  />
+                  {renderFilters()}
                   <Button
                     tabIndex={batchActionProps.shouldShowBatchActions ? -1 : 0}
                     onClick={tableAddNewHandler}
@@ -305,8 +552,20 @@ export default function ListTable({
                     {translations.add}
                   </Button>
                 </TableToolbarContent>
+                <TableBatchActions
+                  {...batchActionProps}
+                  translateWithId={tableBatchActionsTranslate}
+                >
+                  <TableBatchAction
+                    tabIndex={batchActionProps.shouldShowBatchActions ? 0 : -1}
+                    renderIcon={TrashCan}
+                    onClick={() => tableDeleteHandler(selectedRows)}
+                  >
+                    {translations.delete}
+                  </TableBatchAction>
+                </TableBatchActions>
               </TableToolbar>
-              <Table>
+              <Table data-id={tableId}>
                 <TableHead>
                   <TableRow>
                     <TableSelectAll
@@ -347,13 +606,14 @@ export default function ListTable({
                       />
                       {row.cells.map((cell, index) => (
                         <TableCell key={`${id}-row-${rowIndex}-cell-${index}`}>
-                          {renderCell(row, cell)}
+                          {renderCell(row, cell, tableRows[rowIndex])}
                         </TableCell>
                       ))}
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
+              {isLoading ? <Loader /> : null}
             </TableContainer>
           );
         }}
@@ -361,7 +621,7 @@ export default function ListTable({
 
       <Stack gap={4} orientation="horizontal" className="cds-table--pagination">
         <PaginationNav
-          itemsShown={config.table.limit}
+          itemsShown={itemsShown}
           totalItems={pages}
           onChange={onPaginationChangeHandler}
         />
@@ -379,6 +639,29 @@ export default function ListTable({
           onChange={onLimitChangeHandler}
         />
       </Stack>
+      <Modal
+        open={deleteOpen}
+        onRequestClose={() => tableDeleteClear()}
+        onRequestSubmit={() => tableDeleteHandler(deleteRows)}
+        danger
+        modalHeading={
+          deleteRows.length === 1
+            ? translations.confirmDelete
+            : translations.confirmDeleteSelected
+        }
+        closeButtonLabel={translations.close}
+        primaryButtonText={translations.delete}
+        secondaryButtonText={translations.cancel}
+        modalLabel={deleteRows
+          .map(
+            (row) =>
+              row.cells.find(
+                (cell: Record<string, any>) =>
+                  cell.info.header === defaultCell.key
+              ).value
+          )
+          .join(', ')}
+      />
     </div>
   );
 }

@@ -1,16 +1,46 @@
 :host {
   display: block;
-  
+
   .album {
     width: 100%;
     height: 100%;
   }
 
   .cover {
+    position: relative;
+    background-image: unset;
+    height: 0px;
+    padding-top: 100%;
+  }
+
+  .cover:before {
+    content: "";
+    background-image: var(--background-image);
+    display: block;
     width: 100%;
     height: 100%;
+    border-radius: 10px;
+    position: relative;
+    background-position: center top;
     background-size: cover;
-    border-radius: 8px;
+    z-index: 0;
+    padding-top: 100%;
+    transform: translateY(-100%);
+  }
+  .cover:after {
+    content: "";
+    background-image: var(--background-image);
+    display: block;
+    position: absolute;
+    z-index: -1;
+    background-position: center top;
+    width: 90%;
+    height: 90%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-size: cover;
+    filter: blur(20px);
+    bottom: -10px;
   }
 
   .title {
@@ -24,5 +54,5 @@
     font-size: var(--fontSizeS);
     line-height: var(--fontSizeXL);
     padding-top: 6px;
-  } 
+  }
 }

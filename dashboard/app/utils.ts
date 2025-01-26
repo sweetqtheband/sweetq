@@ -1,5 +1,6 @@
-import { I18n, i18n } from 'next-i18next';
+import { I18n } from 'next-i18next';
 import { v4 as uuidv4 } from 'uuid';
+import { FIELD_TYPES } from './constants';
 
 export const getClasses = (obj: Record<string, any>) =>
   Object.keys(obj)
@@ -37,10 +38,8 @@ export const getFormData = (data: any, files: any) => {
   Object.keys(data).forEach((key) => {
     if (files[key]?.length && files[key][0].file instanceof File) {
       formData.append(key, files[key][0].file);
-    } else {
-      if (data[key]) {
-        formData.append(key, data[key]);
-      }
+    } else if (data[key]) {
+      formData.append(key, data[key]);
     }
   });
 
@@ -50,18 +49,25 @@ export const getFormData = (data: any, files: any) => {
 export const s3File = (fileName: string) =>
   `https://${process.env.NEXT_PUBLIC_AWS_BUCKET_NAME}.s3.${process.env.NEXT_PUBLIC_AWS_REGION}.amazonaws.com/${fileName}`;
 
-export const formDataToObject = (formData: FormData): Record<string, any> => {
+export const formDataToObject = (
+  formData: FormData,
+  types: Record<string, any>
+): Record<string, any> => {
   const obj: Record<string, any> = {};
+
   formData.forEach((value, key) => {
     if (key in obj) {
       obj[key] =
         Array.isArray(obj[key]) && obj[key] instanceof File
           ? [...obj[key], value]
           : value;
+    } else if (types[key] === FIELD_TYPES.MULTISELECT) {
+      obj[key] = value !== 'undefined' ? String(value).split(',') : [];
     } else {
       obj[key] = value !== 'undefined' ? value : null;
     }
   });
+
   return obj;
 };
 
