@@ -55,10 +55,11 @@
   "gigs": {
     "label": "Gigs",
     "viewInGoogleMap": "View in Google Maps",
-    "20240103": {
+    "20250214": {
       "date": "February 14th",
-      "title": "Sweet Q + Delparaíso",
-      "text": "Live a very special Valentine's Day with us. Next February 14th we return to <span class='bold'>El Perro Club</span> accompanying <span class='bold'>Delparaíso</span> in their visit to Madrid. If you want to listen to our new 2025 songs... Don't miss it out!"
+      "title": "Sweet Q + Canciller",
+      "text": "Live a very special Valentine's Day with us. Next February 14th we return to <span class='bold'>El Perro Club</span> accompanying <span class='bold'>Canciller</span> in their visit to Madrid. If you want to listen to our new 2025 songs... Don't miss it out!",
+      "button": "Buy tickets"
     }
   },
   "stayTuned": "At this time we haven't any gig scheduled soon. Stay tuned!",
@@ -101,7 +102,7 @@
       "20240719": "View interview in 'Sonidos Nuevos'"
     },
     "gigs": {
-      "20241004": "Tickets for Primera Fila Fest"
+      "20250214": "Tickets Sweet Q + Canciller 14 Feb"
     }
   },
   "listen": {

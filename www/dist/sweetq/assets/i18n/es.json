@@ -55,10 +55,11 @@
   "gigs": {
     "label": "Conciertos",
     "viewInGoogleMap": "Ver en Google Maps",
-    "20240214": {
+    "20250214": {
       "date": "14 Febrero",
-      "title": "Sweet Q + Delparaíso",
-      "text": "Vive un día de los enamorados muy especial junto a nosotros. El próximo 14 de febrero volvemos a <span class='bold'>El Perro Club</span> acompañando a <span class='bold'>Delparaíso</span> en su paso por Madrid. Si quieres escuchar nuestros nuevos temas de 2025... ¡No te lo pierdas!"
+      "title": "Sweet Q + Canciller",
+      "text": "Vive un día de los enamorados muy especial junto a nosotros. El próximo 14 de febrero volvemos a <span class='bold'>El Perro Club</span> acompañando a <span class='bold'>Canciller</span> en su paso por Madrid. Si quieres escuchar nuestros nuevos temas de 2025... ¡No te lo pierdas!",
+      "button": "Comprar entradas"
     }
   },
   "stayTuned": "Por el momento no tenemos conciertos a la vista. ¡Permanece atento!",
@@ -101,7 +102,7 @@
       "20240719": "Ven entrevista en 'Sonidos Nuevos'"
     },
     "gigs": {
-      "20241004": "Entradas Primera Fila Fest"
+      "20250214": "Entradas Sweet Q + Canciller 14 Feb"
     }
   },
   "listen": {

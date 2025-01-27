@@ -20,6 +20,14 @@
     "button": "primary",
     "link": "https://music.youtube.com/playlist?list=OLAK5uy_mLRXuPUlh7lYzPYMEfS0sY5OF8VwTN_zg"
   },
+
+  {
+    "type": "gig",
+    "icon": "icon-gigs",
+    "text": "links.gigs.20250214",
+    "button": "secondary",
+    "link": "https://www.notikumi.com/channel/sweet-q/2025/2/14/canciller-sweet-q"
+  },
   {
     "type": "youtube",
     "icon": "icon-youtube",
