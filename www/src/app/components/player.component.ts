@@ -146,7 +146,7 @@ export class PlayerComponent
     };
 
     this.listeners.audioLoadedData = () => {
-      this.audio.volume = 0.75;
+      this.audio.volume = 1;
     };
 
     this.listeners.audioEnded = () => {
