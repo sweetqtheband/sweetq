@@ -1,10 +1,13 @@
 [
   {
-    "type": "info gig g20240214",
-    "title": "gigs.20240214.title",
-    "subtitle": "gigs.20240214.date",
-    "text": "gigs.20240214.text",
-    "squared": true
+    "type": "info gig g20250214",
+    "title": "gigs.20250214.title",
+    "subtitle": "gigs.20250214.date",
+    "text": "gigs.20250214.text",
+    "button": "gigs.20250214.button",
+    "squared": true,
+    "icon": "icon-gigs",
+    "href": "https://www.notikumi.com/channel/sweet-q/2025/2/14/canciller-sweet-q"
   },
   {
     "type": "video ley",

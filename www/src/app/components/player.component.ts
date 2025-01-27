@@ -16,7 +16,6 @@ import { Album } from '@interfaces/album';
 
 import { Media } from '@interfaces/media';
 import { StreamService } from '@services/stream.service';
-import * as e from 'cors';
 import { Nullable } from 'src/app/types';
 
 @Component({
@@ -169,6 +168,10 @@ export class PlayerComponent
           (this.audio.currentTime / this.audio.duration) * 100;
       }
     };
+
+    if (!this.streamUrl) {
+      await this.getStreamUrl();
+    }
   }
 
   async ngOnDestroy(): Promise<void> {
