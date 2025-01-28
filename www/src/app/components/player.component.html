@@ -1,4 +1,9 @@
-<div class="audio-player">
+<div
+  class="audio-player"
+  [ngClass]="{
+    mobile: isMobile
+  }"
+>
   <div class="video" *ngIf="type === 'canvas' && track.isCurrent">
     <video
       #video
@@ -16,7 +21,8 @@
     [ngClass]="{
       'is-active': track.isCurrent,
       'is-playing': track.isPlaying,
-      'is-paused': !track.isPlaying
+      'is-paused': !track.isPlaying,
+      mobile: isMobile
     }"
   >
     <div class="play-container">

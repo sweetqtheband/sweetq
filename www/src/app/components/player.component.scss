@@ -479,7 +479,7 @@
         font-size: var(--fontSizeXS);
       }
 
-      &:hover,
+      &:not(.mobile):hover,
       &.is-active {
         .index {
           display: none;

@@ -16,6 +16,7 @@ import { Album } from '@interfaces/album';
 
 import { Media } from '@interfaces/media';
 import { StreamService } from '@services/stream.service';
+import { SystemService } from '@services/system.service';
 import { Nullable } from 'src/app/types';
 
 @Component({
@@ -57,15 +58,12 @@ export class PlayerComponent
   private listeners: any = {};
   public progressWidth: number = 0;
 
-  constructor(private http: StreamService, private elementRef: ElementRef) {}
+  constructor(private http: StreamService, private system: SystemService) {}
 
   @HostListener('window:onPlaying', ['$event'])
   onPlayingListener({ detail }: any) {
     if (this.track.id !== detail.id) {
-      if (!this.audio.paused) this.stopPlay();
-      this.track.isCurrent = false;
-      this.audio.currentTime = 0;
-      this.progressWidth = 0;
+      this.clearPlay();
     }
   }
 
@@ -75,10 +73,7 @@ export class PlayerComponent
       await this.playTrack();
       this.track.isCurrent = true;
     } else {
-      this.stopPlay();
-      this.audio.currentTime = 0;
-      this.progressWidth = 0;
-      this.track.isCurrent = false;
+      this.clearPlay();
     }
   }
 
@@ -86,6 +81,8 @@ export class PlayerComponent
   async startPlayListener() {
     if (this.track.isCurrent) {
       this.playTrack();
+    } else {
+      this.clearPlay();
     }
   }
 
@@ -116,6 +113,18 @@ export class PlayerComponent
     return { TID: this.tId };
   }
 
+  get isMobile(): boolean {
+    return this.system.isMobile();
+  }
+
+  clearPlay() {
+    if (!this.audio.paused) {
+      this.stopPlay();
+    }
+    this.audio.currentTime = 0;
+    this.progressWidth = 0;
+    this.track.isCurrent = false;
+  }
   videoStyle(): Object {
     const isHorizontal = window.innerHeight < window.innerWidth;
     const prop9_16 = window.innerWidth / 0.5625;
