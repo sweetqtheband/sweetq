@@ -416,6 +416,7 @@
 }
 
 :host(.album) {
+  cursor: pointer;
   .audio-player {
     .controls {
       flex: auto;
@@ -484,7 +485,17 @@
         .index {
           display: none;
         }
-        .toggle-play {
+        &.is-loading {
+          .toggle-play {
+            background-image: url("/assets/imgs/loader.gif");
+            height: 30px;
+            width: 48px;
+            background-repeat: no-repeat;
+            background-position: 2px center;
+            background-size: contain;
+          }
+        }
+        &:not(.is-loading) .toggle-play {
           transition: none;
           cursor: pointer;
           position: relative;

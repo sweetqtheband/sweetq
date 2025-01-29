@@ -16,6 +16,7 @@ export interface Media {
   description?: string | null;
   lyrics?: string | null;
   isPlaying?: boolean;
+  isLoading?: boolean;
   isCurrent?: boolean;
   fileSize?: number;
 }

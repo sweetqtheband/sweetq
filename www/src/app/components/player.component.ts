@@ -51,8 +51,8 @@ export class PlayerComponent
   @Output() ready = new EventEmitter<any>();
 
   public streamUrl: any = null;
-  public isLoaded: boolean = false;
   public isDragging: boolean = false;
+  public isReady: boolean = false;
   public videoLoaded: boolean = false;
   private progressInterval: any;
   private listeners: any = {};
@@ -155,7 +155,12 @@ export class PlayerComponent
     };
 
     this.listeners.audioLoadedData = () => {
+      this.isReady = true;
+      this.track.isLoading = false;
       this.audio.volume = 1;
+      if (this.track.isCurrent) {
+        this.launchPlay();
+      }
     };
 
     this.listeners.audioEnded = () => {
@@ -179,7 +184,7 @@ export class PlayerComponent
     };
 
     if (!this.streamUrl) {
-      await this.getStreamUrl();
+      this.getStreamUrl();
     }
   }
 
@@ -304,31 +309,40 @@ export class PlayerComponent
     }
   }
 
-  async playTrack() {
-    try {
-      if (!this.streamUrl) {
-        await this.getStreamUrl();
+  async launchPlay() {
+    if (this.audio && this.audio.paused) {
+      this.onPlaying();
+      this.track.isPlaying = true;
+      await this.audio.play();
+      this.setMetadata();
+      if (this.video) {
+        this.video.play();
+      }
+      if (this.videoLoaded) {
+        this.emitVideoLoaded();
       }
 
-      if (this.audio && this.audio.paused) {
-        this.onPlaying();
-        this.track.isPlaying = true;
-        await this.audio.play();
-        this.setMetadata();
-        if (this.video) {
-          this.video.play();
-        }
-        if (this.videoLoaded) {
-          this.emitVideoLoaded();
-        }
+      this.progressInterval = setInterval(() => {
+        this.progressWidth =
+          (this.audio.currentTime / this.audio.duration) * 100;
+        this.track.advance = this.getTimeCodeFromNum(this.audio.currentTime);
+      }, 500);
+    } else {
+      this.stopPlay();
+    }
+  }
 
-        this.progressInterval = setInterval(() => {
-          this.progressWidth =
-            (this.audio.currentTime / this.audio.duration) * 100;
-          this.track.advance = this.getTimeCodeFromNum(this.audio.currentTime);
-        }, 500);
+  async playTrack() {
+    try {
+      if (!this.isReady) {
+        this.track.isCurrent = true;
+        this.track.isLoading = true;
+        this.onPlaying();
+      }
+      if (!this.streamUrl) {
+        this.getStreamUrl();
       } else {
-        this.stopPlay();
+        this.launchPlay();
       }
     } catch (e) {
       console.log(this.track.id);
@@ -341,6 +355,8 @@ export class PlayerComponent
     if (!this.isDragging && this.track.isCurrent) {
       this.stopPlay();
       this.isDragging = true;
+    } else if (!this.track.isCurrent) {
+      this.playTrack();
     }
   }
 
@@ -402,5 +418,15 @@ export class PlayerComponent
     let seconds = Math.floor(num - minutes * 60);
 
     return `${minutes}:${String(seconds % 60).padStart(2, '0')}`;
+  }
+
+  audioPlayerClick(ev: MouseEvent | TouchEvent) {
+    if (
+      !this.track.isCurrent ||
+      (this.track.isCurrent &&
+        !(ev.target as HTMLElement).classList.contains('timeline-wrapper'))
+    ) {
+      this.playTrack();
+    }
   }
 }

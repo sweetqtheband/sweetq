@@ -3,6 +3,7 @@
   [ngClass]="{
     mobile: isMobile
   }"
+  (click)="audioPlayerClick($event)"
 >
   <div class="video" *ngIf="type === 'canvas' && track.isCurrent">
     <video
@@ -21,7 +22,8 @@
     [ngClass]="{
       'is-active': track.isCurrent,
       'is-playing': track.isPlaying,
-      'is-paused': !track.isPlaying,
+      'is-loading': track.isLoading,
+      'is-paused': !track.isPlaying && !track.isLoading,
       mobile: isMobile
     }"
   >
@@ -35,7 +37,7 @@
     </div>
     <div class="controls-container">
       <div class="info-wrapper">
-        <div class="name" (click)="playTrack()">
+        <div class="name">
           <div
             *ngIf="index && index > 0"
             class="toggle-play"
