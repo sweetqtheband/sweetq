@@ -8,9 +8,10 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    env:
-      VPS_HOST: ${{ secrets.VPS_HOST }}
     steps:
+      - uses: actions/checkout@v3
+      - env:
+        VPS_HOST: ${{ secrets.VPS_HOST }}
       - name: Verificar valores de Secrets
         run: |
           echo "VPS_HOST='$VPS_HOST'"
