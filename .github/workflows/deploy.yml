@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Verificar valores de Secrets
-        uses: actions/checkout@v3
         env:
           VPS_HOST: ${{ secrets.VPS_HOST }}
           run: |
