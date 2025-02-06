@@ -253,12 +253,17 @@ export default function ListPanel({
   };
 
   const ref = Object.keys(fields.types).reduce(
-    (acc: Record<string, any>, field: string) => ({
-      ...acc,
-      [field]: useRef(null),
-    }),
+    (acc: Record<string, any>, field: string) => {
+      acc[field] = null;
+      return acc;
+    },
     {}
   );
+
+  Object.keys(fields.types).forEach((field: string) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    ref[field] = useRef(null);
+  });
 
   const getContent = (data: any) => (
     <>
