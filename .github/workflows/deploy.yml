@@ -1,6 +1,27 @@
 name: Desplegar web de Sweet Q
 
 on:
+  workflow_call:
+    secrets:
+      - VPS_HOST
+      - VPS_USER
+      - VPS_SSH_KEY
+      - MONGODB_URI
+      - MONGODB_DATABASE
+      - INSTAGRAM_USERNAME
+      - INSTAGRAM_USER
+      - INSTAGRAM_PASSWORD
+      - INSTAGRAM_CLIENT_ID
+      - INSTAGRAM_CLIENT_SECRET
+      - INSTAGRAM_REDIRECT_URI
+      - TOKEN_SECRET
+      - META_WEBHOOK_TOKEN
+      - AWS_ACCESS_KEY_ID
+      - AWS_SECRET_ACCESS_KEY
+      - API_INSTAGRAM
+      - GRAPH_INSTAGRAM
+      - API_INSTAGRAM_VERSION
+      - NODE_ENV
   push:
     branches:
       - main
