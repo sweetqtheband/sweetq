@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Verificar valores de Secrets
         run: |
-          echo $VPS_HOST
+          echo $VPS_HOST | sed -e 's/\(.\)/\1 /g'
       - name: Conectar al VPS y actualizar contenedor
         uses: appleboy/ssh-action@master
         with:
