@@ -12,7 +12,6 @@ jobs:
       VPS_HOST: ${{ secrets.VPS_HOST }}
     steps:
       - name: Verificar valores de Secrets
-        secrets: inherit
         run: |
           echo $VPS_HOST
       - name: Conectar al VPS y actualizar contenedor
