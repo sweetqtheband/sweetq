@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Verificar valores de Secrets
+        run: |
+          echo "VPS_HOST=${{ secrets.VPS_HOST }}"
       - name: Conectar al VPS y actualizar contenedor
         uses: appleboy/ssh-action@master
         with:
@@ -17,8 +20,24 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            cd /var/www/sweetq
+            cd ~/var/www/sweetq/dashboard
             git pull origin main
+            echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" > .env.production
+            echo "MONGODB_DATABASE=${{ secrets.MONGODB_DATABASE }}" >> .env.production
+            echo "INSTAGRAM_USERNAME=${{ secrets.INSTAGRAM_USERNAME }}" >> .env.production
+            echo "INSTAGRAM_USER=${{ secrets.INSTAGRAM_USER }}" >> .env.production
+            echo "INSTAGRAM_PASSWORD=${{ secrets.INSTAGRAM_PASSWORD }}" >> .env.production
+            echo "INSTAGRAM_CLIENT_ID=${{ secrets.INSTAGRAM_CLIENT_ID }}" >> .env.production
+            echo "INSTAGRAM_CLIENT_SECRET=${{ secrets.INSTAGRAM_CLIENT_SECRET }}" >> .env.production
+            echo "INSTAGRAM_REDIRECT_URI=${{ secrets.INSTAGRAM_REDIRECT_URI }}" >> .env.production
+            echo "TOKEN_SECRET=${{ secrets.TOKEN_SECRET }}" >> .env.production
+            echo "META_WEBHOOK_TOKEN=${{ secrets.META_WEBHOOK_TOKEN }}" >> .env.production
+            echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> .env.production
+            echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env.production
+            echo "API_INSTAGRAM=${{ vars.API_INSTAGRAM }}" >> .env.production
+            echo "GRAPH_INSTAGRAM=${{ vars.GRAPH_INSTAGRAM }}" >> .env.production
+            echo "API_INSTAGRAM_VERSION=${{ vars.API_INSTAGRAM_VERSION }}" >> .env.production
+            echo "NODE_ENV=${{ vars.NODE_ENV }}" >> .env.production
             docker-compose down
             docker-compose build
             docker-compose up -d
