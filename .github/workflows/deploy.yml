@@ -19,7 +19,7 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            cd /Users/jesus.garciag/www/sweetq/web/dashboard/
+            cd /var/www/sweetq
             git pull origin main
             echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" > .env.production
             echo "MONGODB_DATABASE=${{ secrets.MONGODB_DATABASE }}" >> .env.production
