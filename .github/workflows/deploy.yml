@@ -21,6 +21,7 @@ jobs:
           script: |
             cd /var/www/sweetq
             git pull origin main
+            cd /var/www/sweetq/dashboard
             echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" > .env.production
             echo "MONGODB_DATABASE=${{ secrets.MONGODB_DATABASE }}" >> .env.production
             echo "INSTAGRAM_USERNAME=${{ secrets.INSTAGRAM_USERNAME }}" >> .env.production
@@ -37,6 +38,7 @@ jobs:
             echo "GRAPH_INSTAGRAM=${{ vars.GRAPH_INSTAGRAM }}" >> .env.production
             echo "API_INSTAGRAM_VERSION=${{ vars.API_INSTAGRAM_VERSION }}" >> .env.production
             echo "NODE_ENV=${{ vars.NODE_ENV }}" >> .env.production
+            rm -Rf /var/www/sweetq/dist /var/www/sweetq/www
             docker-compose down
             docker-compose build
             docker-compose up -d
