@@ -1,6 +1,6 @@
 import { Options as options, Types as types } from '@/app/services/gigs';
 import { NextRequest } from 'next/server';
-import { deleteItem, getItem, putItem } from '../db';
+import { deleteItem, getItem, putItem } from '../../../services/api/_db';
 import { HTTP_STATUS_CODES } from '@/app/constants';
 
 const collection = 'instagram';

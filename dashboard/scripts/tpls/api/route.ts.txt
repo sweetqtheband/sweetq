@@ -1,6 +1,6 @@
 import { Options as options, Types as types } from '@/app/services/{{plural}}';
 import { NextRequest } from 'next/server';
-import { getList, postItem } from '@/app/(pages)/api/db';
+import { getList, postItem } from '@/app/services/api/_db';
 import { revalidatePath } from 'next/cache';
 import { HTTP_STATUS_CODES } from '@/app/constants';
 

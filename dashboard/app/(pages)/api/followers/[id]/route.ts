@@ -1,6 +1,6 @@
 import { Options as options, Types as types } from '@/app/services/followers';
 import { NextRequest } from 'next/server';
-import { putItem } from '../../db';
+import { putItem } from '@/app/services/api/_db';
 import { HTTP_STATUS_CODES } from '@/app/constants';
 import { revalidatePath } from 'next/cache';
 

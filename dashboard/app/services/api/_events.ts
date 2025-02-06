@@ -1,4 +1,4 @@
-import { getCollection } from '@/app/(pages)/api/db';
+import { getCollection } from '@/app/services/api/_db';
 import { ObjectId } from 'mongodb';
 
 const col = getCollection('app_events');

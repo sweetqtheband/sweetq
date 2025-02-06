@@ -1,7 +1,7 @@
 import { Model } from '@/app/models/followers';
 import { BaseSvc } from './_base';
 import { Collection, Document } from 'mongodb';
-import { getCollection } from '@/app/(pages)/api/db';
+import { getCollection } from '@/app/services/api/_db';
 import { FactorySvc } from './factory';
 
 /**

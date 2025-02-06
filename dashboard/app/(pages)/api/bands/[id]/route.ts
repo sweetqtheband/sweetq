@@ -1,6 +1,6 @@
 import { Options as options, Types as types } from '@/app/services/bands';
 import { NextRequest } from 'next/server';
-import { deleteItem, putItem } from '../../db';
+import { deleteItem, putItem } from '@/app/services/api/_db';
 import { HTTP_STATUS_CODES } from '@/app/constants';
 import { revalidatePath } from 'next/cache';
 

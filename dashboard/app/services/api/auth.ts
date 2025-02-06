@@ -1,16 +1,15 @@
-import { ERRORS, TOKENS, USER_PROFILES } from "@/app/constants";
-import { accessTokenSvc, adminTokenSvc } from "./token";
-import { userSvc } from "./user";
-import { toTimestamp } from "@/app/(pages)/api/db";
-import { NextRequest } from "next/server";
-
+import { ERRORS, TOKENS, USER_PROFILES } from '@/app/constants';
+import { accessTokenSvc, adminTokenSvc } from './token';
+import { userSvc } from './user';
+import { toTimestamp } from '@/app/services/api/_db';
+import { NextRequest } from 'next/server';
 
 export const authSvc = {
   /**
    * Parse token
    */
-  parseToken(token:Record<string, any>, user: Record<string, any>) {
-    const obj:Record<string, any> = {
+  parseToken(token: Record<string, any>, user: Record<string, any>) {
+    const obj: Record<string, any> = {
       token,
       user: {
         id: user.id,
@@ -30,12 +29,15 @@ export const authSvc = {
    * @param {String} tokenType Token type
    * @returns {Object}
    */
-  async getTokenByAuth(req:NextRequest, tokenType = TOKENS.ACCESS) {
+  async getTokenByAuth(req: NextRequest, tokenType = TOKENS.ACCESS) {
     const tokenSvc =
       tokenType === TOKENS.ACCESS ? accessTokenSvc : adminTokenSvc;
 
-    if (req.headers?.has("authorization")) {
-      const authToken = req.headers.get("authorization")?.replace("Bearer ", "").trim() as string;
+    if (req.headers?.has('authorization')) {
+      const authToken = req.headers
+        .get('authorization')
+        ?.replace('Bearer ', '')
+        .trim() as string;
       return tokenSvc.getByToken(authToken);
     }
   },
@@ -45,7 +47,7 @@ export const authSvc = {
    * @param {String} tokenType Token type
    * @returns {Boolean}
    */
-  async isAuth(req: NextRequest, tokenType:string) {
+  async isAuth(req: NextRequest, tokenType: string) {
     const token = await this.getTokenByAuth(req, tokenType);
 
     const validToken =
@@ -63,7 +65,7 @@ export const authSvc = {
    * @param {String} tokenId Token id
    * @param {String} tokenType Token type
    */
-  async removeToken(tokenId:string, tokenType:string) {
+  async removeToken(tokenId: string, tokenType: string) {
     const tokenSvc =
       tokenType === TOKENS.ADMIN ? adminTokenSvc : accessTokenSvc;
 
@@ -74,7 +76,11 @@ export const authSvc = {
    * Create user token
    * @param {Object} user
    */
-  async createUserToken(user:Record<string, any>, expire:string|boolean = false, tokenType = TOKENS.ADMIN) {
+  async createUserToken(
+    user: Record<string, any>,
+    expire: string | boolean = false,
+    tokenType = TOKENS.ADMIN
+  ) {
     let token = null;
     const tokenSvc =
       tokenType === TOKENS.ADMIN ? adminTokenSvc : accessTokenSvc;

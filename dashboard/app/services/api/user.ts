@@ -1,9 +1,9 @@
-import { v4 as uuid } from "uuid";
+import { v4 as uuid } from 'uuid';
 
-import { userProfileSvc } from "./userProfile";
+import { userProfileSvc } from './userProfile';
 
-import { getCollection } from "@/app/(pages)/api/db";
-import { encSvc } from "./encryption";
+import { getCollection } from '@/app/services/api/_db';
+import { encSvc } from './encryption';
 
 /**
  * User service
@@ -15,7 +15,7 @@ export const userSvc = {
    * @param {Object} user
    * @returns {Object}
    */
-  async parseUser(user:Record<string, any>) {    
+  async parseUser(user: Record<string, any>) {
     const obj = {
       ...user,
     };
@@ -37,7 +37,8 @@ export const userSvc = {
    * @param {Object} query
    * @returns {User}
    */
-  findOne: async (query:Record<string, any>) => (await userSvc.model).findOne(query),
+  findOne: async (query: Record<string, any>) =>
+    (await userSvc.model).findOne(query),
 
   /**
    * Get by id
@@ -73,7 +74,7 @@ export const userSvc = {
    * @returns {string}
    */
   _getPassword(password: string, uuid: string) {
-    const salt = uuid.split("-").at(-1);
+    const salt = uuid.split('-').at(-1);
 
     return encSvc.encrypt(`${password}:${salt}`);
   },
@@ -101,14 +102,13 @@ export const userSvc = {
     const obj = { ...item };
 
     obj._uuid = uuid();
-    obj.password = userSvc._getPassword(item.password, obj._uuid);    
+    obj.password = userSvc._getPassword(item.password, obj._uuid);
     const profile = await userProfileSvc.getByType(item.profile);
-    obj._profileId = profile?._id;   
-    
-    const dbResult = await(await userSvc.model).insertOne(obj);
+    obj._profileId = profile?._id;
+
+    const dbResult = await (await userSvc.model).insertOne(obj);
     obj._id = dbResult.insertedId;
     return this.parseUser(obj);
-
   },
   /**
    * Update method
@@ -116,7 +116,10 @@ export const userSvc = {
    * @returns
    */
   async update(item: Record<string, any>) {
-    const user = await userSvc.getByUsername(item.username) as Record<string, any>;
+    const user = (await userSvc.getByUsername(item.username)) as Record<
+      string,
+      any
+    >;
 
     const obj = {
       ...item,
@@ -131,13 +134,11 @@ export const userSvc = {
     const profile = await userProfileSvc.getByType(item.profile);
     obj._profileId = profile?._id;
 
-    const updatedUser = await(await userSvc.model).findOneAndUpdate(
-      { _id: user._id },
-      obj,
-      {
-        includeResultMetadata: true,
-      }
-    );
+    const updatedUser = await (
+      await userSvc.model
+    ).findOneAndUpdate({ _id: user._id }, obj, {
+      includeResultMetadata: true,
+    });
 
     return this.parseUser(updatedUser);
   },

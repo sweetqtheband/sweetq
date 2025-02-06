@@ -1,6 +1,6 @@
 import { HTTP_STATUS_CODES } from '@/app/constants';
 import { NextRequest } from 'next/server';
-import { getCollection } from '../../db';
+import { getCollection } from '@/app/services/api/_db';
 import { instagramSvc } from '@/app/services/api/instagram';
 import { EA } from '@/app/services/api/_events';
 

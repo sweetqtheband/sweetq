@@ -1,20 +1,19 @@
-import jwt from "jsonwebtoken";
-import { getCollection, toTimestamp } from "@/app/(pages)/api/db";
-import config from "@/app/config";
-
+import jwt from 'jsonwebtoken';
+import { getCollection, toTimestamp } from '@/app/services/api/_db';
+import config from '@/app/config';
 
 /**
  * Token service
  */
 const tokenSvc = {
-  tokenModel: {} as any,  
+  tokenModel: {} as any,
   /**
    * Find one
    * @param {Object} query
    * @returns {AccessToken}
    */
-  async findOne(query: Record<string, any>) {    
-    return await(await this.tokenModel)
+  async findOne(query: Record<string, any>) {
+    return await (await this.tokenModel)
       .find(query)
       .limit(1)
       .sort({ $natural: -1 })[0];
@@ -24,7 +23,7 @@ const tokenSvc = {
    * @param {Object} value
    * @returns {AccessToken}
    */
-  async getByUserId(value:string) {
+  async getByUserId(value: string) {
     return (await this.tokenModel).findOne({ _uid: value });
   },
   /**
@@ -32,7 +31,7 @@ const tokenSvc = {
    * @param {Object} value
    * @returns {AccessToken}
    */
-  async getByToken(value:string) {
+  async getByToken(value: string) {
     return (await this.tokenModel).findOne({ token: value });
   },
   /**
@@ -40,7 +39,7 @@ const tokenSvc = {
    * @param {String} value Token Id
    * @returns
    */
-  async remove(value:string) {
+  async remove(value: string) {
     return (await this.tokenModel).deleteOne({ _id: value });
   },
   /**
@@ -48,7 +47,7 @@ const tokenSvc = {
    * @param {Object} user DB User
    * @param {String|Boolean} mustExpire. Tells if token must expire or not
    */
-  async create(user:Record<string, any>, mustExpire:string|boolean = true) {
+  async create(user: Record<string, any>, mustExpire: string | boolean = true) {
     const token = jwt.sign(
       {
         name: user.username,
@@ -58,21 +57,23 @@ const tokenSvc = {
     );
 
     const expires =
-      !mustExpire || mustExpire === "false"
+      !mustExpire || mustExpire === 'false'
         ? 0
         : toTimestamp(new Date()) + config.tokens.expireDays * 86400;
 
-    await (await accessTokenSvc.tokenModel).insertOne({ _uid: user._id, token, expires });
+    await (
+      await accessTokenSvc.tokenModel
+    ).insertOne({ _uid: user._id, token, expires });
     return token;
   },
 };
 
 export const accessTokenSvc = {
-	...tokenSvc,
-	tokenModel: getCollection("access_tokens")
+  ...tokenSvc,
+  tokenModel: getCollection('access_tokens'),
 };
 
 export const adminTokenSvc = {
   ...tokenSvc,
-  tokenModel: getCollection("admin_tokens"),
+  tokenModel: getCollection('admin_tokens'),
 };

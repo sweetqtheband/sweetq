@@ -74,7 +74,7 @@ export default function ListLayout({
         filters={filters}
         translations={translations}
         fields={fields}
-        loading={true}
+        loading={isLoading}
         renders={renders}
       />
       <ListPanel

@@ -1,13 +1,14 @@
-import { getCollection } from "@/app/(pages)/api/db";
+import { getCollection } from '@/app/services/api/_db';
 
 export const userProfileSvc = {
-  model: getCollection("user_profiles"),
+  model: getCollection('user_profiles'),
   /**
    * Find one
    * @param {Object} query
    * @returns {User}
    */
-  findOne: async (query: Record<string, any>) => (await userProfileSvc.model).findOne(query),
+  findOne: async (query: Record<string, any>) =>
+    (await userProfileSvc.model).findOne(query),
 
   /**
    * Get by id

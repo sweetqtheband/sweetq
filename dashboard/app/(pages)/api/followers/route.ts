@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { getList, postItem } from '@/app/(pages)/api/db';
+import { getList, postItem } from '@/app/services/api/_db';
 import { SORT } from '@/app/constants';
 
 const collection = 'followers';
