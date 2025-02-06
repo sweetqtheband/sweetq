@@ -39,9 +39,20 @@ export default function ListLayout({
   renders?: Record<string, any>;
 }>) {
   const [item, setItem] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onClose = async (item = null) => {
     setItem(null);
+  };
+
+  const onSaveHandler = async (data: any, files: any) => {
+    setIsLoading(true);
+    const response = await onSave(data, files);
+    setIsLoading(false);
+    if (response) {
+      onClose();
+    }
+    return true;
   };
 
   const onItemClickHandler = (item: any) => {
@@ -63,13 +74,14 @@ export default function ListLayout({
         filters={filters}
         translations={translations}
         fields={fields}
+        loading={true}
         renders={renders}
       />
       <ListPanel
         id={id}
         data={item}
         onClose={onClose}
-        onSave={onSave}
+        onSave={onSaveHandler}
         translations={translations}
         fields={fields}
         methods={methods}

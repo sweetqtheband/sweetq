@@ -47,27 +47,25 @@ export default function ListTable({
   items = [],
   headers = [],
   imageSize = 'md',
-  total = 0,
   limit = config.table.limit,
   pages = 0,
+  loading = false,
   onItemClick = () => {},
   onDelete = async () => true,
   translations = {},
-  fields = {},
   filters = {},
   renders = {},
 }: Readonly<{
   id?: string;
   items: any[];
-  imageSize: SizeType;
   headers?: any[];
-  total: number;
+  imageSize: SizeType;
   limit: number;
   pages: number;
+  loading: boolean;
   onItemClick?: (item: any) => void;
   onDelete?: (ids: string[]) => Promise<boolean>;
   translations?: Record<string, any>;
-  fields?: Record<string, any>;
   filters?: Record<string, any>;
   renders?: Record<string, any>;
 }>) {
@@ -84,7 +82,7 @@ export default function ListTable({
   }));
 
   const [deleteOpen, setDeleteOpen] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(loading);
   const [deleteRows, setDeleteRows] = useState<any[]>([]);
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false);
   const [internalState, setInternalState] = useState<Record<string, any>>({});
@@ -151,6 +149,11 @@ export default function ListTable({
     );
   }, [internalState, filters, paramFiltersObj]);
 
+  useEffect(() => {
+    console.log(loading);
+    setIsLoading(loading);
+  }, [loading]);
+
   const renderCell = (
     row: Record<string, any>,
     field: Record<string, any>,
@@ -188,7 +191,13 @@ export default function ListTable({
         if (typeof func === 'function') {
           const render = func(fieldName, value, item);
           return render instanceof Array ? (
-            <>{render.map((renderedItem) => renderItem(renderedItem))}</>
+            <>
+              {render.map((renderedItem, renderItemIndex) => (
+                <div key={`render-${renderItemIndex}`}>
+                  {renderItem(renderedItem)}
+                </div>
+              ))}
+            </>
           ) : (
             renderItem(render)
           );
@@ -503,6 +512,8 @@ export default function ListTable({
     return null;
   };
 
+  let debounce: any = null;
+
   return (
     <div
       className={classes}
@@ -539,7 +550,10 @@ export default function ListTable({
                     tabIndex={batchActionProps.shouldShowBatchActions ? -1 : 0}
                     translateWithId={tableSearchTranslate}
                     onChange={(evt: any) => {
-                      onTableSearch(evt.target.value);
+                      clearTimeout(debounce);
+                      debounce = setTimeout(() => {
+                        onTableSearch(evt.target.value);
+                      }, 300);
                     }}
                   />
                   {renderFilters()}

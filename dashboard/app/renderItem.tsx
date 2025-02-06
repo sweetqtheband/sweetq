@@ -1,6 +1,7 @@
 import { Size } from '@/types/size';
 import { RENDER_TYPES, SIZES } from './constants';
 import { Tag } from '@carbon/react';
+import Link from 'next/link';
 
 const renderColor = (obj: any) => (
   <>
@@ -15,9 +16,16 @@ const renderTag = (obj: any) => (
   </Tag>
 );
 
+const renderLink = (obj: any) => (
+  <Link href={obj.href} target="_blank" onClick={(e) => e.stopPropagation()}>
+    {obj.value}
+  </Link>
+);
+
 const renderers = {
   [RENDER_TYPES.COLOR]: renderColor,
   [RENDER_TYPES.TAG]: renderTag,
+  [RENDER_TYPES.LINK]: renderLink,
 };
 
 // Main renderer

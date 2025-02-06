@@ -24,7 +24,7 @@ export async function PUT(req: NextRequest, { params }: Params) {
       options,
       avoidUnset: true,
     });
-    revalidatePath(`/admin/${collection}`);
+    revalidatePath(`/admin/instagram`);
 
     return Response.json({ data: item }, { status: HTTP_STATUS_CODES.OK });
   } catch (err: any) {

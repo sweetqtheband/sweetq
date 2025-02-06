@@ -142,9 +142,11 @@ const renderSelect = ({
     formState?.[field] instanceof Array
       ? formState?.[field][0]
       : formState?.[field];
-
   const selectedItem = value
-    ? items.find((item: Record<string, any>) => item.id === value)
+    ? items.find(
+        (item: Record<string, any>) =>
+          item.id === value || item.id === String(value)
+      )
     : undefined;
 
   if (selectedItem && !internalState?.[field]) {
@@ -159,11 +161,11 @@ const renderSelect = ({
   const itemToString = renders?.[field]?.itemToString
     ? (item: any) => renderItem(renders?.[field]?.itemToString(field, item))
     : (item: any) => item.text;
+
   const itemToElement = renders?.[field]?.itemToElement || itemToString;
 
   return (
     <FormItem key={field}>
-      <p className="cds--label">{translations.fields[field]}</p>
       <div className="cds--flex">
         <Dropdown
           className={className}
@@ -171,6 +173,7 @@ const renderSelect = ({
           key={field}
           id={field}
           label={translations.fields[field]}
+          titleText={translations.fields[field]}
           items={items}
           selectedItem={internalState?.[field]}
           itemToString={itemToString}
@@ -739,7 +742,9 @@ const renderCity = ({
     <Stack gap={4} orientation="horizontal" key={field}>
       {countryDropdown({
         className: 'cds--text-input__field-outer-wrapper',
-        value: String(formState.country) || FIELD_DEFAULTS.country,
+        value: formState.country
+          ? String(formState.country)
+          : FIELD_DEFAULTS.country,
         fields,
         translations,
         internalState,
@@ -749,7 +754,7 @@ const renderCity = ({
       } as Field)}
       {stateDropdown({
         className: 'cds--text-input__field-outer-wrapper',
-        value: String(formState.state) || null,
+        value: formState.state ? String(formState.state) : undefined,
         fields,
         translations,
         internalState,
@@ -759,7 +764,7 @@ const renderCity = ({
       } as Field)}
       {cityDropdown({
         className: 'cds--text-input__field-outer-wrapper',
-        value: String(formState.city) || null,
+        value: formState.city ? String(formState.city) : undefined,
         fields,
         translations,
         internalState,

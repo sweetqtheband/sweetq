@@ -143,7 +143,8 @@ export default function ListPanel({
   }, [searchState, formState, fields.search, pathname, replace, params]);
 
   const resetPanel = () => {
-    setFormState({ ...data });
+    setFormState({});
+    setInternalState({});
     setFiles({ ...defaultSetFiles });
     setIsInitialized({ ...defaultIsInitialized });
     const searchFields = Object.keys(searchState).filter(
@@ -176,11 +177,15 @@ export default function ListPanel({
   };
 
   const onSaveHandler = async () => {
-    const saved = await onSave(formState, files);
-    if (saved) {
-      setForceClose(true);
-      resetPanel();
-      onClose(saved);
+    try {
+      const saved = await onSave(formState, files);
+      if (saved) {
+        setForceClose(true);
+        resetPanel();
+        onClose(saved);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 

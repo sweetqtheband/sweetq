@@ -95,6 +95,7 @@ export const IG = {
 };
 export const RENDER_TYPES: Record<string, string> = {
   TAG: 'tag',
+  LINK: 'link',
   COLOR: 'color',
 };
 

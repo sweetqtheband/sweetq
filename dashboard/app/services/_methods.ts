@@ -14,6 +14,10 @@ export const onSave = async (
     : instance.post(formData));
 
   router.refresh();
+
+  setTimeout(() => {
+    router.refresh();
+  }, 0);
   return response.status === HTTP_STATUS_CODES.OK ? response.data : false;
 };
 

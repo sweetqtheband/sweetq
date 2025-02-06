@@ -1,6 +1,11 @@
 import axios from 'axios';
 import { BaseList } from './_list';
-import { FIELD_DEFAULTS, FIELD_TYPES, TREATMENTS } from '../constants';
+import {
+  FIELD_DEFAULTS,
+  FIELD_TYPES,
+  RENDER_TYPES,
+  TREATMENTS,
+} from '../constants';
 import { Countries } from './countries';
 import { States } from './states';
 import { Cities } from './cities';
@@ -214,6 +219,13 @@ const getMethods = (router?: any): Record<string, any> => ({
   },
 });
 const getRenders = (): Record<string, Function> => ({
+  username: (field: any, item: any, base: any) => {
+    return {
+      type: RENDER_TYPES.LINK,
+      value: item,
+      href: `https://instagram.com/${item}`,
+    };
+  },
   tags: Tags.getRenders().items,
 });
 
