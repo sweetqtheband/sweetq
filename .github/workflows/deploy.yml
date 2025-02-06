@@ -9,12 +9,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - env:
-        VPS_HOST: ${{ secrets.VPS_HOST }}
       - name: Verificar valores de Secrets
-        run: |
-          echo "VPS_HOST='$VPS_HOST'"
+        uses: actions/checkout@v3
+        env:
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          run: |
+            echo "VPS_HOST='$VPS_HOST'"
       - name: Conectar al VPS y actualizar contenedor
         uses: appleboy/ssh-action@master
         with:
