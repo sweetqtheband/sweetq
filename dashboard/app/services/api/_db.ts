@@ -279,7 +279,7 @@ export const corsOptions = (req: NextRequest): any => {
   const origin = req.headers.get('origin');
 
   if (!origin || !allowedOrigins.includes(origin)) {
-    console.log('CORS error', origin);
+    console.log('CORS error', origin, req);
     return [{ error: ERRORS.CORS }, { status: 403 }];
   }
 
