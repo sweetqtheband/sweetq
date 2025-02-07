@@ -10,6 +10,7 @@ export default async function BandsPage({
   await i18n.init();
 
   const data = await Bands.getAll(searchParams);
+  console.log('BANDS DATA', data);
   const items: Band[] = await Bands.parseAll(data.items);
 
   const headers = [

@@ -49,12 +49,14 @@ const getMethods = (router?: any) => ({
   onDelete: async (ids: string[]) => onDelete(Bands, router, ids),
 });
 
+const client = axios.create({
+  baseURL: `${process.env.NEXT_PUBLIC_API_URI}/bands`,
+});
+
+console.log('CLIENT ENV', process.env.NEXT_PUBLIC_API_URI);
+console.log(client);
 export const Bands = {
-  ...BaseList(
-    axios.create({
-      baseURL: `${process.env.NEXT_PUBLIC_API_URI}/bands`,
-    })
-  ),
+  ...BaseList(client),
   fields,
   getOptions,
   getMethods,
