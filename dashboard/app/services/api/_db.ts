@@ -276,7 +276,7 @@ export const deleteItem = async ({
 const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [];
 
 export const corsOptions = (req: NextRequest): any => {
-  const origin = req.headers.get('origin');
+  const origin = req.headers.get('origin') || 'null';
 
   if (!origin || !allowedOrigins.includes(origin)) {
     console.log('CORS error', origin, req);
@@ -288,7 +288,7 @@ export const corsOptions = (req: NextRequest): any => {
     {
       status: 200,
       headers: {
-        'Access-Control-Allow-Origin': origin,
+        'Access-Control-Allow-Origin': origin === 'null' ? '*' : origin,
         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
         'Access-Control-Allow-Headers': 'Content-Type, Authorization',
       },
