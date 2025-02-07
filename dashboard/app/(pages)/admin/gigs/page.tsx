@@ -4,8 +4,6 @@ import i18n from '@/app/services/translate';
 import GigsView from './view';
 import { getActionsTranslations } from '@/app/services/_list';
 
-export const dynamic = 'force-dynamic';
-
 export default async function GigsPage({
   searchParams,
 }: Readonly<{ searchParams?: URLSearchParams }>) {

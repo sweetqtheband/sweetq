@@ -1,5 +1,3 @@
-export const dynamic = 'force-dynamic';
-
 import { Followers } from '@/app/services/followers';
 import type { Follower } from '@/types/follower';
 import i18n from '@/app/services/translate';

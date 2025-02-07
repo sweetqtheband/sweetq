@@ -4,8 +4,6 @@ import i18n from '@/app/services/translate';
 import TracksView from './view';
 import { getActionsTranslations } from '@/app/services/_list';
 
-export const dynamic = 'force-dynamic';
-
 export default async function TracksPage({
   searchParams,
 }: Readonly<{ searchParams?: URLSearchParams }>) {
