@@ -1,9 +1,14 @@
 import { NextRequest } from 'next/server';
-import { getList, postItem } from '@/app/services/api/_db';
+import { getList, corsOptions } from '@/app/services/api/_db';
 import { SORT } from '@/app/constants';
 
 const collection = 'followers';
 const idx = '_id';
+
+export async function OPTIONS(req: NextRequest) {
+  const [message, params] = corsOptions(req);
+  return new Response(message, params);
+}
 
 export async function GET(req: NextRequest) {
   const qp = req.nextUrl.searchParams;

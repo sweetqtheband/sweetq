@@ -1,6 +1,6 @@
 import { Options as options, Types as types } from '@/app/services/bands';
 import { NextRequest } from 'next/server';
-import { deleteItem, putItem } from '@/app/services/api/_db';
+import { deleteItem, putItem, corsOptions } from '@/app/services/api/_db';
 import { HTTP_STATUS_CODES } from '@/app/constants';
 import { revalidatePath } from 'next/cache';
 
@@ -10,6 +10,11 @@ interface Params {
   params: {
     id: string;
   };
+}
+
+export async function OPTIONS(req: NextRequest) {
+  const [message, params] = corsOptions(req);
+  return new Response(message, params);
 }
 
 export async function PUT(req: NextRequest, { params }: Params) {

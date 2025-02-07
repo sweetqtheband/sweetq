@@ -1,11 +1,16 @@
 import { Options as options, Types as types } from '@/app/services/bands';
 import { NextRequest } from 'next/server';
-import { getList, postItem } from '@/app/services/api/_db';
+import { corsOptions, getList, postItem } from '@/app/services/api/_db';
 import { revalidatePath } from 'next/cache';
 import { HTTP_STATUS_CODES } from '@/app/constants';
 
 const collection = 'bands';
 const idx = 'name';
+
+export async function OPTIONS(req: NextRequest) {
+  const [message, params] = corsOptions(req);
+  return new Response(message, params);
+}
 
 export async function GET(req: NextRequest) {
   return Response.json(

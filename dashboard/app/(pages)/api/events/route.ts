@@ -1,8 +1,14 @@
 // app/api/events/route.ts
 import { EA } from '@/app/services/api/_events';
 import { NextRequest, NextResponse } from 'next/server';
+import { corsOptions } from '@/app/services/api/_db'; // Added corsOptions import
 
 export const dynamic = 'force-dynamic';
+
+export async function OPTIONS(req: NextRequest) {
+  const [message, params] = corsOptions(req);
+  return new Response(message, params);
+}
 
 const checkInstagram = async (controller: any) => {
   const event = await EA.find({ eventType: 'instagram' });

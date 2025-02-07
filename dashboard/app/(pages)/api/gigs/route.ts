@@ -1,11 +1,16 @@
 import { Options as options, Types as types } from '@/app/services/gigs';
 import { NextRequest } from 'next/server';
-import { getList, postItem } from '@/app/services/api/_db';
+import { getList, postItem, corsOptions } from '@/app/services/api/_db';
 import { HTTP_STATUS_CODES, SORT } from '@/app/constants';
 import { revalidatePath } from 'next/cache';
 
 const collection = 'gigs';
 const idx = 'date';
+
+export async function OPTIONS(req: NextRequest) {
+  const [message, params] = corsOptions(req);
+  return new Response(message, params);
+}
 
 export async function GET(req: NextRequest) {
   return Response.json(

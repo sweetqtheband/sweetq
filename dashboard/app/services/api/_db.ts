@@ -272,3 +272,25 @@ export const deleteItem = async ({
 
   return svc.remove(id);
 };
+
+const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [];
+
+export const corsOptions = (req: NextRequest): any[] => {
+  const origin = req.headers.get('origin');
+
+  if (!origin || !allowedOrigins.includes(origin)) {
+    return [{ error: 'CORS not allowed' }, { status: 403 }];
+  }
+
+  return [
+    {},
+    {
+      status: 200,
+      headers: {
+        'Access-Control-Allow-Origin': origin,
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      },
+    },
+  ];
+};

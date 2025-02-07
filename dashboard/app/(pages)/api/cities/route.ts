@@ -1,9 +1,12 @@
 import { type NextRequest } from 'next/server';
-import { getCollection } from '@/app/services/api/_db';
-import config from '@/app/config';
+import { getCollection, corsOptions } from '@/app/services/api/_db';
 
 const collection = 'cities';
-const limit = config.table.limit;
+
+export async function OPTIONS(req: NextRequest) {
+  const [message, params] = corsOptions(req);
+  return new Response(message, params);
+}
 
 export async function GET(req: NextRequest) {
   const col = await getCollection(collection);
