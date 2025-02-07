@@ -48,11 +48,13 @@ export default function ListTable({
   headers = [],
   imageSize = 'md',
   limit = config.table.limit,
+  total = 0,
   pages = 0,
   loading = false,
   onItemClick = () => {},
   onDelete = async () => true,
   translations = {},
+  fields = {},
   filters = {},
   renders = {},
 }: Readonly<{
@@ -61,11 +63,13 @@ export default function ListTable({
   headers?: any[];
   imageSize: SizeType;
   limit: number;
+  total?: number;
   pages: number;
   loading: boolean;
   onItemClick?: (item: any) => void;
   onDelete?: (ids: string[]) => Promise<boolean>;
   translations?: Record<string, any>;
+  fields?: Record<string, any>;
   filters?: Record<string, any>;
   renders?: Record<string, any>;
 }>) {
@@ -641,6 +645,7 @@ export default function ListTable({
         />
 
         <Dropdown
+          titleText={null}
           id="limit"
           label={translations.fields.limit}
           items={limitItems}

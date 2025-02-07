@@ -65,88 +65,92 @@ export const getList = async ({
   queryObj?: Record<string, any>;
   sortReplace?: Record<string, any>;
 }>) => {
-  const col = await getCollection(collection);
-  const svc = FactorySvc(collection, col);
-  const qp = req.nextUrl.searchParams;
-  let sortField = qp.get('sort') || idx;
-  const sortDir = Number(qp.get('sortDir')) || sort;
+  try {
+    const col = await getCollection(collection);
+    const svc = FactorySvc(collection, col);
+    const qp = req.nextUrl.searchParams;
+    let sortField = qp.get('sort') || idx;
+    const sortDir = Number(qp.get('sortDir')) || sort;
 
-  if (sortReplace?.[sortField]) {
-    sortField = sortReplace[sortField];
-  }
-
-  const limit = Number(qp.get('limit')) || config.table.limit;
-  const skip = Number(qp.get('cursor')) || 0;
-
-  if (!queryObj.$or) {
-    const query = qp.get('query');
-
-    if (query) {
-      queryObj.$or = [
-        {
-          [idx]: { $regex: query, $options: 'i' },
-        },
-      ];
+    if (sortReplace?.[sortField]) {
+      sortField = sortReplace[sortField];
     }
-  }
 
-  const filters: Record<string, any> = {};
-  qp.forEach((value, key) => {
-    const match = key.match(/^filters\[(.+?)\](?:\[(\d+)\])?$/);
-    if (match) {
-      const [, filterKey, index] = match;
+    const limit = Number(qp.get('limit')) || config.table.limit;
+    const skip = Number(qp.get('cursor')) || 0;
 
-      const modelizedValue = svc.modelize({ [filterKey]: value })[filterKey];
-      if (index !== undefined) {
-        filters[filterKey] = filters[filterKey] || [];
-        filters[filterKey][+index] =
-          modelizedValue instanceof Array
-            ? modelizedValue.at(0)
-            : modelizedValue;
-      } else {
-        filters[filterKey] = modelizedValue;
+    if (!queryObj.$or) {
+      const query = qp.get('query');
+
+      if (query) {
+        queryObj.$or = [
+          {
+            [idx]: { $regex: query, $options: 'i' },
+          },
+        ];
       }
     }
-  });
 
-  if (Object.keys(filters).length > 0) {
-    if (!queryObj.$and) {
-      queryObj.$and = [];
-    }
+    const filters: Record<string, any> = {};
+    qp.forEach((value, key) => {
+      const match = key.match(/^filters\[(.+?)\](?:\[(\d+)\])?$/);
+      if (match) {
+        const [, filterKey, index] = match;
 
-    Object.keys(filters).forEach((key) => {
-      if (Array.isArray(filters[key])) {
-        queryObj.$and.push({ [key]: { $in: filters[key] } });
-      } else {
-        queryObj.$and.push({ [key]: filters[key] });
+        const modelizedValue = svc.modelize({ [filterKey]: value })[filterKey];
+        if (index !== undefined) {
+          filters[filterKey] = filters[filterKey] || [];
+          filters[filterKey][+index] =
+            modelizedValue instanceof Array
+              ? modelizedValue.at(0)
+              : modelizedValue;
+        } else {
+          filters[filterKey] = modelizedValue;
+        }
       }
     });
+
+    if (Object.keys(filters).length > 0) {
+      if (!queryObj.$and) {
+        queryObj.$and = [];
+      }
+
+      Object.keys(filters).forEach((key) => {
+        if (Array.isArray(filters[key])) {
+          queryObj.$and.push({ [key]: { $in: filters[key] } });
+        } else {
+          queryObj.$and.push({ [key]: filters[key] });
+        }
+      });
+    }
+
+    const total = await col.countDocuments(queryObj);
+
+    const pages = Math.floor(total / Number(qp.get('limit'))) + 1;
+
+    const items = await col
+      .find(queryObj)
+      .sort({ [sortField]: sortDir === SORT.ASC ? 1 : -1 })
+      .limit(limit)
+      .skip(skip)
+      .collation({ locale: 'es', caseLevel: true })
+      .toArray();
+
+    const parsedItems = await Promise.all(
+      items.map(async (item) => svc.parse(item))
+    );
+
+    const data = {
+      total,
+      items: parsedItems,
+      pages,
+      next: { limit, cursor: skip + limit },
+      last: (pages - 1) * Number(limit) || 10,
+    };
+    return data;
+  } catch (error) {
+    return {};
   }
-
-  const total = await col.countDocuments(queryObj);
-
-  const pages = Math.floor(total / Number(qp.get('limit'))) + 1;
-
-  const items = await col
-    .find(queryObj)
-    .sort({ [sortField]: sortDir === SORT.ASC ? 1 : -1 })
-    .limit(limit)
-    .skip(skip)
-    .collation({ locale: 'es', caseLevel: true })
-    .toArray();
-
-  const parsedItems = await Promise.all(
-    items.map(async (item) => svc.parse(item))
-  );
-
-  const data = {
-    total,
-    items: parsedItems,
-    pages,
-    next: { limit, cursor: skip + limit },
-    last: (pages - 1) * Number(limit) || 10,
-  };
-  return data;
 };
 
 export const getItem = async ({

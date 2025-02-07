@@ -62,7 +62,7 @@ const fields = {
 };
 
 // Parse all function
-const parseAll = async (data: Gig[], i18n: any) => {
+const parseAll = async (data: Gig[] = [], i18n: any) => {
   return data.map((item: any) => {
     return {
       ...item,
@@ -78,40 +78,44 @@ const getFields = async ({
   searchParams,
   i18n,
 }: Readonly<{ searchParams: any; i18n: any }>) => {
-  if (!searchParams?.['panel.country']) {
-    searchParams['panel.country'] = FIELD_DEFAULTS.COUNTRY;
+  try {
+    if (!searchParams?.['panel.country']) {
+      searchParams['panel.country'] = FIELD_DEFAULTS.COUNTRY;
+    }
+    return {
+      ...Gigs.fields,
+      options: {
+        ...Gigs.fields.options,
+        country: await Countries.getOptions({ locale: i18n.locale }),
+        state: await States.getOptions({
+          locale: i18n.locale,
+          query: searchParams?.['panel.country']
+            ? { country_id: searchParams['panel.country'] }
+            : null,
+        }),
+        city: await Cities.getOptions({
+          locale: i18n.locale,
+          query: searchParams?.['panel.state']
+            ? { state_id: searchParams['panel.state'] }
+            : null,
+        }),
+        bands: {
+          ...(await Bands.getOptions()),
+        },
+      },
+      search: {
+        country: {
+          deletes: ['state', 'city'],
+        },
+        state: {
+          deletes: ['city'],
+        },
+        city: {}, // No deletes
+      },
+    };
+  } catch (error) {
+    return {};
   }
-  return {
-    ...Gigs.fields,
-    options: {
-      ...Gigs.fields.options,
-      country: await Countries.getOptions({ locale: i18n.locale }),
-      state: await States.getOptions({
-        locale: i18n.locale,
-        query: searchParams?.['panel.country']
-          ? { country_id: searchParams['panel.country'] }
-          : null,
-      }),
-      city: await Cities.getOptions({
-        locale: i18n.locale,
-        query: searchParams?.['panel.state']
-          ? { state_id: searchParams['panel.state'] }
-          : null,
-      }),
-      bands: {
-        ...(await Bands.getOptions()),
-      },
-    },
-    search: {
-      country: {
-        deletes: ['state', 'city'],
-      },
-      state: {
-        deletes: ['city'],
-      },
-      city: {}, // No deletes
-    },
-  };
 };
 
 // Get methods function

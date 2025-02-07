@@ -71,7 +71,7 @@ const fields = {
 };
 
 // Parse all method
-const parseAll = (data: New[]) =>
+const parseAll = (data: New[] = []) =>
   data.map((item: any) => {
     return {
       ...item,

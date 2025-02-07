@@ -50,7 +50,7 @@ const fields = {
 };
 
 // Parse all method
-const parseAll = (data: Track[]) =>
+const parseAll = (data: Track[] = []) =>
   data.map((item: any) => {
     return {
       ...item,

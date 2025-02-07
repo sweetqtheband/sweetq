@@ -1,25 +1,30 @@
-"use client"
+'use client';
 
-import { ChangeEvent, FormEventHandler, KeyboardEventHandler, useRef, useState } from "react";
-import "./page.scss";
-import { Auth } from "@/app/services/auth";
-import Image from "next/image";
-import { ERRORS, HTTP_STATUS_CODES } from "@/app/constants";
-import { TextInput, Button } from "@carbon/react";
-
+import {
+  ChangeEvent,
+  FormEventHandler,
+  KeyboardEventHandler,
+  useRef,
+  useState,
+} from 'react';
+import './page.scss';
+import { Auth } from '@/app/services/auth';
+import Image from 'next/image';
+import { ERRORS, HTTP_STATUS_CODES } from '@/app/constants';
+import { TextInput, Button } from '@carbon/react';
 
 export default function LoginPage() {
   const passwordRef = useRef(null);
-  
-  const [formState, setFormState] = useState({ username: "", password: "" });
+
+  const [formState, setFormState] = useState({ username: '', password: '' });
 
   const [invalidCredentials, setInvalidCredentials] = useState(false);
-  
-  const onInputHandler = (field: string, value:string) => {
+
+  const onInputHandler = (field: string, value: string) => {
     setFormState({
       ...formState,
-      [field]: value
-    })
+      [field]: value,
+    });
   };
 
   const onSaveHandler = async () => {
@@ -29,8 +34,8 @@ export default function LoginPage() {
 
     try {
       await Auth.login(formState);
-      location.href = "/admin/dashboard";
-    } catch (err:any) {
+      location.href = '/admin/dashboard';
+    } catch (err: any) {
       console.log(err);
       if (err.response.status === HTTP_STATUS_CODES.ERROR) {
         setInvalidCredentials(err.response.data === ERRORS.INVALID_CREDENTIALS);
@@ -38,10 +43,11 @@ export default function LoginPage() {
     }
   };
 
-  const onUsernameKeyUpHandler:KeyboardEventHandler<HTMLInputElement> = (e) => {
-    if (e.key === "Enter") {
-      if (passwordRef.current) 
-      {
+  const onUsernameKeyUpHandler: KeyboardEventHandler<HTMLInputElement> = (
+    e
+  ) => {
+    if (e.key === 'Enter') {
+      if (passwordRef.current) {
         const input = passwordRef.current as HTMLInputElement;
         input.focus();
       }
@@ -50,8 +56,10 @@ export default function LoginPage() {
     }
   };
 
-  const onPasswordKeyUpHandler:KeyboardEventHandler<HTMLInputElement> = (e) => {
-    if (e.key === "Enter") {
+  const onPasswordKeyUpHandler: KeyboardEventHandler<HTMLInputElement> = (
+    e
+  ) => {
+    if (e.key === 'Enter') {
       onSaveHandler();
       if (passwordRef.current) {
         const input = passwordRef.current as HTMLInputElement;
@@ -67,38 +75,48 @@ export default function LoginPage() {
       <div className="login">
         <header>
           <Image
-            alt={"Logo"}
+            alt={'Logo'}
             className="image"
             width={80}
             height={80}
-            src={"/logo.svg"}
+            src={'/logo.svg'}
           ></Image>
         </header>
         <section>
           <TextInput
+            id="username"
+            labelText="Usuario"
             name="username"
             type="text"
             value={formState.username}
             invalid={invalidCredentials}
             size="md"
-            onChange={(event: ChangeEvent<HTMLInputElement>) => onInputHandler("username", event.target?.value)}
+            onChange={(event: ChangeEvent<HTMLInputElement>) =>
+              onInputHandler('username', event.target?.value)
+            }
             onKeyUp={onUsernameKeyUpHandler}
-            placeholder={"Usuario"}
+            placeholder={'Usuario'}
           />
           <TextInput
+            id="password"
+            labelText="Password"
             ref={passwordRef}
             name="password"
             type="password"
-            value={formState.password}  
+            value={formState.password}
             invalid={invalidCredentials}
             size="md"
-            onChange={(event: ChangeEvent<HTMLInputElement>) => onInputHandler("password", event.target?.value)}
+            onChange={(event: ChangeEvent<HTMLInputElement>) =>
+              onInputHandler('password', event.target?.value)
+            }
             onKeyUp={onPasswordKeyUpHandler}
-            placeholder={"Password"}
+            placeholder={'Password'}
           />
         </section>
         <footer>
-          <Button kind="secondary" onClick={onSaveHandler}>Login</Button>
+          <Button kind="secondary" onClick={onSaveHandler}>
+            Login
+          </Button>
         </footer>
       </div>
     </div>

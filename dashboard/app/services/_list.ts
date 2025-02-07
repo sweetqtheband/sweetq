@@ -8,7 +8,7 @@ export const BaseList = (client: AxiosInstance): BaseListItem => ({
   fields: {},
   getTranslations,
   getAll: (searchParams: any) => getAll(client, searchParams),
-  parseAll: (data: any[]) => data,
+  parseAll: (data: any[] = []) => data,
   getFields: async () => ({}),
   getFilters: async () => ({}),
   getRenders: () => ({}),

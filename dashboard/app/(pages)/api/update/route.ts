@@ -1,7 +1,7 @@
 import { TOKENS } from '@/app/constants';
 import { authSvc } from '@/app/services/api/auth';
 import { NextRequest, NextResponse } from 'next/server';
-import { getCollection } from '../../../services/api/_db';
+import { getCollection } from '@/app/services/api/_db';
 
 const collection = 'update';
 

@@ -1,42 +1,53 @@
 import { AxiosInstance } from 'axios';
-import config from '../config';
+import config from '@/app/config';
 
-export const getAll = async (client: AxiosInstance, searchParams?: any) => {
-  const limit = Number(searchParams?.limit) || config.table.limit;
-  const currentPage = Number(searchParams?.page) || 0;
-  const query = searchParams?.query ? String(searchParams?.query) : '';
-  const sort = searchParams?.sort ? String(searchParams?.sort) : '';
-  const sortDir = searchParams?.sortDir ? String(searchParams?.sortDir) : '';
-  const cursor = limit * currentPage;
-  const filters: Record<string, any> = Object.entries(searchParams).reduce(
-    (acc, [key, value]) => {
-      const match = key.match(/^filters\[(.+)\]$/); // Detectar claves como 'filters[...]'
-      if (match) {
-        const filterKey = match[1]; // Extraer el nombre del filtro (e.g., "treatment")
-        acc[filterKey] = String(value).split(','); // Añadirlo al objeto `filters`
-      }
-      return acc;
-    },
-    {} as Record<string, any> // Inicializar como objeto vacío
-  );
+export const getAll = async (client: AxiosInstance, searchParams: any = {}) => {
+  try {
+    const limit =
+      searchParams.limit !== undefined
+        ? Number(searchParams.limit)
+        : config.table.limit;
+    const currentPage =
+      searchParams.page !== undefined ? Number(searchParams.page) : 0;
+    const query =
+      searchParams.query !== undefined ? String(searchParams.query) : '';
+    const sort =
+      searchParams.sort !== undefined ? String(searchParams.sort) : '';
+    const sortDir =
+      searchParams.sortDir !== undefined ? String(searchParams.sortDir) : '';
+    const cursor = limit * currentPage;
+    const filters: Record<string, any> = Object.entries(searchParams).reduce(
+      (acc, [key, value]) => {
+        const match = key.match(/^filters\[(.+)\]$/); // Detectar claves como 'filters[...]'
+        if (match) {
+          const filterKey = match[1]; // Extraer el nombre del filtro (e.g., "treatment")
+          acc[filterKey] = String(value).split(','); // Añadirlo al objeto `filters`
+        }
+        return acc;
+      },
+      {} as Record<string, any> // Inicializar como objeto vacío
+    );
 
-  const params: any = {
-    limit,
-    cursor,
-    filters: filters || {},
-  };
+    const params: any = {
+      limit,
+      cursor,
+      filters: filters || {},
+    };
 
-  if (query) {
-    params.query = query;
+    if (query) {
+      params.query = query;
+    }
+
+    if (sort && sortDir) {
+      params.sort = sort;
+      params.sortDir = sortDir;
+    }
+
+    const response = await GET(client, '', params);
+    return response.data;
+  } catch (error) {
+    return [];
   }
-
-  if (sort && sortDir) {
-    params.sort = sort;
-    params.sortDir = sortDir;
-  }
-
-  const response = await GET(client, '', params);
-  return response.data;
 };
 
 export const GET = async (

@@ -1,10 +1,10 @@
-'use server';
-
 import { News } from '@/app/services/news';
 import type { New } from '@/types/new';
 import i18n from '@/app/services/translate';
 import NewsView from './view';
 import { getActionsTranslations } from '@/app/services/_list';
+
+export const dynamic = 'force-dynamic';
 
 export default async function NewsPage({
   searchParams,

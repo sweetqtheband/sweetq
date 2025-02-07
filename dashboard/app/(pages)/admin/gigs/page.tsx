@@ -1,10 +1,10 @@
-'use server';
-
 import { Gigs } from '@/app/services/gigs';
 import type { Gig } from '@/types/gig';
 import i18n from '@/app/services/translate';
 import GigsView from './view';
 import { getActionsTranslations } from '@/app/services/_list';
+
+export const dynamic = 'force-dynamic';
 
 export default async function GigsPage({
   searchParams,

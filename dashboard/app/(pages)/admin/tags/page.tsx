@@ -1,10 +1,10 @@
-'use server';
-
 import { Tags } from '@/app/services/tags';
 import type { Tag } from '@/types/tag';
 import i18n from '@/app/services/translate';
 import TagsView from './view';
 import { getActionsTranslations } from '@/app/services/_list';
+
+export const dynamic = 'force-dynamic';
 
 export default async function TagsPage({
   searchParams,
