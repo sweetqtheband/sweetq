@@ -1,11 +1,21 @@
 import { type NextRequest } from 'next/server';
-import { getCollection } from '@/app/services/api/_db';
+import { corsOptions, getCollection } from '@/app/services/api/_db';
 import config from '@/app/config';
+import { ERRORS } from '@/app/constants';
 
 const collection = 'states';
-const limit = config.table.limit;
+
+export async function OPTIONS(req: NextRequest) {
+  const [message, params] = corsOptions(req);
+  return new Response(message, params);
+}
 
 export async function GET(req: NextRequest) {
+  const [message, corsParams] = corsOptions(req);
+
+  if (message?.error === ERRORS.CORS) {
+    return new Response(message, corsParams);
+  }
   const col = await getCollection(collection);
   const qp = req.nextUrl.searchParams;
   const queryObj: any = {};
@@ -38,5 +48,5 @@ export async function GET(req: NextRequest) {
     items,
   };
 
-  return Response.json(data);
+  return Response.json(data, corsParams);
 }

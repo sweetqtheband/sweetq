@@ -2,7 +2,7 @@ import { Options as options, Types as types } from '@/app/services/bands';
 import { NextRequest } from 'next/server';
 import { corsOptions, getList, postItem } from '@/app/services/api/_db';
 import { revalidatePath } from 'next/cache';
-import { HTTP_STATUS_CODES } from '@/app/constants';
+import { ERRORS, HTTP_STATUS_CODES } from '@/app/constants';
 
 const collection = 'bands';
 const idx = 'name';
@@ -13,6 +13,11 @@ export async function OPTIONS(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
+  const [message, corsParams] = corsOptions(req);
+
+  if (message?.error === ERRORS.CORS) {
+    return new Response(message, corsParams);
+  }
   return Response.json(
     await getList({
       req,

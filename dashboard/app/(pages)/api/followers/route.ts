@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server';
 import { getList, corsOptions } from '@/app/services/api/_db';
-import { SORT } from '@/app/constants';
+import { ERRORS, SORT } from '@/app/constants';
 
 const collection = 'followers';
 const idx = '_id';
@@ -11,6 +11,11 @@ export async function OPTIONS(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
+  const [message, corsParams] = corsOptions(req);
+
+  if (message?.error === ERRORS.CORS) {
+    return new Response(message, corsParams);
+  }
   const qp = req.nextUrl.searchParams;
 
   const queryObj: any = {};
@@ -35,6 +40,7 @@ export async function GET(req: NextRequest) {
       idx,
       sort: SORT.DESC,
       queryObj,
-    })
+    }),
+    corsParams
   );
 }

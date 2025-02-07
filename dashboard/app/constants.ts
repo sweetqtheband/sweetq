@@ -39,6 +39,7 @@ export const STORAGE = {
 
 export const ERRORS = {
   INVALID_CREDENTIALS: 'Invalid credentials',
+  CORS: 'CORS not allowed',
 };
 
 export const ACTIONS = {

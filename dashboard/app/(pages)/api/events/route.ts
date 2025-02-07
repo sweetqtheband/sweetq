@@ -2,6 +2,7 @@
 import { EA } from '@/app/services/api/_events';
 import { NextRequest, NextResponse } from 'next/server';
 import { corsOptions } from '@/app/services/api/_db'; // Added corsOptions import
+import { ERRORS } from '@/app/constants';
 
 export async function OPTIONS(req: NextRequest) {
   const [message, params] = corsOptions(req);
@@ -26,6 +27,11 @@ const checkInstagram = async (controller: any) => {
 };
 
 export function GET(req: NextRequest) {
+  const [message, corsParams] = corsOptions(req);
+
+  if (message?.error === ERRORS.CORS) {
+    return new Response(message, corsParams);
+  }
   const stream = new ReadableStream({
     async start(controller) {
       const interval = setInterval(async () => {
@@ -41,7 +47,9 @@ export function GET(req: NextRequest) {
   });
 
   return new NextResponse(stream, {
+    ...corsParams,
     headers: {
+      ...corsParams.headers,
       'Content-Type': 'text/event-stream',
       'Cache-Control': 'no-cache',
       Connection: 'keep-alive',

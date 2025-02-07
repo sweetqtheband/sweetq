@@ -1,7 +1,7 @@
 import { Options as options, Types as types } from '@/app/services/followers';
 import { NextRequest } from 'next/server';
 import { putItem, corsOptions } from '@/app/services/api/_db';
-import { HTTP_STATUS_CODES } from '@/app/constants';
+import { ERRORS, HTTP_STATUS_CODES } from '@/app/constants';
 import { revalidatePath } from 'next/cache';
 
 const collection = 'followers';
@@ -18,6 +18,11 @@ export async function OPTIONS(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest, { params }: Params) {
+  const [message, corsParams] = corsOptions(req);
+
+  if (message?.error === ERRORS.CORS) {
+    return new Response(message, corsParams);
+  }
   const { id } = params;
 
   try {
@@ -31,11 +36,14 @@ export async function PUT(req: NextRequest, { params }: Params) {
     });
     revalidatePath(`/admin/instagram`);
 
-    return Response.json({ data: item }, { status: HTTP_STATUS_CODES.OK });
+    return Response.json(
+      { data: item },
+      { ...corsParams, status: HTTP_STATUS_CODES.OK }
+    );
   } catch (err: any) {
     return Response.json(
       { err: err?.message },
-      { status: HTTP_STATUS_CODES.ERROR }
+      { ...corsParams, status: HTTP_STATUS_CODES.ERROR }
     );
   }
 }

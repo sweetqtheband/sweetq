@@ -1,12 +1,22 @@
-import { HTTP_STATUS_CODES } from '@/app/constants';
+import { ERRORS, HTTP_STATUS_CODES } from '@/app/constants';
 import { NextRequest } from 'next/server';
-import { getCollection } from '@/app/services/api/_db';
+import { corsOptions, getCollection } from '@/app/services/api/_db';
 import { instagramSvc } from '@/app/services/api/instagram';
 import { EA } from '@/app/services/api/_events';
 
 const collection = 'instagram';
 
+export async function OPTIONS(req: NextRequest) {
+  const [message, params] = corsOptions(req);
+  return new Response(message, params);
+}
+
 export async function GET(req: NextRequest) {
+  const [message, corsParams] = corsOptions(req);
+
+  if (message?.error === ERRORS.CORS) {
+    return new Response(message, corsParams);
+  }
   const col = await getCollection(collection);
 
   const qp = req.nextUrl.searchParams;
@@ -47,20 +57,28 @@ export async function GET(req: NextRequest) {
     }
   } catch (error) {
     return Response.json('Error', {
+      ...corsParams,
       status: HTTP_STATUS_CODES.ERROR,
     });
   } finally {
     return Response.json('Ok', {
+      ...corsParams,
       status: HTTP_STATUS_CODES.OK,
     });
   }
 }
 
 export async function POST(req: NextRequest) {
+  const [message, corsParams] = corsOptions(req);
+
+  if (message?.error === ERRORS.CORS) {
+    return new Response(message, corsParams);
+  }
   const qp = req.nextUrl.searchParams;
 
   const formData = await req.formData();
   return Response.json('', {
+    ...corsParams,
     status: HTTP_STATUS_CODES.OK,
   });
 }

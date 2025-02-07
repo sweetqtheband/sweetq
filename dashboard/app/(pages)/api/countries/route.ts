@@ -1,5 +1,6 @@
 import { type NextRequest } from 'next/server';
 import { getCollection, corsOptions } from '@/app/services/api/_db';
+import { ERRORS } from '@/app/constants';
 
 const collection = 'countries';
 
@@ -9,6 +10,11 @@ export async function OPTIONS(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
+  const [message, corsParams] = corsOptions(req);
+
+  if (message?.error === ERRORS.CORS) {
+    return new Response(message, corsParams);
+  }
   const col = await getCollection(collection);
   const qp = req.nextUrl.searchParams;
   const queryObj: any = {};
@@ -36,5 +42,5 @@ export async function GET(req: NextRequest) {
     items,
   };
 
-  return Response.json(data);
+  return Response.json(data, corsParams);
 }
