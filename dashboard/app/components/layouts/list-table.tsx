@@ -178,8 +178,8 @@ export default function ListTable({
 
       const image = () => (
         // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={value}
+        <Image
+          src={`/api/proxy?url=${value}`}
           alt={row.id}
           height={IMAGE_SIZES[imageSize]}
           width={IMAGE_SIZES[imageSize]}

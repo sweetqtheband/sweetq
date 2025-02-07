@@ -40,6 +40,7 @@ export const STORAGE = {
 export const ERRORS = {
   INVALID_CREDENTIALS: 'Invalid credentials',
   CORS: 'CORS not allowed',
+  IMAGE_URL_MISSING: 'Missing URL',
 };
 
 export const ACTIONS = {

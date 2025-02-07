@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 import { v4 as uuid } from 'uuid';
 import config from '@/app/config';
 import { uploadSvc } from '@/app/services/api/upload';
-import { ERRORS, FIELD_TYPES, SORT } from '@/app/constants';
+import { ERRORS, FIELD_TYPES, HTTP_STATUS_CODES, SORT } from '@/app/constants';
 import { FactorySvc } from '@/app/services/api/factory';
 import { formDataToObject } from '@/app/utils';
 
@@ -280,13 +280,13 @@ export const corsOptions = (req: NextRequest): any => {
 
   if (!origin || (origin !== 'null' && !allowedOrigins.includes(origin))) {
     console.log('CORS error', origin, req);
-    return [{ error: ERRORS.CORS }, { status: 403 }];
+    return [{ error: ERRORS.CORS }, { status: HTTP_STATUS_CODES.FORBIDDEN }];
   }
 
   return [
     {},
     {
-      status: 200,
+      status: HTTP_STATUS_CODES.OK,
       headers: {
         'Access-Control-Allow-Origin': origin === 'null' ? '*' : origin,
         'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
