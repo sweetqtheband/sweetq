@@ -278,7 +278,7 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [];
 export const corsOptions = (req: NextRequest): any => {
   const origin = req.headers.get('origin') || 'null';
 
-  if (!origin || !allowedOrigins.includes(origin)) {
+  if (!origin || (origin !== 'null' && !allowedOrigins.includes(origin))) {
     console.log('CORS error', origin, req);
     return [{ error: ERRORS.CORS }, { status: 403 }];
   }
