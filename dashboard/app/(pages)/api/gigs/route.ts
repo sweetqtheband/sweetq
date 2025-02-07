@@ -9,7 +9,6 @@ const idx = 'date';
 
 export async function OPTIONS(req: NextRequest) {
   const [message, params] = corsOptions(req);
-  console.log('CORS', message, params);
   return new Response(message, params);
 }
 
@@ -22,7 +21,6 @@ export async function GET(req: NextRequest) {
     sortReplace: { datehour: 'date' },
   });
 
-  console.log('LIST', list);
   return Response.json(list);
 }
 

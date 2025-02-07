@@ -149,7 +149,6 @@ export const getList = async ({
     };
     return data;
   } catch (error) {
-    console.log(error);
     return {};
   }
 };
@@ -279,6 +278,7 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [];
 export const corsOptions = (req: NextRequest): any => {
   const origin = req.headers.get('origin');
 
+  console.log(allowedOrigins, origin);
   if (!origin || !allowedOrigins.includes(origin)) {
     return [{ error: 'CORS not allowed' }, { status: 403 }];
   }

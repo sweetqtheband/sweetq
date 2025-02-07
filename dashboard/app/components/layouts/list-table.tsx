@@ -154,7 +154,6 @@ export default function ListTable({
   }, [internalState, filters, paramFiltersObj]);
 
   useEffect(() => {
-    console.log(loading);
     setIsLoading(loading);
   }, [loading]);
 

@@ -36,7 +36,6 @@ export default function LoginPage() {
       await Auth.login(formState);
       location.href = '/admin/dashboard';
     } catch (err: any) {
-      console.log(err);
       if (err.response.status === HTTP_STATUS_CODES.ERROR) {
         setInvalidCredentials(err.response.data === ERRORS.INVALID_CREDENTIALS);
       }
