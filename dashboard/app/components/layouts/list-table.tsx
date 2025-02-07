@@ -177,7 +177,8 @@ export default function ListTable({
         : defaultValue;
 
       const image = () => (
-        <Image
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
           src={value}
           alt={row.id}
           height={IMAGE_SIZES[imageSize]}
