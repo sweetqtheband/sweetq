@@ -275,7 +275,7 @@ export const deleteItem = async ({
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [];
 
-export const corsOptions = (req: NextRequest): any[] => {
+export const corsOptions = (req: NextRequest): any => {
   const origin = req.headers.get('origin');
 
   if (!origin || !allowedOrigins.includes(origin)) {
