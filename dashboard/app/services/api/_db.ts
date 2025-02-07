@@ -11,6 +11,7 @@ let _db: Db;
 
 export const getDb = async () => {
   if (!_db) {
+    console.log('MONGODB_URI:', process.env.MONGODB_URI);
     const client = new MongoClient(process.env.MONGODB_URI as string);
 
     await client.connect();
