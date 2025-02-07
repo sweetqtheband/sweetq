@@ -2,6 +2,8 @@
 import { EA } from '@/app/services/api/_events';
 import { NextRequest, NextResponse } from 'next/server';
 
+export const dynamic = 'force-dynamic';
+
 const checkInstagram = async (controller: any) => {
   const event = await EA.find({ eventType: 'instagram' });
 
