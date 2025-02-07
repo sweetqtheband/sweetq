@@ -3,6 +3,10 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
+        protocol: 'http',
+        hostname: 'srv659934.hstgr.cloud',
+      },
+      {
         protocol: 'https',
         hostname: '**insta**',
       },
