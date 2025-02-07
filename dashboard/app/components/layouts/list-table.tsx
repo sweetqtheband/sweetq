@@ -182,6 +182,7 @@ export default function ListTable({
           alt={row.id}
           height={IMAGE_SIZES[imageSize]}
           width={IMAGE_SIZES[imageSize]}
+          crossOrigin="anonymous"
         />
       );
 
