@@ -26,7 +26,7 @@ jobs:
             echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" > .env.production
             echo "MONGODB_DATABASE=${{ secrets.MONGODB_DATABASE }}" >> .env.production
             echo "MONGODB_USER=${{ secrets.MONGODB_USER }}" >> .env.production
-            echo "MONGODB_PASSWORD=${{ secrets.MONGODB_PASSWORD }}" >> .env.production
+            echo "MONGODB_PASSWORD=\"${{ secrets.MONGODB_PASSWORD }}\"" >> .env.production
             echo "MONGODB_AUTH_SOURCE=${{ secrets.MONGODB_AUTH_SOURCE }}" >> .env.production
             echo "INSTAGRAM_USERNAME=${{ secrets.INSTAGRAM_USERNAME }}" >> .env.production
             echo "INSTAGRAM_USER=${{ secrets.INSTAGRAM_USER }}" >> .env.production
