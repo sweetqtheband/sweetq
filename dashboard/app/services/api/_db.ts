@@ -11,7 +11,19 @@ let _db: Db;
 
 export const getDb = async () => {
   if (!_db) {
-    const client = new MongoClient(process.env.MONGODB_URI as string);
+    const client = new MongoClient(process.env.MONGODB_URI as string, {
+      ...(process.env.NODE_ENV === 'production'
+        ? {
+            auth: {
+              username: process.env.MONGODB_USER,
+              password: process.env.MONGODB_PASSWORD,
+            },
+            authSource: process.env.MONGODB_AUTH_SOURCE,
+          }
+        : {}),
+    });
+
+    console.log(client);
 
     await client.connect();
 
