@@ -6,7 +6,7 @@ import { ACTIONS, IMAGE_SIZES, SORT } from '@/app/constants';
 import useTableRenderComplete from '@/app/hooks/table';
 import { renderField } from '@/app/render';
 import { renderItem } from '@/app/renderItem';
-import { getClasses, uuid } from '@/app/utils';
+import { getClasses, s3File, uuid } from '@/app/utils';
 import type { SizeType } from '@/types/size.d';
 import {
   Button,
@@ -172,14 +172,17 @@ export default function ListTable({
       const defaultValue =
         item.relations?.[fieldName]?.[translations.locale] || field.value;
 
-      const value = translations.options?.[fieldName]
+      let value = translations.options?.[fieldName]
         ? translations.options?.[fieldName][field.value]
         : defaultValue;
 
+      if (value.startsWith('imgs')) {
+        value = s3File('/' + value);
+      }
       const image = () => (
         // eslint-disable-next-line @next/next/no-img-element
         <Image
-          src={`/api/proxy?url=${value}`}
+          src={value}
           alt={row.id}
           height={IMAGE_SIZES[imageSize]}
           width={IMAGE_SIZES[imageSize]}

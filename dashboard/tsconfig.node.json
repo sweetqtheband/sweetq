@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json", // Hereda la configuración de Next.js
+  "compilerOptions": {
+    "module": "commonjs", // Cambiado a commonjs para ts-node
+    "moduleResolution": "node", // Cambiado para compatibilidad con ts-node
+    "noEmit": false, // Permite la emisión de archivos en ts-node
+    "outDir": "./dist" // Especifica el directorio de salida (si es necesario)
+  },
+  "include": [
+    "scripts/**/*.ts", // Incluye solo los scripts que quieres ejecutar con ts-node
+    "update.ts" // Asegúrate de que el archivo update.ts esté incluido
+  ]
+}

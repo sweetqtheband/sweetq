@@ -4,7 +4,6 @@ import {
   PutObjectCommand,
   DeleteObjectCommand,
 } from '@aws-sdk/client-s3';
-import fs from 'fs';
 
 // Configura el cliente de S3
 const s3Client = new S3Client({

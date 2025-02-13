@@ -31,7 +31,7 @@ export async function GET(req: NextRequest) {
         Accept:
           'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
         Referer: 'https://www.instagram.com/',
-      }, // Evita bloqueos de Instagram
+      },
     });
 
     if (!response.ok) throw new Error('Failed to fetch image');
