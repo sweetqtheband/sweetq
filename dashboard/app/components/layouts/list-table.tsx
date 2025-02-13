@@ -176,19 +176,20 @@ export default function ListTable({
         ? translations.options?.[fieldName][field.value]
         : defaultValue;
 
-      if (value.startsWith('imgs')) {
+      if (value?.startsWith('imgs')) {
         value = s3File('/' + value);
       }
-      const image = () => (
-        // eslint-disable-next-line @next/next/no-img-element
-        <Image
-          src={value}
-          alt={row.id}
-          height={IMAGE_SIZES[imageSize]}
-          width={IMAGE_SIZES[imageSize]}
-          crossOrigin="anonymous"
-        />
-      );
+      const image = () =>
+        value ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <Image
+            src={value}
+            alt={row.id}
+            height={IMAGE_SIZES[imageSize]}
+            width={IMAGE_SIZES[imageSize]}
+            crossOrigin="anonymous"
+          />
+        ) : null;
 
       if (renders[fieldName]) {
         const func =
