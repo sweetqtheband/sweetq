@@ -11,6 +11,7 @@
     "lint": "next lint",
     "update:followers": "dotenv -e .env.production tsx updates/followers.ts",
     "update:images": "dotenv -e .env.production tsx updates/images.ts",
+    "messages": "dotenv -e .env.production tsx updates/messages.ts",
     "sq": "node scripts/swq.js",
     "expose": "ngrok http 3000  --url=overly-awaited-leech.ngrok-free.app"
   },
@@ -51,7 +52,7 @@
     "eslint-config-next": "14.2.3",
     "fs-extra": "^11.3.0",
     "p-limit": "^6.2.0",
-    "puppeteer": "^22.15.0",
+    "puppeteer": "^24.2.1",
     "sass": "^1.84.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.19.2",

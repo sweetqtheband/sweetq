@@ -22,12 +22,25 @@ export default async function InstagramPage({
     { key: 'tags', header: i18n.t('fields.tags') },
   ];
 
+  const getFiltersTranslations = (i18n: any, translations: any) => {
+    translations.fields.show = i18n.t('filters.show.label');
+    translations.options.show = {
+      options: {
+        following: i18n.t('filters.show.following'),
+        notFollowing: i18n.t('filters.show.notFollowing'),
+        all: i18n.t('filters.show.all'),
+      },
+    };
+  };
+
   const translations = {
     ...Followers.getTranslations(i18n, Followers),
     ...getActionsTranslations(i18n),
     title: i18n.t('pages.instagram.title'),
     description: i18n.t('pages.instagram.description', { total: data.total }),
   };
+
+  getFiltersTranslations(i18n, translations);
 
   const fields = await Followers.getFields({ searchParams, i18n });
   const filters = await Followers.getFilters({ searchParams, i18n });

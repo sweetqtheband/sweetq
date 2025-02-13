@@ -131,7 +131,7 @@ export const getList = async ({
         }
       });
     }
-
+    console.log(queryObj);
     const total = await col.countDocuments(queryObj);
 
     const pages = Math.floor(total / Number(qp.get('limit'))) + 1;

@@ -11,9 +11,11 @@ export default {
       'U2FsdGVkX18kGdsP%2FlmM09h6bkVJ8f6Fn4fGgSw%2F7mWfRXAf6owVRwd806Ix3QRI',
   },
   track: {
-    ley: 'U2FsdGVkX19Sb1m01jh3uhEUh58HS9Ao9%2Fpjod4uEvE%3D',
     fiesta: 'U2FsdGVkX1%2FrKv2bU9NnftdBaRRbRmgMxCD0ezKQV8w%3D',
-    yaesnavidad: 'U2FsdGVkX1%2FwRkUZ922wbzCat2AjSUbyMnw195dLZWg%3D',
+    golpedesuerte: 'U2FsdGVkX18fP%2Bob9n9LKr4hPo17X7GRyebvHcSEPa8%3D',
+    sacameabailar: 'U2FsdGVkX18XucyTTptYRnXFRLIeRcdfjW7gQFz1EjQ%3D',
+    quieromas: 'U2FsdGVkX1%2FpXMvUkMdk9%2F5%2F2LWTncYPHoHuZDq0SxI%3D',
+    nohabriasidoasi: 'U2FsdGVkX1%2FEixNjskX37UinYvNXxc8PCbviihlV2LM%3D',
   },
   spotify: {
     clientId: 'MDExNzEzNDkwZDY4NGYyNmFmOWRhYjRiNzc4OWI1YzU=',

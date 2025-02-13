@@ -34,7 +34,7 @@ export const getAll = async (client: AxiosInstance, searchParams: any = {}) => {
       filters: filters || {},
     };
 
-    if (query) {
+    if (query && query !== 'null') {
       params.query = query;
     }
 

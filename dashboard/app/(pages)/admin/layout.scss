@@ -53,8 +53,11 @@ body {
   }
   .cds--flex {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     gap: var(--padding);
     width: 100%;
+    .cds--tooltip-trigger__wrapper {
+      padding-bottom: calc(var(--padding) / 2);
+    }
   }
 }

@@ -87,6 +87,14 @@
       "web": "Web"
     }
   },
+  "filters": {
+    "show": {
+      "label": "Mostrar",
+      "following": "Siguiendo",
+      "notFollowing": "No siguiendo",
+      "all": "Todos"
+    }
+  },
   "news": {
     "types": {
       "news": "Noticia",

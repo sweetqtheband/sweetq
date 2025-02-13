@@ -28,6 +28,7 @@ import { ChangeEvent } from 'react';
 import { Add, Close, Interactions } from '@carbon/react/icons';
 import { Size } from '@/types/size';
 import { renderItem } from './renderItem';
+import internal from 'stream';
 
 interface Field {
   field: string;
@@ -49,6 +50,7 @@ interface Field {
   onAddFileHandler: Function;
   onRemoveFileHandler: Function;
   onInputHandler: Function;
+  onFormStateHandler: Function;
   onInternalStateHandler: Function;
   className: string | undefined;
 }
@@ -128,9 +130,10 @@ const renderSelect = ({
   disabled = false,
   fields,
   formState,
-  internalState,
-  onInputHandler,
-  onInternalStateHandler,
+  internalState = {},
+  onFormStateHandler = () => {},
+  onInputHandler = () => {},
+  onInternalStateHandler = () => {},
   className,
   renders,
 }: Field) => {
@@ -142,6 +145,7 @@ const renderSelect = ({
     formState?.[field] instanceof Array
       ? formState?.[field][0]
       : formState?.[field];
+
   const selectedItem = value
     ? items.find(
         (item: Record<string, any>) =>
@@ -149,13 +153,18 @@ const renderSelect = ({
       )
     : undefined;
 
-  if (selectedItem && !internalState?.[field]) {
-    onInternalStateHandler(field, selectedItem);
+  if (
+    selectedItem &&
+    !internalState?.[field] &&
+    !internalState?.[`removed[${field}]`]
+  ) {
+    onInternalStateHandler(field, selectedItem, formState);
   }
 
   const handleRemoveClick = () => {
+    onInternalStateHandler([field, `removed[${field}]`], [null, true]);
     onInputHandler(field, undefined);
-    onInternalStateHandler(field, null);
+    onFormStateHandler(field, null);
   };
 
   const itemToString = renders?.[field]?.itemToString
@@ -163,6 +172,8 @@ const renderSelect = ({
     : (item: any) => item.text;
 
   const itemToElement = renders?.[field]?.itemToElement || itemToString;
+
+  const currentValue = internalState?.[field] || null;
 
   return (
     <FormItem key={field}>
@@ -175,7 +186,7 @@ const renderSelect = ({
           label={translations.fields[field]}
           titleText={translations.fields[field]}
           items={items}
-          selectedItem={internalState?.[field]}
+          selectedItem={currentValue}
           itemToString={itemToString}
           itemToElement={itemToElement}
           onChange={({ selectedItem }) => {
@@ -183,8 +194,9 @@ const renderSelect = ({
             onInputHandler(field, selectedItem?.id);
           }}
         />
-        {removable && internalState[field] ? (
+        {removable && currentValue ? (
           <IconButton
+            className="cds--button--remove"
             size={SIZES.SM}
             kind="secondary"
             label={translations.delete}
@@ -593,6 +605,7 @@ const countryDropdown = ({
   formState,
   internalState,
   removable,
+  onFormStateHandler,
   onInternalStateHandler,
   onInputHandler,
   className,
@@ -605,6 +618,7 @@ const countryDropdown = ({
     formState,
     internalState,
     removable,
+    onFormStateHandler,
     onInputHandler,
     onInternalStateHandler,
     className,
@@ -619,6 +633,7 @@ const stateDropdown = ({
   formState,
   internalState,
   removable,
+  onFormStateHandler,
   onInternalStateHandler,
   onInputHandler,
   className,
@@ -632,6 +647,7 @@ const stateDropdown = ({
     formState,
     internalState,
     removable,
+    onFormStateHandler,
     onInputHandler,
     onInternalStateHandler,
     className,
@@ -645,6 +661,7 @@ const cityDropdown = ({
   formState,
   internalState,
   removable,
+  onFormStateHandler,
   onInternalStateHandler,
   onInputHandler,
   className,
@@ -658,6 +675,7 @@ const cityDropdown = ({
     formState,
     internalState,
     removable,
+    onFormStateHandler,
     onInputHandler,
     onInternalStateHandler,
     className,
@@ -668,6 +686,7 @@ const renderCountryFilter = ({
   translations,
   formState,
   internalState,
+  onFormStateHandler,
   onInternalStateHandler,
   onInputHandler,
 }: Field) => {
@@ -679,6 +698,7 @@ const renderCountryFilter = ({
     formState,
     internalState,
     onInternalStateHandler,
+    onFormStateHandler,
     onInputHandler,
     removable: true,
   } as Field);
@@ -689,6 +709,7 @@ const renderStateFilter = ({
   translations,
   formState,
   internalState,
+  onFormStateHandler,
   onInternalStateHandler,
   onInputHandler,
 }: Field) => {
@@ -700,6 +721,7 @@ const renderStateFilter = ({
     formState,
     internalState,
     disabled: internalState?.country ? false : true,
+    onFormStateHandler,
     onInternalStateHandler,
     onInputHandler,
     removable: true,
@@ -711,6 +733,7 @@ const renderCityFilter = ({
   translations,
   formState,
   internalState,
+  onFormStateHandler,
   onInternalStateHandler,
   onInputHandler,
 }: Field) => {
@@ -722,6 +745,7 @@ const renderCityFilter = ({
     formState,
     internalState,
     disabled: internalState?.state ? false : true,
+    onFormStateHandler,
     onInternalStateHandler,
     onInputHandler,
     removable: true,

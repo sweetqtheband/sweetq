@@ -20,6 +20,11 @@ const useTableRenderComplete = (
 
     observer.observe(tableElement, { childList: true, subtree: true });
     observerRef.current = observer;
+
+    timeoutRef.current = setTimeout(() => {
+      onRenderComplete();
+      observer.disconnect();
+    }, 500);
   }, [tableId, onRenderComplete]);
 };
 

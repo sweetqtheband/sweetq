@@ -124,11 +124,25 @@ export default function ListTable({
     }
   }
 
-  const onInternalStateHandler = (field: string, value: any) => {
-    setInternalState({
-      ...internalState,
-      [field]: value,
-    });
+  const onInternalStateHandler = (fields: string | string[], value: any) => {
+    const filterInternalState = { ...internalState };
+    if (fields instanceof Array) {
+      fields.forEach((field, index) => {
+        delete filterInternalState[field];
+
+        if (value) {
+          filterInternalState[field] = value[index];
+        }
+      });
+    } else {
+      delete filterInternalState[fields];
+
+      if (value) {
+        filterInternalState[fields] = value;
+      }
+    }
+
+    setInternalState(filterInternalState);
   };
 
   useTableRenderComplete(tableId, () => {
@@ -176,21 +190,6 @@ export default function ListTable({
         ? translations.options?.[fieldName][field.value]
         : defaultValue;
 
-      if (value?.startsWith('imgs')) {
-        value = s3File('/' + value);
-      }
-      const image = () =>
-        value ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <Image
-            src={value}
-            alt={row.id}
-            height={IMAGE_SIZES[imageSize]}
-            width={IMAGE_SIZES[imageSize]}
-            crossOrigin="anonymous"
-          />
-        ) : null;
-
       if (renders[fieldName]) {
         const func =
           typeof renders[fieldName] === 'function'
@@ -213,9 +212,30 @@ export default function ListTable({
         }
       }
 
-      return isImage ? image() : value;
+      if (isImage) {
+        if (value?.startsWith('imgs')) {
+          value = s3File('/' + value);
+        }
+
+        if (value?.startsWith('/imgs')) {
+          value = s3File(value);
+        }
+
+        return (
+          // eslint-disable-next-line @next/next/no-img-element
+          <Image
+            src={value}
+            alt={row.id}
+            height={IMAGE_SIZES[imageSize]}
+            width={IMAGE_SIZES[imageSize]}
+            crossOrigin="anonymous"
+          />
+        );
+      }
+
+      return value;
     } else {
-      return '-';
+      return null;
     }
   };
 
@@ -391,14 +411,6 @@ export default function ListTable({
 
     replace(`${pathname}?${params.toString()}`);
   };
-  useEffect(() => {
-    if (isLoading) {
-      clearTimeout(imageTimeout);
-      imageTimeout = setTimeout(() => {
-        setIsLoading(false);
-      }, 500);
-    }
-  }, [isLoading]);
 
   useEffect(() => {
     const resizeHandler = () => {
@@ -462,6 +474,7 @@ export default function ListTable({
               const handleFilter = (field: string, value: any) => {
                 setIsLoading(true);
                 const params = new URLSearchParams(searchParams);
+                params.delete('page');
                 if (value instanceof Array) {
                   if (value.length > 0) {
                     params.set(`filters[${field}]`, value.join(','));
@@ -499,6 +512,18 @@ export default function ListTable({
                 handleFilter(field, null);
               };
 
+              const handleFilterFormState = (field: string, value: any) => {
+                const filterFormState = { ...formState };
+                delete filterFormState[field];
+
+                if (value) {
+                  filterFormState[field] = value;
+                } else {
+                  filterFormState[field] = null;
+                }
+                setFormState(filterFormState);
+              };
+
               return (
                 <div key={`filter-${field}`}>
                   {renderField({
@@ -507,6 +532,7 @@ export default function ListTable({
                     field,
                     formState,
                     internalState,
+                    onFormStateHandler: handleFilterFormState,
                     onInternalStateHandler: handleFilterInternalState,
                     onInputHandler: handleFilter,
                   })}

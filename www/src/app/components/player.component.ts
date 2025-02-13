@@ -339,6 +339,7 @@ export class PlayerComponent
         this.track.isLoading = true;
         this.onPlaying();
       }
+
       if (!this.streamUrl) {
         this.getStreamUrl();
       } else {

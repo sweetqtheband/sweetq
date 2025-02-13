@@ -185,6 +185,26 @@ const getFilters = async ({
       },
       type: FIELD_TYPES.FILTER_CITY,
     },
+    show: {
+      translations: {
+        fields: {
+          show: i18n.t('filters.show.label'),
+        },
+      },
+      fields: {
+        options: {
+          show: {
+            options: [
+              { id: '0', value: i18n.t('filters.show.following') },
+              { id: '1', value: i18n.t('filters.show.notFollowing') },
+              { id: '2', value: i18n.t('filters.show.all') },
+            ],
+          },
+        },
+      },
+      value: '0',
+      type: FIELD_TYPES.SELECT,
+    },
     tags: {
       translations: {
         fields: {

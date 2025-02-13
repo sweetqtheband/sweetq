@@ -4,14 +4,14 @@
 
 :host {
   --Dark: #121619;
-  --White: #FFFFFF;
-  --LightWhite: rgba(255,255,255,0.6);
-  --Coral: #FE255F;
-  --light-opacity-30: rgba(255, 255, 255, 0.30);
+  --White: #ffffff;
+  --LightWhite: rgba(255, 255, 255, 0.6);
+  --Coral: #fe255f;
+  --light-opacity-30: rgba(255, 255, 255, 0.3);
   --light-opacity-5: rgba(255, 255, 255, 0.05);
-  --neutral-50: #7D91A1;
-  --indigo-30: #B191FE;
-  --indigo-opacity-10: rgba(88, 37, 254, 0.10);  
+  --neutral-50: #7d91a1;
+  --indigo-30: #b191fe;
+  --indigo-opacity-10: rgba(88, 37, 254, 0.1);
   --fontSize2XL: calc(36 / 16 * 1em);
   --fontSizeXL: calc(24 / 16 * 1em);
   --fontSizeL: calc(20 / 16 * 1em);
@@ -24,14 +24,14 @@
   --secondaryLightTextColor: var(--LightWhite);
   --timelineColor: var(--light-opacity-30);
 
-  --backgroundColor: #16181A;  
-  --imgBorderColor: rgba(255, 255, 255, .26);
-  --primaryColor: #FFFFFF;
-  --secondaryColor: rgba(255, 255, 255, .70);
+  --backgroundColor: #16181a;
+  --imgBorderColor: rgba(255, 255, 255, 0.26);
+  --primaryColor: #ffffff;
+  --secondaryColor: rgba(255, 255, 255, 0.7);
   --padding: 8px;
 
   height: 100vh;
-  font-family: 'poppins', sans-serif;
+  font-family: "poppins", sans-serif;
 
   .listen {
     &--view {
@@ -45,10 +45,10 @@
 
       .image {
         &::before {
-          content: '';
+          content: "";
           display: block;
           width: 100%;
-          background-image: url('/assets/imgs/sweetq-bg.webp');
+          background-image: url("/assets/imgs/sweetq-bg.webp");
           background-repeat: no-repeat;
           background-position: 50%;
           background-size: cover;
@@ -79,8 +79,8 @@
         z-index: 1;
 
         &::before {
-          content: '';
-          opacity: .5;
+          content: "";
+          opacity: 0.5;
           background: var(--Dark);
           position: absolute;
           top: 0;
@@ -91,7 +91,7 @@
         }
 
         &::after {
-          content: '';
+          content: "";
           display: block;
           width: 100%;
           height: 100%;
@@ -99,7 +99,11 @@
           position: absolute;
           top: 0;
           left: 0;
-          background: linear-gradient(0deg, #16181A 30.96%, rgba(22, 24, 26, 0.00) 100%);
+          background: linear-gradient(
+            0deg,
+            #16181a 30.96%,
+            rgba(22, 24, 26, 0) 100%
+          );
         }
       }
     }
@@ -126,15 +130,14 @@
         padding-top: 326px;
       }
     }
-    
-    
+
     &--panels {
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      align-items: center;      
-    
-      gap: 72px;      
+      align-items: center;
+
+      gap: 72px;
       position: relative;
       overflow: hidden;
 
@@ -143,12 +146,12 @@
     }
     &--panel {
       &:first-child {
-        min-width: 100%;     
+        min-width: 100%;
         max-width: 1280px;
         flex: 1;
       }
       z-index: 1;
-      position: relative;      
+      position: relative;
       overflow: hidden;
     }
 
@@ -160,8 +163,8 @@
       display: flex;
 
       &:after {
-        content: '';
-        background: linear-gradient(0deg, #16181A 31%, transparent 55%);
+        content: "";
+        background: linear-gradient(0deg, #16181a 31%, transparent 55%);
         display: block;
         width: 100%;
         height: 160%;
@@ -171,20 +174,20 @@
       }
 
       & .listen--wrapper {
-        @media screen and (max-width: 645px) {          
+        @media screen and (max-width: 645px) {
           &:before {
-            content: '';
+            content: "";
             height: 30%;
             width: 100%;
             background-color: var(--Dark);
             position: absolute;
             bottom: 0px;
             left: 0;
-            z-index: 1;            
+            z-index: 1;
           }
 
           &:after {
-            content: '';
+            content: "";
             height: 56px;
             width: 100%;
             background-color: var(--White);
@@ -194,29 +197,28 @@
             z-index: 0;
           }
         }
-
       }
 
-      header {        
+      header {
         display: flex;
         align-items: center;
         padding-bottom: 30px;
         gap: px8(3);
         position: relative;
         z-index: 1;
-        .image{        
+        .image {
           border-radius: 100%;
           width: 64px;
           height: 64px;
           background-size: cover;
           background-repeat: no-repeat;
-          background-image: url('/assets/imgs/sweetq.webp');
+          background-image: url("/assets/imgs/sweetq.webp");
         }
-      }            
+      }
 
       .player {
         position: relative;
-        z-index: 1;        
+        z-index: 1;
         max-width: 400px;
         aspect-ratio: 1 / 1;
         margin: 0 auto;
@@ -230,7 +232,7 @@
       }
 
       .toggler {
-        padding: calc(var(--padding)* 8) 0;
+        padding: calc(var(--padding) * 8) 0;
         ::ng-deep {
           toggler-item {
             padding: calc(var(--padding) * 2);
@@ -246,16 +248,14 @@
                   padding-top: 0;
                 }
               }
-
             }
           }
         }
-        
       }
 
       .releases {
         header {
-          display: none
+          display: none;
         }
       }
 
@@ -295,7 +295,7 @@
 
               .image {
                 display: block;
-                background-image: url('/assets/imgs/cover.png');
+                background-image: url("/assets/imgs/cover.png");
                 background-repeat: no-repeat;
                 height: 100px;
                 width: 100px;
@@ -324,7 +324,6 @@
                   font-weight: 600;
                 }
               }
-
             }
 
             .subtext {
@@ -361,30 +360,30 @@
           }
         }
 
-        &.video-wrapper {          
+        &.video-wrapper {
           width: calc(100% - 14px);
           aspect-ratio: 9 / 16;
           position: relative;
           margin: 0 auto;
           padding: 0;
 
-          .video-overlay {            
+          .video-overlay {
             opacity: 1;
             display: block;
-            position: absolute;            
+            position: absolute;
             top: 0;
-            left: 0;        
-            width: 100%;    
+            left: 0;
+            width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.50);
-            color: var(--primaryTextColor);            
+            background-color: rgba(0, 0, 0, 0.5);
+            color: var(--primaryTextColor);
             z-index: 1;
 
             .toggle-play {
-              transition: none;          
+              transition: none;
               cursor: pointer;
               position: absolute;
-              left: 16px;              
+              left: 16px;
               bottom: 16px;
               height: 18px;
               width: 18px;
@@ -394,22 +393,21 @@
               padding: 11px;
               background-position: center center;
               background-size: 24px;
-          
-          
+
               &.play {
-                background-image: url('/assets/imgs/controls/canvas/play.svg');
+                background-image: url("/assets/imgs/controls/canvas/play.svg");
               }
-          
+
               &.pause {
-                background-image: url('/assets/imgs/controls/canvas/pause.svg');
+                background-image: url("/assets/imgs/controls/canvas/pause.svg");
               }
             }
           }
 
           .player {
-            height: 100%;          
+            height: 100%;
             width: 100%;
-            position: absolute; 
+            position: absolute;
             top: 0;
             left: 0;
             z-index: 2;
@@ -419,16 +417,15 @@
           }
         }
 
-        &.next-releases { 
-          padding: 0;                    
+        &.next-releases {
+          padding: 0;
           display: flex;
           flex-direction: column;
-          gap: 64px;          
+          gap: 64px;
         }
       }
-
     }
-    
+
     &--footer {
       flex: auto;
       background-color: var(--White);
@@ -466,37 +463,38 @@
           width: 40px;
 
           &.spotify {
-            background: url('/assets/imgs/spotify.svg') no-repeat center center;
+            background: url("/assets/imgs/spotify.svg") no-repeat center center;
           }
-          
+
           &.instagram {
-            background: url('/assets/imgs/instagram.svg') no-repeat center center;
+            background: url("/assets/imgs/instagram.svg") no-repeat center
+              center;
           }
-          
+
           &.youtube {
-            background: url('/assets/imgs/youtube.svg') no-repeat center center;
+            background: url("/assets/imgs/youtube.svg") no-repeat center center;
           }
 
           &.tiktok {
-            background: url('/assets/imgs/tiktok.svg') no-repeat center center;
+            background: url("/assets/imgs/tiktok.svg") no-repeat center center;
           }
         }
       }
     }
     &--view.long-wrapper {
       .listen--content:after {
-        background: linear-gradient(0deg, #16181A 35%, transparent 45%);
-      height: 210%;
-    }
+        background: linear-gradient(0deg, #16181a 35%, transparent 45%);
+        height: 210%;
+      }
     }
   }
 
   h1 {
     color: var(--primaryTextColor);
     font-size: var(--fontSize2XL);
-    font-weight: 600;   
+    font-weight: 600;
   }
-  
+
   h2 {
     color: var(--secondaryTextColor);
     font-size: var(--fontSizeXL);
@@ -504,7 +502,7 @@
     font-size: 20px;
   }
 
-  h3 {  
+  h3 {
     color: var(--primaryTextColor);
     font-weight: 600;
     font-size: 16px;
@@ -518,20 +516,20 @@
   sweetq-kit {
     ::ng-deep {
       .sq-subtitle {
-        font-family: 'poppins', sans-serif;
-        font-size: var(--fontSizeL); 
-        font-weight: 700; 
-        text-transform: capitalize;  
+        font-family: "poppins", sans-serif;
+        font-size: var(--fontSizeL);
+        font-weight: 700;
+        text-transform: capitalize;
       }
     }
   }
 
-  @media screen and (max-width: 645px) {       
+  @media screen and (max-width: 645px) {
     h1 {
       font-size: var(--fontSize2M);
-    } 
+    }
 
-    .listen {            
+    .listen {
       &--wrapper {
         padding: px8(3);
         overflow: unset;
@@ -559,19 +557,17 @@
           }
         }
       }
-
     }
   }
 
-
   .sq-links-wrapper {
-    max-width: 700px;    
+    max-width: 700px;
     text-align: center;
     margin: 0 auto;
     display: flex;
     flex-flow: column;
     .sq-links {
-      text-align: center;      
+      text-align: center;
       flex: 1;
       display: flex;
       flex-flow: column;
@@ -610,7 +606,7 @@
         }
 
         &.primary {
-          font-family: 'titillium-web-bold';
+          font-family: "titillium-web-bold";
           font-size: 18px;
           border-radius: 4px;
           border-width: 1px;
@@ -619,7 +615,7 @@
         }
 
         &.secondary {
-          font-family: 'titillium-web-bold';
+          font-family: "titillium-web-bold";
           font-size: 18px;
           border-radius: 4px;
           border-width: 1px;
@@ -640,7 +636,7 @@
               content: "";
               border-radius: 100%;
               display: block;
-              background-color: #FFF;
+              background-color: #fff;
               z-index: 0;
               width: 25px;
               height: 25px;
@@ -663,7 +659,7 @@
               content: "";
               border-radius: 100%;
               display: block;
-              background-color: #FFF;
+              background-color: #fff;
               z-index: 0;
               width: 15px;
               height: 15px;
@@ -684,7 +680,7 @@
 
         .sq-icon {
           &.icon-spotify {
-            color: #1ED760;
+            color: #1ed760;
 
             &::before {
               top: calc(50%);
@@ -693,12 +689,12 @@
 
           &.icon-youtube,
           &.icon-youtube-music {
-            color: #FF0000;
+            color: #ff0000;
           }
 
           &.icon-apple-music {
             &::before {
-              background: linear-gradient(0deg, #FA233B 0.36%, #FB5C74 97.85%);
+              background: linear-gradient(0deg, #fa233b 0.36%, #fb5c74 97.85%);
               -webkit-background-clip: text;
               -webkit-text-fill-color: transparent;
             }

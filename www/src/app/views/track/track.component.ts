@@ -34,7 +34,7 @@ export class TrackComponent implements OnInit {
   public isPlaying: boolean = false;
 
   public trackId: Nullable<string> = null;
-  
+
   public longWrapper: boolean = false;
 
   constructor(
@@ -64,7 +64,9 @@ export class TrackComponent implements OnInit {
   }
 
   get canDownload() {
-    return +this.route.snapshot.queryParams?.['dl'] === 1 && this.item?.download;
+    return (
+      +this.route.snapshot.queryParams?.['dl'] === 1 && this.item?.download
+    );
   }
 
   async ngOnInit(): Promise<any> {

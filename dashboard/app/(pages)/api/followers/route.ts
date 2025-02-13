@@ -21,6 +21,16 @@ export async function GET(req: NextRequest) {
   const queryObj: any = {};
 
   const query = qp.get('query');
+  const filterShow = qp.get('filters[show][0]');
+  if (filterShow !== '2') {
+    queryObj.$and = [
+      {
+        unfollow: filterShow === '1',
+      },
+    ];
+  }
+  console.log(req.nextUrl.searchParams);
+  req.nextUrl.searchParams.delete('filters[show][0]');
 
   if (query) {
     queryObj.$or = [
@@ -32,7 +42,6 @@ export async function GET(req: NextRequest) {
       },
     ];
   }
-
   return Response.json(
     await getList({
       req,
