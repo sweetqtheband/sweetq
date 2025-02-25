@@ -309,7 +309,7 @@ export const getQueryFilter = (
   asArray: boolean = false
 ) => {
   const searchParams = req.nextUrl.searchParams.toString();
-  const params = qs.parse(searchParams, { ignoreQueryPrefix: true });
+  const params = qs.parse(searchParams, { ignoreQueryPrefix: true }) as any;
   if (
     params?.filters?.[property] instanceof Array &&
     params?.filters?.[property].length
@@ -324,7 +324,7 @@ export const getQueryFilter = (
 
 export const removeQueryFilter = (req: NextRequest, property: string) => {
   const searchParams = req.nextUrl.searchParams.toString();
-  const params = qs.parse(searchParams, { ignoreQueryPrefix: true });
+  const params = qs.parse(searchParams, { ignoreQueryPrefix: true }) as any;
   if (params?.filters?.[property]) {
     if (params.filters[property].length > 0) {
       params.filters[property].forEach((value: string, index: number) => {
