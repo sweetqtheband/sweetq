@@ -1,3 +1,5 @@
+@use '@scss/mixins' as *;
+
 body {
   height: 100%;
   width: 100%;
@@ -47,6 +49,7 @@ body {
 
   .cds--table-toolbar {
     z-index: 2;
+    box-shadow: 0 0 1px 1px var(--cds-layer);
   }
   .cds--popover-content {
     padding: 1rem;
@@ -58,6 +61,12 @@ body {
     width: 100%;
     .cds--tooltip-trigger__wrapper {
       padding-bottom: calc(var(--padding) / 2);
+    }
+  }
+
+  @include breakpoint(mobile) {
+    .cds--stack-horizontal {
+      grid-auto-flow: row;
     }
   }
 }

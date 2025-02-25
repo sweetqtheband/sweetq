@@ -1,0 +1,20 @@
+@use '@scss/mixins' as *;
+
+.cell {
+  @include breakpoint(mobile) {
+    &-profile_pic_url {
+      width: 50px;
+    }
+  }
+}
+
+.field {
+  > div {
+    width: 100%;
+  }
+  &-profile_pic_url {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

@@ -1,5 +1,10 @@
 import { NextRequest } from 'next/server';
-import { getList, corsOptions } from '@/app/services/api/_db';
+import {
+  getList,
+  corsOptions,
+  getQueryFilter,
+  removeQueryFilter,
+} from '@/app/services/api/_db';
 import { ERRORS, SORT } from '@/app/constants';
 
 const collection = 'followers';
@@ -20,17 +25,28 @@ export async function GET(req: NextRequest) {
 
   const queryObj: any = {};
 
+  const filters = [];
+
   const query = qp.get('query');
-  const filterShow = qp.get('filters[show][0]');
+  const filterShow = getQueryFilter(req, 'show');
   if (filterShow !== '2') {
-    queryObj.$and = [
-      {
-        unfollow: filterShow === '1',
-      },
-    ];
+    filters.push({
+      unfollow: filterShow === '1',
+    });
   }
-  console.log(req.nextUrl.searchParams);
-  req.nextUrl.searchParams.delete('filters[show][0]');
+  removeQueryFilter(req, 'show');
+
+  const filterWithoutTags = getQueryFilter(req, 'withoutTags', true);
+  if (filterWithoutTags) {
+    filters.push({
+      tags: { $nin: filterWithoutTags },
+    });
+  }
+  removeQueryFilter(req, 'withoutTags');
+
+  if (filters.length > 0) {
+    queryObj.$and = filters;
+  }
 
   if (query) {
     queryObj.$or = [
@@ -42,6 +58,7 @@ export async function GET(req: NextRequest) {
       },
     ];
   }
+
   return Response.json(
     await getList({
       req,

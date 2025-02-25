@@ -1,3 +1,5 @@
+@use '@scss/mixins' as *;
+
 .panel {
   position: fixed;
   height: var(--panel-wrapper-height, 100%);
@@ -29,6 +31,12 @@
 
   .panel-wrapper {
     width: 60vw;
+    @include breakpoint(mobile) {
+      width: 100vw;
+    }
+    @include breakpoint(tablet) {
+      width: 80vw;
+    }
     padding: calc(var(--padding) * 4) calc(var(--padding) * 2)
       calc(var(--padding) * 2);
 
@@ -70,6 +78,26 @@
     &.resizing {
       .panel-wrapper {
         transition: unset;
+      }
+    }
+    @include breakpoint(mobile) {
+      .panel-wrapper {
+        transition: transform 400ms ease-in;
+        transform: translateX(0vw);
+        .panel-content {
+          max-height: 80vh;
+          .fields {
+            overflow-y: auto;
+            max-height: calc(80vh - 24px);
+          }
+        }
+      }
+    }
+
+    @include breakpoint(desktop) {
+      .panel-wrapper {
+        transition: transform 400ms ease-in;
+        transform: translateX(20vw);
       }
     }
   }

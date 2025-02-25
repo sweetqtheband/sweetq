@@ -71,7 +71,10 @@ const getFields = async ({
     ...Followers.fields,
     options: {
       ...Followers.fields.options,
-      country: await Countries.getOptions({ locale: i18n.locale }),
+      country: {
+        ...(await Countries.getOptions({ locale: i18n.locale })),
+        value: FIELD_DEFAULTS.COUNTRY,
+      },
       state: await States.getOptions({
         locale: i18n.locale,
         query: searchParams?.['panel.country']
@@ -159,7 +162,7 @@ const getFilters = async ({
         options: {
           state: await States.getOptions({
             locale: i18n.locale,
-            query: searchParams?.['filters[country]']
+            filters: searchParams?.['filters[country]']
               ? { country_id: searchParams['filters[country]'] }
               : null,
           }),
@@ -177,7 +180,7 @@ const getFilters = async ({
         options: {
           city: await Cities.getOptions({
             locale: i18n.locale,
-            query: searchParams?.['filters[state]']
+            filters: searchParams?.['filters[state]']
               ? { state_id: searchParams['filters[state]'] }
               : null,
           }),
@@ -215,8 +218,26 @@ const getFilters = async ({
         options: {
           tags: await Tags.getOptions({
             locale: i18n.locale,
-            query: searchParams?.['filters[tags]']
+            filters: searchParams?.['filters[tags]']
               ? { tags: searchParams['filters[tags]'] }
+              : null,
+          }),
+        },
+      },
+      type: FIELD_TYPES.MULTISELECT,
+    },
+    withoutTags: {
+      translations: {
+        fields: {
+          withoutTags: i18n.t('filters.withoutTags'),
+        },
+      },
+      fields: {
+        options: {
+          withoutTags: await Tags.getOptions({
+            locale: i18n.locale,
+            filters: searchParams?.['filters[withoutTags]']
+              ? { tags: searchParams['filters[withoutTags]'] }
               : null,
           }),
         },

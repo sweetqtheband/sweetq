@@ -18,8 +18,8 @@ export default function InstagramView(params: Readonly<any>) {
         renders={renders}
         onSave={methods.onSave}
         onDelete={methods.onDelete}
+        noAdd={true}
       />
-      <InstagramLogin />
     </>
   );
 }

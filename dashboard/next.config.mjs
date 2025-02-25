@@ -15,11 +15,15 @@ const nextConfig = {
   },
   sassOptions: {
     silenceDeprecations: ['legacy-js-api'],
-    includePaths: ['styles', 'node_modules'],
+    includePaths: ['app/scss', 'node_modules'],
   },
   i18n: {
     locales: ['en', 'es'],
     defaultLocale: 'es',
+  },
+  webpack: (config) => {
+    config.resolve.alias['@scss'] = './app/scss';
+    return config;
   },
 };
 

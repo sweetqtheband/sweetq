@@ -29,6 +29,7 @@ import { Add, Close, Interactions } from '@carbon/react/icons';
 import { Size } from '@/types/size';
 import { renderItem } from './renderItem';
 import internal from 'stream';
+import { getClasses, s3File } from './utils';
 
 interface Field {
   field: string;
@@ -53,6 +54,7 @@ interface Field {
   onFormStateHandler: Function;
   onInternalStateHandler: Function;
   className: string | undefined;
+  ready?: boolean;
 }
 
 // Renderers
@@ -63,15 +65,26 @@ const renderHidden = ({ field, value }: Field) => (
 );
 
 // Image field
-const renderImage = ({ field, value }: Field) => (
-  <Image
-    key={field}
-    src={value}
-    alt={field}
-    width={IMAGE_SIZES.lg}
-    height={IMAGE_SIZES.lg}
-  />
-);
+const renderImage = ({ field, value }: Field) => {
+  let defaultValue = value;
+  if (value?.startsWith('imgs')) {
+    defaultValue = s3File('/' + value);
+  }
+
+  if (value?.startsWith('/imgs')) {
+    defaultValue = s3File(value);
+  }
+  return (
+    <Image
+      key={field}
+      src={defaultValue}
+      alt={field}
+      width={IMAGE_SIZES.lg}
+      height={IMAGE_SIZES.lg}
+      crossOrigin="anonymous"
+    />
+  );
+};
 
 // Hidden field
 const renderLabel = ({ field, value, translations }: Field) => (
@@ -125,6 +138,7 @@ const renderTextMap = ({
 // Select field
 const renderSelect = ({
   field,
+  value,
   translations,
   removable = false,
   disabled = false,
@@ -136,17 +150,20 @@ const renderSelect = ({
   onInternalStateHandler = () => {},
   className,
   renders,
+  ready = true,
 }: Field) => {
   const items = fields.options[field].options.map((option: any) => ({
     id: option.id,
     text: translations?.options[field]?.[option.id] || option.value,
   }));
-  const value =
+  const defaultValue =
     formState?.[field] instanceof Array
       ? formState?.[field][0]
-      : formState?.[field];
+      : formState?.[field]
+      ? formState?.[field]
+      : value;
 
-  const selectedItem = value
+  const selectedItem = defaultValue
     ? items.find(
         (item: Record<string, any>) =>
           item.id === value || item.id === String(value)
@@ -154,11 +171,14 @@ const renderSelect = ({
     : undefined;
 
   if (
+    ready &&
     selectedItem &&
     !internalState?.[field] &&
     !internalState?.[`removed[${field}]`]
   ) {
-    onInternalStateHandler(field, selectedItem, formState);
+    setTimeout(() => {
+      onInternalStateHandler(field, selectedItem, formState);
+    }, 0);
   }
 
   const handleRemoveClick = () => {
@@ -179,6 +199,7 @@ const renderSelect = ({
     <FormItem key={field}>
       <div className="cds--flex">
         <Dropdown
+          autoAlign={true}
           className={className}
           disabled={disabled}
           key={field}
@@ -424,6 +445,7 @@ const renderMultiSelect = ({
           key={field}
           id={field}
           ref={ref}
+          autoAlign={true}
           onInputValueChange={onInputValueChangeHandler}
           placeholder={translations.fields[field]}
           items={items}
@@ -838,11 +860,26 @@ const renderers = {
   [FIELD_TYPES.VIDEO_UPLOADER]: renderUploader,
   [FIELD_TYPES.DATE]: renderDatePicker,
   [FIELD_TYPES.LABEL]: renderLabel,
-  [FIELD_TYPES.NONE]: () => null,
 };
 
 // Main renderer
 export const renderField = (obj: any) => {
-  const { type } = obj;
-  return typeof renderers[type] === 'function' && renderers[type](obj);
+  const { type, field } = obj;
+  if (typeof renderers[type] === 'function') {
+    const className = getClasses({
+      field: true,
+      [`field-${field}`]: true,
+    });
+
+    const renderObj = renderers[type](obj);
+    return type === FIELD_TYPES.HIDDEN ? (
+      renderObj
+    ) : (
+      <div className={className} key={obj.key}>
+        {renderObj}
+      </div>
+    );
+  }
+
+  return null;
 };

@@ -6,18 +6,23 @@ import { ACTIONS, IMAGE_SIZES, SORT } from '@/app/constants';
 import useTableRenderComplete from '@/app/hooks/table';
 import { renderField } from '@/app/render';
 import { renderItem } from '@/app/renderItem';
-import { getClasses, s3File, uuid } from '@/app/utils';
+import { breakpoint, getClasses, s3File, uuid } from '@/app/utils';
 import type { SizeType } from '@/types/size.d';
 import {
   Button,
+  Column,
   DataTable,
   DataTableRow,
   Dropdown,
+  FlexGrid,
+  Heading,
   IconButton,
   Modal,
   PaginationNav,
   Popover,
   PopoverContent,
+  Row,
+  Section,
   Stack,
   Table,
   TableBatchAction,
@@ -34,7 +39,7 @@ import {
   TableToolbarContent,
   TableToolbarSearch,
 } from '@carbon/react';
-import { Add, Filter, TrashCan } from '@carbon/react/icons';
+import { Add, Close, Filter, TrashCan } from '@carbon/react/icons';
 import Image from 'next/image';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
@@ -49,10 +54,12 @@ export default function ListTable({
   imageSize = 'md',
   limit = config.table.limit,
   total = 0,
+  timestamp = 0,
   pages = 0,
   loading = false,
   onItemClick = () => {},
   onDelete = async () => true,
+  noAdd = false,
   translations = {},
   fields = {},
   filters = {},
@@ -64,10 +71,12 @@ export default function ListTable({
   imageSize: SizeType;
   limit: number;
   total?: number;
+  timestamp?: number;
   pages: number;
   loading: boolean;
   onItemClick?: (item: any) => void;
   onDelete?: (ids: string[]) => Promise<boolean>;
+  noAdd?: boolean;
   translations?: Record<string, any>;
   fields?: Record<string, any>;
   filters?: Record<string, any>;
@@ -86,12 +95,13 @@ export default function ListTable({
   }));
 
   const [deleteOpen, setDeleteOpen] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(loading);
+  const [isLoading, setIsLoading] = useState<boolean>(loading || true);
   const [deleteRows, setDeleteRows] = useState<any[]>([]);
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false);
   const [internalState, setInternalState] = useState<Record<string, any>>({});
   const [formState, setFormState] = useState<Record<string, any>>({});
   const [filtering, setFiltering] = useState<boolean>(false);
+  const [waiting, setWaiting] = useState<boolean>(false);
 
   const params = new URLSearchParams(searchParams);
 
@@ -145,9 +155,17 @@ export default function ListTable({
     setInternalState(filterInternalState);
   };
 
+  useEffect(() => {
+    if (timestamp) {
+      setWaiting(false);
+    }
+  }, [timestamp]);
+
   useTableRenderComplete(tableId, () => {
     setTimeout(() => {
-      setIsLoading(false);
+      if (!waiting) {
+        setIsLoading(false);
+      }
     }, 300);
   });
 
@@ -450,6 +468,10 @@ export default function ListTable({
   const renderFilters = () => {
     const filterFields = Object.keys(filters);
 
+    const onCloseHandler = () => {
+      setFiltersOpen(false);
+    };
+
     if (filterFields.length > 0) {
       return (
         <Popover
@@ -460,6 +482,7 @@ export default function ListTable({
           onRequestClose={() => setFiltersOpen(false)}
         >
           <IconButton
+            autoAlign
             label={translations.filter}
             kind={filtering ? 'tertiary' : 'ghost'}
             aria-expanded={filtersOpen}
@@ -469,10 +492,19 @@ export default function ListTable({
           >
             <Filter />
           </IconButton>
-          <PopoverContent>
-            {filterFields.map((field: string) => {
+          <PopoverContent className="cds--table-filters">
+            {breakpoint('mobile') ? (
+              <div className="cds--flex">
+                <Section level={4}>
+                  <Heading>{translations.filter}</Heading>
+                </Section>
+                <Close size={32} className="close" onClick={onCloseHandler} />
+              </div>
+            ) : null}
+            {filterFields.map((field: string, index: number) => {
               const handleFilter = (field: string, value: any) => {
                 setIsLoading(true);
+                setWaiting(true);
                 const params = new URLSearchParams(searchParams);
                 params.delete('page');
                 if (value instanceof Array) {
@@ -524,20 +556,18 @@ export default function ListTable({
                 setFormState(filterFormState);
               };
 
-              return (
-                <div key={`filter-${field}`}>
-                  {renderField({
-                    ...filters[field],
-                    translations,
-                    field,
-                    formState,
-                    internalState,
-                    onFormStateHandler: handleFilterFormState,
-                    onInternalStateHandler: handleFilterInternalState,
-                    onInputHandler: handleFilter,
-                  })}
-                </div>
-              );
+              return renderField({
+                ...filters[field],
+                key: 'filter-' + index,
+                ready: !isLoading,
+                translations,
+                field,
+                formState,
+                internalState,
+                onFormStateHandler: handleFilterFormState,
+                onInternalStateHandler: handleFilterInternalState,
+                onInputHandler: handleFilter,
+              });
             })}
           </PopoverContent>
         </Popover>
@@ -592,14 +622,18 @@ export default function ListTable({
                     }}
                   />
                   {renderFilters()}
-                  <Button
-                    tabIndex={batchActionProps.shouldShowBatchActions ? -1 : 0}
-                    onClick={tableAddNewHandler}
-                    renderIcon={Add}
-                    kind="primary"
-                  >
-                    {translations.add}
-                  </Button>
+                  {!noAdd ? (
+                    <Button
+                      tabIndex={
+                        batchActionProps.shouldShowBatchActions ? -1 : 0
+                      }
+                      onClick={tableAddNewHandler}
+                      renderIcon={Add}
+                      kind="primary"
+                    >
+                      {translations.add}
+                    </Button>
+                  ) : null}
                 </TableToolbarContent>
                 <TableBatchActions
                   {...batchActionProps}
@@ -625,19 +659,22 @@ export default function ListTable({
                         onSelectAllHandler(rows, selectRow);
                       }}
                     />
-                    {headers.map((header, index) => (
-                      <TableHeader
-                        key={`${id}-header-${index}`}
-                        isSortHeader={sortable[index]}
-                        isSortable={true}
-                        sortDirection={direction[index]}
-                        onFocus={() => tableRowSortableHandler(index)}
-                        onBlur={() => tableRowSortableHandler(index)}
-                        onClick={() => tableRowSortHandler(index)}
-                      >
-                        {header.header}
-                      </TableHeader>
-                    ))}
+                    {headers.map((header, index) => {
+                      return (
+                        <TableHeader
+                          className={`cell-${header.key}`}
+                          key={`${id}-header-${index}`}
+                          isSortHeader={sortable[index]}
+                          isSortable={true}
+                          sortDirection={direction[index]}
+                          onFocus={() => tableRowSortableHandler(index)}
+                          onBlur={() => tableRowSortableHandler(index)}
+                          onClick={() => tableRowSortHandler(index)}
+                        >
+                          {header.header}
+                        </TableHeader>
+                      );
+                    })}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -654,7 +691,10 @@ export default function ListTable({
                         })}
                       />
                       {row.cells.map((cell, index) => (
-                        <TableCell key={`${id}-row-${rowIndex}-cell-${index}`}>
+                        <TableCell
+                          className={`cell-${cell.id.split(':')[1]}`}
+                          key={`${id}-row-${rowIndex}-cell-${index}`}
+                        >
                           {renderCell(row, cell, tableRows[rowIndex])}
                         </TableCell>
                       ))}
@@ -672,6 +712,7 @@ export default function ListTable({
         <PaginationNav
           itemsShown={itemsShown}
           totalItems={pages}
+          size={breakpoint('mobile') ? 'sm' : 'md'}
           onChange={onPaginationChangeHandler}
         />
 

@@ -95,8 +95,6 @@ const createFactory = (entity) => {
 const createFile = ({ entity, tpl, folder, fileName }) => {
   const file = path.join(folder, fileName);
 
-  console.log(file);
-
   const tplContent = fs.readFileSync(tpl, 'utf8');
 
   const fileContent = Object.keys(entity).reduce(

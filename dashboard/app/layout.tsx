@@ -2,7 +2,7 @@
 import { SetStateAction, useEffect, useState } from 'react';
 import { WindowContext } from './context';
 import './reset.css';
-import './globals.css';
+import './globals.scss';
 
 let resizeTimeout: any = null;
 let isResizing = false;

@@ -1,0 +1,21 @@
+@use '@scss/vars' as vars;
+
+@mixin breakpoint($breakpoint) {
+  $query: map-get(vars.$breakpoints, $breakpoint);
+
+  @if $query {
+    @media screen and (#{$query}) {
+      @content;
+    }
+  }
+}
+
+@mixin theme($theme) {
+  $query: map-get(vars.$themes, $theme);
+
+  @if $query {
+    @media (#{$query}) {
+      @content;
+    }
+  }
+}

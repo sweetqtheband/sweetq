@@ -20,7 +20,6 @@ export const Model = (data: any): Model => {
   const obj = {
     id: String(data.id),
     username: String(data.username),
-    tags: data.tags instanceof Array ? data.tags : [data.tags],
   } as Model;
 
   if (data._id) {
@@ -45,6 +44,10 @@ export const Model = (data: any): Model => {
 
   if (data.treatment) {
     obj.treatment = Number(data.treatment);
+  }
+
+  if (data.tags) {
+    obj.tags = data.tags instanceof Array ? data.tags : [data.tags];
   }
 
   return obj;

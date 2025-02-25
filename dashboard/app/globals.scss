@@ -1,3 +1,5 @@
+@use '@scss/mixins' as *;
+
 :root {
   --hover: blue;
   --light-bg-color: #ffffff;
@@ -64,18 +66,7 @@
   font-family: 'sans-serif';
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    *:not(.error) {
-      --border-color: var(--dark-border-color);
-    }
-    *.error {
-      --border-color: var(--error-border-color);
-    }
-  }
-}
-
-@media (prefers-color-scheme: light) {
+@include theme(light) {
   :root {
     *:not(.error) {
       --border-color: var(--dark-border-color);
@@ -107,7 +98,16 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
+@include theme(dark) {
+  :root {
+    *:not(.error) {
+      --border-color: var(--dark-border-color);
+    }
+    *.error {
+      --border-color: var(--error-border-color);
+    }
+  }
+
   html {
     color-scheme: dark;
   }

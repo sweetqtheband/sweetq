@@ -91,7 +91,8 @@
       "following": "Following",
       "notFollowing": "Not following",
       "all": "All"
-    }
+    },
+    "withoutTags": "Without tags"
   },
   "news": {
     "types": {

@@ -78,6 +78,7 @@
     "shortName": "Nombre corto",
     "fullName": "Nombre completo",
     "tags": "Etiquetas",
+    "withoutTags": "Sin etiquetas",
     "social": {
       "facebook": "Facebook",
       "instagram": "Instagram",
@@ -93,7 +94,8 @@
       "following": "Siguiendo",
       "notFollowing": "No siguiendo",
       "all": "Todos"
-    }
+    },
+    "withoutTags": "Sin etiquetas"
   },
   "news": {
     "types": {

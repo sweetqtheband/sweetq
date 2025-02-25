@@ -270,11 +270,12 @@ export default function ListPanel({
       <section className="fields">
         <Form>
           <Stack gap={4}>
-            {Object.keys(fields.types).map((field: string) =>
+            {Object.keys(fields.types).map((field: string, index: number) =>
               renderField({
                 field,
+                key: 'field-' + index,
                 type: fields.types[field],
-                value: data[field],
+                value: data[field] || fields.options[field]?.value,
                 translations,
                 files,
                 fields,

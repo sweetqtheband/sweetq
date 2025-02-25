@@ -1,4 +1,4 @@
-#!/usr/bin/env ts-node
+#!/usr/bin/env node
 
 import yargs from 'yargs/yargs';
 import { hideBin } from 'yargs/helpers';
@@ -12,7 +12,7 @@ args
     'Crea una entidad',
     {
       name: {
-        description: 'El nombre de la persona',
+        description: 'El nombre de la entidad',
         alias: 'n',
         type: 'string',
       },
@@ -27,5 +27,10 @@ args
     }
   )
   .version(false)
+
   .help('help', 'Mostrar ayuda')
   .alias('help', 'h').argv;
+
+if (process.argv.length <= 2) {
+  args.showHelp('log');
+}

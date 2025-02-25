@@ -1,6 +1,7 @@
 import { I18n } from 'next-i18next';
 import { v4 as uuidv4 } from 'uuid';
-import { FIELD_TYPES } from './constants';
+import { BREAKPOINTS, FIELD_TYPES } from './constants';
+import { table } from 'console';
 
 export const getClasses = (obj: Record<string, any>) =>
   Object.keys(obj)
@@ -96,4 +97,20 @@ export const dateFormat = (
       ) ?? '';
 
   return str[0].toUpperCase() + str.slice(1);
+};
+
+type Breakpoint = 'mobile' | 'tablet' | 'laptop' | 'desktop' | 'large';
+export const breakpoint = (size: Breakpoint): boolean => {
+  const sizes = {
+    mobile: screen.width < BREAKPOINTS.MOBILE,
+    tablet:
+      screen.width >= BREAKPOINTS.MOBILE && screen.width < BREAKPOINTS.TABLET,
+    laptop:
+      screen.width >= BREAKPOINTS.TABLET && screen.width < BREAKPOINTS.LAPTOP,
+    desktop:
+      screen.width >= BREAKPOINTS.LAPTOP && screen.width < BREAKPOINTS.DESKTOP,
+    large: screen.width >= BREAKPOINTS.DESKTOP,
+  };
+
+  return sizes[size];
 };

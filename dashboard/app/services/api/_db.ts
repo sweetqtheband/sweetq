@@ -6,6 +6,7 @@ import { uploadSvc } from '@/app/services/api/upload';
 import { ERRORS, FIELD_TYPES, HTTP_STATUS_CODES, SORT } from '@/app/constants';
 import { FactorySvc } from '@/app/services/api/factory';
 import { formDataToObject } from '@/app/utils';
+import qs from 'qs';
 
 let _db: Db;
 
@@ -89,7 +90,6 @@ export const getList = async ({
 
     if (!queryObj.$or) {
       const query = qp.get('query');
-
       if (query) {
         queryObj.$or = [
           {
@@ -99,24 +99,22 @@ export const getList = async ({
       }
     }
 
-    const filters: Record<string, any> = {};
-    qp.forEach((value, key) => {
-      const match = key.match(/^filters\[(.+?)\](?:\[(\d+)\])?$/);
-      if (match) {
-        const [, filterKey, index] = match;
+    const searchParams = req.nextUrl.searchParams.toString();
 
-        const modelizedValue = svc.modelize({ [filterKey]: value })[filterKey];
-        if (index !== undefined) {
-          filters[filterKey] = filters[filterKey] || [];
-          filters[filterKey][+index] =
-            modelizedValue instanceof Array
-              ? modelizedValue.at(0)
-              : modelizedValue;
-        } else {
-          filters[filterKey] = modelizedValue;
-        }
-      }
+    const params = qs.parse(searchParams, {
+      ignoreQueryPrefix: true,
     });
+
+    const filters = Object.keys(params.filters || {}).reduce(
+      (acc: Record<string, any>, name: string) => {
+        const modelizedValue = svc.modelize({
+          [name]: (params.filters as Record<string, any>)[name],
+        });
+        acc[name] = modelizedValue[name];
+        return acc;
+      },
+      {}
+    );
 
     if (Object.keys(filters).length > 0) {
       if (!queryObj.$and) {
@@ -131,7 +129,7 @@ export const getList = async ({
         }
       });
     }
-    console.log(queryObj);
+
     const total = await col.countDocuments(queryObj);
 
     const pages = Math.floor(total / Number(qp.get('limit'))) + 1;
@@ -149,6 +147,7 @@ export const getList = async ({
     );
 
     const data = {
+      timestamp: new Date().getTime(),
       total,
       items: parsedItems,
       pages,
@@ -157,6 +156,7 @@ export const getList = async ({
     };
     return data;
   } catch (error) {
+    console.log(error);
     return {};
   }
 };
@@ -243,10 +243,9 @@ export const putItem = async ({
     }
   });
 
-  return svc.update(
-    { ...formDataToObject(formData, types), _id: id },
-    avoidUnset
-  );
+  const updateObject = { ...formDataToObject(formData, types), _id: id };
+
+  return svc.update(updateObject, avoidUnset);
 };
 
 export const deleteItem = async ({
@@ -302,4 +301,37 @@ export const corsOptions = (req: NextRequest): any => {
       },
     },
   ];
+};
+
+export const getQueryFilter = (
+  req: NextRequest,
+  property: string,
+  asArray: boolean = false
+) => {
+  const searchParams = req.nextUrl.searchParams.toString();
+  const params = qs.parse(searchParams, { ignoreQueryPrefix: true });
+  if (
+    params?.filters?.[property] instanceof Array &&
+    params?.filters?.[property].length
+  ) {
+    if (params.filters[property].length > 1 || asArray) {
+      return params.filters[property];
+    } else {
+      return params.filters[property][0];
+    }
+  }
+};
+
+export const removeQueryFilter = (req: NextRequest, property: string) => {
+  const searchParams = req.nextUrl.searchParams.toString();
+  const params = qs.parse(searchParams, { ignoreQueryPrefix: true });
+  if (params?.filters?.[property]) {
+    if (params.filters[property].length > 0) {
+      params.filters[property].forEach((value: string, index: number) => {
+        req.nextUrl.searchParams.delete(
+          `filters[${property}][${String(index)}]`
+        );
+      });
+    }
+  }
 };

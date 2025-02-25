@@ -1,12 +1,6 @@
 'use client';
 
-import {
-  ChangeEvent,
-  FormEventHandler,
-  KeyboardEventHandler,
-  useRef,
-  useState,
-} from 'react';
+import { ChangeEvent, KeyboardEventHandler, useRef, useState } from 'react';
 import './page.scss';
 import { Auth } from '@/app/services/auth';
 import Image from 'next/image';

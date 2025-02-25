@@ -14,9 +14,11 @@ export default function ListLayout({
   total = 0,
   limit = 0,
   pages = 0,
+  timestamp = 0,
   id = '',
   onSave = async () => true,
   onDelete = async () => true,
+  noAdd = false,
   translations = {},
   fields = {},
   filters = {},
@@ -29,9 +31,11 @@ export default function ListLayout({
   total?: number;
   limit?: number;
   pages?: number;
+  timestamp?: number;
   id?: string;
   onSave?: (data: any, files: any) => Promise<boolean>;
   onDelete?: (ids: string[]) => Promise<boolean>;
+  noAdd?: boolean;
   translations?: Record<string, string>;
   fields?: Record<string, any>;
   filters?: Record<string, any>;
@@ -70,9 +74,11 @@ export default function ListLayout({
         headers={headers}
         total={total}
         limit={limit}
+        timestamp={timestamp}
         pages={pages}
         filters={filters}
         translations={translations}
+        noAdd={noAdd}
         fields={fields}
         loading={isLoading}
         renders={renders}

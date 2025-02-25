@@ -1,0 +1,11 @@
+$breakpoints: (
+  mobile: 'max-width: 639px',
+  tablet: 'min-width: 640px and max-width: 1023px',
+  laptop: 'min-width: 1024px and max-width: 1279px',
+  desktop: 'min-width: 1280px',
+);
+
+$themes: (
+  light: 'prefers-color-scheme: light',
+  dark: 'prefers-color-scheme: dark',
+);

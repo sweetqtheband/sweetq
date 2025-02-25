@@ -3,6 +3,7 @@ import type { Follower } from '@/types/follower';
 import i18n from '@/app/services/translate';
 import InstagramView from './view';
 import { getActionsTranslations } from '@/app/services/_list';
+import './page.scss';
 
 export default async function InstagramPage({
   searchParams,
@@ -15,8 +16,8 @@ export default async function InstagramPage({
   const headers = [
     { key: 'profile_pic_url', header: i18n.t('fields.image') },
     { key: 'full_name', header: i18n.t('fields.name') },
-    { key: 'short_name', header: i18n.t('fields.alias') },
     { key: 'username', header: i18n.t('fields.username') },
+    { key: 'short_name', header: i18n.t('fields.alias') },
     { key: 'country', header: i18n.t('fields.country') },
     { key: 'state', header: i18n.t('fields.state') },
     { key: 'tags', header: i18n.t('fields.tags') },
@@ -31,6 +32,7 @@ export default async function InstagramPage({
         all: i18n.t('filters.show.all'),
       },
     };
+    translations.fields.withoutTags = i18n.t('filters.withoutTags');
   };
 
   const translations = {
@@ -50,6 +52,7 @@ export default async function InstagramPage({
       items={items}
       translations={translations}
       headers={headers}
+      timestamp={data.timestamp}
       total={data.total}
       limit={data?.next?.limit}
       pages={data.pages}

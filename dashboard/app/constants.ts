@@ -119,3 +119,10 @@ export const TAG_TYPES: (
   | 'cool-gray'
   | 'warm-gray'
 )[] = ['red', 'magenta', 'purple', 'blue', 'cyan', 'teal', 'green', 'gray'];
+
+export const BREAKPOINTS = {
+  MOBILE: 640,
+  TABLET: 768,
+  LAPTOP: 1024,
+  DESKTOP: 1280,
+};
