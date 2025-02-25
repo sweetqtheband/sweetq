@@ -20,7 +20,11 @@
     "selected": "Selected",
     "selecteds": "Selected",
     "unselectAll": "Unselect all",
-    "upload": "Upload"
+    "upload": "Upload",
+    "login": "Login",
+    "email": "Email",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password"
   },
   "date": {
     "formats": {
@@ -64,6 +68,7 @@
     "video": "Video",
     "venue": "Venue",
     "city": "City",
+    "profile": "Profile",
     "state": "State",
     "country": "Country",
     "address": "Address",
@@ -83,7 +88,13 @@
       "youtube": "YouTube",
       "spotify": "Spotify",
       "web": "Web"
-    }
+    },
+    "password": "Password"
+  },
+
+  "userProfiles": {
+    "admin": "Administrator",
+    "user": "User"
   },
   "filters": {
     "show": {
@@ -116,7 +127,9 @@
     "news": "News",
     "contact": "Contact",
     "bands": "Bands",
-    "tags": "Tags"
+    "tags": "Tags",
+    "users": "Users",
+    "config": "Configuration"
   },
   "status": {
     "published": "Published",

@@ -20,7 +20,11 @@
     "selected": "Seleccionado",
     "selecteds": "Seleccionados",
     "unselectAll": "Deseleccionar todo",
-    "upload": "Subir"
+    "upload": "Subir",
+    "login": "Entrar",
+    "email": "Email",
+    "showPassword": "Mostrar contraseña",
+    "hidePassword": "Ocultar contraseña"
   },
   "date": {
     "formats": {
@@ -66,6 +70,7 @@
     "video": "Vídeo",
     "venue": "Sala",
     "city": "Ciudad",
+    "profile": "Tipo de usuario",
     "state": "Provincia",
     "country": "País",
     "address": "Dirección",
@@ -86,7 +91,13 @@
       "youtube": "YouTube",
       "spotify": "Spotify",
       "web": "Web"
-    }
+    },
+    "password": "Contraseña",
+    "email": "Email"
+  },
+  "userProfiles": {
+    "admin": "Administrador",
+    "user": "Usuario"
   },
   "filters": {
     "show": {
@@ -122,7 +133,9 @@
     "news": "Noticias",
     "contact": "Contacto",
     "bands": "Bandas",
-    "tags": "Etiquetas"
+    "tags": "Etiquetas",
+    "users": "Usuarios",
+    "config": "Configuración"
   },
   "status": {
     "published": "Publicado",

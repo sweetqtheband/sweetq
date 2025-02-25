@@ -54,4 +54,6 @@ export const getActionsTranslations = (i18n: any) => ({
   selecteds: i18n.t('actions.selecteds'),
   unselectAll: i18n.t('actions.unselectAll'),
   upload: i18n.t('actions.upload'),
+  showPassword: i18n.t('actions.showPassword'),
+  hidePassword: i18n.t('actions.hidePassword'),
 });

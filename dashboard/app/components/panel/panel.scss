@@ -94,7 +94,7 @@
       }
     }
 
-    @include breakpoint(desktop) {
+    @include breakpoint(tablet) {
       .panel-wrapper {
         transition: transform 400ms ease-in;
         transform: translateX(20vw);

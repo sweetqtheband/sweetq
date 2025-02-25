@@ -88,6 +88,7 @@ export const FIELD_TYPES: Record<string, FieldTypesType> = {
   NONE: 'none',
   LABEL: 'label',
   DATE_LABEL: 'dateLabel',
+  PASSWORD: 'password',
 };
 
 export const IG = {

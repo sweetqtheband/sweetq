@@ -8,7 +8,10 @@ import { citiesSvc } from './cities';
 import { statesSvc } from './states';
 import { tagsSvc } from './tags';
 import { instagramSvc } from './instagram';
+import { usersSvc } from './users';
+import { userProfilesSvc } from './userProfiles';
 import { countriesSvc } from './countries';
+import { camelCase } from '@/app/utils';
 
 type FactoryType = {
   [key: string]: (collection: Collection<Document>) => any;
@@ -25,9 +28,11 @@ let factory: FactoryType = {
   cities: citiesSvc,
   tags: tagsSvc,
   instagram: instagramSvc,
+  users: usersSvc,
+  userProfiles: userProfilesSvc,
 };
 
 export const FactorySvc = (
   collectionName: string,
   collection: Collection<Document>
-) => factory[collectionName](collection);
+) => factory[camelCase(collectionName)](collection);

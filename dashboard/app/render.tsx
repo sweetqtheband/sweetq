@@ -11,6 +11,7 @@ import {
   FilterableMultiSelect,
   FormItem,
   IconButton,
+  PasswordInput,
   Stack,
   Tag,
   TextInput,
@@ -28,7 +29,6 @@ import { ChangeEvent } from 'react';
 import { Add, Close, Interactions } from '@carbon/react/icons';
 import { Size } from '@/types/size';
 import { renderItem } from './renderItem';
-import internal from 'stream';
 import { getClasses, s3File } from './utils';
 
 interface Field {
@@ -178,6 +178,7 @@ const renderSelect = ({
   ) {
     setTimeout(() => {
       onInternalStateHandler(field, selectedItem, formState);
+      onInputHandler(field, selectedItem?.id);
     }, 0);
   }
 
@@ -842,6 +843,20 @@ const renderDatePicker = ({ field, value, translations, formState }: Field) => {
     </DatePicker>
   );
 };
+const renderPassword = ({ field, translations, onInputHandler }: Field) => {
+  return (
+    <PasswordInput
+      key={field}
+      id={field}
+      showPasswordLabel={translations.showPassword}
+      hidePasswordLabel={translations.hidePassword}
+      labelText={translations.fields[field]}
+      onChange={(e: ChangeEvent<HTMLInputElement>) =>
+        onInputHandler(field, e.target.value)
+      }
+    />
+  );
+};
 
 const renderers = {
   [FIELD_TYPES.HIDDEN]: renderHidden,
@@ -860,6 +875,7 @@ const renderers = {
   [FIELD_TYPES.VIDEO_UPLOADER]: renderUploader,
   [FIELD_TYPES.DATE]: renderDatePicker,
   [FIELD_TYPES.LABEL]: renderLabel,
+  [FIELD_TYPES.PASSWORD]: renderPassword,
 };
 
 // Main renderer

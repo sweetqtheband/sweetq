@@ -9,9 +9,8 @@ import {
 import { Countries } from './countries';
 import { States } from './states';
 import { Cities } from './cities';
-import { onDelete, onSave } from './_methods';
+import { onSave } from './_methods';
 import { Tags } from './tags';
-import { ReactNode } from 'react';
 
 export const Types = {
   id: FIELD_TYPES.HIDDEN,

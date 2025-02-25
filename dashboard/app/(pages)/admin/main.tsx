@@ -6,6 +6,7 @@ import { Suspense, useEffect, useState } from 'react';
 import { Auth } from '@/app/services/auth';
 import { Layout } from '@/app/services/layout';
 import Loader from './loading';
+import './main.scss';
 
 export default function Main({
   translations,

@@ -3,9 +3,8 @@
 import Link from 'next/link';
 
 import './menu.scss';
-import Image from 'next/image';
 import { Auth } from '@/app/services/auth';
-import { MouseEventHandler, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ACTIONS, STORAGE } from '@/app/constants';
 import { Storage } from '@/app/services/storage';
 import { Update } from '@/app/services/update';
@@ -14,6 +13,7 @@ import {
   HeaderContainer,
   HeaderGlobalAction,
   HeaderGlobalBar,
+  HeaderMenu,
   HeaderMenuButton,
   HeaderMenuItem,
   HeaderNavigation,
@@ -43,6 +43,28 @@ export default function MenuComponent({
     setNeedUpdate(Storage.getValue(ACTIONS.DATA_UPDATE, STORAGE.LOCAL));
   }, []);
 
+  const renderMenuItem = (route: any) => {
+    return (
+      <HeaderMenuItem key={route.text} href={route.path} as={Link}>
+        {translations[route.text]}
+      </HeaderMenuItem>
+    );
+  };
+
+  const renderSubmenu = (route: any) => {
+    return (
+      <HeaderMenu
+        key={route.text}
+        aria-label={translations[route.text]}
+        menuLinkName={translations[route.text]}
+      >
+        {route.children.map((child: any) =>
+          child?.children ? renderSubmenu(child) : renderMenuItem(child)
+        )}
+      </HeaderMenu>
+    );
+  };
+
   return (
     <Theme theme="g100">
       <HeaderContainer
@@ -61,11 +83,9 @@ export default function MenuComponent({
               aria-expanded={isSideNavExpanded}
             />
             <HeaderNavigation aria-label="Sweet Q Dashboard">
-              {routes.map((route) => (
-                <HeaderMenuItem key={route.path} href={route.path} as={Link}>
-                  {translations[route.text]}
-                </HeaderMenuItem>
-              ))}
+              {routes.map((route) =>
+                route?.children ? renderSubmenu(route) : renderMenuItem(route)
+              )}
             </HeaderNavigation>
             <HeaderGlobalBar>
               {needUpdate ? (
@@ -85,15 +105,11 @@ export default function MenuComponent({
             >
               <SideNavItems>
                 <HeaderSideNavItems>
-                  {routes.map((route) => (
-                    <HeaderMenuItem
-                      key={route.path}
-                      href={route.path}
-                      as={Link}
-                    >
-                      {translations[route.text]}
-                    </HeaderMenuItem>
-                  ))}
+                  {routes.map((route) =>
+                    route?.children
+                      ? renderSubmenu(route)
+                      : renderMenuItem(route)
+                  )}
                 </HeaderSideNavItems>
               </SideNavItems>
             </SideNav>

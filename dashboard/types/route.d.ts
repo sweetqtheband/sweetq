@@ -1,4 +1,5 @@
 export type Route = {
   text: string;
-  path: string;
+  path?: string;
+  children?: Route[];
 };

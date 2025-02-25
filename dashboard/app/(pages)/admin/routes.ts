@@ -6,10 +6,6 @@ export const routes: Route[] = [
     path: '/admin/instagram',
   },
   {
-    text: 'gmail',
-    path: '/admin/gmail',
-  },
-  {
     text: 'tracks',
     path: '/admin/tracks',
   },
@@ -17,12 +13,22 @@ export const routes: Route[] = [
     text: 'gigs',
     path: '/admin/gigs',
   },
-  {
-    text: 'tags',
-    path: '/admin/tags'
-  },
+
   {
     text: 'bands',
     path: '/admin/bands',
+  },
+  {
+    text: 'config',
+    children: [
+      {
+        text: 'users',
+        path: '/admin/users',
+      },
+      {
+        text: 'tags',
+        path: '/admin/tags',
+      },
+    ],
   },
 ];

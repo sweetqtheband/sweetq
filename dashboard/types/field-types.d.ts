@@ -24,6 +24,7 @@ export enum FieldTypes {
   label = 'label',
   tag = 'tag',
   dateLabel = 'dateLabel',
+  password = 'password',
 }
 
 export type FieldTypesType = keyof typeof FieldTypes;

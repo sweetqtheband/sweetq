@@ -114,3 +114,8 @@ export const breakpoint = (size: Breakpoint): boolean => {
 
   return sizes[size];
 };
+
+export const camelCase = (str: string) =>
+  str
+    .replace(/[-_](.)/g, (_, char) => char.toUpperCase())
+    .replace(/^[A-Z]/, (char) => char.toLowerCase());

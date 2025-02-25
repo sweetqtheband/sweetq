@@ -1,15 +1,17 @@
 import { v4 as uuid } from 'uuid';
 
-import { userProfileSvc } from './userProfile';
-
 import { getCollection } from '@/app/services/api/_db';
 import { encSvc } from './encryption';
+import { FactorySvc } from './factory';
+import { ObjectId } from 'mongodb';
 
 /**
  * User service
  */
 export const userSvc = {
   model: getCollection('users'),
+  userProfileSvc: async () =>
+    FactorySvc('userProfiles', await getCollection('user_profiles')),
   /**
    * Parse user before returning
    * @param {Object} user
@@ -20,7 +22,9 @@ export const userSvc = {
       ...user,
     };
 
-    const profile = await userProfileSvc.getById(user._profileId);
+    const profile = await (
+      await userSvc.userProfileSvc()
+    ).getById(user._profileId);
     obj.id = user._id.toHexString();
     obj.profile = profile?.type;
 
@@ -45,7 +49,8 @@ export const userSvc = {
    * @param {*} value
    * @returns
    */
-  getById: async (value: string) => userSvc.findOne({ _id: value }),
+  getById: async (value: string) =>
+    userSvc.findOne({ _id: new ObjectId(value) }),
   /**
    * Get by username
    * @param {string} value Retrieve user by username
@@ -103,7 +108,10 @@ export const userSvc = {
 
     obj._uuid = uuid();
     obj.password = userSvc._getPassword(item.password, obj._uuid);
+
+    const userProfileSvc = await userSvc.userProfileSvc();
     const profile = await userProfileSvc.getByType(item.profile);
+
     obj._profileId = profile?._id;
 
     const dbResult = await (await userSvc.model).insertOne(obj);
@@ -116,30 +124,36 @@ export const userSvc = {
    * @returns
    */
   async update(item: Record<string, any>) {
-    const user = (await userSvc.getByUsername(item.username)) as Record<
-      string,
-      any
-    >;
+    try {
+      const user = (await userSvc.getById(item._id)) as Record<string, any>;
 
-    const obj = {
-      ...item,
-    };
-    delete obj._id;
-    delete obj.profile;
+      const obj = {
+        ...item,
+      };
+      delete obj._id;
+      delete obj.profile;
+      if (item.password) {
+        obj.password = userSvc._getPassword(item.password, user._uuid);
+      }
 
-    if (item.password) {
-      obj.password = userSvc._getPassword(item.password, obj._uuid);
+      const userProfileSvc = await userSvc.userProfileSvc();
+      const profile = await userProfileSvc.getByType(item.profile);
+
+      obj._profileId = profile?._id;
+
+      await (
+        await userSvc.model
+      ).findOneAndUpdate(
+        { _id: new ObjectId(user._id) },
+        { $set: obj },
+        {
+          includeResultMetadata: true,
+        }
+      );
+
+      return this.parseUser({ ...user, ...obj });
+    } catch (err) {
+      console.log(err);
     }
-
-    const profile = await userProfileSvc.getByType(item.profile);
-    obj._profileId = profile?._id;
-
-    const updatedUser = await (
-      await userSvc.model
-    ).findOneAndUpdate({ _id: user._id }, obj, {
-      includeResultMetadata: true,
-    });
-
-    return this.parseUser(updatedUser);
   },
 };

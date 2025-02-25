@@ -12,6 +12,24 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [adjusted, setAdjusted] = useState(false);
+
+  useEffect(() => {
+    const adjust = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
+      setAdjusted(true);
+    };
+
+    adjust();
+
+    window.addEventListener('resize', adjust);
+
+    return () => {
+      window.removeEventListener('resize', adjust);
+    };
+  }, [adjusted]);
+
   const [windowState, setWindowState] = useState({
     open: false,
     resizing: false,
