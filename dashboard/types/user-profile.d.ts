@@ -1,6 +1,6 @@
 import { ObjectId } from 'mongodb';
 
-export type User-profile = {
+export type UserProfile = {
   _id: ObjectId;
   name: string;
 };
