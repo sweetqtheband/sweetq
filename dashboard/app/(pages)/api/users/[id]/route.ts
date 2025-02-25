@@ -35,7 +35,6 @@ export async function PUT(req: NextRequest, { params }: Params) {
       statusCode = HTTP_STATUS_CODES.NO_CONTENT;
       const data = await userSvc.update(obj);
 
-      console.log(data);
       revalidatePath(`/admin/${collection}`);
       return Response.json(
         { data },
