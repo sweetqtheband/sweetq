@@ -1,16 +1,18 @@
 import axios from 'axios';
-import { getTranslations } from './_i18n';
-
+import { GET } from './_api';
+const isBuild = process.env.NEXT_PHASE === 'phase-production-build';
 const client = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URI}/user-profiles`,
 });
 
 export const UserProfiles = {
   getAll: async (params: Record<string, any> | null = null) => {
-    const response = await client.get('', {
-      params,
-    });
-    return response.data;
+    if (!isBuild) {
+      const response = await GET(client, '', params);
+      return response.data;
+    } else {
+      return { items: [], total: 0, pages: 0 };
+    }
   },
   getOptions: async (params: Record<string, any> | null = null) => {
     return {

@@ -1,5 +1,8 @@
-import { AxiosInstance } from 'axios';
+import { AxiosInstance, AxiosResponse } from 'axios';
 import config from '@/app/config';
+import { HTTP_STATUS_CODES } from '../constants';
+
+const isBuild = process.env.NEXT_PHASE === 'phase-production-build';
 
 export const getAll = async (client: AxiosInstance, searchParams: any = {}) => {
   try {
@@ -42,9 +45,12 @@ export const getAll = async (client: AxiosInstance, searchParams: any = {}) => {
       params.sort = sort;
       params.sortDir = sortDir;
     }
-
-    const response = await GET(client, '', params);
-    return response.data;
+    if (!isBuild) {
+      const response = await GET(client, '', params);
+      return response.data;
+    } else {
+      return { items: [], total: 0, pages: 0 };
+    }
   } catch (error) {
     return [];
   }
@@ -53,10 +59,18 @@ export const getAll = async (client: AxiosInstance, searchParams: any = {}) => {
 export const GET = async (
   client: AxiosInstance,
   url: string,
-  params: Record<string, any> = {}
-) => {
-  const response = await client.get(url, { params });
-  return response;
+  params: Record<string, any> | null = {},
+  headers: Record<string, any> = {}
+): Promise<any> => {
+  if (!isBuild) {
+    const response = await client.get(url, { params, headers });
+    return response;
+  } else {
+    return {
+      data: { items: [], total: 0, pages: 0 },
+      status: HTTP_STATUS_CODES.OK,
+    } as AxiosResponse;
+  }
 };
 
 export const POST = async (

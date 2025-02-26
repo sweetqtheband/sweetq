@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { GET } from './_api';
 
 const client = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URI}/countries`,
@@ -6,9 +7,7 @@ const client = axios.create({
 
 export const Countries = {
   getAll: async (params: Record<string, any> | null = null) => {
-    const response = await client.get('', {
-      params,
-    });
+    const response = await GET(client, '', params);
 
     return response.data;
   },

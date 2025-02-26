@@ -1,8 +1,9 @@
-import { Storage } from "./storage";
-import axios from "axios";
-import { HTTP_STATUS_CODES, STORAGE } from "../constants";
-import { unquote } from "../utils";
-import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
+import { Storage } from './storage';
+import axios from 'axios';
+import { HTTP_STATUS_CODES, STORAGE } from '../constants';
+import { unquote } from '../utils';
+import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies';
+import { GET } from './_api';
 
 const client = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URI}/auth`,
@@ -14,7 +15,7 @@ const client = axios.create({
 export const Auth = {
   _isAuth: false,
   user: null,
-  token: "",
+  token: '',
 
   /**
    * Returns headers
@@ -38,27 +39,28 @@ export const Auth = {
   /**
    * Checks if user is authorized
    */
-  async isAuth(params?: Readonly<{
-    user: Record<string, any> | RequestCookie | string | null;
-    token: RequestCookie | string | null;
-    serverSide: boolean
-  }>|null) {
-    
-    const {user, token, serverSide} = {...params};
+  async isAuth(
+    params?: Readonly<{
+      user: Record<string, any> | RequestCookie | string | null;
+      token: RequestCookie | string | null;
+      serverSide: boolean;
+    }> | null
+  ) {
+    const { user, token, serverSide } = { ...params };
 
     if (!this._isAuth) {
-      if (!serverSide || serverSide && user && token) {
-        this.user = user || Storage.getValue("user", STORAGE.COOKIES);
+      if (!serverSide || (serverSide && user && token)) {
+        this.user = user || Storage.getValue('user', STORAGE.COOKIES);
 
         if (this.user) {
-          this.token = token || Storage.getValue("auth-token", STORAGE.COOKIES);
+          this.token = token || Storage.getValue('auth-token', STORAGE.COOKIES);
           if (serverSide) {
-            this._isAuth = serverSide; 
+            this._isAuth = serverSide;
           } else {
             try {
-              const response = await client.get('', this.headers);
+              const response = await GET(client, '', {}, this.headers.headers);
               this._isAuth = response.status === HTTP_STATUS_CODES.OK;
-            } catch (err:any) {
+            } catch (err: any) {
               if (err.response.status === HTTP_STATUS_CODES.UNAUTHORIZED) {
                 this.logout();
               }
@@ -87,7 +89,7 @@ export const Auth = {
     // Handle logic here when using service
 
     try {
-      const response = await client.post("login", {
+      const response = await client.post('login', {
         username,
         password,
       });
@@ -97,8 +99,8 @@ export const Auth = {
         Auth.user = response.data.user;
         Auth.token = response.data.token;
 
-        Storage.setValue("user", Auth.user, STORAGE.COOKIES);
-        Storage.setValue("auth-token", Auth.token, STORAGE.COOKIES);
+        Storage.setValue('user', Auth.user, STORAGE.COOKIES);
+        Storage.setValue('auth-token', Auth.token, STORAGE.COOKIES);
       }
 
       return response;
@@ -115,8 +117,8 @@ export const Auth = {
   async logout() {
     Auth._isAuth = false;
     Auth.user = null;
-    Storage.remove("user", STORAGE.COOKIES);
-    Storage.remove("auth-token", STORAGE.COOKIES);
-    location.href = "/admin/login";
+    Storage.remove('user', STORAGE.COOKIES);
+    Storage.remove('auth-token', STORAGE.COOKIES);
+    location.href = '/admin/login';
   },
 };
