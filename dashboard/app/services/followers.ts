@@ -11,6 +11,7 @@ import { States } from './states';
 import { Cities } from './cities';
 import { onSave } from './_methods';
 import { Tags } from './tags';
+import { SendAlt } from '@carbon/react/icons';
 
 export const Types = {
   id: FIELD_TYPES.HIDDEN,
@@ -269,6 +270,19 @@ const getRenders = (): Record<string, Function> => ({
   tags: Tags.getRenders().items,
 });
 
+const getBatchActions = (setIds: Function, translations: any) => {
+  return {
+    message: {
+      translations: {
+        title: translations.sendMessage,
+      },
+      icon: SendAlt,
+      onClick: (selectedRows: string[]) =>
+        openMessagePanel(selectedRows, setIds),
+    },
+  };
+};
+
 // Followers service
 export const Followers = {
   ...BaseList(
@@ -277,8 +291,16 @@ export const Followers = {
     })
   ),
   fields,
+  getBatchActions,
   getRenders,
   getFilters,
   getFields,
   getMethods,
+};
+
+// ACTIONS
+
+const openMessagePanel = async (selectedRows: string[], setIds: Function) => {
+  console.log('sendMessage', selectedRows);
+  setIds(selectedRows);
 };

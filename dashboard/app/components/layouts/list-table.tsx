@@ -39,7 +39,7 @@ import {
   TableToolbarContent,
   TableToolbarSearch,
 } from '@carbon/react';
-import { Add, Close, Filter, TrashCan } from '@carbon/react/icons';
+import { Add, Close, Filter, Icon, TrashCan } from '@carbon/react/icons';
 import Image from 'next/image';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
@@ -61,6 +61,8 @@ export default function ListTable({
   onDelete = async () => true,
   noAdd = false,
   translations = {},
+  actions = {},
+  batchActions = {},
   fields = {},
   filters = {},
   renders = {},
@@ -79,6 +81,8 @@ export default function ListTable({
   noAdd?: boolean;
   translations?: Record<string, any>;
   fields?: Record<string, any>;
+  actions?: Record<string, any>;
+  batchActions: Record<string, any>;
   filters?: Record<string, any>;
   renders?: Record<string, any>;
 }>) {
@@ -202,7 +206,7 @@ export default function ListTable({
       );
 
       const defaultValue =
-        item.relations?.[fieldName]?.[translations.locale] || field.value;
+        item?.relations?.[fieldName]?.[translations.locale] || field.value;
 
       let value = translations.options?.[fieldName]
         ? translations.options?.[fieldName][field.value]
@@ -337,6 +341,13 @@ export default function ListTable({
       return translations.cancel;
     }
     if (id === 'carbon.table.batch.selectAll') {
+      if (breakpoint('mobile')) {
+        return `${
+          allSelected
+            ? translations.unselectAllShort
+            : translations.selectAllShort
+        } (${totalCount})`;
+      }
       return `${
         allSelected ? translations.unselectAll : translations.selectAll
       } (${totalCount})`;
@@ -345,9 +356,15 @@ export default function ListTable({
       return translations.selectNone;
     }
     if (id === 'carbon.table.batch.item.selected') {
+      if (breakpoint('mobile')) {
+        return `${totalSelected} ${translations.selectedShort.toLocaleLowerCase()}`;
+      }
       return `${totalSelected} ${translations.selected.toLocaleLowerCase()}`;
     }
     if (id === 'carbon.table.batch.items.selected') {
+      if (breakpoint('mobile')) {
+        return `${totalSelected} ${translations.selectedsShort.toLocaleLowerCase()}`;
+      }
       return `${totalSelected} ${translations.selecteds.toLocaleLowerCase()}`;
     }
     if (id === 'carbon.table.batch.actions') {
@@ -418,11 +435,15 @@ export default function ListTable({
     params.set('limit', String(selectedItem?.id));
 
     setSelectedLimit(limitItems.find((item) => item.id === selectedItem?.id));
+    setIsLoading(true);
+    setWaiting(true);
+
     replace(`${pathname}?${params.toString()}`);
   };
 
   const onPaginationChangeHandler = (page: number) => {
     setIsLoading(true);
+    setWaiting(true);
     const params = new URLSearchParams(searchParams);
 
     params.set('page', String(page));
@@ -577,6 +598,29 @@ export default function ListTable({
     return null;
   };
 
+  const renderActions = () => {
+    return null;
+  };
+
+  const renderBatchActions = (batchActionProps: any, selectedRows: any) => {
+    if (batchActions) {
+      return Object.keys(batchActions).map((action, index) => (
+        <Button
+          key={`batch-action-${index}`}
+          tabIndex={batchActionProps.shouldShowBatchActions ? -1 : 0}
+          onClick={() =>
+            batchActions[action].onClick(selectedRows.map((row: any) => row.id))
+          }
+          renderIcon={batchActions[action].icon}
+          kind={batchActions[action].kind || 'primary'}
+        >
+          {batchActions[action].translations.title}
+        </Button>
+      ));
+    }
+    return null;
+  };
+
   let debounce: any = null;
 
   return (
@@ -622,6 +666,7 @@ export default function ListTable({
                     }}
                   />
                   {renderFilters()}
+                  {renderActions()}
                   {!noAdd ? (
                     <Button
                       tabIndex={
@@ -639,6 +684,7 @@ export default function ListTable({
                   {...batchActionProps}
                   translateWithId={tableBatchActionsTranslate}
                 >
+                  {renderBatchActions(batchActionProps, selectedRows)}
                   <TableBatchAction
                     tabIndex={batchActionProps.shouldShowBatchActions ? 0 : -1}
                     renderIcon={TrashCan}

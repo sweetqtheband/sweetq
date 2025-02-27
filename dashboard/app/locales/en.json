@@ -17,14 +17,19 @@
     "save": "Save",
     "search": "Search",
     "selectAll": "Select all",
+    "selectAllShort": "Sel. all",
     "selected": "Selected",
+    "selectedShort": "Sel.",
     "selecteds": "Selected",
+    "selectedsShort": "Sel.",
     "unselectAll": "Unselect all",
+    "unselectAllShort": "Unsel.",
     "upload": "Upload",
     "login": "Login",
     "email": "Email",
     "showPassword": "Show password",
-    "hidePassword": "Hide password"
+    "hidePassword": "Hide password",
+    "sendMessage": "Message"
   },
   "date": {
     "formats": {
@@ -89,7 +94,8 @@
       "spotify": "Spotify",
       "web": "Web"
     },
-    "password": "Password"
+    "password": "Password",
+    "layout": "Layout"
   },
 
   "userProfiles": {
@@ -115,7 +121,20 @@
   "pages": {
     "instagram": {
       "title": "Instagram",
-      "description": "{{total}} followers"
+      "description": "{{total}} followers",
+      "panel": {
+        "title": "Send message",
+        "vars": "Variables",
+        "personalMessage": "Personal message",
+        "collectiveMessage": "Collective message",
+        "variables": {
+          "alias": "Short name"
+        },
+        "modes": {
+          "createNew": "Create new",
+          "loadLayout": "Load layout"
+        }
+      }
     }
   },
   "routes": {

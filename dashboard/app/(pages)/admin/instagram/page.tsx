@@ -35,6 +35,29 @@ export default async function InstagramPage({
     translations.fields.withoutTags = i18n.t('filters.withoutTags');
   };
 
+  const getPanelTranslations = (i18n: any, translations: any) => {
+    translations.fields.layout = i18n.t('fields.layout');
+    translations.fields.vars = i18n.t('pages.instagram.panel.vars');
+    translations.fields.personalMessage = i18n.t(
+      'pages.instagram.panel.personalMessage'
+    );
+    translations.fields.collectiveMessage = i18n.t(
+      'pages.instagram.panel.collectiveMessage'
+    );
+    translations.vars = i18n.t('pages.instagram.panel.variables', {
+      returnObjects: true,
+    });
+    translations.messagePanel = {
+      title: i18n.t('pages.instagram.panel.title'),
+      subtitle: i18n.t('pages.instagram.panel.subtitle'),
+      description: i18n.t('pages.instagram.description'),
+      modes: {
+        new: i18n.t('pages.instagram.panel.modes.createNew'),
+        layout: i18n.t('pages.instagram.panel.modes.loadLayout'),
+      },
+    };
+  };
+
   const translations = {
     ...Followers.getTranslations(i18n, Followers),
     ...getActionsTranslations(i18n),
@@ -43,6 +66,7 @@ export default async function InstagramPage({
   };
 
   getFiltersTranslations(i18n, translations);
+  getPanelTranslations(i18n, translations);
 
   const fields = await Followers.getFields({ searchParams, i18n });
   const filters = await Followers.getFilters({ searchParams, i18n });

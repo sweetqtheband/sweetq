@@ -2,7 +2,7 @@ import { BaseListItem } from '@/types/list';
 import { HTTP_STATUS_CODES } from '../constants';
 import { getFormData } from '../utils';
 export const onSave = async (
-  instance: BaseListItem,
+  instance: any,
   router: any,
   data: any,
   files: any

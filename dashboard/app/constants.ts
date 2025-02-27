@@ -127,3 +127,13 @@ export const BREAKPOINTS = {
   LAPTOP: 1024,
   DESKTOP: 1280,
 };
+
+export const ICON_SIZES = {
+  SM: 16,
+  MD: 20,
+  LG: 32,
+};
+
+export const VARIABLES = [
+  { id: 'alias', text: 'Nombre corto', replacement: '{{alias}}' },
+];

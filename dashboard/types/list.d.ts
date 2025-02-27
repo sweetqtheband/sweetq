@@ -5,8 +5,10 @@ export type BaseListItem = {
   post: (data: any) => Promise<any>;
   put(id: string, data: any): Promise<any>;
   delete(id: string | string[]): Promise<any>;
+  getActions(params?: any): Record<string, any>;
+  getBatchActions(params?: any): Record<string, any>;
   getTranslations(i18n: any, instance): Record<string, any>;
-  getFields(paramsº?: any): Promise<Record<string, any>>;
+  getFields(params?: any): Promise<Record<string, any>>;
   getFilters(params?: any): Promise<Record<string, any>>;
   getMethods(router?: any): Record<string, any>;
   getOptions(params?: any): Promise<string, string>;

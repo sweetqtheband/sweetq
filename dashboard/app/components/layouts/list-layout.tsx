@@ -20,6 +20,8 @@ export default function ListLayout({
   onDelete = async () => true,
   noAdd = false,
   translations = {},
+  actions = {},
+  batchActions = {},
   fields = {},
   filters = {},
   methods = {},
@@ -37,6 +39,8 @@ export default function ListLayout({
   onDelete?: (ids: string[]) => Promise<boolean>;
   noAdd?: boolean;
   translations?: Record<string, string>;
+  actions?: Record<string, any>;
+  batchActions?: Record<string, any>;
   fields?: Record<string, any>;
   filters?: Record<string, any>;
   methods?: Record<string, any>;
@@ -82,6 +86,8 @@ export default function ListLayout({
         fields={fields}
         loading={isLoading}
         renders={renders}
+        actions={actions}
+        batchActions={batchActions}
       />
       <ListPanel
         id={id}

@@ -17,14 +17,19 @@
     "save": "Guardar",
     "search": "Buscar",
     "selectAll": "Seleccionar todo",
+    "selectAllShort": "Sel. todo",
     "selected": "Seleccionado",
+    "selectdShort": "Sel.",
     "selecteds": "Seleccionados",
+    "selectedsShort": "Sel.",
     "unselectAll": "Deseleccionar todo",
+    "unselectAllShort": "Desel.",
     "upload": "Subir",
     "login": "Entrar",
     "email": "Email",
     "showPassword": "Mostrar contraseña",
-    "hidePassword": "Ocultar contraseña"
+    "hidePassword": "Ocultar contraseña",
+    "sendMessage": "Mensaje"
   },
   "date": {
     "formats": {
@@ -93,7 +98,8 @@
       "web": "Web"
     },
     "password": "Contraseña",
-    "email": "Email"
+    "email": "Email",
+    "layout": "Plantilla"
   },
   "userProfiles": {
     "admin": "Administrador",
@@ -118,7 +124,21 @@
   "pages": {
     "instagram": {
       "title": "Instagram",
-      "description": "{{total}} seguidores"
+      "description": "{{total}} seguidores",
+      "panel": {
+        "title": "Enviar mensaje",
+        "subtitle": "Se enviará el mensaje a ",
+        "vars": "Variables",
+        "personalMessage": "Mensaje a personas",
+        "collectiveMessage": "Mensaje a colectivos",
+        "variables": {
+          "alias": "Nombre corto"
+        },
+        "modes": {
+          "createNew": "Crear nuevo",
+          "loadLayout": "Cargar plantilla"
+        }
+      }
     },
     "gigs": {
       "title": "Conciertos"

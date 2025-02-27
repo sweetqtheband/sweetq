@@ -110,6 +110,15 @@
     justify-content: flex-start;
   }
 }
+
+@include breakpoint(mobile) {
+  .cds--batch-summary {
+    position: initial;
+  }
+  .cds--batch-actions {
+    overflow-x: auto;
+  }
+}
 .color-block {
   display: inline-flex;
   align-items: center;

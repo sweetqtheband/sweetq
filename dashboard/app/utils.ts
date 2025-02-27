@@ -119,3 +119,6 @@ export const camelCase = (str: string) =>
   str
     .replace(/[-_](.)/g, (_, char) => char.toUpperCase())
     .replace(/^[A-Z]/, (char) => char.toLowerCase());
+
+export const t = (template: string, params: Record<string, any>) =>
+  template.replace(/\{\{(\w+)\}\}/g, (_, key) => params[key] || `{{${key}}}`);

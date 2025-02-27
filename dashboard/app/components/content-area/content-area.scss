@@ -1,0 +1,62 @@
+:root {
+  --contenteditable-toolbar-height: 32px;
+}
+.contenteditable {
+  height: 100%;
+  width: 100%;
+  font-size: var(--text-font-size);
+  &:focus {
+    outline: none;
+  }
+
+  &--actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 var(--padding);
+    height: var(--contenteditable-toolbar-height);
+  }
+
+  &--scroll {
+    overflow: auto;
+    height: calc(100% - var(--contenteditable-toolbar-height));
+    width: 100%;
+    padding: var(--padding);
+  }
+  &--wrapper {
+    position: relative;
+    width: 100%;
+    cursor: pointer;
+    font-size: var(--controls-font-size);
+    border: solid 1px var(--border-color);
+    border-radius: var(--controls-border-radius);
+    height: 200px;
+    background-color: var(--light-bg-color);
+
+    &.disabled {
+      .select--selected {
+        user-select: none;
+        cursor: default;
+        opacity: 0.5;
+      }
+    }
+    &::placeholder,
+    &--placeholder {
+      color: var(--light-text-placeholder);
+    }
+  }
+}
+
+.cds--form-item {
+  position: relative;
+  width: 100%;
+  .emoji-picker {
+    position: absolute;
+    z-index: 1;
+    right: 0;
+    top: 100%;
+  }
+}
+.invisible {
+  display: none;
+}

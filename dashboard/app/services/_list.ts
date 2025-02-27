@@ -14,6 +14,8 @@ export const BaseList = (client: AxiosInstance): BaseListItem => ({
   getRenders: () => ({}),
   getOptions: async () => ({ options: [] }),
   getMethods: (router) => getMethods(client, router),
+  getActions: async () => ({}),
+  getBatchActions: async () => ({}),
   post: (data) => POST(client, data),
   put: (id, data) => PUT(client, id, data),
   delete: (id: string | string[]) => DELETE(client, id),
