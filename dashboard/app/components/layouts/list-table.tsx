@@ -10,18 +10,15 @@ import { breakpoint, getClasses, s3File, uuid } from '@/app/utils';
 import type { SizeType } from '@/types/size.d';
 import {
   Button,
-  Column,
   DataTable,
   DataTableRow,
   Dropdown,
-  FlexGrid,
   Heading,
   IconButton,
   Modal,
   PaginationNav,
   Popover,
   PopoverContent,
-  Row,
   Section,
   Stack,
   Table,
@@ -39,7 +36,7 @@ import {
   TableToolbarContent,
   TableToolbarSearch,
 } from '@carbon/react';
-import { Add, Close, Filter, Icon, TrashCan } from '@carbon/react/icons';
+import { Add, Close, Filter, TrashCan } from '@carbon/react/icons';
 import Image from 'next/image';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';

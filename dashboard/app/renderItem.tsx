@@ -1,7 +1,8 @@
 import { Size } from '@/types/size';
-import { RENDER_TYPES, SIZES } from './constants';
-import { Tag } from '@carbon/react';
+import { ICON_SIZES, RENDER_TYPES, SIZES } from './constants';
+import { Tag, Tooltip } from '@carbon/react';
 import Link from 'next/link';
+import { NotSentFilled } from '@carbon/react/icons';
 
 const renderColor = (obj: any) => (
   <>
@@ -22,10 +23,19 @@ const renderLink = (obj: any) => (
   </Link>
 );
 
+const renderStatusMessage = (obj: any) => {
+  return (
+    <Tooltip align="left" label={obj.value} autoAlign>
+      <NotSentFilled size={ICON_SIZES.MD} />
+    </Tooltip>
+  );
+};
+
 const renderers = {
   [RENDER_TYPES.COLOR]: renderColor,
   [RENDER_TYPES.TAG]: renderTag,
   [RENDER_TYPES.LINK]: renderLink,
+  [RENDER_TYPES.STATUS_MESSAGE]: renderStatusMessage,
 };
 
 // Main renderer

@@ -9,8 +9,6 @@ export const onSave = async (
 ) => {
   const formData = getFormData(data, files);
 
-  console.log(data, formData);
-
   const response = await (data._id
     ? instance.put(data._id, formData)
     : instance.post(formData));

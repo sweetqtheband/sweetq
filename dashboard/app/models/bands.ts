@@ -5,12 +5,14 @@ type Model = {
   instagram?: string;
 };
 export const Model = (data: any): Model => {
-  const obj = {
-    name: String(data.name),
-  } as Model;
+  const obj = {} as Model;
 
   if (data._id) {
     obj._id = String(data._id);
+  }
+
+  if (data.name) {
+    obj.name = String(data.name);
   }
 
   if (data.facebook) {

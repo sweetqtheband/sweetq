@@ -64,6 +64,10 @@ body {
     }
   }
 
+  .cds--tooltip-content {
+    white-space: pre-line;
+    text-align: left;
+  }
   @include breakpoint(mobile) {
     .cds--stack-horizontal {
       grid-auto-flow: row;

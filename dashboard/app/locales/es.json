@@ -99,7 +99,8 @@
     },
     "password": "Contraseña",
     "email": "Email",
-    "layout": "Plantilla"
+    "layout": "Plantilla",
+    "pendingMessages": "Mensajes pendientes"
   },
   "userProfiles": {
     "admin": "Administrador",
@@ -155,7 +156,8 @@
     "bands": "Bandas",
     "tags": "Etiquetas",
     "users": "Usuarios",
-    "config": "Configuración"
+    "config": "Configuración",
+    "layouts": "Plantillas"
   },
   "status": {
     "published": "Publicado",

@@ -5,10 +5,12 @@ import ListLayout from '@/app/components/layouts/list-layout';
 import { Followers } from '@/app/services/followers';
 import { useRouter } from 'next/navigation';
 import MessagePanel from './message-panel';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function InstagramView(params: Readonly<any>) {
   const [ids, setIds] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
   const router = useRouter();
   const methods = Followers.getMethods(router);
   const renders = Followers.getRenders();
@@ -23,6 +25,7 @@ export default function InstagramView(params: Readonly<any>) {
         batchActions={batchActions}
         onSave={methods.onSave}
         onDelete={methods.onDelete}
+        loading={isLoading}
         noAdd={true}
       />
       <MessagePanel
@@ -30,6 +33,9 @@ export default function InstagramView(params: Readonly<any>) {
         items={params.items}
         translations={params.translations}
         setIds={setIds}
+        layouts={params.layouts}
+        onSave={methods.onMessageSave}
+        setIsLoading={setIsLoading}
       />
     </>
   );

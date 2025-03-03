@@ -14,7 +14,7 @@ import './content-area.scss';
 import { FaceAdd, Parameter } from '@carbon/react/icons';
 import { ICON_SIZES, VARIABLES } from '@/app/constants';
 import { Dropdown } from '@carbon/react';
-import { uuid } from '@/app/utils';
+import { getClasses, uuid } from '@/app/utils';
 
 const pickerLocale: Record<string, any> = {
   en: dataEn,
@@ -26,18 +26,21 @@ export default function ContentArea({
   locale = 'es',
   value = '',
   translations = {},
+  invalid = false,
   onChange = () => {},
 }: Readonly<{
   id?: string;
   locale?: string;
   value?: string;
+  invalid?: boolean;
   translations?: Record<string, any>;
   onChange?: Function;
 }>) {
   const contentEditableRef = useRef(null) as RefObject<HTMLElement>;
+  const emojiWrapperRef = useRef<HTMLDivElement>(null);
   const emojiRef = useRef(null) as RefObject<HTMLElement>;
 
-  const [defaultVarValue, setDefaultVarValue] = useState<string>('');
+  const [defaultVarValue, setDefaultVarValue] = useState<string>(value);
   const [defaultValue, setDefaultValue] = useState<string>(value);
 
   const onChangeHandler = useCallback(() => {
@@ -47,10 +50,15 @@ export default function ContentArea({
     }
   }, [onChange]);
 
+  useEffect(() => {
+    if (value !== contentEditableRef.current?.innerText) {
+      setDefaultValue(value.replace(/\n/g, '<br>'));
+    }
+  }, [value]);
+
   const handleChange = (e: ContentEditableEvent) => {
     setDefaultValue(e.target.value);
   };
-
   const [showPicker, setShowPicker] = useState<boolean>(false);
   const [showParameter, setShowParameter] = useState<boolean>(false);
   const [emojiElement, setEmojiElement] = useState<ReactElement | null>(null);
@@ -59,6 +67,7 @@ export default function ContentArea({
   useEffect(() => {
     onChangeHandler();
   }, [defaultValue, onChangeHandler]);
+
   useEffect(() => {
     if (emojiRef?.current && emojiLoaded) {
       let emojiHtml = emojiRef.current.innerHTML;
@@ -73,6 +82,14 @@ export default function ContentArea({
     setDefaultVarValue('');
     setShowParameter(false);
   }, [defaultValue, defaultVarValue]);
+
+  useEffect(() => {
+    const pos = emojiWrapperRef.current?.getBoundingClientRect();
+    if (pos?.bottom || 0 > window.innerHeight) {
+      emojiWrapperRef.current?.style.setProperty('top', 'auto');
+      emojiWrapperRef.current?.style.setProperty('bottom', '0');
+    }
+  }, [showPicker, emojiWrapperRef]);
 
   const handleAddEmoji = (emoji: any) => {
     setEmojiElement(
@@ -99,18 +116,22 @@ export default function ContentArea({
   const handleShowVars = () => {
     setShowParameter(!showParameter);
   };
-
   return (
     <>
-      <div className="contenteditable--wrapper">
+      <div
+        className={getClasses({
+          'contenteditable--wrapper': true,
+          error: invalid,
+        })}
+      >
         <div className="contenteditable--scroll">
           <ContentEditable
             innerRef={contentEditableRef}
             className="contenteditable"
             html={defaultValue}
-            disabled={false} // use true to disable editing
-            onChange={handleChange} // handle innerHTML change
-            tagName="article" // Use a custom HTML tag (uses a div by default)
+            disabled={false}
+            onChange={handleChange}
+            tagName="div"
           />
         </div>
         <div className="contenteditable--actions">
@@ -135,11 +156,12 @@ export default function ContentArea({
         />
       )}
       {showPicker && (
-        <div className="emoji-picker">
+        <div className="emoji-picker" ref={emojiWrapperRef}>
           <Picker
             data={pickerLocale[locale]}
             locale={locale}
             onEmojiSelect={handleAddEmoji}
+            onClickOutside={() => setShowPicker(false)}
           />
           {emojiElement}
         </div>

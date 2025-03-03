@@ -17,13 +17,18 @@ type Model = {
   tags?: Array<number>;
 };
 export const Model = (data: any): Model => {
-  const obj = {
-    id: String(data.id),
-    username: String(data.username),
-  } as Model;
+  const obj = {} as Model;
 
   if (data._id) {
     obj._id = String(data._id);
+  }
+
+  if (data.id) {
+    obj.id = String(data.id);
+  }
+
+  if (data.username) {
+    obj.username = String(data.username);
   }
 
   if (data.short_name) {
@@ -46,9 +51,12 @@ export const Model = (data: any): Model => {
     obj.treatment = Number(data.treatment);
   }
 
-  if (data.tags) {
-    obj.tags = data.tags instanceof Array ? data.tags : [data.tags];
-  }
+  obj.tags =
+    data.tags instanceof Array
+      ? data.tags
+      : data.tags !== '' && data.tags
+      ? [data.tags]
+      : null;
 
   return obj;
 };

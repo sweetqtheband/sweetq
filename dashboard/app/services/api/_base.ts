@@ -71,7 +71,20 @@ export const BaseSvc = (model: Collection<Document>, Model: Function) => {
                 {}
               )
           : [];
+      } else {
+        modifiers['$unset'] = Object.keys(obj).reduce(
+          (acc: Record<string, any>, key: string) => {
+            if (obj[key] === undefined || obj[key] === null) {
+              acc[key] = '';
+              delete modifiers.$set[key];
+            }
+            return acc;
+          },
+          {}
+        );
       }
+
+      console.log(obj, modifiers);
 
       await instance.model.findOneAndUpdate(
         { _id: new ObjectId(item._id) },

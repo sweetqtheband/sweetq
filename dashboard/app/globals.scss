@@ -13,7 +13,8 @@
   --dark-text-color: #ffffff;
   --dark-text-placeholder: #a0a0a0;
   --dark-border-color: #cccccc;
-  --error-border-color: red;
+  --cds-input-border-color: #161616;
+  --error-border-color: #da1e28;
   --menu-height: 56px;
   --padding: 8px;
   --controls-height: 40px;
@@ -75,6 +76,8 @@
 
     *.error {
       --border-color: var(--error-border-color);
+      outline: 2px solid var(--cds-support-error, #da1e28);
+      outline-offset: -2px;
     }
   }
 }

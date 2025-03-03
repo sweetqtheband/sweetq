@@ -95,9 +95,9 @@
       "web": "Web"
     },
     "password": "Password",
-    "layout": "Layout"
+    "layout": "Layout",
+    "pendingMessages": "Pending messages"
   },
-
   "userProfiles": {
     "admin": "Administrator",
     "user": "User"
@@ -148,7 +148,8 @@
     "bands": "Bands",
     "tags": "Tags",
     "users": "Users",
-    "config": "Configuration"
+    "config": "Configuration",
+    "layouts": "Layouts"
   },
   "status": {
     "published": "Published",

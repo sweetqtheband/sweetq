@@ -26,6 +26,10 @@ export const routes: Route[] = [
         path: '/admin/users',
       },
       {
+    text: 'layouts',
+    path: '/admin/layouts'
+  },
+  {
         text: 'tags',
         path: '/admin/tags',
       },

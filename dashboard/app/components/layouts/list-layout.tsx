@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ListTable from './list-table';
 import ListPanel from './list-panel';
 import { SizeType } from '@/types/size';
@@ -16,6 +16,7 @@ export default function ListLayout({
   pages = 0,
   timestamp = 0,
   id = '',
+  loading = false,
   onSave = async () => true,
   onDelete = async () => true,
   noAdd = false,
@@ -35,6 +36,7 @@ export default function ListLayout({
   pages?: number;
   timestamp?: number;
   id?: string;
+  loading?: boolean;
   onSave?: (data: any, files: any) => Promise<boolean>;
   onDelete?: (ids: string[]) => Promise<boolean>;
   noAdd?: boolean;
@@ -47,7 +49,13 @@ export default function ListLayout({
   renders?: Record<string, any>;
 }>) {
   const [item, setItem] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(loading);
+
+  useEffect(() => {
+    if (loading !== isLoading) {
+      setIsLoading(loading);
+    }
+  }, [loading]);
 
   const onClose = async (item = null) => {
     setItem(null);
@@ -56,7 +64,6 @@ export default function ListLayout({
   const onSaveHandler = async (data: any, files: any) => {
     setIsLoading(true);
     const response = await onSave(data, files);
-    setIsLoading(false);
     if (response) {
       onClose();
     }

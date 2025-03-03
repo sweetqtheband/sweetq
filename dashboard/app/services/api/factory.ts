@@ -11,6 +11,8 @@ import { instagramSvc } from './instagram';
 import { usersSvc } from './users';
 import { userProfilesSvc } from './userProfiles';
 import { countriesSvc } from './countries';
+import { layoutsSvc } from './layouts';
+import { messagesSvc } from './messages';
 import { camelCase } from '@/app/utils';
 
 type FactoryType = {
@@ -30,6 +32,8 @@ let factory: FactoryType = {
   instagram: instagramSvc,
   users: usersSvc,
   userProfiles: userProfilesSvc,
+  layouts: layoutsSvc,
+  messages: messagesSvc,
 };
 
 export const FactorySvc = (

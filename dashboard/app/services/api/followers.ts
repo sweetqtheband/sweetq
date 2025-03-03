@@ -10,10 +10,15 @@ import { FactorySvc } from './factory';
 export const followersSvc = (collection: Collection<Document>) => ({
   ...BaseSvc(collection, Model),
   parse: async (item: Record<string, any>) => {
-    const countries = FactorySvc('countries', await getCollection('countries'));
-    const states = FactorySvc('states', await getCollection('states'));
-    const cities = FactorySvc('cities', await getCollection('cities'));
-    const tags = FactorySvc('tags', await getCollection('tags'));
+    const countriesSvc = FactorySvc(
+      'countries',
+      await getCollection('countries')
+    );
+    const statesSvc = FactorySvc('states', await getCollection('states'));
+    const citiesSvc = FactorySvc('cities', await getCollection('cities'));
+    const tagsSvc = FactorySvc('tags', await getCollection('tags'));
+    const messagesSvc = FactorySvc('messages', await getCollection('messages'));
+    const messages = await messagesSvc.getAllByFollowerId(item._id);
 
     const obj = {
       ...item,
@@ -23,26 +28,30 @@ export const followersSvc = (collection: Collection<Document>) => ({
 
     if (obj.country) {
       obj.relations.country = (
-        await countries.findOne({ id: String(obj.country) })
+        await countriesSvc.findOne({ id: String(obj.country) })
       ).name;
     }
 
     if (obj.state) {
       obj.relations.state = (
-        await states.findOne({ id: String(obj.state) })
+        await statesSvc.findOne({ id: String(obj.state) })
       ).name;
     }
 
     if (obj.city) {
       obj.relations.city = (
-        await cities.findOne({ id: String(obj.city) })
+        await citiesSvc.findOne({ id: String(obj.city) })
       ).name;
     }
 
     if (obj.tags) {
-      obj.relations.tags = await tags.getAllById(obj.tags);
+      obj.relations.tags = await tagsSvc.getAllById(obj.tags);
     }
 
+    obj.pending_messages =
+      messages.length > 0
+        ? await messagesSvc.parseForFollower(obj, messages.at(0))
+        : null;
     return obj;
   },
 });

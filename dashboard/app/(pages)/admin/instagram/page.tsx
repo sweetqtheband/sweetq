@@ -4,10 +4,11 @@ import i18n from '@/app/services/translate';
 import InstagramView from './view';
 import { getActionsTranslations } from '@/app/services/_list';
 import './page.scss';
+import { Layouts } from '@/app/services/layouts';
 
 export default async function InstagramPage({
   searchParams,
-}: Readonly<{ searchParams?: URLSearchParams }>) {
+}: Readonly<{ searchParams?: any }>) {
   await i18n.init();
 
   const data = await Followers.getAll(searchParams);
@@ -21,6 +22,7 @@ export default async function InstagramPage({
     { key: 'country', header: i18n.t('fields.country') },
     { key: 'state', header: i18n.t('fields.state') },
     { key: 'tags', header: i18n.t('fields.tags') },
+    { key: 'pending_messages', header: i18n.t('fields.pendingMessages') },
   ];
 
   const getFiltersTranslations = (i18n: any, translations: any) => {
@@ -71,6 +73,13 @@ export default async function InstagramPage({
   const fields = await Followers.getFields({ searchParams, i18n });
   const filters = await Followers.getFilters({ searchParams, i18n });
 
+  const layouts = (
+    await Layouts.getAll({
+      filters: { type: 'instagram' },
+      limit: 10000,
+    })
+  ).items;
+
   return (
     <InstagramView
       items={items}
@@ -82,6 +91,7 @@ export default async function InstagramPage({
       pages={data.pages}
       filters={filters}
       fields={fields}
+      layouts={layouts}
     />
   );
 }

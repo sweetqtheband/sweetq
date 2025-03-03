@@ -12,6 +12,7 @@ import { Cities } from './cities';
 import { onSave } from './_methods';
 import { Tags } from './tags';
 import { SendAlt } from '@carbon/react/icons';
+import { InstagramMessages } from './instagramMessages';
 
 export const Types = {
   id: FIELD_TYPES.HIDDEN,
@@ -253,10 +254,17 @@ const getMethods = (router?: any): Record<string, any> => ({
     if (!data.country) {
       data.country = FIELD_DEFAULTS.COUNTRY;
     }
+
+    if (data.tags && data.tags instanceof Array && data.tags.length === 0) {
+      data.tags = null;
+    }
     return onSave(Followers, router, data, files);
   },
   tags: {
     onSave: Tags.getMethods(router).onListSave,
+  },
+  onMessageSave: async (data: any) => {
+    return onSave(InstagramMessages, router, data, []);
   },
 });
 const getRenders = (): Record<string, Function> => ({
@@ -268,6 +276,12 @@ const getRenders = (): Record<string, Function> => ({
     };
   },
   tags: Tags.getRenders().items,
+  pending_messages: (field: any, item: any, base: any) => {
+    return {
+      type: RENDER_TYPES.STATUS_MESSAGE,
+      value: item,
+    };
+  },
 });
 
 const getBatchActions = (setIds: Function, translations: any) => {
@@ -301,6 +315,5 @@ export const Followers = {
 // ACTIONS
 
 const openMessagePanel = async (selectedRows: string[], setIds: Function) => {
-  console.log('sendMessage', selectedRows);
   setIds(selectedRows);
 };

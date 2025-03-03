@@ -28,10 +28,9 @@
     width: 100%;
     cursor: pointer;
     font-size: var(--controls-font-size);
-    border: solid 1px var(--border-color);
-    border-radius: var(--controls-border-radius);
+    border-bottom: solid 1px var(--cds-input-border-color);
     height: 200px;
-    background-color: var(--light-bg-color);
+    background-color: var(--cds-field);
 
     &.disabled {
       .select--selected {
@@ -52,7 +51,7 @@
   width: 100%;
   .emoji-picker {
     position: absolute;
-    z-index: 1;
+    z-index: 3;
     right: 0;
     top: 100%;
   }

@@ -4,6 +4,7 @@ import { ContentArea, Panel } from '@/app/components';
 import {
   Button,
   ContentSwitcher,
+  Dropdown,
   Form,
   FormItem,
   Heading,
@@ -15,17 +16,24 @@ import {
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ChangeEvent, useEffect, useMemo, useState } from 'react';
 import { t } from '@/app/utils';
+import { Layout } from '@/types/layout';
 
 export default function MessagePanel({
   ids = null,
   items = [],
-  setIds = () => {},
+  setIds = () => true,
+  onSave = () => true,
+  setIsLoading = () => false,
   translations = {},
+  layouts = [],
 }: Readonly<{
   ids: string[] | null;
   items: any[];
   setIds?: Function;
+  onSave?: Function;
+  setIsLoading?: Function;
   translations: Record<string, any>;
+  layouts: Layout[];
 }>) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -39,29 +47,80 @@ export default function MessagePanel({
     { name: 'new', text: translations.messagePanel.modes.new },
     { name: 'layout', text: translations.messagePanel.modes.layout },
   ];
-
   const [mode, setMode] = useState(0);
-  const [formState, setFormState] = useState({
+
+  const validateFields: Record<string, any> = {
+    layout: {
+      required: !mode,
+    },
+    layoutId: {
+      required: mode,
+    },
+    personalMessage: {
+      required: true,
+    },
+    collectiveMessage: {
+      required: true,
+    },
+  };
+
+  const defaultState = {
+    layoutId: null,
     layout: '',
     personalMessage: '',
     collectiveMessage: '',
-  });
-  const [forceClose, setForceClose] = useState(false);
+  };
+
+  const [invalidFields, setInvalidFields] = useState<Record<string, boolean>>(
+    Object.keys(validateFields).reduce((acc: Record<string, boolean>, key) => {
+      acc[key] = false;
+      return acc;
+    }, {})
+  );
+  const [formState, setFormState] = useState<Record<string, any>>(defaultState);
+  const [forceClose, setForceClose] = useState<boolean>(false);
+
+  const validate = () => {
+    const invalidFields: Record<string, boolean> = {};
+    for (const key in validateFields) {
+      if (validateFields[key].required && !formState[key]) {
+        invalidFields[key] = true;
+      } else {
+        invalidFields[key] = false;
+      }
+    }
+    setInvalidFields(invalidFields);
+    return !Object.values(invalidFields).some((value) => value);
+  };
 
   const onSaveHandler = async () => {
-    setForceClose(true);
-    setIds(null);
+    if (!validate()) return;
+    setIsLoading(true);
+    const valid = onSave({ ...formState, ids });
+
+    if (valid) {
+      setForceClose(true);
+      setIds(null);
+    } else {
+      setIsLoading(false);
+    }
   };
 
   const onCloseHandler = async () => {
     setForceClose(false);
     setIds(null);
+    setFormState(defaultState);
   };
 
   const onInputHandler = (key: string, value: any) => {
     setFormState((prevState: any) => {
       if (prevState[key] === value) return prevState;
       return { ...prevState, [key]: value };
+    });
+
+    setInvalidFields((prevState: any) => {
+      if (prevState[key] === false) return prevState;
+      return { ...prevState, [key]: false };
     });
   };
 
@@ -80,8 +139,26 @@ export default function MessagePanel({
     } else {
       params.delete('panel.mode');
       replace(`${pathname}?${params.toString()}`);
+      setFormState({
+        ...formState,
+        layoutId: null,
+      });
     }
   };
+
+  const handleLayoutChange = ({ selectedItem }: Record<string, any>) => {
+    const layout = layouts.find(
+      (item) => item._id.toString() === selectedItem.id
+    );
+    setFormState({
+      ...formState,
+      ...{
+        ...layout?.tpl,
+        layoutId: selectedItem.id,
+      },
+    });
+  };
+
   const getContent = (data: any) => (
     <>
       <Section className="fields" level={4}>
@@ -112,12 +189,29 @@ export default function MessagePanel({
                   labelText={translations.fields.layout}
                   placeholder={translations.fields.layout}
                   value={formState['layout']}
+                  invalid={invalidFields.layout}
                   onChange={(e: ChangeEvent<HTMLInputElement>) =>
                     onInputHandler('layout', e.target.value)
                   }
                 />
               ) : (
-                'HOLA'
+                <Dropdown
+                  autoAlign={true}
+                  id={'layout'}
+                  label={translations.fields.layout}
+                  titleText={translations.fields.layout}
+                  invalid={invalidFields.layoutId}
+                  items={layouts.map((item) => ({
+                    id: item._id,
+                    text: item.name,
+                  }))}
+                  selectedItem={layouts.find(
+                    (item) => item._id.toString() === formState['layout']
+                  )}
+                  itemToString={(item: any) => item.text}
+                  itemToElement={(item: any) => item.text}
+                  onChange={handleLayoutChange}
+                ></Dropdown>
               )}
             </FormItem>
             <FormItem>
@@ -128,6 +222,7 @@ export default function MessagePanel({
                 id="personal-message"
                 translations={translations}
                 value={formState['personalMessage']}
+                invalid={invalidFields.personalMessage}
                 onChange={(text: string) => {
                   handlePersonalMessageChange(text);
                 }}
@@ -140,6 +235,7 @@ export default function MessagePanel({
               <ContentArea
                 id="collective-message"
                 translations={translations}
+                invalid={invalidFields.collectiveMessage}
                 value={formState['collectiveMessage']}
                 onChange={(text: string) => handleCollectiveMessageChange(text)}
               />

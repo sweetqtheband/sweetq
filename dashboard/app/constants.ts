@@ -100,6 +100,7 @@ export const RENDER_TYPES: Record<string, string> = {
   TAG: 'tag',
   LINK: 'link',
   COLOR: 'color',
+  STATUS_MESSAGE: 'statusMessage',
 };
 
 export const FIELD_DEFAULTS: Record<string, any> = {
@@ -135,5 +136,5 @@ export const ICON_SIZES = {
 };
 
 export const VARIABLES = [
-  { id: 'alias', text: 'Nombre corto', replacement: '{{alias}}' },
+  { id: 'short_name', text: 'Nombre corto', replacement: '{{short_name}}' },
 ];
