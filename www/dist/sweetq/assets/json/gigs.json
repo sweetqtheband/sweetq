@@ -1,29 +1,5 @@
 [
   {
-    "id": 1,
-    "date": "2024-03-08 21:00",
-    "city": "Madrid",
-    "hour": "21:00",
-    "venue": "Sweet Q + Madame Christie",
-    "address": "Sala Vesta",
-    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.3621509550676!2d-3.6956384!3d40.4229791!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42297c0e03ba33%3A0x28f0b82774563387!2sSALA%20VESTA!5e0!3m2!1ses!2ses!4v1708444057250!5m2!1ses!2ses",
-    "bands": [21],
-    "event": "https://www.facebook.com/events/899338568500501",
-    "tickets": "https://dice.fm/partner/vesta/event/6o8k2-sweet-q-madame-christie-en-madrid-8th-mar-sala-vesta-madrid-tickets"
-  },
-  {
-    "id": 2,
-    "date": "2024-04-21 13:00",
-    "city": "Madrid",
-    "hour": "13:00",
-    "venue": "Atalaya Roja + Sweet Q",
-    "address": "Fun House",
-    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3036.983055592305!2d-3.7011369000000003!3d40.4313741!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42288af1a198e3%3A0xa3e349b77417e9e9!2sFun%20House!5e0!3m2!1ses!2ses!4v1711014526803!5m2!1ses!2ses",
-    "bands": [22],
-    "event": null,
-    "tickets": "https://entradium.com/es/events/atalaya-roja-sweet-q-en-fun-house"
-  },
-  {
     "id": 3,
     "date": "2024-04-28 11:00",
     "city": "Madrid",
@@ -34,18 +10,6 @@
     "bands": [],
     "event": null,
     "tickets": null
-  },
-  {
-    "id": 4,
-    "date": "2024-05-25 21:00",
-    "city": "Madrid",
-    "hour": "21:00",
-    "venue": "Nuevo Berlín + Sweet Q",
-    "address": "El Perro de la Parte de Atrás del Coche",
-    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.3947121181004!2d-3.706448922301062!3d40.422257971438725!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42287d45b7e65f%3A0xee76b4babb779be0!2sEl%20Perro%20de%20la%20Parte%20de%20Atr%C3%A1s%20del%20Coche!5e0!3m2!1ses!2ses!4v1711014732662!5m2!1ses!2ses",
-    "bands": [23],
-    "event": null,
-    "tickets": "https://www.wegow.com/es/compra/concierto-de-nuevo-berlin-y-sweet-q-en-madrid"
   },
   {
     "id": 5,
@@ -130,5 +94,17 @@
     "bands": [35],
     "event": null,
     "tickets": "https://www.notikumi.com/channel/sweet-q/2025/2/14/canciller-sweet-q"
+  },
+  {
+    "id": 12,
+    "date": "2025-03-17 20:30",
+    "city": "Madrid",
+    "hour": "20:30",
+    "venue": "Vivo Back to Bands",
+    "address": "Teatro Albéniz",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1456.7144460404322!2d-3.7045900259373776!3d40.415239611497725!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42287e3452f6f1%3A0xdb0b8a0bc443290d!2sTeatro%20Alb%C3%A9niz!5e1!3m2!1ses!2ses!4v1741080208337!5m2!1ses!2ses",
+    "bands": [36, 37],
+    "event": null,
+    "tickets": "https://tickets.oneboxtds.com/umusichotelteatroalbeniz/select/2367122?viewCode=Vista_Principal"
   }
 ]

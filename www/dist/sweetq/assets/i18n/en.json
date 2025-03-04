@@ -52,13 +52,21 @@
     "button": "Download <span class='peso'>(5.5MB)</span>",
     "download": "Download press kit"
   },
+  "contest": {
+    "lesarts": {
+      "title": "Festival de les Arts contest",
+      "subtitle": "Vote for us to see us in the lineup!",
+      "text": "We are participating in the contest to play at Festival de les Arts! If you want us to be in the lineup of the next edition, vote for us!",
+      "button": "Vote for us here"
+    }
+  },
   "gigs": {
     "label": "Gigs",
     "viewInGoogleMap": "View in Google Maps",
-    "20250214": {
-      "date": "February 14th",
-      "title": "Sweet Q + Canciller",
-      "text": "Live a very special Valentine's Day with us. Next February 14th we return to <span class='bold'>El Perro Club</span> accompanying <span class='bold'>Canciller</span> in their visit to Madrid. If you want to listen to our new 2025 songs... Don't miss it out!",
+    "20250317": {
+      "title": "Vivo Back to Bands",
+      "date": "March 17th",
+      "text": "We are back to the stage with a new gig at Vivo Back to Bands. Don't miss it!",
       "button": "Buy tickets"
     }
   },
@@ -95,14 +103,10 @@
       "yaesnavidad": "'Ya es Navidad' presave"
     },
     "contest": {
-      "fib": "Vote for us to play at FIB!"
-    },
-    "vackstage": {
-      "20240525": "View concert El Perro May 25th",
-      "20240719": "View interview in 'Sonidos Nuevos'"
+      "lesarts": "Vote for us to play at Festival de les Arts!"
     },
     "gigs": {
-      "20250214": "Tickets Sweet Q + Canciller 14 Feb"
+      "20250317": "'Vivo Back to Bands' March 17th"
     }
   },
   "listen": {

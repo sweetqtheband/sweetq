@@ -52,14 +52,22 @@
     "button": "Descargar <span class='peso'>(5.5MB)</span>",
     "download": "Descargar kit de prensa"
   },
+  "contest": {
+    "lesarts": {
+      "title": "Concurso Festival de les Arts",
+      "subtitle": "Vótanos para vernos en el cartel",
+      "text": "¡Nos presentamos al concurso para tocar en el Festival de les Arts! Si quieres que estemos en el cartel de la próxima edición, ¡vota por nosotros!",
+      "button": "Vótanos aquí"
+    }
+  },
   "gigs": {
     "label": "Conciertos",
     "viewInGoogleMap": "Ver en Google Maps",
-    "20250214": {
-      "date": "14 Febrero",
-      "title": "Sweet Q + Canciller",
-      "text": "Vive un día de los enamorados muy especial junto a nosotros. El próximo 14 de febrero volvemos a <span class='bold'>El Perro Club</span> acompañando a <span class='bold'>Canciller</span> en su paso por Madrid. Si quieres escuchar nuestros nuevos temas de 2025... ¡No te lo pierdas!",
-      "button": "Comprar entradas"
+    "20250317": {
+      "title": "Vivo Back to Bands",
+      "date": "17 Marzo",
+      "text": "Hemos sido seleccionados entre más de 600 bandas para participar en el Vivo Back to Bands en un escenario increíble como es el Teatro Albéniz. ¿Quieres vernos darlo todo? ¡Pues te esperamos!",
+      "button": "Link a entradas"
     }
   },
   "stayTuned": "Por el momento no tenemos conciertos a la vista. ¡Permanece atento!",
@@ -95,14 +103,10 @@
       "yaesnavidad": "Pre-save 'Ya es Navidad'"
     },
     "contest": {
-      "fib": "¡Vótanos para tocar en el FIB!"
-    },
-    "vackstage": {
-      "20240525": "Ver concierto El Perro 25 mayo",
-      "20240719": "Ven entrevista en 'Sonidos Nuevos'"
+      "lesarts": "¡Vótanos para tocar en el Festival de les Arts!"
     },
     "gigs": {
-      "20250214": "Entradas Sweet Q + Canciller 14 Feb"
+      "20250317": "Entradas Vivo Back to Bands 17 Mar"
     }
   },
   "listen": {

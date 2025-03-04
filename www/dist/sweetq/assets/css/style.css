@@ -416,10 +416,15 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   margin: 0 auto;
 }
 
+.sq-section.notice.contest .sq-half-columns .column-left,
+.sq-section.notice.gig .sq-half-columns .column-left {
+  max-width: 30vw;
+}
+.sq-section.notice.contest .sq-image-wrapper,
 .sq-section.notice.gig .sq-image-wrapper {
   width: 75%;
   margin: 0 auto;
-  aspect-ratio: 9 / 14;
+  aspect-ratio: 9 / 12;
 }
 
 .sq-section.notice.info.cover .sq-image.image-cover {
@@ -518,10 +523,14 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   background-image: url("../imgs/youtube/makingof/atrapado.jpg");
 }
 
+.sq-section.notice.info.contest .sq-image.image-cover,
 .sq-section.notice.info.gig .sq-image.image-cover {
   position: relative;
   height: 100%;
+  max-width: 400px;
+  margin: 0 auto;
 }
+.sq-section.notice.info.contest .sq-image.image-cover:before,
 .sq-section.notice.info.gig .sq-image.image-cover:before {
   content: "";
   position: relative;
@@ -529,14 +538,18 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   background-size: contain;
   background-position: center top;
   background-repeat: no-repeat;
-  aspect-ratio: 9 / 16;
+  aspect-ratio: 9 / 12;
   top: 0;
   left: 0;
   width: 100%;
 }
 
-.sq-section.notice.info.gig.g20250214 .sq-image.image-cover:before {
-  background-image: url("../imgs/gigs/20250214.jpg");
+.sq-section.notice.info.contest.lesarts .sq-image.image-cover:before {
+  background-image: url("../imgs/contest/lesarts.jpg");
+}
+
+.sq-section.notice.info.gig.g20250317 .sq-image.image-cover:before {
+  background-image: url("../imgs/gigs/20250317.jpg");
 }
 
 .sq-section.notice.info.gig.g20241004 .sq-button .sq-button-text {
@@ -681,6 +694,13 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   display: block;
 }
 .sq-gig-day > .month {
+  font-size: 14px;
+  line-height: 14px;
+  text-transform: uppercase;
+  display: block;
+}
+
+.sq-gig-day > .year {
   font-size: 22px;
   line-height: 24px;
   text-transform: uppercase;
@@ -822,8 +842,14 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   .sq-image-wrapper {
     margin: 0 auto;
   }
+  .notice.contest .sq-image-wrapper,
   .notice.gig .sq-image-wrapper {
     max-width: 320px;
+  }
+
+  .sq-section.notice.contest .sq-half-columns .column-left,
+  .sq-section.notice.gig .sq-half-columns .column-left {
+    max-width: unset;
   }
   .sq-section .sq-title {
     font-size: 54px;
@@ -884,6 +910,7 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   .sq-contact-icons .sq-button .sq-icon {
     font-size: 22px;
   }
+  .notice.contest .sq-image-wrapper,
   .notice.gig .sq-image-wrapper {
     max-width: 270px;
   }

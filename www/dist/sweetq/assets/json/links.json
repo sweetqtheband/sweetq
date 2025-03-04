@@ -24,15 +24,15 @@
   {
     "type": "gig",
     "icon": "icon-gigs",
-    "text": "links.gigs.20250214",
+    "text": "links.gigs.20250317",
     "button": "secondary",
-    "link": "https://www.notikumi.com/channel/sweet-q/2025/2/14/canciller-sweet-q"
+    "link": "https://tickets.oneboxtds.com/umusichotelteatroalbeniz/select/2367122?viewCode=Vista_Principal"
   },
   {
-    "type": "youtube",
-    "icon": "icon-youtube",
-    "text": "links.youtube.ley",
+    "type": "contest",
+    "icon": "icon-contest",
+    "text": "links.contest.lesarts",
     "button": "secondary",
-    "link": "https://www.youtube.com/watch?v=IN0iZTZkN2Q"
+    "link": "https://concurs.festivaldelesarts.com/artists/3925"
   }
 ]
