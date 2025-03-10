@@ -22,12 +22,6 @@
       }
     }
   },
-  "time": {
-    "short": {
-      "min": "min",
-      "sec": "s"
-    }
-  },
   "releaseMessage": "¡Ya podéis escuchar \"Ley de la atracción\"!",
   "listenInSpotify": "Escuchar en Spotify",
   "listenAlsoIn": "Disponible también en...",
@@ -52,22 +46,13 @@
     "button": "Descargar <span class='peso'>(5.5MB)</span>",
     "download": "Descargar kit de prensa"
   },
-  "contest": {
-    "lesarts": {
-      "title": "Concurso Festival de les Arts",
-      "subtitle": "Vótanos para vernos en el cartel",
-      "text": "¡Nos presentamos al concurso para tocar en el Festival de les Arts! Si quieres que estemos en el cartel de la próxima edición, ¡vota por nosotros!",
-      "button": "Vótanos aquí"
-    }
-  },
   "gigs": {
     "label": "Conciertos",
     "viewInGoogleMap": "Ver en Google Maps",
-    "20250317": {
-      "title": "Vivo Back to Bands",
-      "date": "17 Marzo",
-      "text": "Hemos sido seleccionados entre más de 600 bandas para participar en el Vivo Back to Bands en un escenario increíble como es el Teatro Albéniz. ¿Quieres vernos darlo todo? ¡Pues te esperamos!",
-      "button": "Link a entradas"
+    "20241102": {
+      "date": "02 Noviembre",
+      "title": "IV Concurso de bandas de Vicálvaro",
+      "text": "El sábado 02 de noviembre estaremos tocando en el <span class='bold'>concurso de bandas de Vicálvaro</span> en la sala <span>ReviLive</span>. A partir de las 19:00 y hasta las 23:00, entrada gratuita. ¡No te lo pierdas!"
     }
   },
   "stayTuned": "Por el momento no tenemos conciertos a la vista. ¡Permanece atento!",
@@ -103,10 +88,14 @@
       "yaesnavidad": "Pre-save 'Ya es Navidad'"
     },
     "contest": {
-      "lesarts": "¡Vótanos para tocar en el Festival de les Arts!"
+      "fib": "¡Vótanos para tocar en el FIB!"
+    },
+    "vackstage": {
+      "20240525": "Ver concierto El Perro 25 mayo",
+      "20240719": "Ven entrevista en 'Sonidos Nuevos'"
     },
     "gigs": {
-      "20250317": "Entradas Vivo Back to Bands 17 Mar"
+      "20241004": "Entradas Primera Fila Fest"
     }
   },
   "listen": {
@@ -135,11 +124,6 @@
       "text": "Acabamos de lanzar nuestro videoclip de 'Ley de la atracción', grabado en el centro de Madrid con la colaboración de parejas reales que nos regalaron momentos únicos para dar vida a este tema. ¡Esperemos que te guste!",
       "button": "Ver en Youtube"
     }
-  },
-  "album": {
-    "label": "Álbum",
-    "styles": "Indie, Pop, Rock",
-    "tracks": "canciones"
   },
   "albums": {
     "released": "Últimos lanzamientos",

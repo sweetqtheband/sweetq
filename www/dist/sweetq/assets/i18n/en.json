@@ -22,12 +22,6 @@
       }
     }
   },
-  "time": {
-    "short": {
-      "min": "min",
-      "sec": "s"
-    }
-  },
   "releaseMessage": "You can listen to \"Ley de la atracción\" now!",
   "listenInSpotify": "Listen in Spotify",
   "listenAlsoIn": "Also available in...",
@@ -52,22 +46,13 @@
     "button": "Download <span class='peso'>(5.5MB)</span>",
     "download": "Download press kit"
   },
-  "contest": {
-    "lesarts": {
-      "title": "Festival de les Arts contest",
-      "subtitle": "Vote for us to see us in the lineup!",
-      "text": "We are participating in the contest to play at Festival de les Arts! If you want us to be in the lineup of the next edition, vote for us!",
-      "button": "Vote for us here"
-    }
-  },
   "gigs": {
     "label": "Gigs",
     "viewInGoogleMap": "View in Google Maps",
-    "20250317": {
-      "title": "Vivo Back to Bands",
-      "date": "March 17th",
-      "text": "We are back to the stage with a new gig at Vivo Back to Bands. Don't miss it!",
-      "button": "Buy tickets"
+    "20241102": {
+      "date": "November 2nd",
+      "title": "IV Vicálvaro Band Contest",
+      "text": "On Saturday, November 2nd, we’ll be performing at the <span class='bold'>Vicálvaro Band Contest</span> at <span>ReviLive</span>. From 7:00 PM to 11:00 PM, free entry. Don’t miss it!"
     }
   },
   "stayTuned": "At this time we haven't any gig scheduled soon. Stay tuned!",
@@ -103,10 +88,14 @@
       "yaesnavidad": "'Ya es Navidad' presave"
     },
     "contest": {
-      "lesarts": "Vote for us to play at Festival de les Arts!"
+      "fib": "Vote for us to play at FIB!"
+    },
+    "vackstage": {
+      "20240525": "View concert El Perro May 25th",
+      "20240719": "View interview in 'Sonidos Nuevos'"
     },
     "gigs": {
-      "20250317": "'Vivo Back to Bands' March 17th"
+      "20241004": "Tickets for Primera Fila Fest"
     }
   },
   "listen": {
@@ -135,11 +124,6 @@
       "text": "We’ve just released our music video for 'Ley de la atracción', filmed in the heart of Madrid with the collaboration of real couples who shared unique moments with us to bring this song to life. We hope you like it!",
       "button": "Watch on YouTube"
     }
-  },
-  "album": {
-    "label": "Album",
-    "styles": "Indie, Pop, Rock",
-    "tracks": "tracks"
   },
   "albums": {
     "released": "Latest releases",

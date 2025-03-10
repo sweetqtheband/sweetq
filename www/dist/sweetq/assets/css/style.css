@@ -69,7 +69,7 @@ body {
   max-height: 768px;
   min-height: 500px;
   color: #fff;
-  background-image: url("../imgs/img-sweetq.webp");
+  background-image: url("../imgs/img-sweet-q.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -354,12 +354,11 @@ body {
   height: 100%;
 }
 
-.gig .sq-image-wrapper {
+.concierto .sq-image-wrapper {
   max-width: 400px;
-  aspect-ratio: 16 / 9;
 }
 
-.sq-section.gig .column-right {
+.sq-section.concierto .column-right {
   padding: 0px 24px;
 }
 
@@ -414,17 +413,6 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
 .sq-section.notice .sq-image-wrapper {
   width: 75%;
   margin: 0 auto;
-}
-
-.sq-section.notice.contest .sq-half-columns .column-left,
-.sq-section.notice.gig .sq-half-columns .column-left {
-  max-width: 30vw;
-}
-.sq-section.notice.contest .sq-image-wrapper,
-.sq-section.notice.gig .sq-image-wrapper {
-  width: 75%;
-  margin: 0 auto;
-  aspect-ratio: 9 / 12;
 }
 
 .sq-section.notice.info.cover .sq-image.image-cover {
@@ -523,33 +511,20 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   background-image: url("../imgs/youtube/makingof/atrapado.jpg");
 }
 
-.sq-section.notice.info.contest .sq-image.image-cover,
 .sq-section.notice.info.gig .sq-image.image-cover {
   position: relative;
-  height: 100%;
-  max-width: 400px;
-  margin: 0 auto;
 }
-.sq-section.notice.info.contest .sq-image.image-cover:before,
 .sq-section.notice.info.gig .sq-image.image-cover:before {
   content: "";
   position: relative;
   display: block;
-  background-size: contain;
+  background-size: cover;
+  padding-top: 100%;
   background-position: center top;
-  background-repeat: no-repeat;
-  aspect-ratio: 9 / 12;
-  top: 0;
-  left: 0;
-  width: 100%;
 }
 
-.sq-section.notice.info.contest.lesarts .sq-image.image-cover:before {
-  background-image: url("../imgs/contest/lesarts.jpg");
-}
-
-.sq-section.notice.info.gig.g20250317 .sq-image.image-cover:before {
-  background-image: url("../imgs/gigs/20250317.jpg");
+.sq-section.notice.info.gig.g20241102 .sq-image.image-cover:before {
+  background-image: url("../imgs/gigs/20241102.jpg");
 }
 
 .sq-section.notice.info.gig.g20241004 .sq-button .sq-button-text {
@@ -694,13 +669,6 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   display: block;
 }
 .sq-gig-day > .month {
-  font-size: 14px;
-  line-height: 14px;
-  text-transform: uppercase;
-  display: block;
-}
-
-.sq-gig-day > .year {
   font-size: 22px;
   line-height: 24px;
   text-transform: uppercase;
@@ -808,7 +776,7 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
 
 @media (max-width: 767px) {
   .sq-bg {
-    background-image: url("../imgs/img-sweetq-mobile.webp");
+    background-image: url("../imgs/img-sweet-q-mobile.jpg");
   }
 
   .sq-button .sq-icon.icon-play {
@@ -842,14 +810,8 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   .sq-image-wrapper {
     margin: 0 auto;
   }
-  .notice.contest .sq-image-wrapper,
-  .notice.gig .sq-image-wrapper {
+  .notice.concierto .sq-image-wrapper {
     max-width: 320px;
-  }
-
-  .sq-section.notice.contest .sq-half-columns .column-left,
-  .sq-section.notice.gig .sq-half-columns .column-left {
-    max-width: unset;
   }
   .sq-section .sq-title {
     font-size: 54px;
@@ -910,8 +872,7 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   .sq-contact-icons .sq-button .sq-icon {
     font-size: 22px;
   }
-  .notice.contest .sq-image-wrapper,
-  .notice.gig .sq-image-wrapper {
+  .notice.concierto .sq-image-wrapper {
     max-width: 270px;
   }
   .gigs .sq-gigs-list .sq-item {
