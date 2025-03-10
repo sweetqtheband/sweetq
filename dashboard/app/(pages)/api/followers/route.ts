@@ -8,7 +8,7 @@ import {
 import { ERRORS, SORT } from '@/app/constants';
 
 const collection = 'followers';
-const idx = '_id';
+const idx = 'created';
 
 export async function OPTIONS(req: NextRequest) {
   const [message, params] = corsOptions(req);

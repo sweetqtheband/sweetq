@@ -249,7 +249,7 @@ const getFilters = async ({
 };
 
 // Get methods function
-const getMethods = (router?: any): Record<string, any> => ({
+const getMethods = (router?: any, translations?: any): Record<string, any> => ({
   onSave: async (data: any, files: any) => {
     if (!data.country) {
       data.country = FIELD_DEFAULTS.COUNTRY;
@@ -265,6 +265,14 @@ const getMethods = (router?: any): Record<string, any> => ({
   },
   onMessageSave: async (data: any) => {
     return onSave(InstagramMessages, router, data, []);
+  },
+  action: {
+    onClick: async (data: any, setItem: Function) => {
+      setItem(data);
+    },
+    check: (data: any) => data?.instagram_id,
+    icon: RENDER_TYPES.INSTAGRAM_MESSAGE,
+    label: translations?.openChat,
   },
 });
 const getRenders = (): Record<string, Function> => ({

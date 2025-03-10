@@ -34,7 +34,6 @@ export function useEventBus(channel: string) {
     eventSource.onmessage = (event) => {
       try {
         const { eventType: eventName, data } = JSON.parse(event.data);
-
         if (eventHandlers.current[eventName]) {
           eventHandlers.current[eventName](data);
         }

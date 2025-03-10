@@ -14,7 +14,7 @@ import {
   TextInput,
 } from '@carbon/react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { ChangeEvent, useEffect, useMemo, useState } from 'react';
+import { ChangeEvent, useMemo, useState } from 'react';
 import { t } from '@/app/utils';
 import { Layout } from '@/types/layout';
 
@@ -226,6 +226,7 @@ export default function MessagePanel({
                 onChange={(text: string) => {
                   handlePersonalMessageChange(text);
                 }}
+                hasParameter={true}
               />
             </FormItem>
             <FormItem>
@@ -238,6 +239,7 @@ export default function MessagePanel({
                 invalid={invalidFields.collectiveMessage}
                 value={formState['collectiveMessage']}
                 onChange={(text: string) => handleCollectiveMessageChange(text)}
+                hasParameter={true}
               />
             </FormItem>
           </Stack>

@@ -17,6 +17,14 @@ const EP = {
   ACCESS_TOKEN: 'access_token',
   REFRESH_ACCESS_TOKEN: 'refresh_access_token',
 };
+
+const MAX_LIMITS = {
+  CONVERSATIONS: 100,
+  MESSAGES: 100,
+};
+
+let accessToken: string | any = null;
+
 const getAccessToken = async (instance: any) =>
   instance.findOne({ id: 'instagram' });
 
@@ -81,6 +89,128 @@ const storeLongLiveAccessToken = async (instance: any, tokenResponse: any) => {
   return parseAuthToken(await instance.findOne({ id: 'instagram' }));
 };
 
+const getHeaders = async (instance: any) => {
+  if (!accessToken) {
+    const { long_live_access_token: token } = await getAccessToken(instance);
+    accessToken = token;
+  }
+  return {
+    Authorization: `Bearer ${accessToken}`,
+  };
+};
+
+const getConversations = async (
+  instance: any,
+  limit: number = MAX_LIMITS.CONVERSATIONS,
+  after: string | null = null
+): Promise<any> => {
+  try {
+    const params: Record<string, any> = {
+      limit,
+    };
+
+    if (after) {
+      params.after = after;
+    }
+    const response = await GET(
+      graph,
+      `/me/conversations`,
+      params,
+      await getHeaders(instance)
+    );
+
+    const { data, paging } = response?.data;
+
+    if (
+      paging?.cursors?.after &&
+      paging?.cursors?.after !== after &&
+      limit === MAX_LIMITS.CONVERSATIONS
+    ) {
+      return [
+        ...data,
+        ...(await getConversations(instance, limit, paging.cursors.after)),
+      ];
+    } else {
+      return data || [];
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const getMessages = async (
+  instance: any,
+  conversationId: string,
+  limit: number = MAX_LIMITS.MESSAGES,
+  after: string | null = null
+): Promise<any> => {
+  if (!accessToken) {
+    await getHeaders(instance);
+  }
+  try {
+    const params: Record<string, any> = {
+      limit: 100,
+      fields: 'messages',
+      access_token: accessToken,
+    };
+
+    if (after) {
+      params.after = after;
+    }
+
+    const response = await GET(graph, `/${conversationId}`, params);
+
+    const { data, paging } = response?.data?.messages;
+
+    if (
+      paging?.cursors?.after &&
+      paging?.cursors?.after !== after &&
+      limit === MAX_LIMITS.MESSAGES &&
+      data.length === limit
+    ) {
+      return [
+        ...((await Promise.all(
+          data.map(async (message: Record<string, any>) =>
+            getMessage(instance, message.id)
+          )
+        )) || []),
+        ...(await getMessages(
+          instance,
+          conversationId,
+          limit,
+          paging.cursors.after
+        )),
+      ];
+    } else {
+      return (
+        Promise.all(
+          data.map(async (message: Record<string, any>) =>
+            getMessage(instance, message.id)
+          )
+        ) || []
+      );
+    }
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const getMessage = async (instance: any, messageId: string) => {
+  if (!accessToken) {
+    await getHeaders(instance);
+  }
+  try {
+    const params = {
+      fields: 'id,created_time,from,to,message',
+      access_token: accessToken,
+    };
+    const response = await GET(graph, `/${messageId}`, params);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 /**
  * Instagram service
  */
@@ -92,4 +222,7 @@ export const instagramSvc = (collection: Collection<Document>) => ({
   storeLongLiveAccessToken,
   getAccessToken,
   parseAuthToken,
+  getConversations,
+  getMessages,
+  getMessage,
 });

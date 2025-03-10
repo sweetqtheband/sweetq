@@ -8,6 +8,8 @@ type Model = {
   is_verified?: boolean;
   profile_pic_url?: string;
   requested_by_viewer?: boolean;
+  instagram_id?: number;
+  instagram_conversation_id?: string;
   updated?: string;
   created?: string;
   country?: number;
@@ -49,6 +51,14 @@ export const Model = (data: any): Model => {
 
   if (data.treatment) {
     obj.treatment = Number(data.treatment);
+  }
+
+  if (data.instagram_id) {
+    obj.instagram_id = Number(data.instagram_id);
+  }
+
+  if (data.instagram_conversation_id) {
+    obj.instagram_conversation_id = String(data.instagram_conversation_id);
   }
 
   obj.tags =

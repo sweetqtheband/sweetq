@@ -101,6 +101,7 @@ export const RENDER_TYPES: Record<string, string> = {
   LINK: 'link',
   COLOR: 'color',
   STATUS_MESSAGE: 'statusMessage',
+  INSTAGRAM_MESSAGE: 'instagramMessage',
 };
 
 export const FIELD_DEFAULTS: Record<string, any> = {

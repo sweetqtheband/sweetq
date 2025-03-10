@@ -786,7 +786,7 @@ const renderCity = ({
   onInputHandler,
 }: Field) => {
   return (
-    <Stack gap={4} orientation="horizontal" key={field}>
+    <div className="cds--flex">
       {countryDropdown({
         className: 'cds--text-input__field-outer-wrapper',
         value: formState.country
@@ -820,7 +820,7 @@ const renderCity = ({
         onInternalStateHandler,
         onInputHandler,
       } as Field)}
-    </Stack>
+    </div>
   );
 };
 

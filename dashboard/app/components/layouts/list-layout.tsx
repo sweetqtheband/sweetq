@@ -19,6 +19,9 @@ export default function ListLayout({
   loading = false,
   onSave = async () => true,
   onDelete = async () => true,
+  actionIcon = null,
+  actionLabel = '',
+  onAction = async () => true,
   noAdd = false,
   translations = {},
   actions = {},
@@ -27,6 +30,7 @@ export default function ListLayout({
   filters = {},
   methods = {},
   renders = {},
+  onItemSelect = () => true,
 }: Readonly<{
   items?: any[];
   headers?: any[];
@@ -39,6 +43,9 @@ export default function ListLayout({
   loading?: boolean;
   onSave?: (data: any, files: any) => Promise<boolean>;
   onDelete?: (ids: string[]) => Promise<boolean>;
+  actionIcon?: string | null;
+  actionLabel?: string;
+  onAction?: Function;
   noAdd?: boolean;
   translations?: Record<string, string>;
   actions?: Record<string, any>;
@@ -47,6 +54,7 @@ export default function ListLayout({
   filters?: Record<string, any>;
   methods?: Record<string, any>;
   renders?: Record<string, any>;
+  onItemSelect?: Function;
 }>) {
   const [item, setItem] = useState(null);
   const [isLoading, setIsLoading] = useState(loading);
@@ -55,10 +63,11 @@ export default function ListLayout({
     if (loading !== isLoading) {
       setIsLoading(loading);
     }
-  }, [loading]);
+  }, [loading, isLoading]);
 
   const onClose = async (item = null) => {
     setItem(null);
+    onItemSelect(null);
   };
 
   const onSaveHandler = async (data: any, files: any) => {
@@ -72,6 +81,11 @@ export default function ListLayout({
 
   const onItemClickHandler = (item: any) => {
     setItem(item);
+    onItemSelect(item);
+  };
+
+  const onActionHandler = async (e: any) => {
+    onAction(e);
   };
 
   return (
@@ -101,7 +115,11 @@ export default function ListLayout({
         data={item}
         onClose={onClose}
         onSave={onSaveHandler}
+        onAction={onActionHandler}
+        actionIcon={actionIcon}
+        actionLabel={actionLabel}
         translations={translations}
+        checkAction={methods?.action?.check ?? null}
         fields={fields}
         methods={methods}
         renders={renders}

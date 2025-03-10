@@ -19,8 +19,12 @@ const parse = (obj: any, add: boolean = false) => {
 
   return item;
 };
-const add = async (type: string, data: any) =>
-  (await col).insertOne(parse({ ...data, eventType: type }, true));
+const add = async (type: string, data: any) => {
+  const collection = await col;
+  const obj = parse({ data, eventType: type }, true);
+  await collection.insertOne(obj);
+  return true;
+};
 const update = async (data: any) => {
   const model = await col;
 

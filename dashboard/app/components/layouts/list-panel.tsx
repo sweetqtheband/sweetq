@@ -13,6 +13,10 @@ export default function ListPanel({
   data = null,
   onSave = async () => true,
   onClose = async (item: any) => {},
+  onAction = async () => {},
+  actionLabel = '',
+  actionIcon = null,
+  checkAction = null,
   translations = {},
   fields = {},
   methods = {},
@@ -22,6 +26,10 @@ export default function ListPanel({
   data: any;
   onSave?: (data: any, files: any) => Promise<boolean>;
   onClose?: (item: any) => Promise<void>;
+  onAction?: Function;
+  actionLabel?: string;
+  actionIcon?: string | null;
+  checkAction?: Function | null;
   translations?: Record<string, any>;
   fields?: Record<string, any>;
   methods?: Record<string, any>;
@@ -34,6 +42,8 @@ export default function ListPanel({
     () => new URLSearchParams(searchParams),
     [searchParams]
   );
+
+  const [action, setAction] = useState<string | null>(null);
 
   const defaultIsInitialized = Object.keys(fields.types).reduce(
     (acc: Record<string, boolean>, field: string) => {
@@ -145,6 +155,7 @@ export default function ListPanel({
   const resetPanel = () => {
     setFormState({});
     setInternalState({});
+    setAction(null);
     setFiles({ ...defaultSetFiles });
     setIsInitialized({ ...defaultIsInitialized });
     const searchFields = Object.keys(searchState).filter(
@@ -170,6 +181,11 @@ export default function ListPanel({
   };
 
   const [forceClose, setForceClose] = useState(false);
+
+  const onActionHandler = async () => {
+    onAction(data);
+  };
+
   const onCloseHandler = () => {
     setForceClose(false);
     resetPanel();
@@ -301,10 +317,28 @@ export default function ListPanel({
       </footer>
     </>
   );
+
+  useEffect(() => {
+    if (!action && actionIcon) {
+      if (typeof checkAction === 'function') {
+        setAction(checkAction(data) ? actionIcon : null);
+      }
+    }
+  }, [action, data, actionIcon, checkAction]);
+
   const content = data ? getContent(data) : null;
   return (
-    <Panel onClose={onCloseHandler} forceClose={forceClose}>
-      {content}
-    </Panel>
+    <>
+      <Panel
+        onAction={onActionHandler}
+        actionIcon={action}
+        actionLabel={actionLabel}
+        onClose={onCloseHandler}
+        translations={translations}
+        forceClose={forceClose}
+      >
+        {content}
+      </Panel>
+    </>
   );
 }

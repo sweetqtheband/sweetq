@@ -12,6 +12,7 @@
     "update:followers": "dotenv -e .env.production tsx updates/followers.ts",
     "update:images": "dotenv -e .env.production tsx updates/images.ts",
     "messages": "dotenv -e .env.production tsx updates/messages.ts",
+    "instagram": "dotenv -e .env.production tsx updates/instagram.ts",
     "cron": "dotenv -e .env.production tsx updates/cron.ts",
     "sq": "node scripts/swq.js",
     "expose": "ngrok http 3000  --url=overly-awaited-leech.ngrok-free.app"

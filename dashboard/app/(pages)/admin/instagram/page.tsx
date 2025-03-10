@@ -60,6 +60,10 @@ export default async function InstagramPage({
     };
   };
 
+  const getChatTranslations = (i18n: any, translations: any) => {
+    translations.openChat = i18n.t('pages.instagram.panel.openChat');
+  };
+
   const translations = {
     ...Followers.getTranslations(i18n, Followers),
     ...getActionsTranslations(i18n),
@@ -69,6 +73,7 @@ export default async function InstagramPage({
 
   getFiltersTranslations(i18n, translations);
   getPanelTranslations(i18n, translations);
+  getChatTranslations(i18n, translations);
 
   const fields = await Followers.getFields({ searchParams, i18n });
   const filters = await Followers.getFilters({ searchParams, i18n });

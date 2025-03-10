@@ -38,7 +38,14 @@
         "day": "%d %M %Y",
         "text": "%d de %M",
         "month": "%M %Y"
-      }
+      },
+      "chat": {
+        "date": "%d %M %H:%i",
+        "dateToday": "Hoy a las %H:%i",
+        "dateYesterday": "Ayer a las %H:%i",
+        "dateYear": "%d %M %Y"
+      },
+      "timestamp": "%Y%m%D"
     },
     "months": {
       "0": "enero",
@@ -138,7 +145,8 @@
         "modes": {
           "createNew": "Crear nuevo",
           "loadLayout": "Cargar plantilla"
-        }
+        },
+        "openChat": "Abrir chat"
       }
     },
     "gigs": {

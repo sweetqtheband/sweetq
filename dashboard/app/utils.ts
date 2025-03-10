@@ -75,28 +75,43 @@ export const formDataToObject = (
 export const dateFormat = (
   date: Date = new Date(),
   format: string = 'short.date',
-  i18n?: I18n
+  i18n?: I18n | null,
+  translations?: Record<string, any>
 ) => {
-  let dateFormat = i18n?.t(`date.formats.${format}`);
+  let dateFormat = format;
+
+  if (!dateFormat.includes('%')) {
+    dateFormat = i18n
+      ? String(i18n?.t(`date.formats.${format}`))
+      : String(getValue(translations?.date.formats, format));
+  }
 
   const replaces: Record<string, string> = {
     '%d': String(date.getDate()),
     '%D': String(date.getDate()).padStart(2, '0'),
     '%m': String(date.getMonth() + 1).padStart(2, '0'),
-    '%M': String(i18n?.t(`date.formats.months.${date.getMonth()}`)),
+    '%M': String(
+      i18n
+        ? i18n?.t(`date.months.${date.getMonth()}`)
+        : getValue(translations?.date, `months.${String(date.getMonth())}`)
+    ),
     '%y': String(date.getFullYear()).substring(2, 4),
     '%Y': String(date.getFullYear()),
+    '%H': String(date.getHours()).padStart(2, '0'),
+    '%i': String(date.getMinutes()).padStart(2, '0'),
+    '%s': String(date.getSeconds()).padStart(2, '0'),
   };
 
   const str =
     dateFormat
-      ?.match(/%[dmyDMY]{1,2}/g)
+      ?.match(/%[dmyisDMYH]{1,2}/g)
       ?.reduce(
-        (acc, datePart) => acc.replace(datePart, replaces[datePart]),
+        (acc: string, datePart: any) =>
+          acc.replace(datePart, replaces[datePart]),
         dateFormat
       ) ?? '';
 
-  return str[0].toUpperCase() + str.slice(1);
+  return str !== '' ? str[0].toUpperCase() + str.slice(1) : str;
 };
 
 type Breakpoint = 'mobile' | 'tablet' | 'laptop' | 'desktop' | 'large';
@@ -122,3 +137,28 @@ export const camelCase = (str: string) =>
 
 export const t = (template: string, params: Record<string, any>) =>
   template.replace(/\{\{(\w+)\}\}/g, (_, key) => params[key] || `{{${key}}}`);
+
+export const getValue = (obj: Record<string, any>, path: string) =>
+  path
+    .split('.')
+    .reduce((acc: Record<string, any>, key: string) => acc?.[key], obj);
+
+export const deepEqual: any = (obj1: any, obj2: any) => {
+  if (obj1 === obj2) return true;
+
+  if (
+    typeof obj1 !== 'object' ||
+    typeof obj2 !== 'object' ||
+    obj1 === null ||
+    obj2 === null
+  ) {
+    return false;
+  }
+
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+
+  if (keys1.length !== keys2.length) return false;
+
+  return keys1.every((key) => deepEqual(obj1[key], obj2[key]));
+};

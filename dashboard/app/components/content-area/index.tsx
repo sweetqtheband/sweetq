@@ -28,6 +28,8 @@ export default function ContentArea({
   translations = {},
   invalid = false,
   onChange = () => {},
+  variant = 'default',
+  hasParameter = false,
 }: Readonly<{
   id?: string;
   locale?: string;
@@ -35,6 +37,8 @@ export default function ContentArea({
   invalid?: boolean;
   translations?: Record<string, any>;
   onChange?: Function;
+  variant?: string;
+  hasParameter?: boolean;
 }>) {
   const contentEditableRef = useRef(null) as RefObject<HTMLElement>;
   const emojiWrapperRef = useRef<HTMLDivElement>(null);
@@ -119,6 +123,7 @@ export default function ContentArea({
   return (
     <>
       <div
+        data-variant={variant}
         className={getClasses({
           'contenteditable--wrapper': true,
           error: invalid,
@@ -135,7 +140,9 @@ export default function ContentArea({
           />
         </div>
         <div className="contenteditable--actions">
-          <Parameter size={ICON_SIZES.MD} onClick={handleShowVars} />
+          {hasParameter ? (
+            <Parameter size={ICON_SIZES.MD} onClick={handleShowVars} />
+          ) : null}
           <FaceAdd size={ICON_SIZES.MD} onClick={handleShowEmoji} />
         </div>
       </div>

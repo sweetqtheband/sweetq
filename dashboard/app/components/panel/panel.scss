@@ -37,15 +37,22 @@
     @include breakpoint(tablet) {
       width: 80vw;
     }
-    padding: calc(var(--padding) * 4) calc(var(--padding) * 2)
+    padding: calc(var(--padding) * 4) calc(var(--padding) / 2)
       calc(var(--padding) * 2);
 
+    .action {
+      position: fixed;
+      top: calc(var(--padding) * 2);
+      left: calc(var(--padding) * 2);
+      cursor: pointer;
+    }
     .close {
       position: fixed;
       top: calc(var(--padding) * 3);
       transform: translateY(-50%);
       right: var(--padding);
       cursor: pointer;
+      z-index: 2;
     }
 
     footer {
@@ -54,7 +61,7 @@
       bottom: 0;
       padding: calc(var(--padding) * 2);
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: flex-end;
     }
   }
@@ -80,17 +87,18 @@
         transition: unset;
       }
     }
+    .panel-content {
+      max-height: 80vh;
+      .fields {
+        overflow-y: auto;
+        padding: 0px 4px;
+        max-height: calc(80vh - 80px);
+      }
+    }
     @include breakpoint(mobile) {
       .panel-wrapper {
         transition: transform 400ms ease-in;
         transform: translateX(0vw);
-        .panel-content {
-          max-height: 80vh;
-          .fields {
-            overflow-y: auto;
-            max-height: calc(80vh - 80px);
-          }
-        }
       }
     }
 
@@ -98,6 +106,20 @@
       .panel-wrapper {
         transition: transform 400ms ease-in;
         transform: translateX(20vw);
+      }
+    }
+
+    @include breakpoint(desktop) {
+      .fields {
+        --webkit-scrollbar {
+          display: none;
+        }
+
+        &:hover {
+          --webkit-scrollbar {
+            background: rgba(0, 0, 0, 0.3);
+          }
+        }
       }
     }
   }

@@ -1,6 +1,7 @@
 export const getTranslations = (i18n: any, instance: Record<string, any>) => ({
   locale: i18n.i18n.language,
   uploader: i18n.t('uploader'),
+  date: i18n.t('date', { returnObjects: true }),
   fields: {
     ...Object.keys(instance.fields.titles).reduce(
       (acc, key) => ({

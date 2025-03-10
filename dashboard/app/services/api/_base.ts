@@ -84,8 +84,6 @@ export const BaseSvc = (model: Collection<Document>, Model: Function) => {
         );
       }
 
-      console.log(obj, modifiers);
-
       await instance.model.findOneAndUpdate(
         { _id: new ObjectId(item._id) },
         modifiers,

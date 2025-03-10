@@ -10,6 +10,8 @@ export type Follower = {
   is_verified?: boolean;
   profile_pic_url?: string;
   requested_by_viewer?: boolean;
+  instagram_id?: number;
+  instagram_conversation_id?: string;
   updated?: string;
   created?: string;
   country?: string;

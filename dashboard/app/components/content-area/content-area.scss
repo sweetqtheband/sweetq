@@ -1,6 +1,7 @@
 :root {
   --contenteditable-toolbar-height: 32px;
 }
+
 .contenteditable {
   height: 100%;
   width: 100%;
@@ -43,6 +44,21 @@
     &--placeholder {
       color: var(--light-text-placeholder);
     }
+  }
+}
+
+.contenteditable--wrapper[data-variant='input'] {
+  max-height: 50px;
+  position: absolute;
+  width: calc(100% - calc(var(--padding) * 2));
+  left: 0;
+  .contenteditable--scroll {
+    height: 100%;
+  }
+  .contenteditable--actions {
+    position: absolute;
+    top: 0;
+    right: 0;
   }
 }
 

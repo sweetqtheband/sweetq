@@ -29,7 +29,7 @@
     "email": "Email",
     "showPassword": "Show password",
     "hidePassword": "Hide password",
-    "sendMessage": "Message"
+    "sendMessage": "Send message"
   },
   "date": {
     "formats": {
@@ -38,7 +38,14 @@
         "day": "%M %d %Y",
         "text": "%M %d",
         "month": "%M %Y"
-      }
+      },
+      "chat": {
+        "date": "%d %M %H:%i",
+        "dateToday": "Today at %H:%i",
+        "dateYesterday": "Yesterday at %H:%i",
+        "dateYear": "%d %M %Y"
+      },
+      "timestamp": "%Y%m%D"
     },
     "months": [
       "January",
@@ -96,7 +103,11 @@
     },
     "password": "Password",
     "layout": "Layout",
-    "pendingMessages": "Pending messages"
+    "pendingMessages": "Pending messages",
+    "bands": "Bands",
+    "limit": "Limit",
+    "withoutTags": "Without tags",
+    "email": "Email"
   },
   "userProfiles": {
     "admin": "Administrator",
@@ -133,8 +144,13 @@
         "modes": {
           "createNew": "Create new",
           "loadLayout": "Load layout"
-        }
+        },
+        "openChat": "Open chat",
+        "subtitle": "The message will be sent to "
       }
+    },
+    "gigs": {
+      "title": "Gigs"
     }
   },
   "routes": {
@@ -161,6 +177,10 @@
       "latest": "Latest release",
       "upcoming": "Upcoming"
     }
+  },
+  "treatments": {
+    "person": "Person",
+    "collective": "Collective"
   },
   "uploader": "Drag and drop a file here or click to select a file",
   "colors": {

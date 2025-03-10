@@ -25,6 +25,11 @@ export const getAll = async (client: AxiosInstance, searchParams: any = {}) => {
         if (match) {
           const filterKey = match[1]; // Extraer el nombre del filtro (e.g., "treatment")
           acc[filterKey] = String(value).split(','); // Añadirlo al objeto `filters`
+        } else if (key === 'filters') {
+          acc = {
+            ...acc,
+            ...searchParams[key],
+          };
         }
         return acc;
       },

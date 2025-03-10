@@ -52,11 +52,12 @@ const storeResponse = (response: Record<string, string | number>) => {
 };
 
 const doInstagramLogin = () => {
-  return window.open(
+  const win = window.open(
     'https://www.instagram.com/oauth/authorize?enable_fb_login=0&force_authentication=1&client_id=1116438159688778&redirect_uri=https://overly-awaited-leech.ngrok-free.app/api/instagram/oauth&response_type=code&scope=instagram_business_basic%2Cinstagram_business_manage_messages%2Cinstagram_business_manage_comments%2Cinstagram_business_content_publish',
     '_blank',
     'width=600,height=600'
   );
+  return win;
 };
 
 export default function InstagramLogin() {
@@ -67,11 +68,11 @@ export default function InstagramLogin() {
       try {
         await initFacebookSdk();
         if (isExpired()) {
-          const window = doInstagramLogin();
+          const loginWindow = doInstagramLogin();
           on((data) => {
             if (data) {
               storeResponse(data);
-              window?.close();
+              loginWindow?.close();
             }
             off();
           });

@@ -2,7 +2,7 @@ import { Size } from '@/types/size';
 import { ICON_SIZES, RENDER_TYPES, SIZES } from './constants';
 import { Tag, Tooltip } from '@carbon/react';
 import Link from 'next/link';
-import { NotSentFilled } from '@carbon/react/icons';
+import { LogoWechat, NotSentFilled } from '@carbon/react/icons';
 
 const renderColor = (obj: any) => (
   <>
@@ -31,11 +31,16 @@ const renderStatusMessage = (obj: any) => {
   );
 };
 
+const renderInstagramMessage = (obj: any) => {
+  return <LogoWechat size={ICON_SIZES.LG} />;
+};
+
 const renderers = {
   [RENDER_TYPES.COLOR]: renderColor,
   [RENDER_TYPES.TAG]: renderTag,
   [RENDER_TYPES.LINK]: renderLink,
   [RENDER_TYPES.STATUS_MESSAGE]: renderStatusMessage,
+  [RENDER_TYPES.INSTAGRAM_MESSAGE]: renderInstagramMessage,
 };
 
 // Main renderer

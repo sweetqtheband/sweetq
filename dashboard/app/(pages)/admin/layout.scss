@@ -59,8 +59,13 @@ body {
     align-items: flex-end;
     gap: var(--padding);
     width: 100%;
+    flex-wrap: wrap;
     .cds--tooltip-trigger__wrapper {
       padding-bottom: calc(var(--padding) / 2);
+    }
+
+    .cds--form-item {
+      flex: 1;
     }
   }
 
