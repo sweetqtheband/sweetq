@@ -22,6 +22,12 @@
       }
     }
   },
+  "time": {
+    "short": {
+      "min": "min",
+      "sec": "s"
+    }
+  },
   "releaseMessage": "¡Ya podéis escuchar \"Ley de la atracción\"!",
   "listenInSpotify": "Escuchar en Spotify",
   "listenAlsoIn": "Disponible también en...",
@@ -46,13 +52,22 @@
     "button": "Descargar <span class='peso'>(5.5MB)</span>",
     "download": "Descargar kit de prensa"
   },
+  "contest": {
+    "lesarts": {
+      "title": "Concurso Festival de les Arts",
+      "subtitle": "Vótanos para vernos en el cartel",
+      "text": "¡Nos presentamos al concurso para tocar en el Festival de les Arts! Si quieres que estemos en el cartel de la próxima edición, ¡vota por nosotros!",
+      "button": "Vótanos aquí"
+    }
+  },
   "gigs": {
     "label": "Conciertos",
     "viewInGoogleMap": "Ver en Google Maps",
-    "20241102": {
-      "date": "02 Noviembre",
-      "title": "IV Concurso de bandas de Vicálvaro",
-      "text": "El sábado 02 de noviembre estaremos tocando en el <span class='bold'>concurso de bandas de Vicálvaro</span> en la sala <span>ReviLive</span>. A partir de las 19:00 y hasta las 23:00, entrada gratuita. ¡No te lo pierdas!"
+    "20250317": {
+      "title": "Vivo Back to Bands",
+      "date": "17 Marzo",
+      "text": "Hemos sido seleccionados entre más de 600 bandas para participar en el Vivo Back to Bands en un escenario increíble como es el Teatro Albéniz. ¿Quieres vernos darlo todo? ¡Pues te esperamos!",
+      "button": "Link a entradas"
     }
   },
   "stayTuned": "Por el momento no tenemos conciertos a la vista. ¡Permanece atento!",
@@ -88,14 +103,10 @@
       "yaesnavidad": "Pre-save 'Ya es Navidad'"
     },
     "contest": {
-      "fib": "¡Vótanos para tocar en el FIB!"
-    },
-    "vackstage": {
-      "20240525": "Ver concierto El Perro 25 mayo",
-      "20240719": "Ven entrevista en 'Sonidos Nuevos'"
+      "lesarts": "¡Vótanos para tocar en el Festival de les Arts!"
     },
     "gigs": {
-      "20241004": "Entradas Primera Fila Fest"
+      "20250317": "Entradas Vivo Back to Bands 17 Mar"
     }
   },
   "listen": {
@@ -125,6 +136,11 @@
       "button": "Ver en Youtube"
     }
   },
+  "album": {
+    "label": "Álbum",
+    "styles": "Indie, Pop, Rock",
+    "tracks": "canciones"
+  },
   "albums": {
     "released": "Últimos lanzamientos",
     "upcoming": "Próximamente"
@@ -135,7 +151,7 @@
   },
   "aboutUs": {
     "title": "Sobre nosotros",
-    "info": "<p>Somos una banda madrileña de indie pop rock.</p><p>Nos encanta el arte, el cine, las grandes bandas sonoras, las series, la cultura pop... Todo esto influye a la hora de componer nuestros temas.</p><p>Nuestra música es el reflejo de nuestra forma de ser e intentamos que al escucharla experimentes con nosotros nuevas sensaciones o conectemos al sentir eso que te identifica.</p><p>Nos gusta lo que hacemos y queremos que formes parte de ello.</p>"
+    "info": "<p>Somos una banda madrileña de indie pop rock formada por Sara, Hari, Manuel, Curro y Jesús Manuel.</p><p>Nuestros temas destacan por su energía desbordante, unos ritmos que harán que tus caderas se muevan solas y unas melodías muy pegadizas para que no se te vayan de la cabeza.</p><p>En 2024 fuimos Finalistas del FIB Heineken Silver Rising Stars, segundo premio en las Fiestas de Arganzuela, finalistas de la guerra de bandas de las fiestas de Vicálvaro, tocamos en Málaga en el festival Brisa en tu Barrio y actuamos en la Plaza de Callao en la Zurich Madrid Rock'n'roll Running Series, entre otros eventos destacables.</p><p>Este 2025 hemos actuado en Logroño en la guerra de bandas del Festival Actual y en el Vivo Back to Bands que organiza Universal Music.</p><p>Además, hemos empezado a trabajar con All Sounds la comunicación de nuestro próximo LP 'Que sólo nos quede ganar'.</p>"
   },
   "file": {
     "download": {

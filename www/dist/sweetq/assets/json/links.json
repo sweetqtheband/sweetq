@@ -20,18 +20,19 @@
     "button": "primary",
     "link": "https://music.youtube.com/playlist?list=OLAK5uy_mLRXuPUlh7lYzPYMEfS0sY5OF8VwTN_zg"
   },
+
   {
-    "type": "presave",
-    "icon": "icon-spotify",
-    "text": "links.presave.yaesnavidad",
+    "type": "gig",
+    "icon": "icon-gigs",
+    "text": "links.gigs.20250317",
     "button": "secondary",
-    "link": "https://push.fm/ps/sweet-q-ya-es-navidad"
+    "link": "https://tickets.oneboxtds.com/umusichotelteatroalbeniz/select/2367122?viewCode=Vista_Principal"
   },
   {
-    "type": "youtube",
-    "icon": "icon-youtube",
-    "text": "links.youtube.ley",
+    "type": "contest",
+    "icon": "icon-contest",
+    "text": "links.contest.lesarts",
     "button": "secondary",
-    "link": "https://www.youtube.com/watch?v=IN0iZTZkN2Q"
+    "link": "https://concurs.festivaldelesarts.com/artists/3925"
   }
 ]
