@@ -2,6 +2,7 @@
 
 import { IG, STORAGE } from '@/app/constants';
 import { useEventBus } from '@/app/hooks/event';
+import { instagram } from '@/app/services/instagram';
 import { Storage } from '@/app/services/storage';
 import Script from 'next/script';
 import { useEffect } from 'react';
@@ -13,22 +14,6 @@ declare global {
   }
 }
 
-export const initFacebookSdk = () => {
-  return new Promise<void>((resolve, reject) => {
-    // Load the Facebook SDK asynchronously
-    window.fbAsyncInit = () => {
-      window.FB.init({
-        appId: process.env.NEXT_PUBLIC_META_APP_ID,
-        cookie: true,
-        xfbml: true,
-        version: process.env.NEXT_PUBLIC_META_VERSION,
-      });
-      // Resolve the promise when the SDK is loaded
-      resolve();
-    };
-  });
-};
-
 const isExpired = () => {
   const expires = Storage.getValue(IG.EXPIRES, STORAGE.LOCAL);
   if (expires) {
@@ -36,7 +21,6 @@ const isExpired = () => {
     const expiration = new Date(Number(expires)).getTime() * 1000;
     if (now > expiration) {
       Storage.removeValue(IG.TOKEN, STORAGE.LOCAL);
-      Storage.removeValue(IG.USER, STORAGE.LOCAL);
       Storage.removeValue(IG.EXPIRES, STORAGE.LOCAL);
     }
 
@@ -60,26 +44,47 @@ const doInstagramLogin = () => {
   return win;
 };
 
+const checkToken = async () => {
+  return new Promise(async (resolve) => {
+    const token = Storage.getValue(IG.TOKEN, STORAGE.LOCAL);
+    if (!token) {
+      resolve(await instagram.checkAuth());
+    } else {
+      resolve(false);
+    }
+  });
+};
+
 export default function InstagramLogin() {
   const { on, off } = useEventBus('instagram');
 
   useEffect(() => {
-    async function initSDK() {
+    async function initialize(skip = false) {
       try {
-        await initFacebookSdk();
-        if (isExpired()) {
-          const loginWindow = doInstagramLogin();
+        if (!skip && (await checkToken())) {
           on((data) => {
             if (data) {
               storeResponse(data);
-              loginWindow?.close();
+              initialize(true);
             }
             off();
           });
+        } else {
+          // First of all, check we have any token
+          if (isExpired()) {
+            const loginWindow = doInstagramLogin();
+            on((data) => {
+              if (data) {
+                storeResponse(data);
+                loginWindow?.close();
+              }
+              off();
+            });
+          }
         }
       } catch (err) {}
     }
-    initSDK();
+    initialize();
   });
 
   return (

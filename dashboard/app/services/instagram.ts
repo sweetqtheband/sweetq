@@ -8,6 +8,7 @@ const client = axios.create({
 
 const ENDPOINTS = {
   CHAT: '/chat',
+  OAUTH: '/oauth',
 };
 
 // Messages service
@@ -20,5 +21,8 @@ export const instagram = {
   },
   sendMessage: async (data: Record<string, any>) => {
     return POST(client, data, ENDPOINTS.CHAT);
+  },
+  checkAuth: async () => {
+    return GET(client, ENDPOINTS.OAUTH);
   },
 };

@@ -12,7 +12,6 @@ export async function OPTIONS(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const svc = FactorySvc(collection, await getCollection(collection));
   const body = await req.json();
   if (body.object === 'instagram') {
     body.entry.forEach(async (entry: any) => {
