@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { BaseList } from './_list';
-import { GET } from './_api';
+import { GET, POST } from './_api';
 
 const client = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URI}/instagram`,
@@ -17,5 +17,8 @@ export const instagram = {
     return GET(client, ENDPOINTS.CHAT, {
       cid: conversationId,
     });
+  },
+  sendMessage: async (data: Record<string, any>) => {
+    return POST(client, data, ENDPOINTS.CHAT);
   },
 };

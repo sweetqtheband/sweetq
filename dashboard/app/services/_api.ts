@@ -81,7 +81,8 @@ export const GET = async (
 export const POST = async (
   client: AxiosInstance,
   data: any,
-  url: string = ''
+  url: string = '',
+  headers: Record<string, any> = {}
 ) => {
   const response = await client.request({
     method: 'post',
@@ -89,6 +90,7 @@ export const POST = async (
     url,
     headers: {
       'Content-Type': 'multipart/form-data',
+      ...headers,
     },
   });
   return response;

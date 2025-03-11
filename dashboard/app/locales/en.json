@@ -40,10 +40,10 @@
         "month": "%M %Y"
       },
       "chat": {
-        "date": "%d %M %H:%i",
+        "date": "%d %MM %H:%i",
         "dateToday": "Today at %H:%i",
         "dateYesterday": "Yesterday at %H:%i",
-        "dateYear": "%d %M %Y"
+        "dateYear": "%d %MM %Y"
       },
       "timestamp": "%Y%m%D"
     },

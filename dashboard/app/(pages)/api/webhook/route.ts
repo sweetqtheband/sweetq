@@ -1,10 +1,28 @@
 import { ERRORS, HTTP_STATUS_CODES } from '@/app/constants';
-import { corsOptions } from '@/app/services/api/_db';
+import { corsOptions, getCollection } from '@/app/services/api/_db';
+import { FactorySvc } from '@/app/services/api/factory';
 import { NextRequest } from 'next/server';
+import { EA } from '@/app/services/api/_events';
+
+const collection = 'instagram';
 
 export async function OPTIONS(req: NextRequest) {
   const [message, params] = corsOptions(req);
   return new Response(message, params);
+}
+
+export async function POST(req: NextRequest) {
+  const svc = FactorySvc(collection, await getCollection(collection));
+  const body = await req.json();
+  if (body.object === 'instagram') {
+    body.entry.forEach(async (entry: any) => {
+      entry.messaging.forEach(async (message: any) => {
+        EA.add('chat', message);
+      });
+    });
+  }
+
+  return Response.json({ status: 'ok' }, { status: HTTP_STATUS_CODES.OK });
 }
 
 export async function GET(req: NextRequest) {
@@ -13,6 +31,7 @@ export async function GET(req: NextRequest) {
   if (message?.error === ERRORS.CORS) {
     return new Response(message, corsParams);
   }
+
   const qp = req.nextUrl.searchParams;
 
   const mode = qp.get('hub.mode');

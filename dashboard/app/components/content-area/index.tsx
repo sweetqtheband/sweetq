@@ -11,10 +11,10 @@ import {
 } from 'react';
 import ContentEditable, { ContentEditableEvent } from 'react-contenteditable';
 import './content-area.scss';
-import { FaceAdd, Parameter } from '@carbon/react/icons';
+import { FaceAdd, Parameter, Send } from '@carbon/react/icons';
 import { ICON_SIZES, VARIABLES } from '@/app/constants';
 import { Dropdown } from '@carbon/react';
-import { getClasses, uuid } from '@/app/utils';
+import { getClasses, isMobile, uuid } from '@/app/utils';
 
 const pickerLocale: Record<string, any> = {
   en: dataEn,
@@ -28,6 +28,7 @@ export default function ContentArea({
   translations = {},
   invalid = false,
   onChange = () => {},
+  onSend = null,
   variant = 'default',
   hasParameter = false,
 }: Readonly<{
@@ -37,6 +38,7 @@ export default function ContentArea({
   invalid?: boolean;
   translations?: Record<string, any>;
   onChange?: Function;
+  onSend?: Function | null;
   variant?: string;
   hasParameter?: boolean;
 }>) {
@@ -120,6 +122,19 @@ export default function ContentArea({
   const handleShowVars = () => {
     setShowParameter(!showParameter);
   };
+
+  const handleSend = () => {
+    onChangeHandler();
+    if (onSend) onSend(contentEditableRef.current?.innerText);
+    setDefaultValue('');
+  };
+
+  const onKeyDownHandler = (e: any) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  };
   return (
     <>
       <div
@@ -136,6 +151,7 @@ export default function ContentArea({
             html={defaultValue}
             disabled={false}
             onChange={handleChange}
+            onKeyDown={onKeyDownHandler}
             tagName="div"
           />
         </div>
@@ -143,7 +159,12 @@ export default function ContentArea({
           {hasParameter ? (
             <Parameter size={ICON_SIZES.MD} onClick={handleShowVars} />
           ) : null}
-          <FaceAdd size={ICON_SIZES.MD} onClick={handleShowEmoji} />
+          {!isMobile() ? (
+            <FaceAdd size={ICON_SIZES.MD} onClick={handleShowEmoji} />
+          ) : null}
+          {typeof onSend === 'function' ? (
+            <Send size={ICON_SIZES.MD} onClick={handleSend} />
+          ) : null}
         </div>
       </div>
       {showParameter && (

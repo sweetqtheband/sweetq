@@ -51,7 +51,7 @@ export default function InstagramView(params: Readonly<any>) {
         item={item}
         translations={params.translations}
         setItem={setItem}
-        onSave={methods.onMessage}
+        onSave={methods.onSendInstagramMessage}
       />
     </>
   );

@@ -31,6 +31,8 @@
     position: relative;
     top: 16px;
     overflow-y: auto;
+    scrollbar-gutter: stable;
+
     padding: 0px 4px;
     height: calc(
       100vh - var(--header-height) - var(--footer-height) - var(--header-height)
@@ -39,6 +41,7 @@
     a {
       font-weight: 700;
       color: var(--dark-text-color);
+      word-break: break-all;
     }
   }
 
@@ -58,7 +61,7 @@
 
     .avatar {
       position: absolute;
-      z-index: 1;
+      z-index: 0;
       top: 8px;
       left: 9px;
       border-radius: 30px;
@@ -83,7 +86,7 @@
   overflow: hidden;
   position: relative;
   width: 100%;
-  padding: 0 4px 0 0;
+  padding: 0 4px;
   > div {
     position: relative;
   }
@@ -103,14 +106,48 @@
     text-align: center;
     width: 100%;
     font-size: var(--chat-font-size);
+    padding: calc(var(--padding) * 2) 0;
   }
+
   .message {
     clear: both;
     float: left;
-    padding: 6px 10px 7px;
-    border-radius: 10px 10px 10px 0;
+    border-radius: 0px 10px 10px 0;
     background-color: var(--personal-message-bg-color);
-    margin: 8px 0;
+
+    margin: 1px 0;
+    padding: 6px 10px 7px;
+
+    &.message-first {
+      margin-bottom: 1px;
+      margin-top: var(--padding);
+      border-radius: 10px 10px 10px 0px;
+    }
+    &.message-last {
+      margin-top: 1px;
+      border-radius: 0px 10px 10px 0px;
+    }
+
+    &.spaced {
+      margin-top: var(--padding);
+      margin-bottom: var(--padding);
+    }
+
+    &.skeleton {
+      .text {
+        .cds--skeleton__text {
+          width: 100%;
+          height: 20px;
+          min-width: 200px;
+          top: 0;
+          margin: 0;
+        }
+      }
+
+      &.message-personal {
+        background-color: var(--personal-message-bg-color);
+      }
+    }
     line-height: 1.4;
     margin-left: 35px;
     position: relative;
@@ -146,13 +183,17 @@
       color: #fff;
       text-align: right;
       background: var(--other-message-bg-color);
-      border-radius: 10px 10px 0 10px;
-    }
+      border-radius: 10px 0 0 10px;
 
-    &:last-child {
-      margin-bottom: 30px;
+      &.message-first {
+        margin-bottom: 1px;
+        border-radius: 10px 10px 0 10px;
+      }
+      &.message-last {
+        margin-top: 1px;
+        border-radius: 10px 0 10px 10px;
+      }
     }
-
     &.new {
       transform: scale(0);
       transform-origin: 0 0;
@@ -189,6 +230,9 @@
 }
 
 footer {
+  .contenteditable--wrapper[data-variant='input'] {
+    left: calc(var(--padding) * 1.5);
+  }
   height: var(--footer-height);
 }
 

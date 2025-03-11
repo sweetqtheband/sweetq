@@ -211,6 +211,38 @@ const getMessage = async (instance: any, messageId: string) => {
   }
 };
 
+const sendMessage = async (instance: any, data: Record<string, any>) => {
+  if (!accessToken) {
+    await getHeaders(instance);
+  }
+  try {
+    const params = {
+      fields: 'id,created_time,from,to,message',
+      access_token: accessToken,
+    };
+    const response = await POST(
+      graph,
+      {
+        recipient: {
+          id: data.recipient,
+        },
+        message: {
+          text: data.text,
+        },
+      },
+      `/me/messages`,
+      {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 /**
  * Instagram service
  */
@@ -225,4 +257,5 @@ export const instagramSvc = (collection: Collection<Document>) => ({
   getConversations,
   getMessages,
   getMessage,
+  sendMessage,
 });

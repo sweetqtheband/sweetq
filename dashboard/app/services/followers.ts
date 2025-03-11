@@ -13,6 +13,7 @@ import { onSave } from './_methods';
 import { Tags } from './tags';
 import { SendAlt } from '@carbon/react/icons';
 import { InstagramMessages } from './instagramMessages';
+import { instagram } from './instagram';
 
 export const Types = {
   id: FIELD_TYPES.HIDDEN,
@@ -265,6 +266,9 @@ const getMethods = (router?: any, translations?: any): Record<string, any> => ({
   },
   onMessageSave: async (data: any) => {
     return onSave(InstagramMessages, router, data, []);
+  },
+  onSendInstagramMessage: async (data: any) => {
+    return instagram.sendMessage(data);
   },
   action: {
     onClick: async (data: any, setItem: Function) => {

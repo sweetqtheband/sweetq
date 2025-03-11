@@ -6,6 +6,7 @@
   height: 100%;
   width: 100%;
   font-size: var(--text-font-size);
+  line-height: calc(var(--text-font-size) * 1.1);
   &:focus {
     outline: none;
   }
@@ -52,13 +53,19 @@
   position: absolute;
   width: calc(100% - calc(var(--padding) * 2));
   left: 0;
+  display: flex;
+
   .contenteditable--scroll {
     height: 100%;
+    flex: auto;
   }
   .contenteditable--actions {
-    position: absolute;
-    top: 0;
-    right: 0;
+    position: relative;
+
+    flex: 1;
+    height: 100%;
+    display: flex;
+    gap: var(--padding);
   }
 }
 

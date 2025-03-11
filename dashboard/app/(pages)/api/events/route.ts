@@ -4,14 +4,15 @@ import { NextRequest, NextResponse } from 'next/server';
 import { corsOptions } from '@/app/services/api/_db'; // Added corsOptions import
 import { ERRORS } from '@/app/constants';
 
+const channels = ['chat', 'instagram'];
+
 export async function OPTIONS(req: NextRequest) {
   const [message, params] = corsOptions(req);
   return new Response(message, params);
 }
 
-const checkInstagram = async (controller: any) => {
-  const event = await EA.find({ eventType: 'instagram' });
-
+const check = async (controller: any) => {
+  const event = await EA.find({ eventType: { $in: channels } });
   if (event) {
     controller.enqueue(
       'data: ' +
@@ -36,7 +37,7 @@ export function GET(req: NextRequest) {
     async start(controller) {
       const interval = setInterval(async () => {
         try {
-          await checkInstagram(controller);
+          await check(controller);
         } catch {
           // Noop
         }

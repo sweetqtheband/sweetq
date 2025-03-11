@@ -3,6 +3,7 @@ import { SetStateAction, useEffect, useState } from 'react';
 import { WindowContext } from './context';
 import './reset.css';
 import './globals.scss';
+import { getClasses, isMobile } from './utils';
 
 let resizeTimeout: any = null;
 let isResizing = false;
@@ -13,6 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const [adjusted, setAdjusted] = useState(false);
+  const [classes, setClasses] = useState('');
 
   useEffect(() => {
     const adjust = () => {
@@ -73,10 +75,15 @@ export default function RootLayout({
 
     window.addEventListener('resize', resizeHandler);
 
+    setClasses(
+      getClasses({
+        mobile: isMobile(),
+      })
+    );
     return () => {
       window.removeEventListener('resize', resizeHandler);
     };
-  }, [windowState]);
+  }, [windowState, setClasses]);
 
   return (
     <WindowContext.Provider value={windowState}>
@@ -157,7 +164,7 @@ export default function RootLayout({
             href="/favicons/favicon-16x16.png"
           ></link>
         </head>
-        <body>{children}</body>
+        <body className={classes}>{children}</body>
       </html>
     </WindowContext.Provider>
   );

@@ -5,6 +5,13 @@ $breakpoints: (
   desktop: 'min-width: 1280px',
 );
 
+$from: (
+  mobile: 'min-width: 0px',
+  tablet: 'min-width: 640px',
+  laptop: 'min-width: 1024px',
+  desktop: 'min-width: 1280px',
+);
+
 $themes: (
   light: 'prefers-color-scheme: light',
   dark: 'prefers-color-scheme: dark',

@@ -10,6 +10,16 @@
   }
 }
 
+@mixin from($from) {
+  $query: map-get(vars.$from, $from);
+
+  @if $query {
+    @media screen and (#{$query}) {
+      @content;
+    }
+  }
+}
+
 @mixin theme($theme) {
   $query: map-get(vars.$themes, $theme);
 

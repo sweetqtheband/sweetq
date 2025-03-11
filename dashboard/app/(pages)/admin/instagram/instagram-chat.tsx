@@ -1,13 +1,14 @@
 import { ContentArea, Panel } from '@/app/components';
-import { Section } from '@carbon/react';
-import { useEffect, useState } from 'react';
+import { SkeletonPlaceholder, SkeletonText } from '@carbon/react';
+import { useEffect, useRef, useState } from 'react';
 
 import './instagram-chat.scss';
 import { instagram } from '@/app/services/instagram';
 import { dateFormat, getClasses } from '@/app/utils';
 import { renderField } from '@/app/render';
 import { FIELD_TYPES } from '@/app/constants';
-import { format } from 'path';
+import { useEventBus } from '@/app/hooks/event';
+import { off } from 'process';
 
 export default function InstagramChat({
   item,
@@ -21,18 +22,50 @@ export default function InstagramChat({
   onSave: Function;
 }>) {
   const [messages, setMessages] = useState<any[]>([]);
-  const [message, setMessage] = useState<string>('');
   const [forceClose, setForceClose] = useState<boolean>(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
   const data: Record<string, any> = {
     date: null,
     username: null,
   };
 
+  const { on: onInstagramMessage, off: offInstragramMessage } =
+    useEventBus('chat');
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
   const today = new Date();
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
+
+  onInstagramMessage((data) => {
+    if (
+      data.message &&
+      data.sender.id === String(item?.instagram_id) &&
+      data.recipient.id === process.env.NEXT_PUBLIC_INSTAGRAM_ID
+    ) {
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        {
+          id: data.message.mid,
+          from: {
+            username: item?.username,
+            id: item?.instagram_id,
+          },
+          to: {
+            data: [
+              {
+                username: process.env.NEXT_PUBLIC_INSTAGRAM_USERNAME,
+                id: process.env.NEXT_PUBLIC_INSTAGRAM_ID,
+              },
+            ],
+          },
+          message: data.message.text,
+          created_time: new Date(data.timestamp).toISOString(),
+        },
+      ]);
+    }
+  });
 
   useEffect(() => {
     if (item && !isInitialized) {
@@ -41,27 +74,62 @@ export default function InstagramChat({
           item.instagram_conversation_id
         );
 
-        setMessages(response.data.reverse());
+        setMessages([...response.data.reverse()]);
 
         setIsInitialized(true);
       };
       initialize();
     }
   }, [item, isInitialized]);
-  const onSaveHandler = async () => {
-    setForceClose(true);
-    setIsInitialized(false);
-    setItem(null);
-  };
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   const onCloseHandler = async () => {
     setIsInitialized(false);
     setForceClose(false);
     setItem(null);
+    offInstragramMessage();
   };
 
-  const onInputHandler = (text: string) => {
-    setMessage(text);
+  const onSaveHandler = async (text: string) => {
+    if (text) {
+      const { data: response } = await onSave({
+        text,
+        conversation_id: item?.instagram_conversation_id,
+        recipient: item?.instagram_id,
+      });
+
+      if (response) {
+        const data = response.data;
+
+        if (data) {
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            {
+              id: data.message_id,
+              from: {
+                username: process.env.NEXT_PUBLIC_INSTAGRAM_USERNAME,
+                id: process.env.NEXT_PUBLIC_INSTAGRAM_ID,
+              },
+              to: {
+                data: [
+                  {
+                    username: item?.username,
+                    id: item?.instagram_id,
+                  },
+                ],
+              },
+              message: text,
+              created_time: new Date().toISOString(),
+            },
+          ]);
+        }
+      }
+    }
   };
 
   const parseDate = (date: Date) => {
@@ -92,15 +160,23 @@ export default function InstagramChat({
     return dateFormat(date, formatStr, null, translations);
   };
 
-  const renderMessage = (msg: Record<string, any>) => {
+  const renderMessage = (
+    msg: Record<string, any>,
+    previous: Record<string, any> | null,
+    next: Record<string, any> | null,
+    index: number
+  ) => {
     const isMe =
       process.env.NEXT_PUBLIC_INSTAGRAM_USERNAME === msg.from.username;
-    const classesObj = {
+
+    let hideAvatar = false;
+
+    const classesObj: any = {
       message: true,
       'message-personal': isMe,
+      'message-first': false,
+      'message-last': false,
     };
-
-    const classes = getClasses(classesObj);
 
     const img = !isMe
       ? renderField({
@@ -119,13 +195,56 @@ export default function InstagramChat({
       updateDate = true;
     }
 
+    if (
+      updateDate ||
+      !previous ||
+      previous.from.username !== msg.from.username
+    ) {
+      classesObj['message-first'] = true;
+    } else {
+      if (
+        (next &&
+          next.from.username !== msg.from.username &&
+          previous?.from.username === msg.from.username) ||
+        (next?.created_time &&
+          date !==
+            dateFormat(
+              new Date(next.created_time),
+              'timestamp',
+              null,
+              translations
+            ) &&
+          next.from.username === msg.from.username &&
+          previous?.from.username === msg.from.username) ||
+        !next
+      ) {
+        classesObj['message-last'] = true;
+      }
+    }
+
+    if (
+      !isMe &&
+      next?.from.username === msg.from.username &&
+      next?.created_time &&
+      date ===
+        dateFormat(new Date(next.created_time), 'timestamp', null, translations)
+    ) {
+      hideAvatar = true;
+    }
+
+    const classes = getClasses(classesObj);
+
     return (
-      <div key={msg.id}>
+      <div key={`loop-${index}`}>
         {updateDate ? (
-          <div className="date">{parseDate(createdTime)}</div>
+          <div className="date" key={`date-${index}`}>
+            {parseDate(createdTime)}
+          </div>
         ) : null}
-        <div className={classes}>
-          {!isMe ? <figure className="avatar">{img}</figure> : null}
+        <div className={classes} key={`message-${index}`}>
+          {!isMe && !hideAvatar ? (
+            <figure className="avatar">{img}</figure>
+          ) : null}
           <LinkifyText text={msg.message} />
         </div>
       </div>
@@ -153,6 +272,33 @@ export default function InstagramChat({
     );
   };
 
+  const renderSkeletons = (count: number) => {
+    const skeletons = [];
+    for (let i = 0; i < count; i++) {
+      const classes = getClasses({
+        message: true,
+        skeleton: true,
+        spaced: true,
+        'message-personal': i % 2 !== 0,
+        'message-first': true,
+      });
+
+      skeletons.push(
+        <div className={classes} key={`skeleton-${i}`}>
+          {i % 2 === 0 ? (
+            <div className="avatar">
+              <SkeletonPlaceholder />
+            </div>
+          ) : null}
+          <div className="text">
+            <SkeletonText />
+          </div>
+        </div>
+      );
+    }
+    return skeletons;
+  };
+
   const getContent = (item: Record<string, any>) => {
     return (
       <>
@@ -167,9 +313,18 @@ export default function InstagramChat({
             })}
           </figure>
         </div>
-        <div className="chat--area">
+        <div className="chat--area" ref={scrollRef}>
           <div className="messages">
-            {messages.map((message) => renderMessage(message))}
+            {!isInitialized
+              ? renderSkeletons(5)
+              : messages.map((message, index) =>
+                  renderMessage(
+                    message,
+                    messages?.[index - 1] || null,
+                    messages?.[index + 1] || null,
+                    index
+                  )
+                )}
           </div>
         </div>
         <footer>
@@ -177,9 +332,7 @@ export default function InstagramChat({
             id="message"
             variant="input"
             translations={translations}
-            onChange={(text: string) => {
-              onInputHandler(text);
-            }}
+            onSend={onSaveHandler}
             hasParameter={false}
           />
         </footer>

@@ -95,6 +95,13 @@ export const dateFormat = (
         ? i18n?.t(`date.months.${date.getMonth()}`)
         : getValue(translations?.date, `months.${String(date.getMonth())}`)
     ),
+    '%MM': String(
+      i18n
+        ? i18n?.t(`date.months.${date.getMonth()}`)
+        : getValue(translations?.date, `months.${String(date.getMonth())}`)
+            .substring(0, 3)
+            .toLocaleLowerCase()
+    ),
     '%y': String(date.getFullYear()).substring(2, 4),
     '%Y': String(date.getFullYear()),
     '%H': String(date.getHours()).padStart(2, '0'),
@@ -161,4 +168,12 @@ export const deepEqual: any = (obj1: any, obj2: any) => {
   if (keys1.length !== keys2.length) return false;
 
   return keys1.every((key) => deepEqual(obj1[key], obj2[key]));
+};
+
+export const isMobile = () => {
+  return typeof navigator !== 'undefined'
+    ? /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      )
+    : false;
 };
