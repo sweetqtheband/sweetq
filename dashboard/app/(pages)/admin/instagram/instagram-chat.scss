@@ -57,7 +57,19 @@
     width: 100%;
     height: var(--header-height);
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    justify-content: center;
+    flex-flow: column;
+
+    .title {
+      font-size: var(--text-font-size);
+      color: var(--light-text-color);
+    }
+
+    .subtitle {
+      font-size: var(--chat-font-size);
+      color: var(--light-text-color-disabled);
+    }
 
     .avatar {
       position: absolute;

@@ -347,6 +347,7 @@ export default function InstagramChat({
       actionIcon={null}
       onClose={onCloseHandler}
       forceClose={forceClose}
+      translations={translations}
     >
       {content}
     </Panel>
