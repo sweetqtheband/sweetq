@@ -48,7 +48,7 @@ jobs:
             echo "NEXT_PUBLIC_META_APP_ID=${{ vars.NEXT_PUBLIC_META_APP_ID }}" >> .env.production
             echo "NEXT_PUBLIC_META_VERSION=${{ vars.NEXT_PUBLIC_META_VERSION }}" >> .env.production
             echo "NEXT_PUBLIC_INSTAGRAM_ID=${{ vars.NEXT_PUBLIC_INSTAGRAM_ID }}" >> .env.production
-            echo "NEXT_PUBLIC_INSTAGRAM_USERNAME=${{ secrets.INSTAGRAM_USERNAME }}" >> .env.production
+            echo "NEXT_PUBLIC_INSTAGRAM_USERNAME=${{ vars.NEXT_PUBLIC_INSTAGRAM_USERNAME }}" >> .env.production
             rm -Rf /var/www/sweetq/dist /var/www/sweetq/www
             docker image prune -f
             docker-compose down

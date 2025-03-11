@@ -44,7 +44,7 @@ jobs:
             echo "NEXT_PUBLIC_META_APP_ID=${{ vars.NEXT_PUBLIC_META_APP_ID }}" >> .env.production
             echo "NEXT_PUBLIC_META_VERSION=${{ vars.NEXT_PUBLIC_META_VERSION }}" >> .env.production
             echo "NEXT_PUBLIC_INSTAGRAM_ID=${{ vars.NEXT_PUBLIC_INSTAGRAM_ID }}" >> .env.production
-            echo "NEXT_PUBLIC_INSTAGRAM_USERNAME=${{ secrets.INSTAGRAM_USERNAME }}" >> .env.production
+            echo "NEXT_PUBLIC_INSTAGRAM_USERNAME=${{ vars.NEXT_PUBLIC_INSTAGRAM_USERNAME }}" >> .env.production
 
       - name: Reiniciar contenedores Docker para aplicar cambios
         uses: appleboy/ssh-action@master
