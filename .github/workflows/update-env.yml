@@ -61,7 +61,8 @@ jobs:
             CONTAINER_ID=$(docker ps -q --filter "name=sweetq")
             if [ -n "$CONTAINER_ID" ]; then
               docker cp .env.production $CONTAINER_ID:/app/.env.production
-              docker restart $CONTAINER_ID
+              docker-compose down
+              docker-compose up -d
             else
               echo "Unable to find container'sweetq'."
               exit 1
