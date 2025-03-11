@@ -1,0 +1,58 @@
+name: Actualizar .env y reiniciar contenedores
+
+on:
+  workflow_dispatch: # Permite ejecutar el workflow manualmente desde la interfaz de GitHub
+
+jobs:
+  update_env:
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      VPS_HOST: ${{ secrets.VPS_HOST }}
+
+    steps:
+      - name: Conectar al VPS y actualizar archivo .env
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd /var/www/sweetq/dashboard
+            echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" > .env.production
+            echo "MONGODB_DATABASE=${{ secrets.MONGODB_DATABASE }}" >> .env.production
+            echo "MONGODB_USER=${{ secrets.MONGODB_USER }}" >> .env.production
+            echo "MONGODB_PASSWORD=\"${{ secrets.MONGODB_PASSWORD }}\"" >> .env.production
+            echo "MONGODB_AUTH_SOURCE=${{ secrets.MONGODB_AUTH_SOURCE }}" >> .env.production
+            echo "INSTAGRAM_USERNAME=${{ secrets.INSTAGRAM_USERNAME }}" >> .env.production
+            echo "INSTAGRAM_USER=${{ secrets.INSTAGRAM_USER }}" >> .env.production
+            echo "INSTAGRAM_PASSWORD=${{ secrets.INSTAGRAM_PASSWORD }}" >> .env.production
+            echo "INSTAGRAM_CLIENT_ID=${{ secrets.INSTAGRAM_CLIENT_ID }}" >> .env.production
+            echo "INSTAGRAM_CLIENT_SECRET=${{ secrets.INSTAGRAM_CLIENT_SECRET }}" >> .env.production
+            echo "INSTAGRAM_REDIRECT_URI=${{ secrets.INSTAGRAM_REDIRECT_URI }}" >> .env.production
+            echo "TOKEN_SECRET=${{ secrets.TOKEN_SECRET }}" >> .env.production
+            echo "META_WEBHOOK_TOKEN=${{ secrets.META_WEBHOOK_TOKEN }}" >> .env.production
+            echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> .env.production
+            echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env.production
+            echo "ALLOWED_ORIGINS=${{ secrets.ALLOWED_ORIGINS }}" >> .env.production
+            echo "API_INSTAGRAM=${{ vars.API_INSTAGRAM }}" >> .env.production
+            echo "GRAPH_INSTAGRAM=${{ vars.GRAPH_INSTAGRAM }}" >> .env.production
+            echo "API_INSTAGRAM_VERSION=${{ vars.API_INSTAGRAM_VERSION }}" >> .env.production
+            echo "NODE_ENV=${{ vars.NODE_ENV }}" >> .env.production
+            echo "NEXT_PUBLIC_API_URI=${{ vars.NEXT_PUBLIC_API_URI }}" >> .env.production
+            echo "NEXT_PUBLIC_AWS_REGION=${{ vars.NEXT_PUBLIC_AWS_REGION }}" >> .env.production
+            echo "NEXT_PUBLIC_AWS_BUCKET_NAME=${{ vars.NEXT_PUBLIC_AWS_BUCKET_NAME }}" >> .env.production
+            echo "NEXT_PUBLIC_META_APP_ID=${{ vars.NEXT_PUBLIC_META_APP_ID }}" >> .env.production
+            echo "NEXT_PUBLIC_META_VERSION=${{ vars.NEXT_PUBLIC_META_VERSION }}" >> .env.production
+            echo "NEXT_PUBLIC_INSTAGRAM_ID=${{ vars.NEXT_PUBLIC_INSTAGRAM_ID }}" >> .env.production
+
+      - name: Reiniciar contenedores Docker para aplicar cambios
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd /var/www/sweetq/dashboard
+            docker-compose down
+            docker-compose up -d
