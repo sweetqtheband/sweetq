@@ -54,5 +54,11 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             cd /var/www/sweetq/dashboard
-            docker-compose down
-            docker-compose up -d
+            CONTAINER_ID=$(docker ps -q --filter "name=sweetq")
+            if [ -n "$CONTAINER_ID" ]; then
+              docker cp .env.production $CONTAINER_ID:/app/.env.production
+              docker restart $CONTAINER_ID
+            else
+              echo "No se encontró un contenedor en ejecución con el nombre 'sweetq'."
+              exit 1
+            fi
