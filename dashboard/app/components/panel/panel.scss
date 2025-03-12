@@ -10,6 +10,10 @@
   pointer-events: none;
   z-index: 1;
 
+  &.no-overlay {
+    width: auto;
+  }
+
   &-wrapper {
     transition: transform 200ms ease-out;
     background-color: var(--light-bg-color);
@@ -17,9 +21,17 @@
     position: fixed;
     height: var(--panel-wrapper-height, 100%);
     top: var(--panel-wrapper-top, 0);
-    transform: translateX(100vw);
   }
-
+  &.right {
+    .panel-wrapper {
+      transform: translateX(100vw);
+    }
+  }
+  &.left {
+    .panel-wrapper {
+      transform: translateX(-100vw);
+    }
+  }
   &-overlay {
     transition: opacity 200ms ease-out;
     pointer-events: none;
@@ -30,7 +42,6 @@
   }
 
   .panel-wrapper {
-    width: 60vw;
     @include breakpoint(mobile) {
       width: 100vw;
     }
@@ -73,9 +84,17 @@
 
     .panel-wrapper {
       transition: transform 200ms ease-in;
-      transform: translateX(40vw);
     }
-
+    &.right {
+      .panel-wrapper {
+        transform: translateX(40vw);
+      }
+    }
+    &.left {
+      .panel-wrapper {
+        transform: translateX(0vw);
+      }
+    }
     .panel-overlay {
       transition: opacity 200ms ease-in;
       background-color: var(--dark-bg-color);
@@ -88,32 +107,73 @@
       }
     }
     .panel-content {
-      max-height: 80vh;
+      max-height: calc(var(--full-height) * 0.8);
       .fields {
         overflow-y: auto;
         padding: 0px calc(var(--padding) * 2);
-        max-height: calc(80vh);
+        max-height: calc(var(--full-height) * 0.8);
 
         @include breakpoint(mobile) {
-          max-height: calc(80vh - 25px);
+          max-height: calc(var(--full-height) * 0.8 - 25px);
         }
       }
     }
     @include breakpoint(mobile) {
-      .panel-wrapper {
-        transition: transform 400ms ease-in;
-        transform: translateX(0vw);
+      &.right {
+        .panel-wrapper {
+          transform: translateX(var(--panel-right-mobile-transform, 0));
+          width: var(--panel-right-mobile-max-width, 100vw);
+        }
+      }
+      &.left {
+        .panel-wrapper {
+          width: var(--panel-left-mobile-max-width, 100vw);
+        }
       }
     }
 
     @include breakpoint(tablet) {
-      .panel-wrapper {
-        transition: transform 400ms ease-in;
-        transform: translateX(20vw);
+      &.right {
+        .panel-wrapper {
+          transform: translateX(var(--panel-right-tablet-transform, 50vw));
+          width: var(--panel-right-tablet-max-width, 50vw);
+        }
+      }
+
+      &.left {
+        .panel-wrapper {
+          width: var(--panel-left-tablet-max-width, 50vw);
+        }
       }
     }
 
-    @include breakpoint(desktop) {
+    @include breakpoint(laptop) {
+      &.right {
+        .panel-wrapper {
+          transform: translateX(var(--panel-right-laptop-transform, 40vw));
+          width: var(--panel-right-laptop-max-width, 60vw);
+        }
+      }
+
+      &.left {
+        .panel-wrapper {
+          width: var(--panel-left-laptop-max-width, 50vw);
+        }
+      }
+    }
+
+    @include from(desktop) {
+      &.right {
+        .panel-wrapper {
+          transform: translateX(var(--panel-right-desktop-transform, 45vw));
+          width: var(--panel-right-desktop-max-width, 55vw);
+        }
+      }
+      &.left {
+        .panel-wrapper {
+          width: var(--panel-left-desktop-max-width, 50vw);
+        }
+      }
       .fields {
         --webkit-scrollbar {
           display: none;
@@ -123,6 +183,15 @@
           --webkit-scrollbar {
             background: rgba(0, 0, 0, 0.3);
           }
+        }
+      }
+    }
+
+    @include from(widescreen) {
+      &.right {
+        .panel-wrapper {
+          transform: translateX(var(--panel-right-desktop-transform, 60vw));
+          width: var(--panel-right-desktop-max-width, 40vw);
         }
       }
     }

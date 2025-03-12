@@ -4,6 +4,9 @@
   --header-height: 48px;
   --footer-height: 80px;
   --header-global-height: 47px;
+
+  --panel-left-laptop-max-width: 410px;
+  --panel-left-desktop-max-width: 410px;
 }
 
 @mixin center {
@@ -35,7 +38,8 @@
 
     padding: 0px 4px;
     height: calc(
-      100vh - var(--header-height) - var(--footer-height) - var(--header-height)
+      var(--full-height) - var(--header-height) - var(--footer-height) -
+        var(--header-height)
     );
 
     a {

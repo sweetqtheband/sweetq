@@ -1,8 +1,9 @@
 $breakpoints: (
   mobile: 'max-width: 639px',
-  tablet: 'min-width: 640px and max-width: 1023px',
-  laptop: 'min-width: 1024px and max-width: 1279px',
-  desktop: 'min-width: 1280px',
+  tablet: 'min-width: 640px) and (max-width: 1023px',
+  laptop: 'min-width: 1024px) and (max-width: 1279px',
+  desktop: 'min-width: 1280px) and (max-width: 1920px',
+  widescreen: 'min-width: 1920px',
 );
 
 $from: (
@@ -10,6 +11,7 @@ $from: (
   tablet: 'min-width: 640px',
   laptop: 'min-width: 1024px',
   desktop: 'min-width: 1280px',
+  widescreen: 'min-width: 1920px',
 );
 
 $themes: (

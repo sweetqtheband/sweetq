@@ -136,24 +136,25 @@ export default function ListTable({
   }
 
   const onInternalStateHandler = (fields: string | string[], value: any) => {
-    const filterInternalState = { ...internalState };
-    if (fields instanceof Array) {
-      fields.forEach((field, index) => {
-        delete filterInternalState[field];
+    setInternalState((prevState) => {
+      const filterInternalState = { ...prevState };
+      if (fields instanceof Array) {
+        fields.forEach((field, index) => {
+          delete filterInternalState[field];
+
+          if (value) {
+            filterInternalState[field] = value[index];
+          }
+        });
+      } else {
+        delete filterInternalState[fields];
 
         if (value) {
-          filterInternalState[field] = value[index];
+          filterInternalState[fields] = value;
         }
-      });
-    } else {
-      delete filterInternalState[fields];
-
-      if (value) {
-        filterInternalState[fields] = value;
       }
-    }
-
-    setInternalState(filterInternalState);
+      return filterInternalState;
+    });
   };
 
   useEffect(() => {
@@ -546,14 +547,14 @@ export default function ListTable({
                 delete currentState[field];
 
                 if (value) {
-                  setFormState({
-                    ...currentState,
+                  setFormState((prevState) => ({
+                    ...prevState,
                     [field]: value,
-                  });
+                  }));
                 } else {
-                  setFormState({
+                  setFormState((prevState) => ({
                     ...currentState,
-                  });
+                  }));
                 }
               };
 
@@ -563,15 +564,17 @@ export default function ListTable({
               };
 
               const handleFilterFormState = (field: string, value: any) => {
-                const filterFormState = { ...formState };
-                delete filterFormState[field];
+                setFormState((prevState) => {
+                  const filterFormState = { ...prevState };
+                  delete filterFormState[field];
 
-                if (value) {
-                  filterFormState[field] = value;
-                } else {
-                  filterFormState[field] = null;
-                }
-                setFormState(filterFormState);
+                  if (value) {
+                    filterFormState[field] = value;
+                  } else {
+                    filterFormState[field] = null;
+                  }
+                  return filterFormState;
+                });
               };
 
               return renderField({

@@ -343,6 +343,8 @@ export default function InstagramChat({
 
   return (
     <Panel
+      className="instagram-chat"
+      from="left"
       overlay={false}
       actionIcon={null}
       onClose={onCloseHandler}

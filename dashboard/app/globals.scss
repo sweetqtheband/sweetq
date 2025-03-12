@@ -65,6 +65,7 @@
   --cds-tag-hover-warm-gray: #d8d0cf;
   --cds-tag-background-high-contrast: #393939;
   --cds-tag-color-high-contrast: #ffffff;
+  --full-height: calc(var(--vh, 1vh) * 100);
 
   font-family: 'sans-serif';
 }
@@ -127,7 +128,7 @@ body:not(.mobile) {
 }
 
 html {
-  height: calc(var(--vh, 1vh) * 100);
+  height: var(--full-height);
   max-width: 100vw;
   overflow-x: hidden;
   padding: 0;

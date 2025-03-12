@@ -586,7 +586,7 @@ const renderUploader = ({
             labelText={translations.uploader}
             name={field}
             disabled={false}
-            onChange={(e) => console.log('onChange', e)}
+            onChange={(e) => true}
             onAddFiles={(_, { addedFiles: files }) =>
               onAddFileHandler(field, files)
             }

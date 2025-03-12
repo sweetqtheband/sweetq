@@ -12,6 +12,8 @@ export default function PanelComponent({
   children,
   forceClose = false,
   onClose = () => true,
+  className = '',
+  from = 'right',
   overlay = true,
   actionLabel = '',
   actionIcon = null,
@@ -21,6 +23,8 @@ export default function PanelComponent({
   children: React.ReactNode | null;
   forceClose: boolean;
   onClose: Function;
+  className?: string;
+  from?: string;
   overlay?: boolean;
   actionLabel?: string;
   actionIcon?: string | null;
@@ -59,11 +63,16 @@ export default function PanelComponent({
     setIsResizing(windowState?.resizing ?? false);
   }, [windowState]);
 
-  const classes = getClasses({
-    panel: true,
-    open: isOpen,
-    resizing: isResizing,
-  });
+  const classes =
+    className +
+    ' ' +
+    getClasses({
+      panel: true,
+      open: isOpen,
+      [from]: true,
+      'no-overlay': !overlay,
+      resizing: isResizing,
+    });
 
   const onActionHandler = (e: any) => {
     onAction();
@@ -94,7 +103,7 @@ export default function PanelComponent({
   return (
     <div className={classes} ref={animatedRef}>
       {overlay && actionLabel ? <div className="panel-overlay"></div> : null}
-      <div className="panel-wrapper">
+      <div className="panel-wrapper" style={{ overscrollBehavior: 'contain' }}>
         {icon && (
           <div className="action" onClick={onActionHandler}>
             <Tooltip label={actionLabel} align="bottom" autoAlign>
