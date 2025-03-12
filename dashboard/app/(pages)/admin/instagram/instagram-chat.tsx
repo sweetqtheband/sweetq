@@ -8,7 +8,6 @@ import { dateFormat, getClasses } from '@/app/utils';
 import { renderField } from '@/app/render';
 import { FIELD_TYPES } from '@/app/constants';
 import { useEventBus } from '@/app/hooks/event';
-import { off } from 'process';
 
 export default function InstagramChat({
   item,
@@ -38,50 +37,59 @@ export default function InstagramChat({
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
 
-  onInstagramMessage((data) => {
-    if (
-      data.message &&
-      data.sender.id === String(item?.instagram_id) &&
-      data.recipient.id === process.env.NEXT_PUBLIC_INSTAGRAM_ID
-    ) {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        {
-          id: data.message.mid,
-          from: {
-            username: item?.username,
-            id: item?.instagram_id,
-          },
-          to: {
-            data: [
-              {
-                username: process.env.NEXT_PUBLIC_INSTAGRAM_USERNAME,
-                id: process.env.NEXT_PUBLIC_INSTAGRAM_ID,
+  // Suscripción a los mensajes de Instagram solo una vez
+  useEffect(() => {
+    if (item) {
+      onInstagramMessage((data) => {
+        if (
+          data.message &&
+          data.sender.id === String(item?.instagram_id) &&
+          data.recipient.id === process.env.NEXT_PUBLIC_INSTAGRAM_ID
+        ) {
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            {
+              id: data.message.mid,
+              from: {
+                username: item?.username,
+                id: item?.instagram_id,
               },
-            ],
-          },
-          message: data.message.text,
-          created_time: new Date(data.timestamp).toISOString(),
-        },
-      ]);
+              to: {
+                data: [
+                  {
+                    username: process.env.NEXT_PUBLIC_INSTAGRAM_USERNAME,
+                    id: process.env.NEXT_PUBLIC_INSTAGRAM_ID,
+                  },
+                ],
+              },
+              message: data.message.text,
+              created_time: new Date(data.timestamp).toISOString(),
+            },
+          ]);
+        }
+      });
     }
-  });
 
+    return () => {
+      offInstragramMessage(); // Limpiar la suscripción al desmontar
+    };
+  }, [item, offInstragramMessage, onInstagramMessage]);
+
+  // Inicialización de los mensajes
   useEffect(() => {
     if (item && !isInitialized) {
       const initialize = async () => {
         const response = await instagram.getMessages(
           item.instagram_conversation_id
         );
-
         setMessages([...response.data.reverse()]);
-
         setIsInitialized(true);
       };
       initialize();
     }
   }, [item, isInitialized]);
 
+  // Desplazamiento automático hacia el último mensaje
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -92,7 +100,7 @@ export default function InstagramChat({
     setIsInitialized(false);
     setForceClose(false);
     setItem(null);
-    offInstragramMessage();
+    offInstragramMessage(); // Limpiar la suscripción al cerrar
   };
 
   const onSaveHandler = async (text: string) => {
