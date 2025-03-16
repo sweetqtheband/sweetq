@@ -14,7 +14,7 @@ export const Countries = {
 
   getOptions: async (params: Record<string, any> | null = null) => {
     return {
-      options: (await Countries.getAll(params)).items.map(
+      options: ((await Countries.getAll(params))?.items || []).map(
         (item: Record<string, string>) => ({
           id: item.id,
           value: item.name[params?.locale],

@@ -16,7 +16,7 @@ export const UserProfiles = {
   },
   getOptions: async (params: Record<string, any> | null = null) => {
     return {
-      options: (await UserProfiles.getAll(params?.query)).items.map(
+      options: ((await UserProfiles.getAll(params?.query))?.items || []).map(
         (item: Record<string, string>) => ({
           id: item.type,
           value: item.type,
