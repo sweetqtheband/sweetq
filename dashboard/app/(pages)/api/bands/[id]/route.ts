@@ -5,7 +5,6 @@ import { ERRORS, HTTP_STATUS_CODES } from '@/app/constants';
 import { revalidatePath } from 'next/cache';
 
 const collection = 'bands';
-
 interface Params {
   params: {
     id: string;
@@ -27,7 +26,6 @@ export async function PUT(req: NextRequest, { params }: Params) {
 
   try {
     const item = await putItem({ id, req, collection, types, options });
-    revalidatePath(`/admin/${collection}`);
 
     return Response.json(
       { data: item },

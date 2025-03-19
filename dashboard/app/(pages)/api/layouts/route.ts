@@ -8,7 +8,6 @@ const collection = 'layouts';
 const idx = 'name';
 
 export async function GET(req: NextRequest) {
-
   const [message, corsParams] = corsOptions(req);
 
   if (message?.error === ERRORS.CORS) {
@@ -20,12 +19,12 @@ export async function GET(req: NextRequest) {
       req,
       collection,
       idx,
-    }), corsParams
+    }),
+    corsParams
   );
 }
 
 export async function POST(req: NextRequest) {
-
   const [message, corsParams] = corsOptions(req);
 
   if (message?.error === ERRORS.CORS) {
@@ -36,7 +35,10 @@ export async function POST(req: NextRequest) {
     const item = await postItem({ req, collection, types, options });
     revalidatePath(`/admin/${collection}`);
 
-    return Response.json({ data: item }, { ...corsParams, status: HTTP_STATUS_CODES.OK });
+    return Response.json(
+      { data: item },
+      { ...corsParams, status: HTTP_STATUS_CODES.OK }
+    );
   } catch (err: Error | any) {
     return Response.json(
       { err: err?.message },

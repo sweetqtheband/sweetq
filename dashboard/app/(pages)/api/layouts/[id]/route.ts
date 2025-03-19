@@ -13,7 +13,6 @@ interface Params {
 }
 
 export async function PUT(req: NextRequest, { params }: Params) {
-
   const [message, corsParams] = corsOptions(req);
 
   if (message?.error === ERRORS.CORS) {
@@ -24,9 +23,11 @@ export async function PUT(req: NextRequest, { params }: Params) {
 
   try {
     const item = await putItem({ id, req, collection, types, options });
-    revalidatePath(`/admin/${collection}`);
 
-    return Response.json({ data: item }, { ...corsParams, status: HTTP_STATUS_CODES.OK });
+    return Response.json(
+      { data: item },
+      { ...corsParams, status: HTTP_STATUS_CODES.OK }
+    );
   } catch (err: any) {
     return Response.json(
       { err: err?.message },
@@ -36,7 +37,6 @@ export async function PUT(req: NextRequest, { params }: Params) {
 }
 
 export async function DELETE(req: NextRequest, { params }: Params) {
-  
   const [message, corsParams] = corsOptions(req);
 
   if (message?.error === ERRORS.CORS) {
@@ -49,7 +49,10 @@ export async function DELETE(req: NextRequest, { params }: Params) {
     const item = await deleteItem({ id, req, collection, types, options });
     revalidatePath(`/admin/${collection}`);
 
-    return Response.json({ data: item }, { ...corsParams, status: HTTP_STATUS_CODES.OK });
+    return Response.json(
+      { data: item },
+      { ...corsParams, status: HTTP_STATUS_CODES.OK }
+    );
   } catch (err: any) {
     return Response.json(
       { err: err?.message },

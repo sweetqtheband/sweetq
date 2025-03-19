@@ -27,7 +27,6 @@ export async function PUT(req: NextRequest, { params }: Params) {
 
   try {
     const item = await putItem({ id, req, collection, types, options });
-    revalidatePath(`/admin/${collection}`);
 
     return Response.json(
       { data: item },
