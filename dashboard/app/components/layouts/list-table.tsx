@@ -51,9 +51,11 @@ export default function ListTable({
   imageSize = 'md',
   limit = config.table.limit,
   total = 0,
-  timestamp = 0,
   pages = 0,
-  loading = false,
+  isLoading = false,
+  isWaiting = false,
+  setIsLoading = (value = false) => {},
+  setIsWaiting = (value = false) => {},
   onItemClick = () => {},
   onDelete = async () => true,
   noAdd = false,
@@ -70,9 +72,11 @@ export default function ListTable({
   imageSize: SizeType;
   limit: number;
   total?: number;
-  timestamp?: number;
   pages: number;
-  loading: boolean;
+  isLoading?: boolean;
+  isWaiting?: boolean;
+  setIsLoading?: (value: boolean) => void;
+  setIsWaiting?: (value: boolean) => void;
   onItemClick?: (item: any) => void;
   onDelete?: (ids: string[]) => Promise<boolean>;
   noAdd?: boolean;
@@ -96,13 +100,11 @@ export default function ListTable({
   }));
 
   const [deleteOpen, setDeleteOpen] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(loading || true);
   const [deleteRows, setDeleteRows] = useState<any[]>([]);
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false);
   const [internalState, setInternalState] = useState<Record<string, any>>({});
   const [formState, setFormState] = useState<Record<string, any>>({});
   const [filtering, setFiltering] = useState<boolean>(false);
-  const [waiting, setWaiting] = useState<boolean>(false);
 
   const params = new URLSearchParams(searchParams);
 
@@ -157,15 +159,9 @@ export default function ListTable({
     });
   };
 
-  useEffect(() => {
-    if (timestamp) {
-      setWaiting(false);
-    }
-  }, [timestamp]);
-
   useTableRenderComplete(tableId, () => {
     setTimeout(() => {
-      if (!waiting) {
+      if (!isWaiting) {
         setIsLoading(false);
       }
     }, 300);
@@ -186,10 +182,6 @@ export default function ListTable({
       }, false) || Object.keys(paramFiltersObj).length > 0
     );
   }, [internalState, filters, paramFiltersObj]);
-
-  useEffect(() => {
-    setIsLoading(loading);
-  }, [loading]);
 
   const renderCell = (
     row: Record<string, any>,
@@ -434,14 +426,14 @@ export default function ListTable({
 
     setSelectedLimit(limitItems.find((item) => item.id === selectedItem?.id));
     setIsLoading(true);
-    setWaiting(true);
+    setIsWaiting(true);
 
     replace(`${pathname}?${params.toString()}`);
   };
 
   const onPaginationChangeHandler = (page: number) => {
     setIsLoading(true);
-    setWaiting(true);
+    setIsWaiting(true);
     const params = new URLSearchParams(searchParams);
 
     params.set('page', String(page));
@@ -523,7 +515,7 @@ export default function ListTable({
             {filterFields.map((field: string, index: number) => {
               const handleFilter = (field: string, value: any) => {
                 setIsLoading(true);
-                setWaiting(true);
+                setIsWaiting(true);
                 const params = new URLSearchParams(searchParams);
                 params.delete('page');
                 if (value instanceof Array) {

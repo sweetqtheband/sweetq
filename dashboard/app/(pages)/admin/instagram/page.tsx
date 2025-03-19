@@ -79,10 +79,13 @@ export default async function InstagramPage({
   const filters = await Followers.getFilters({ searchParams, i18n });
 
   const layouts = (
-    await Layouts.getAll({
-      filters: { type: 'instagram' },
-      limit: 10000,
-    })
+    await Layouts.getAll(
+      {
+        filters: { type: 'instagram' },
+        limit: 10000,
+      },
+      true
+    )
   ).items;
 
   return (

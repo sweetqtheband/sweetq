@@ -28,7 +28,7 @@ const getOptions = async (params: any = {}) => {
   return {
     options: [
       ...options,
-      ...(await Layouts.getAll(params)).items.map(
+      ...(await Layouts.getAll(params, true)).items.map(
         (item: Record<string, string>) => ({
           id: item._id,
           value: item.name,

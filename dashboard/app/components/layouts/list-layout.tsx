@@ -41,7 +41,7 @@ export default function ListLayout({
   timestamp?: number;
   id?: string;
   loading?: boolean;
-  onSave?: (data: any, files: any) => Promise<boolean>;
+  onSave?: (data: any, files: any) => Promise<any>;
   onDelete?: (ids: string[]) => Promise<boolean>;
   actionIcon?: string | null;
   actionLabel?: string;
@@ -57,13 +57,28 @@ export default function ListLayout({
   onItemSelect?: Function;
 }>) {
   const [item, setItem] = useState(null);
-  const [isLoading, setIsLoading] = useState(loading);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isWaiting, setIsWaiting] = useState(false);
+
+  const [parsedItems, setParsedItems] = useState<any[]>([]);
 
   useEffect(() => {
-    if (loading !== isLoading) {
+    if (loading !== isLoading && !isWaiting) {
       setIsLoading(loading);
     }
-  }, [loading, isLoading]);
+  }, [loading, isLoading, isWaiting]);
+
+  useEffect(() => {
+    setParsedItems(items);
+    setIsLoading(false);
+    setIsWaiting(false);
+  }, [items]);
+
+  useEffect(() => {
+    if (timestamp) {
+      setIsWaiting(false);
+    }
+  }, [timestamp]);
 
   const onClose = async (item = null) => {
     setItem(null);
@@ -73,8 +88,53 @@ export default function ListLayout({
   const onSaveHandler = async (data: any, files: any) => {
     setIsLoading(true);
     const response = await onSave(data, files);
+
     if (response) {
+      setParsedItems((prevItems) => {
+        const newItems = [...prevItems];
+        const index = prevItems.findIndex(
+          (item) => item.id === response?.data.id
+        );
+        if (index >= 0) {
+          newItems[index] = {
+            ...prevItems[index],
+            ...Object.keys(response?.data).reduce(
+              (acc: Record<string, any>, key: string) => {
+                if (filters?.[key]?.fields?.options?.[key].options) {
+                  const filterOptions =
+                    filters[key].fields.options[key].options;
+                  // If it's an array, traverse through the options and find the value
+
+                  if (Array.isArray(response?.data[key])) {
+                    acc[key] = response?.data[key].map(
+                      (value: any) =>
+                        filterOptions.find(
+                          (option: any) => String(option.id) === String(value)
+                        )?.id || value
+                    );
+                  } else {
+                    acc[key] =
+                      filterOptions.find(
+                        (option: any) =>
+                          String(option.id) === String(response?.data[key])
+                      )?.value || response?.data[key];
+                  }
+                  return acc;
+                }
+
+                acc[key] = response?.data[key];
+                return acc;
+              },
+              {}
+            ),
+          };
+        } else {
+          newItems.unshift(data);
+        }
+        return [...newItems];
+      });
       onClose();
+      setIsLoading(false);
     }
     return true;
   };
@@ -92,20 +152,22 @@ export default function ListLayout({
     <>
       <ListTable
         id={id}
-        items={items}
+        items={parsedItems}
         onItemClick={onItemClickHandler}
         onDelete={onDelete}
         imageSize={imageSize}
         headers={headers}
         total={total}
         limit={limit}
-        timestamp={timestamp}
         pages={pages}
         filters={filters}
         translations={translations}
         noAdd={noAdd}
         fields={fields}
-        loading={isLoading}
+        isLoading={isLoading}
+        isWaiting={isWaiting}
+        setIsWaiting={setIsWaiting}
+        setIsLoading={setIsLoading}
         renders={renders}
         actions={actions}
         batchActions={batchActions}

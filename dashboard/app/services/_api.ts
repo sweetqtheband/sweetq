@@ -4,7 +4,31 @@ import { HTTP_STATUS_CODES } from '../constants';
 
 const isBuild = process.env.NEXT_PHASE === 'phase-production-build';
 
-export const getAll = async (client: AxiosInstance, searchParams: any = {}) => {
+const cache = new Map();
+
+const fetchWithCache = async (
+  client: AxiosInstance,
+  url: string,
+  params: Record<string, any> | null,
+  headers: Record<string, any>
+) => {
+  const slug = btoa(client.defaults.baseURL + url + JSON.stringify(params));
+
+  if (cache.has(slug)) {
+    return cache.get(slug); // Devuelve la data desde el cache
+  }
+
+  const data = await client.get(url, { params, headers });
+  cache.set(slug, data); // Guarda la respuesta en cache
+
+  return data;
+};
+
+export const getAll = async (
+  client: AxiosInstance,
+  searchParams: any = {},
+  cache: boolean = false
+) => {
   try {
     const limit =
       searchParams.limit !== undefined
@@ -50,8 +74,10 @@ export const getAll = async (client: AxiosInstance, searchParams: any = {}) => {
       params.sort = sort;
       params.sortDir = sortDir;
     }
+
     if (!isBuild) {
-      const response = await GET(client, '', params);
+      const response = await GET(client, '', params, cache ? cacheHeaders : {});
+
       return response.data;
     } else {
       return { items: [], total: 0, pages: 0 };
@@ -68,8 +94,11 @@ export const GET = async (
   headers: Record<string, any> = {}
 ): Promise<any> => {
   if (!isBuild) {
-    const response = await client.get(url, { params, headers });
-    return response;
+    if (headers?.['Cache-Control']) {
+      return await fetchWithCache(client, url, params, headers);
+    } else {
+      return await client.get(url, { params, headers });
+    }
   } else {
     return {
       data: { items: [], total: 0, pages: 0 },
@@ -119,4 +148,8 @@ export const DELETE = async (
     ? Promise.all(ids.map((id) => client.delete(url + id)))
     : client.delete(url + ids));
   return response;
+};
+
+export const cacheHeaders = {
+  'Cache-Control': 'max-age=86400',
 };

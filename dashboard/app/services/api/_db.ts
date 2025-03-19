@@ -134,9 +134,14 @@ export const getList = async ({
 
     const pages = Math.floor(total / Number(qp.get('limit'))) + 1;
 
+    const sorts: Record<string, any> =
+      sortField !== '_id'
+        ? { [sortField]: sortDir === SORT.ASC ? 1 : -1, _id: 1 }
+        : { _id: sortDir === SORT.ASC ? 1 : -1 };
+
     const items = await col
       .find(queryObj)
-      .sort({ [sortField]: sortDir === SORT.ASC ? 1 : -1 })
+      .sort(sorts)
       .limit(limit)
       .skip(skip)
       .collation({ locale: 'es', caseLevel: true })

@@ -1,12 +1,5 @@
-import { Options as options, Types as types } from '@/app/services/bands';
 import { NextRequest } from 'next/server';
-import {
-  corsOptions,
-  getCollection,
-  getList,
-  postItem,
-} from '@/app/services/api/_db';
-import { revalidatePath } from 'next/cache';
+import { corsOptions, getCollection } from '@/app/services/api/_db';
 import { ERRORS, HTTP_STATUS_CODES } from '@/app/constants';
 import { FactorySvc } from '@/app/services/api/factory';
 import { formDataToObject } from '@/app/utils';

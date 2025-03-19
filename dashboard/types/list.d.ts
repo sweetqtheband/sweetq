@@ -1,6 +1,6 @@
 export type BaseListItem = {
   fields: Record<string, any>;
-  getAll: (searchParams?: any) => Promise<any>;
+  getAll: (searchParams?: any, cache?: boolean) => Promise<any>;
   parseAll: (data: any[], i18n?: i18n) => any[] | Promise<any[]>;
   post: (data: any) => Promise<any>;
   put(id: string, data: any): Promise<any>;

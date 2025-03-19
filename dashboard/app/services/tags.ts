@@ -48,7 +48,7 @@ let options: Record<string, any>[] = [];
 // Get options
 const getOptions = async (params: any = {}) => {
   params.limit = 10000;
-  const options = (await Tags.getAll(params)).items.map(
+  const options = (await Tags.getAll(params, true)).items.map(
     (item: Record<string, string>) => ({
       id: item._id,
       value: item.name,

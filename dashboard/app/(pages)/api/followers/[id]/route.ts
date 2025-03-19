@@ -34,7 +34,7 @@ export async function PUT(req: NextRequest, { params }: Params) {
       options,
       avoidUnset: true,
     });
-    revalidatePath(`/admin/instagram`);
+    // revalidatePath(`/admin/instagram`);
 
     return Response.json(
       { data: item },

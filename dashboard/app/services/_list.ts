@@ -4,10 +4,14 @@ import { POST, PUT, DELETE, getAll } from './_api';
 import { getTranslations, getActionsTranslations } from './_i18n';
 import { getMethods } from './_methods';
 
-export const BaseList = (client: AxiosInstance): BaseListItem => ({
+export const BaseList = (
+  client: AxiosInstance,
+  cache: boolean = false
+): BaseListItem => ({
   fields: {},
   getTranslations,
-  getAll: (searchParams: any) => getAll(client, searchParams),
+  getAll: (searchParams: any, cache: boolean = false) =>
+    getAll(client, searchParams, cache),
   parseAll: (data: any[] = []) => data,
   getFields: async () => ({}),
   getFilters: async () => ({}),
