@@ -431,6 +431,7 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   position: relative;
   background-image: unset;
   height: 0px;
+  padding-top: 100%;
 }
 
 .sq-section.notice.info.cover .sq-image.image-cover:before {
@@ -489,6 +490,11 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
 .sq-section.notice.info.yaesnavidad .sq-image.image-cover:before,
 .sq-section.notice.info.yaesnavidad .sq-image.image-cover:after {
   background-image: url("../imgs/cover/yaesnavidad.jpg");
+}
+
+.sq-section.notice.info.golpedesuerte .sq-image.image-cover:before,
+.sq-section.notice.info.golpedesuerte .sq-image.image-cover:after {
+  background-image: url("../imgs/cover/golpedesuerte.jpg");
 }
 
 .sq-section.notice.info .sq-image.image-cover {

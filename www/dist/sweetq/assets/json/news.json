@@ -1,13 +1,13 @@
 [
   {
-    "type": "info gig g20250317",
-    "title": "gigs.20250317.title",
-    "subtitle": "gigs.20250317.date",
-    "text": "gigs.20250317.text",
-    "button": "gigs.20250317.button",
+    "type": "info cover golpedesuerte",
+    "title": "presave.title",
+    "subtitle": "presave.subtitle",
+    "text": "presave.text",
+    "button": "presave.button",
     "squared": true,
-    "icon": "icon-gigs",
-    "href": "https://tickets.oneboxtds.com/umusichotelteatroalbeniz/select/2367122?viewCode=Vista_Principal"
+    "icon": "icon-spotify",
+    "spotifyHref": "https://kraken.ffm.to/golpedesuerte"
   },
   {
     "type": "info contest lesarts",

@@ -23,10 +23,10 @@
 
   {
     "type": "gig",
-    "icon": "icon-gigs",
-    "text": "links.gigs.20250317",
+    "icon": "icon-spotify",
+    "text": "links.presave.golpedesuerte",
     "button": "secondary",
-    "link": "https://tickets.oneboxtds.com/umusichotelteatroalbeniz/select/2367122?viewCode=Vista_Principal"
+    "link": "https://kraken.ffm.to/golpedesuerte"
   },
   {
     "type": "contest",
