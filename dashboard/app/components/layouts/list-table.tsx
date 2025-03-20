@@ -465,7 +465,7 @@ export default function ListTable({
     'max-top': fitTable,
   });
 
-  const limitItems = [10, 25, 50, 100].map((item) => ({
+  const limitItems = [10, 25, 50, 100, 200, 500].map((item) => ({
     id: item,
     text: item,
   }));
