@@ -83,9 +83,10 @@
       "appleMusic": "Pre-add done successfully!",
       "deezer": "Pre-save done successfully!"
     },
-    "title": "Ya es Navidad",
-    "subtitle": "Avaiable on December 6th",
-    "text": "This year, we have a very special surprise for you. On December 6th, we officially kick off the holiday season with our carol ‘Ya es Navidad’. Make sure to pre-save it!"
+    "title": "Golpe de suerte",
+    "subtitle": "Avaiable on March 28th",
+    "text": "Be the first to listen to our new single <span class='bold'>'Golpe de suerte'</span>, a song about the changes in our lives, the mistakes we've made, the things we never said, and second chances. Pre-save it now!",
+    "button": "Pre-save here"
   },
   "links": {
     "title": "Sweet Q",
@@ -100,7 +101,7 @@
       "arganzuela": "Watch 'Fiestas de Arganzuela 2024' live gig"
     },
     "presave": {
-      "yaesnavidad": "'Ya es Navidad' presave"
+      "golpedesuerte": "'Golpe de suerte' presave"
     },
     "contest": {
       "lesarts": "Vote for us to play at Festival de les Arts!"

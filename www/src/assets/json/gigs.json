@@ -106,5 +106,17 @@
     "bands": [36, 37],
     "event": null,
     "tickets": "https://tickets.oneboxtds.com/umusichotelteatroalbeniz/select/2367122?viewCode=Vista_Principal"
+  },
+  {
+    "id": 13,
+    "date": "2025-04-25 20:00",
+    "city": "Madrid",
+    "hour": "20:00",
+    "venue": "IndieVisible Fest",
+    "address": "Sala Morocco",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3254.924225940401!2d-3.709943723910831!3d40.42209765531252!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42287ca4c536b3%3A0x4680e0c518c3064d!2sSala%20Morocco!5e1!3m2!1ses!2ses!4v1742502671217!5m2!1ses!2ses",
+    "bands": [],
+    "event": null,
+    "tickets": "https://tickets.salamoroccomadrid.com/events/indievisible-fest-25-de-abril"
   }
 ]

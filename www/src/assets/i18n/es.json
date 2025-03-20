@@ -83,9 +83,10 @@
       "appleMusic": "¡Pre-add realizado correctamente!",
       "deezer": "Pre-save en Deezer realizado correctamente"
     },
-    "title": "Ya es Navidad",
-    "subtitle": "Estreno 06 de diciembre",
-    "text": "Este año tenemos una sorpresa muy especial para ti. El 6 de diciembre inauguramos oficialmente las fiestas navideñas con nuestro villancico <span class='bold'>'Ya es Navidad'</span>. ¡Haz presave!"
+    "title": "Golpe de suerte",
+    "subtitle": "Estreno 28 de marzo",
+    "text": "Se el primero en escuchar nuestro nuevo single <span class='bold'>'Golpe de suerte'</span>, un tema acerca de los cambios en nuestras vidas, los errores cometidos, las cosas que nunca dijimos y las segundas oportunidades. ¡Haz presave!",
+    "button": "Pre-save aquí"
   },
   "links": {
     "title": "Sweet Q",
@@ -100,7 +101,7 @@
       "arganzuela": "Ver directo 'Fiestas de Arganzuela 2024'"
     },
     "presave": {
-      "yaesnavidad": "Pre-save 'Ya es Navidad'"
+      "golpedesuerte": "Pre-save 'Golpe de suerte'"
     },
     "contest": {
       "lesarts": "¡Vótanos para tocar en el Festival de les Arts!"
