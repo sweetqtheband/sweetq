@@ -69,9 +69,12 @@ export class SmartLinkComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   setViewport() {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
     this.fitScroll = false;
     if (this._scroll?.nativeElement) {
-      this.fitScroll = this._scroll.nativeElement.clientHeight > screen.height;
+      this.fitScroll =
+        this._scroll.nativeElement.clientHeight > document.body.clientHeight;
     }
   }
 

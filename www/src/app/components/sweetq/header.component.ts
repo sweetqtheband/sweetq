@@ -13,11 +13,11 @@ export class SweetQHeaderComponent implements OnInit {
 
   public links: any = {
     spotify: 'https://open.spotify.com/album/2Ul8oyq3vUqZC6cIFVIGME',
-    amazon: 'https://www.amazon.es/dp/B0DGJPDRTT',
+    amazon: 'https://www.amazon.es/albums/B0F1J7LDQP',
     appleMusic:
       'https://music.apple.com/es/album/golpe-de-suerte-single/1802283427',
     youtubeMusic:
-      'https://music.youtube.com/playlist?list=OLAK5uy_mLRXuPUlh7lYzPYMEfS0sY5OF8VwTN_zg',
+      'https://music.youtube.com/playlist?list=OLAK5uy_l1TG-Flu5KOSszu5ktBvg0B-huh0DmnJw',
   };
 
   ngOnInit() {

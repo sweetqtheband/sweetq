@@ -98,8 +98,8 @@ export default [
     links: {
       spotify: "album/2Ul8oyq3vUqZC6cIFVIGME",
       apple: "album/golpe-de-suerte-single/1802283427",
-      amazon: "dp/B0DGJPDRTT",
-      youtubeMusic: "playlist?list=OLAK5uy_mLRXuPUlh7lYzPYMEfS0sY5OF8VwTN_zg",
+      amazon: "albums/B0F1J7LDQP",
+      youtubeMusic: "playlist?list=OLAK5uy_l1TG-Flu5KOSszu5ktBvg0B-huh0DmnJw",
     },
     lyrics:
       "Día raro, día gris\nun atardecer\nopacado por las nubes\nque amenazan lluvia\n\nNueva oportunidad\npara reencontrarnos\npara perdonar errores\ny borrar su rastro\n\nQuiero que pienses en mí\ncuando el tiempo cambie\nCuando soplen nuevos vientos\ny el sol reaparezca\n\nQue Dios se apiade de mi alma\nque no deje nada al azar\nque muestre sus cartas de cara\ny sienta que puedo ganar\n\nQue Dios sea benevolente\nque no me aproxime al final\nque encuentre mi golpe de suerte\n\nAhora creo recordar\ntodas esas cosas\nque quedaron enterradas\ny nunca te dije\n\nQuiero que estés junto a mí\ncuando venza al miedo\ncuando todos mis fantasmas\nse vuelvan recuerdos\n\nQue Dios se apiade de mi alma\nque no deje nada al azar\nque muestre sus cartas de cara\ny sienta que puedo ganar\n\nQue Dios sea benevolente\nque no me aproxime al final\nque encuentre mi golpe de suerte\n\nY prefiero perder la razón\na tener que aceptar mi verdad\nesta vez no lo haremos peor\n\nY si vuelvo otra vez a empezar\nte prometo no pedir perdón\nse que hay algo bonito al final\n\nNo lo dudes, allí estaré\ncuando el tiempo cambie\ncuando soplen nuevos vientos y el sol reaparezca\n\nQue Dios se apiade de mi alma\nque no deje nada al azar\nque muestre sus cartas de cara\n\nQue Dios sea benevolente\nque no me aproxime al final\nque encuentre mi golpe de suerte\n\nQue Dios se apiade de mi alma\nque no deje nada al azar\nque muestre sus cartas de cara\n\nQue Dios sea benevolente\nque no me aproxime al final\nque encuentre mi golpe de suerte\nque sólo nos quede ganar.\n\nQue sólo nos quede ganar.",
