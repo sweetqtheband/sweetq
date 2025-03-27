@@ -18,21 +18,14 @@
     "icon": "icon-youtube-music",
     "text": "links.youtubeMusic",
     "button": "primary",
-    "link": "https://music.youtube.com/playlist?list=OLAK5uy_mLRXuPUlh7lYzPYMEfS0sY5OF8VwTN_zg"
+    "link": "https://music.youtube.com/playlist?list=OLAK5uy_l1TG-Flu5KOSszu5ktBvg0B-huh0DmnJw"
   },
 
   {
-    "type": "gig",
-    "icon": "icon-spotify",
-    "text": "links.presave.golpedesuerte",
+    "type": "youtube",
+    "icon": "icon-youtube",
+    "text": "links.youtube.ley",
     "button": "secondary",
-    "link": "https://kraken.ffm.to/golpedesuerte"
-  },
-  {
-    "type": "contest",
-    "icon": "icon-contest",
-    "text": "links.contest.lesarts",
-    "button": "secondary",
-    "link": "https://concurs.festivaldelesarts.com/artists/3925"
+    "link": "https://www.youtube.com/watch?v=IN0iZTZkN2Q&pp=0gcJCXcA-SJGOe9V"
   }
 ]
