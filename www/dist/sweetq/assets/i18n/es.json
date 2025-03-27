@@ -1,5 +1,35 @@
 {
+  "aboutUs": {
+    "info": "<p>Somos una banda madrileña de indie pop rock formada por Sara, Hari, Manuel, Curro y Jesús Manuel.</p><p>Nuestros temas destacan por su energía desbordante, unos ritmos que harán que tus caderas se muevan solas y unas melodías muy pegadizas para que no se te vayan de la cabeza.</p><p>En 2024 fuimos Finalistas del FIB Heineken Silver Rising Stars, segundo premio en las Fiestas de Arganzuela, finalistas de la guerra de bandas de las fiestas de Vicálvaro, tocamos en Málaga en el festival Brisa en tu Barrio y actuamos en la Plaza de Callao en la Zurich Madrid Rock'n'roll Running Series, entre otros eventos destacables.</p><p>Este 2025 hemos actuado en Logroño en la guerra de bandas del Festival Actual y en el Vivo Back to Bands que organiza Universal Music.</p><p>Además, hemos empezado a trabajar con All Sounds la comunicación de nuestro próximo LP 'Que sólo nos quede ganar'.</p>",
+    "title": "Sobre nosotros"
+  },
+  "album": {
+    "label": "Álbum",
+    "styles": "Indie, Pop, Rock",
+    "tracks": "canciones"
+  },
+  "albums": {
+    "released": "Últimos lanzamientos",
+    "upcoming": "Próximamente"
+  },
+  "availableSince": "Disponible a partir del 16 de octubre en:",
+  "buyTickets": "Comprar entradas",
+  "contest": {
+    "lesarts": {
+      "button": "Vótanos aquí",
+      "subtitle": "Vótanos para vernos en el cartel",
+      "text": "¡Nos presentamos al concurso para tocar en el Festival de les Arts! Si quieres que estemos en el cartel de la próxima edición, ¡vota por nosotros!",
+      "title": "Concurso Festival de les Arts"
+    }
+  },
   "date": {
+    "formats": {
+      "short": {
+        "day": "%d %M %Y",
+        "month": "%M %Y",
+        "text": "%d de %M"
+      }
+    },
     "months": {
       "0": "enero",
       "1": "febrero",
@@ -13,151 +43,128 @@
       "9": "octubre",
       "10": "noviembre",
       "11": "diciembre"
-    },
-    "formats": {
-      "short": {
-        "day": "%d %M %Y",
-        "text": "%d de %M",
-        "month": "%M %Y"
-      }
     }
   },
+  "file": {
+    "download": {
+      "mp3": "Descargar MP3",
+      "title": "Descarga nuestro tema '{{track}}'"
+    }
+  },
+  "gigs": {
+    "20250317": {
+      "button": "Link a entradas",
+      "date": "17 Marzo",
+      "text": "Hemos sido seleccionados entre más de 600 bandas para participar en el Vivo Back to Bands en un escenario increíble como es el Teatro Albéniz. ¿Quieres vernos darlo todo? ¡Pues te esperamos!",
+      "title": "Vivo Back to Bands"
+    },
+    "label": "Conciertos",
+    "viewInGoogleMap": "Ver en Google Maps"
+  },
+  "goToItsFacebook": "Ir a su página de Facebook",
+  "goToItsInstagram": "Ir a su página de Instagram",
+  "info": {
+    "button": "Escuchar en Spotify",
+    "subtitle": "Ya disponible",
+    "text": "Ya podéis escuchar en todas las plataformas <span class='bold'>'Golpe de suerte'</span>, un tema acerca de los cambios en nuestras vidas, los errores cometidos, las cosas que nunca dijimos y las segundas oportunidades. ¡Esperamos que os guste!",
+    "title": "Golpe de suerte"
+  },
+  "links": {
+    "appleAvailable": "Link Apple Music (disponible {{date}})",
+    "appleMusic": "Apple Music",
+    "contest": {
+      "lesarts": "¡Vótanos para tocar en el Festival de les Arts!"
+    },
+    "gigs": {
+      "20250317": "Entradas Vivo Back to Bands 17 Mar"
+    },
+    "presave": {
+      "golpedesuerte": "Pre-save 'Golpe de suerte'"
+    },
+    "spotify": "Spotify",
+    "spotifyAvailable": "Link Spotify (disponible {{date}})",
+    "subtitle": "'Golpe de suerte' nuevo single",
+    "title": "Sweet Q",
+    "youtube": {
+      "arganzuela": "Ver directo 'Fiestas de Arganzuela 2024'",
+      "ley": "Videoclip 'Ley de la atracción'"
+    },
+    "youtubeMusic": "Youtube Music"
+  },
+  "listen": {
+    "contactUs": "¡Contáctanos!",
+    "latestRelease": {
+      "date": "28 de marzo 2025",
+      "label": "Último lanzamiento",
+      "title": "Golpe de suerte",
+      "totalPlays": "{{total}} reproducciones"
+    },
+    "monthlyListeners": "{{total}} oyentes mensuales",
+    "nextReleases": {
+      "pillText": "¡Escucha en exclusiva nuestros próximos singles!"
+    }
+  },
+  "listenAlsoIn": "Disponible también en...",
+  "listenInSpotify": "Escuchar en Spotify",
+  "presave": {
+    "appleMusic": "Pre-add en Apple Music",
+    "button": "Pre-save aquí",
+    "deezer": "Pre-save en Deezer",
+    "done": {
+      "appleMusic": "¡Pre-add realizado correctamente!",
+      "deezer": "Pre-save en Deezer realizado correctamente",
+      "spotify": "¡Pre-save realizado correctamente!"
+    },
+    "spotify": "Pre-save en Spotify",
+    "subtitle": "Estreno 28 de marzo",
+    "text": "Se el primero en escuchar nuestro nuevo single <span class='bold'>'Golpe de suerte'</span>, un tema acerca de los cambios en nuestras vidas, los errores cometidos, las cosas que nunca dijimos y las segundas oportunidades. ¡Haz presave!",
+    "title": "Golpe de suerte"
+  },
+  "pressKit": {
+    "button": "Descargar <span class='peso'>(4.5MB)</span>",
+    "download": "Descargar kit de prensa",
+    "text": "Aquí puedes descargar nuestro <span class='bold'>kit de prensa</span>",
+    "title": "Kit de prensa"
+  },
+  "releaseMessage": "¡Ya podéis escuchar \"Golpe de suerte\"!",
+  "smartLinks": {
+    "amazonMusic": "Amazon Music",
+    "appleMusic": "Apple Music",
+    "spotify": "Spotify",
+    "title": "Escucha '{{title}}' en tu plataforma favorita",
+    "youtubeMusic": "Youtube Music"
+  },
+  "stayTuned": "Por el momento no tenemos conciertos a la vista. ¡Permanece atento!",
   "time": {
     "short": {
       "min": "min",
       "sec": "s"
     }
   },
-  "releaseMessage": "¡Ya podéis escuchar \"Ley de la atracción\"!",
-  "listenInSpotify": "Escuchar en Spotify",
-  "listenAlsoIn": "Disponible también en...",
-  "videos": "Vídeos",
-  "videoLabel": {
-    "ley": "Vídeo - Ley de la atracción",
-    "losiento": "Vídeo - Lo siento, pero no",
-    "quevamosahacer": "Vídeo - ¿Qué vamos a hacer?",
-    "atrapadoeneltiempo": "Vídeo - Atrapado en el tiempo",
-    "caminocorrecto": "Vídeo - El camino correcto"
-  },
-  "availableSince": "Disponible a partir del 16 de octubre en:",
-  "info": {
-    "title": "Ley de la atracción",
-    "subtitle": "Ya disponible",
-    "text": "Ya podéis escuchar en todas las plataformas <span class='bold'>'Ley de la atracción'</span>, el quinto single de nuestro próximo LP. ¿Qué pasa cuando alguien te desarma con una sola mirada? Este tema captura ese momento en el que todo cambia, donde el magnetismo entre dos personas es tan fuerte que no hay vuelta atrás y no sabes por qué... ¡descubre si esta ley es algo más que una simple teoría!",
-    "button": "Escuchar en Spotify"
-  },
-  "pressKit": {
-    "title": "Kit de prensa",
-    "text": "Aquí puedes descargar nuestro <span class='bold'>kit de prensa</span>",
-    "button": "Descargar <span class='peso'>(5.5MB)</span>",
-    "download": "Descargar kit de prensa"
-  },
-  "contest": {
-    "lesarts": {
-      "title": "Concurso Festival de les Arts",
-      "subtitle": "Vótanos para vernos en el cartel",
-      "text": "¡Nos presentamos al concurso para tocar en el Festival de les Arts! Si quieres que estemos en el cartel de la próxima edición, ¡vota por nosotros!",
-      "button": "Vótanos aquí"
-    }
-  },
-  "gigs": {
-    "label": "Conciertos",
-    "viewInGoogleMap": "Ver en Google Maps",
-    "20250317": {
-      "title": "Vivo Back to Bands",
-      "date": "17 Marzo",
-      "text": "Hemos sido seleccionados entre más de 600 bandas para participar en el Vivo Back to Bands en un escenario increíble como es el Teatro Albéniz. ¿Quieres vernos darlo todo? ¡Pues te esperamos!",
-      "button": "Link a entradas"
-    }
-  },
-  "stayTuned": "Por el momento no tenemos conciertos a la vista. ¡Permanece atento!",
-  "buyTickets": "Comprar entradas",
-  "goToItsFacebook": "Ir a su página de Facebook",
-  "goToItsInstagram": "Ir a su página de Instagram",
-  "presave": {
-    "spotify": "Pre-save en Spotify",
-    "appleMusic": "Pre-add en Apple Music",
-    "deezer": "Pre-save en Deezer",
-    "done": {
-      "spotify": "¡Pre-save realizado correctamente!",
-      "appleMusic": "¡Pre-add realizado correctamente!",
-      "deezer": "Pre-save en Deezer realizado correctamente"
-    },
-    "title": "Golpe de suerte",
-    "subtitle": "Estreno 28 de marzo",
-    "text": "Se el primero en escuchar nuestro nuevo single <span class='bold'>'Golpe de suerte'</span>, un tema acerca de los cambios en nuestras vidas, los errores cometidos, las cosas que nunca dijimos y las segundas oportunidades. ¡Haz presave!",
-    "button": "Pre-save aquí"
-  },
-  "links": {
-    "title": "Sweet Q",
-    "subtitle": "'Ley de la atracción' nuevo single",
-    "spotify": "Spotify",
-    "spotifyAvailable": "Link Spotify (disponible {{date}})",
-    "appleMusic": "Apple Music",
-    "appleAvailable": "Link Apple Music (disponible {{date}})",
-    "youtubeMusic": "Youtube Music",
-    "youtube": {
-      "ley": "Videoclip 'Ley de la atracción'",
-      "arganzuela": "Ver directo 'Fiestas de Arganzuela 2024'"
-    },
-    "presave": {
-      "golpedesuerte": "Pre-save 'Golpe de suerte'"
-    },
-    "contest": {
-      "lesarts": "¡Vótanos para tocar en el Festival de les Arts!"
-    },
-    "gigs": {
-      "20250317": "Entradas Vivo Back to Bands 17 Mar"
-    }
-  },
-  "listen": {
-    "monthlyListeners": "{{total}} oyentes mensuales",
-    "latestRelease": {
-      "label": "Último lanzamiento",
-      "date": "27 de septiembre 2024",
-      "title": "Ley de la atracción",
-      "totalPlays": "{{total}} reproducciones"
-    },
-    "nextReleases": {
-      "pillText": "¡Escucha en exclusiva nuestros próximos singles!"
-    },
-    "contactUs": "¡Contáctanos!"
-  },
-  "video": {
-    "fiestasArganzuela": {
-      "title": "Fiestas de Arganzuela 2024",
-      "subtitle": "Concierto completo en Youtube",
-      "text": "Ya podéis ver nuestro concierto completo en las Fiestas de La Melonera de Arganzuela en nuestro canal de Youtube. Si queréis escuchar nuestros próximos temas en formato directo... ¡No os lo perdáis!",
-      "button": "Ver en Youtube"
-    },
-    "ley": {
-      "title": "Nuevo videoclip",
-      "subtitle": "Ley de la atracción",
-      "text": "Acabamos de lanzar nuestro videoclip de 'Ley de la atracción', grabado en el centro de Madrid con la colaboración de parejas reales que nos regalaron momentos únicos para dar vida a este tema. ¡Esperemos que te guste!",
-      "button": "Ver en Youtube"
-    }
-  },
-  "album": {
-    "label": "Álbum",
-    "styles": "Indie, Pop, Rock",
-    "tracks": "canciones"
-  },
-  "albums": {
-    "released": "Últimos lanzamientos",
-    "upcoming": "Próximamente"
-  },
   "track": {
     "description": "Descripción",
     "lyrics": "Letra"
   },
-  "aboutUs": {
-    "title": "Sobre nosotros",
-    "info": "<p>Somos una banda madrileña de indie pop rock formada por Sara, Hari, Manuel, Curro y Jesús Manuel.</p><p>Nuestros temas destacan por su energía desbordante, unos ritmos que harán que tus caderas se muevan solas y unas melodías muy pegadizas para que no se te vayan de la cabeza.</p><p>En 2024 fuimos Finalistas del FIB Heineken Silver Rising Stars, segundo premio en las Fiestas de Arganzuela, finalistas de la guerra de bandas de las fiestas de Vicálvaro, tocamos en Málaga en el festival Brisa en tu Barrio y actuamos en la Plaza de Callao en la Zurich Madrid Rock'n'roll Running Series, entre otros eventos destacables.</p><p>Este 2025 hemos actuado en Logroño en la guerra de bandas del Festival Actual y en el Vivo Back to Bands que organiza Universal Music.</p><p>Además, hemos empezado a trabajar con All Sounds la comunicación de nuestro próximo LP 'Que sólo nos quede ganar'.</p>"
-  },
-  "file": {
-    "download": {
-      "title": "Descarga nuestro tema '{{track}}'",
-      "mp3": "Descargar MP3"
+  "video": {
+    "fiestasArganzuela": {
+      "button": "Ver en Youtube",
+      "subtitle": "Concierto completo en Youtube",
+      "text": "Ya podéis ver nuestro concierto completo en las Fiestas de La Melonera de Arganzuela en nuestro canal de Youtube. Si queréis escuchar nuestros próximos temas en formato directo... ¡No os lo perdáis!",
+      "title": "Fiestas de Arganzuela 2024"
+    },
+    "ley": {
+      "button": "Ver en Youtube",
+      "subtitle": "Ley de la atracción",
+      "text": "Acabamos de lanzar nuestro videoclip de 'Ley de la atracción', grabado en el centro de Madrid con la colaboración de parejas reales que nos regalaron momentos únicos para dar vida a este tema. ¡Esperemos que te guste!",
+      "title": "Nuevo videoclip"
     }
-  }
+  },
+  "videoLabel": {
+    "atrapadoeneltiempo": "Vídeo - Atrapado en el tiempo",
+    "caminocorrecto": "Vídeo - El camino correcto",
+    "ley": "Vídeo - Ley de la atracción",
+    "losiento": "Vídeo - Lo siento, pero no",
+    "quevamosahacer": "Vídeo - ¿Qué vamos a hacer?"
+  },
+  "videos": "Vídeos"
 }
