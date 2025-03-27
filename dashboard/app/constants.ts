@@ -71,6 +71,7 @@ export const SORT: Record<string, number> = {
 export const FIELD_TYPES: Record<string, FieldTypesType> = {
   HIDDEN: 'hidden',
   TEXT: 'text',
+  TEXTAREA: 'textarea',
   UPLOADER: 'uploader',
   IMAGE_UPLOADER: 'imageUploader',
   VIDEO_UPLOADER: 'videoUploader',

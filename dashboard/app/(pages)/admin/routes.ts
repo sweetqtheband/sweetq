@@ -30,6 +30,10 @@ export const routes: Route[] = [
     path: '/admin/layouts'
   },
   {
+    text: 'config',
+    path: '/admin/config'
+  },
+  {
         text: 'tags',
         path: '/admin/tags',
       },

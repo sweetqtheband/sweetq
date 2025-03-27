@@ -1,7 +1,7 @@
 import type { AxiosInstance } from 'axios';
 import type { BaseListItem } from '@/types/list';
 import { POST, PUT, DELETE, getAll } from './_api';
-import { getTranslations, getActionsTranslations } from './_i18n';
+import { getTranslations, getTranslation } from './_i18n';
 import { getMethods } from './_methods';
 
 export const BaseList = (
@@ -25,4 +25,4 @@ export const BaseList = (
   delete: (id: string | string[]) => DELETE(client, id),
 });
 
-export { getActionsTranslations };
+export { getTranslation };

@@ -2,7 +2,7 @@ import { Gigs } from '@/app/services/gigs';
 import type { Gig } from '@/types/gig';
 import i18n from '@/app/services/translate';
 import GigsView from './view';
-import { getActionsTranslations } from '@/app/services/_list';
+import { getTranslation } from '@/app/services/_list';
 
 export default async function GigsPage({
   searchParams,
@@ -21,7 +21,7 @@ export default async function GigsPage({
 
   const translations = {
     ...Gigs.getTranslations(i18n, Gigs),
-    ...getActionsTranslations(i18n),
+    ...getTranslation(i18n, 'actions'),
   };
 
   const fields = await Gigs.getFields({ searchParams, i18n });

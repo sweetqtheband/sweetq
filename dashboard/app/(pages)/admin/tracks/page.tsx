@@ -2,7 +2,7 @@ import { Tracks } from '@/app/services/tracks';
 import type { Track } from '@/types/track';
 import i18n from '@/app/services/translate';
 import TracksView from './view';
-import { getActionsTranslations } from '@/app/services/_list';
+import { getTranslation } from '@/app/services/_list';
 
 export default async function TracksPage({
   searchParams,
@@ -21,7 +21,7 @@ export default async function TracksPage({
 
   const translations = {
     ...Tracks.getTranslations(i18n, Tracks),
-    ...getActionsTranslations(i18n),
+    ...getTranslation(i18n, 'actions'),
   };
 
   return (

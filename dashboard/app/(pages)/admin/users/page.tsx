@@ -4,7 +4,7 @@ import { Users } from '@/app/services/users';
 import type { User } from '@/types/user';
 import i18n from '@/app/services/translate';
 import UsersView from './view';
-import { getActionsTranslations } from '@/app/services/_list';
+import { getTranslation } from '@/app/services/_list';
 import { UserProfiles } from '@/app/services/userProfiles';
 
 export default async function UsersPage({
@@ -22,7 +22,7 @@ export default async function UsersPage({
 
   const translations = {
     ...Users.getTranslations(i18n, Users),
-    ...getActionsTranslations(i18n),
+    ...getTranslation(i18n, 'actions'),
   } as Record<string, any>;
   translations.options.profile = UserProfiles.getTranslations(i18n);
 

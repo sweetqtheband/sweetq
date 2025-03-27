@@ -12,10 +12,10 @@ export class SweetQHeaderComponent implements OnInit {
   @Output() playAlbumEvent = new EventEmitter<boolean>();
 
   public links: any = {
-    spotify: 'https://open.spotify.com/album/2muhEidJ0souFsYvPd3ioU',
+    spotify: 'https://open.spotify.com/album/2Ul8oyq3vUqZC6cIFVIGME',
     amazon: 'https://www.amazon.es/dp/B0DGJPDRTT',
     appleMusic:
-      'https://music.apple.com/es/album/ley-de-la-atracci%C3%B3n-single/1767473340',
+      'https://music.apple.com/es/album/golpe-de-suerte-single/1802283427',
     youtubeMusic:
       'https://music.youtube.com/playlist?list=OLAK5uy_mLRXuPUlh7lYzPYMEfS0sY5OF8VwTN_zg',
   };

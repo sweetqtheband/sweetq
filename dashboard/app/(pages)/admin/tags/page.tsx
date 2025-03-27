@@ -2,7 +2,7 @@ import { Tags } from '@/app/services/tags';
 import type { Tag } from '@/types/tag';
 import i18n from '@/app/services/translate';
 import TagsView from './view';
-import { getActionsTranslations } from '@/app/services/_list';
+import { getTranslation } from '@/app/services/_list';
 
 export default async function TagsPage({
   searchParams,
@@ -19,7 +19,7 @@ export default async function TagsPage({
 
   const translations = {
     ...Tags.getTranslations(i18n, Tags),
-    ...getActionsTranslations(i18n),
+    ...getTranslation(i18n, 'actions'),
   };
 
   return (

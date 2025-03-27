@@ -99,7 +99,6 @@ export default function PanelComponent({
       typeof actionIcon === 'string' ? renderItem({ type: actionIcon }) : null;
     setIcon(i);
   }, [actionIcon]);
-
   return (
     <div className={classes} ref={animatedRef}>
       {overlay && actionLabel ? <div className="panel-overlay"></div> : null}

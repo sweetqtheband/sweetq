@@ -2,7 +2,7 @@ import { News } from '@/app/services/news';
 import type { New } from '@/types/new';
 import i18n from '@/app/services/translate';
 import NewsView from './view';
-import { getActionsTranslations } from '@/app/services/_list';
+import { getTranslation } from '@/app/services/_list';
 
 export default async function NewsPage({
   searchParams,
@@ -19,7 +19,7 @@ export default async function NewsPage({
 
   const translations = {
     ...News.getTranslations(i18n, News),
-    ...getActionsTranslations(i18n),
+    ...getTranslation(i18n, 'actions'),
   };
 
   return (

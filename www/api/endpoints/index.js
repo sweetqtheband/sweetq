@@ -1,3 +1,4 @@
-import './media';
-import './stream';
-import './artist';
+import "./media";
+import "./stream";
+import "./artist";
+import "./public";

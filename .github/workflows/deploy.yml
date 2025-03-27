@@ -42,6 +42,7 @@ jobs:
             echo "GRAPH_INSTAGRAM=${{ vars.GRAPH_INSTAGRAM }}" >> .env.production
             echo "API_INSTAGRAM_VERSION=${{ vars.API_INSTAGRAM_VERSION }}" >> .env.production
             echo "NODE_ENV=${{ vars.NODE_ENV }}" >> .env.production
+            echo "NEXT_PUBLIC_URL=${{ vars.NEXT_PUBLIC_URL }}" >> .env.production
             echo "NEXT_PUBLIC_API_URI=${{ vars.NEXT_PUBLIC_API_URI }}" >> .env.production
             echo "NEXT_PUBLIC_AWS_REGION=${{ vars.NEXT_PUBLIC_AWS_REGION }}" >> .env.production
             echo "NEXT_PUBLIC_AWS_BUCKET_NAME=${{ vars.NEXT_PUBLIC_AWS_BUCKET_NAME }}" >> .env.production

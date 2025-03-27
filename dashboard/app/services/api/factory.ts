@@ -13,6 +13,7 @@ import { userProfilesSvc } from './userProfiles';
 import { countriesSvc } from './countries';
 import { layoutsSvc } from './layouts';
 import { messagesSvc } from './messages';
+import { configSvc } from './config';
 import { camelCase } from '@/app/utils';
 
 type FactoryType = {
@@ -34,6 +35,7 @@ let factory: FactoryType = {
   userProfiles: userProfilesSvc,
   layouts: layoutsSvc,
   messages: messagesSvc,
+  config: configSvc,
 };
 
 export const FactorySvc = (

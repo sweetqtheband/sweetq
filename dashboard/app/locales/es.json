@@ -12,38 +12,52 @@
     "confirmDeleteSelected": "¿Estás seguro de que quieres eliminar los elementos seleccionados?",
     "delete": "Eliminar",
     "edit": "Editar",
+    "email": "Email",
     "filter": "Filtrar",
+    "hidePassword": "Ocultar contraseña",
+    "login": "Entrar",
     "preview": "Vista previa",
     "save": "Guardar",
     "search": "Buscar",
     "selectAll": "Seleccionar todo",
     "selectAllShort": "Sel. todo",
-    "selected": "Seleccionado",
     "selectdShort": "Sel.",
+    "selected": "Seleccionado",
     "selecteds": "Seleccionados",
     "selectedsShort": "Sel.",
+    "sendMessage": "Mensaje",
+    "showPassword": "Mostrar contraseña",
     "unselectAll": "Deseleccionar todo",
     "unselectAllShort": "Desel.",
-    "upload": "Subir",
-    "login": "Entrar",
-    "email": "Email",
-    "showPassword": "Mostrar contraseña",
-    "hidePassword": "Ocultar contraseña",
-    "sendMessage": "Mensaje"
+    "upload": "Subir"
+  },
+  "colors": {
+    "blue": "Azul",
+    "cool-gray": "Gris frío",
+    "cyan": "Cian",
+    "gray": "Gris",
+    "green": "Verde",
+    "high-contrast": "Alto contraste",
+    "magenta": "Magenta",
+    "outline": "Delineado",
+    "purple": "Morado",
+    "red": "Rojo",
+    "teal": "Aguamarina",
+    "warm-gray": "Gris cálido"
   },
   "date": {
     "formats": {
-      "short": {
-        "date": "%D/%m/%Y",
-        "day": "%d %M %Y",
-        "text": "%d de %M",
-        "month": "%M %Y"
-      },
       "chat": {
         "date": "%d %MM %H:%i",
         "dateToday": "Hoy a las %H:%i",
-        "dateYesterday": "Ayer a las %H:%i",
-        "dateYear": "%d %MM %Y"
+        "dateYear": "%d %MM %Y",
+        "dateYesterday": "Ayer a las %H:%i"
+      },
+      "short": {
+        "date": "%D/%m/%Y",
+        "day": "%d %M %Y",
+        "month": "%M %Y",
+        "text": "%d de %M"
       },
       "timestamp": "%Y%m%D"
     },
@@ -63,109 +77,120 @@
     }
   },
   "fields": {
+    "address": "Dirección",
     "alias": "Alias",
     "bands": "Bandas",
     "button": "Botón",
     "buttonText": "Texto del botón",
-    "cover": "Portada",
-    "color": "Color",
-    "title": "Título",
-    "subtitle": "Subtítulo",
-    "name": "Nombre",
-    "date": "Fecha",
-    "hour": "Hora",
-    "link": "Enlace",
-    "limit": "Límite",
-    "linkType": "Tipo de enlace",
-    "status": "Estado",
-    "image": "Imagen",
-    "video": "Vídeo",
-    "venue": "Sala",
     "city": "Ciudad",
-    "profile": "Tipo de usuario",
-    "state": "Provincia",
+    "color": "Color",
     "country": "País",
-    "address": "Dirección",
-    "map": "URL embed de Google Maps",
+    "cover": "Portada",
+    "date": "Fecha",
+    "description": "Descripción",
+    "email": "Email",
     "event": "URL de evento / noticia relacionada",
-    "tickets": "URL de venta de entradas",
-    "type": "Tipo",
-    "username": "Nombre de usuario",
-    "treatment": "Tratamiento",
-    "shortName": "Nombre corto",
+    "from": "Desde",
     "fullName": "Nombre completo",
-    "tags": "Etiquetas",
-    "withoutTags": "Sin etiquetas",
+    "hour": "Hora",
+    "image": "Imagen",
+    "keywords": "Palabras clave",
+    "layout": "Plantilla",
+    "limit": "Límite",
+    "link": "Enlace",
+    "linkType": "Tipo de enlace",
+    "map": "URL embed de Google Maps",
+    "name": "Nombre",
+    "password": "Contraseña",
+    "pendingMessages": "Mensajes pendientes",
+    "profile": "Tipo de usuario",
+    "robots": "Robots",
+    "shortName": "Nombre corto",
     "social": {
       "facebook": "Facebook",
       "instagram": "Instagram",
-      "x": "X",
-      "youtube": "YouTube",
       "spotify": "Spotify",
-      "web": "Web"
+      "web": "Web",
+      "x": "X",
+      "youtube": "YouTube"
     },
-    "password": "Contraseña",
-    "email": "Email",
-    "layout": "Plantilla",
-    "pendingMessages": "Mensajes pendientes"
-  },
-  "userProfiles": {
-    "admin": "Administrador",
-    "user": "Usuario"
+    "state": "Provincia",
+    "status": "Estado",
+    "subtitle": "Subtítulo",
+    "tags": "Etiquetas",
+    "tickets": "URL de venta de entradas",
+    "title": "Título",
+    "treatment": "Tratamiento",
+    "type": "Tipo",
+    "until": "Hasta",
+    "username": "Nombre de usuario",
+    "venue": "Sala",
+    "video": "Vídeo",
+    "withoutTags": "Sin etiquetas"
   },
   "filters": {
     "show": {
-      "label": "Mostrar",
+      "all": "Todos",
       "following": "Siguiendo",
-      "notFollowing": "No siguiendo",
-      "all": "Todos"
+      "label": "Mostrar",
+      "notFollowing": "No siguiendo"
     },
     "withoutTags": "Sin etiquetas"
   },
+  "languages": {
+    "en": "Inglés",
+    "es": "Español"
+  },
   "news": {
     "types": {
+      "gig": "Concierto",
       "news": "Noticia",
-      "release": "Lanzamiento",
-      "gig": "Concierto"
+      "release": "Lanzamiento"
     }
   },
   "pages": {
+    "gigs": {
+      "title": "Conciertos"
+    },
     "instagram": {
-      "title": "Instagram",
       "description": "{{total}} seguidores",
       "panel": {
-        "title": "Enviar mensaje",
-        "subtitle": "Se enviará el mensaje a ",
-        "vars": "Variables",
-        "personalMessage": "Mensaje a personas",
         "collectiveMessage": "Mensaje a colectivos",
-        "variables": {
-          "alias": "Nombre corto"
-        },
         "modes": {
           "createNew": "Crear nuevo",
           "loadLayout": "Cargar plantilla"
         },
-        "openChat": "Abrir chat"
-      }
-    },
-    "gigs": {
-      "title": "Conciertos"
+        "openChat": "Abrir chat",
+        "personalMessage": "Mensaje a personas",
+        "subtitle": "Se enviará el mensaje a ",
+        "title": "Enviar mensaje",
+        "variables": {
+          "alias": "Nombre corto"
+        },
+        "vars": "Variables"
+      },
+      "title": "Instagram"
     }
   },
+  "robots": {
+    "indexFollow": "Index",
+    "indexNoFollow": "No follow",
+    "noIndexFollow": "No index",
+    "noIndexNoFollow": "No index, no follow"
+  },
   "routes": {
-    "instagram": "Instagram",
-    "gmail": "Gmail",
-    "gigs": "Conciertos",
-    "tracks": "Pistas",
-    "videos": "Vídeos",
-    "news": "Noticias",
-    "contact": "Contacto",
     "bands": "Bandas",
-    "tags": "Etiquetas",
-    "users": "Usuarios",
     "config": "Configuración",
-    "layouts": "Plantillas"
+    "contact": "Contacto",
+    "gigs": "Conciertos",
+    "gmail": "Gmail",
+    "instagram": "Instagram",
+    "layouts": "Plantillas",
+    "news": "Noticias",
+    "tags": "Etiquetas",
+    "tracks": "Pistas",
+    "users": "Usuarios",
+    "videos": "Vídeos"
   },
   "status": {
     "published": "Publicado",
@@ -173,28 +198,18 @@
   },
   "tracks": {
     "status": {
-      "released": "Lanzado",
       "latest": "Último lanzamiento",
+      "released": "Lanzado",
       "upcoming": "Próximamente"
     }
   },
   "treatments": {
-    "person": "Persona",
-    "collective": "Colectivo"
+    "collective": "Colectivo",
+    "person": "Persona"
   },
   "uploader": "Arrastra y suelta un archivo aquí o haz clic para seleccionar un archivo",
-  "colors": {
-    "red": "Rojo",
-    "magenta": "Magenta",
-    "purple": "Morado",
-    "blue": "Azul",
-    "cyan": "Cian",
-    "teal": "Aguamarina",
-    "green": "Verde",
-    "gray": "Gris",
-    "cool-gray": "Gris frío",
-    "warm-gray": "Gris cálido",
-    "high-contrast": "Alto contraste",
-    "outline": "Delineado"
+  "userProfiles": {
+    "admin": "Administrador",
+    "user": "Usuario"
   }
 }

@@ -4,7 +4,7 @@ import { {{entity}} } from '@/app/services/{{plural}}';
 import type { {{type}} } from '@/types/{{singular}}';
 import i18n from '@/app/services/translate';
 import {{entity}}View from './view';
-import { getActionsTranslations } from '@/app/services/_list';
+import { getTranslation } from '@/app/services/_list';
 
 export default async function {{entity}}Page({
   searchParams,
@@ -20,7 +20,7 @@ export default async function {{entity}}Page({
 
   const translations = {
     ...{{entity}}.getTranslations(i18n, {{entity}}),
-    ...getActionsTranslations(i18n),
+    ...getTranslation(i18n, 'actions'),
   };
 
   return (

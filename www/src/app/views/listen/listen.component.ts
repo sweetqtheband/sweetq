@@ -1,4 +1,15 @@
-import { OnInit, AfterViewInit, DoCheck, Component, ElementRef, HostBinding, Output, EventEmitter, HostListener, ViewChild } from '@angular/core';
+import {
+  OnInit,
+  AfterViewInit,
+  DoCheck,
+  Component,
+  ElementRef,
+  HostBinding,
+  Output,
+  EventEmitter,
+  HostListener,
+  ViewChild,
+} from '@angular/core';
 import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { StreamService } from '@services/stream.service';
@@ -38,10 +49,9 @@ export class ListenComponent implements OnInit, AfterViewInit, DoCheck {
   }
 
   @HostListener('window:onPlaying')
-  onPlayingListener() {    
+  onPlayingListener() {
     this.removeInteractionSubscriptions();
   }
-  
 
   @HostBinding('class.sq-view') sqView: boolean = true;
 
@@ -49,9 +59,9 @@ export class ListenComponent implements OnInit, AfterViewInit, DoCheck {
   public items: Media[] = [];
   public albums: Albums = {
     released: [],
-    upcoming: []
-  }
-  
+    upcoming: [],
+  };
+
   public tid: Nullable<string> = null;
   public data: Data = { listeners: '-', plays: '-' };
   public defaultItem: Media = { id: '' };
@@ -63,19 +73,18 @@ export class ListenComponent implements OnInit, AfterViewInit, DoCheck {
   public initialId: string = '';
   public isPlaying: boolean = false;
 
-  
   constructor(
     private el: ElementRef,
     private meta: Meta,
     private http: StreamService,
     private system: SystemService,
     private route: ActivatedRoute
-    ) {
-      this.meta.removeTag('name="keywords"');
-      this.meta.removeTag('name="description"');
-      this.meta.updateTag({ name: 'robots', content: 'noindex' });
+  ) {
+    this.meta.removeTag('name="keywords"');
+    this.meta.removeTag('name="description"');
+    this.meta.updateTag({ name: 'robots', content: 'noindex' });
   }
-  
+
   get headers(): any {
     return { TID: this.tid };
   }
@@ -126,12 +135,15 @@ export class ListenComponent implements OnInit, AfterViewInit, DoCheck {
 
   async ngOnInit(): Promise<any> {
     this.tid = this.route.snapshot.queryParams['tId'];
-   
-    this.items = await this.http.getMedia({ headers: this.headers });
-    
-    this.albums.released = this.items.filter(item => ['latest', 'released'].includes(item.status as string)).reverse();
-    this.albums.upcoming = this.items.filter((item) => item.status === 'upcoming');
 
+    this.items = await this.http.getMedia({ headers: this.headers });
+
+    this.albums.released = this.items
+      .filter((item) => ['latest', 'released'].includes(item.status as string))
+      .reverse();
+    this.albums.upcoming = this.items.filter(
+      (item) => item.status === 'upcoming'
+    );
 
     const item = this.items.find((item) => item.status === 'latest');
 
@@ -149,18 +161,18 @@ export class ListenComponent implements OnInit, AfterViewInit, DoCheck {
   }
 
   openPanel() {
-    this.showLoader = true;    
+    this.showLoader = true;
     document.body.style.overflow = 'hidden';
     setTimeout(() => {
       this.isPlaying = true;
     }, 0);
   }
-  closePanel() {    
+  closePanel() {
     document.body.style.overflow = 'unset';
-     const event: CustomEvent = new CustomEvent('stopPlay', {
-       bubbles: true,       
-     });
-     window.dispatchEvent(event);    
+    const event: CustomEvent = new CustomEvent('stopPlay', {
+      bubbles: true,
+    });
+    window.dispatchEvent(event);
     this.isPlaying = false;
   }
 

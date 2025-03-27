@@ -2,7 +2,7 @@ import { Bands } from '@/app/services/bands';
 import type { Band } from '@/types/band';
 import i18n from '@/app/services/translate';
 import BandsView from './view';
-import { getActionsTranslations } from '@/app/services/_list';
+import { getTranslation } from '@/app/services/_list';
 
 export default async function BandsPage({
   searchParams,
@@ -20,7 +20,7 @@ export default async function BandsPage({
 
   const translations = {
     ...Bands.getTranslations(i18n, Bands),
-    ...getActionsTranslations(i18n),
+    ...getTranslation(i18n, 'actions'),
   };
 
   return (

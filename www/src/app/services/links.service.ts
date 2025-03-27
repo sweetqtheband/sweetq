@@ -4,13 +4,14 @@ import { Links } from '@interfaces/links';
 
 @Injectable()
 export class LinksService {
-  configUrl = 'assets/json/links.json';
   constructor(private http: HttpClient) {}
 
   getLinks() {
+    const configUrl = 'assets/json/links.json';
+
     return new Promise<Links[]>((resolve, reject) => {
       this.http
-        .get(this.configUrl + '?cb=' + new Date().getTime())
+        .get(configUrl + '?cb=' + new Date().getTime())
         .subscribe((result: any) => resolve(result));
     });
   }

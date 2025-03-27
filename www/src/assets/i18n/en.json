@@ -1,5 +1,35 @@
 {
+  "aboutUs": {
+    "info": "<p>We are a Madrid-based indie pop rock band formed by Sara, Hari, Manuel, Curro, and Jesús Manuel.</p><p>Our songs stand out for their overwhelming energy, rhythms that will make your hips move on their own, and catchy melodies that will stick in your head.</p><p>In 2024, we were finalists in the FIB Heineken Silver Rising Stars, second place in the Fiestas de Arganzuela, finalists in the band battle at the Vicálvaro festivals, performed in Málaga at the Brisa en tu Barrio festival, and played at the Plaza de Callao in the Zurich Madrid Rock'n'roll Running Series, among other notable events.</p><p>In 2025, we performed in Logroño at the band battle of the Festival Actual and at Vivo Back to Bands organized by Universal Music.</p><p>Additionally, we’ve started working with All Sounds on the communication for our upcoming LP ‘Que sólo nos quede ganar’.</p>",
+    "title": "About us"
+  },
+  "album": {
+    "label": "Album",
+    "styles": "Indie, Pop, Rock",
+    "tracks": "tracks"
+  },
+  "albums": {
+    "released": "Latest releases",
+    "upcoming": "Upcoming"
+  },
+  "availableSince": "Available from october 16th in:",
+  "buyTickets": "Buy tickets",
+  "contest": {
+    "lesarts": {
+      "button": "Vote for us here",
+      "subtitle": "Vote for us to see us in the lineup!",
+      "text": "We are participating in the contest to play at Festival de les Arts! If you want us to be in the lineup of the next edition, vote for us!",
+      "title": "Festival de les Arts contest"
+    }
+  },
   "date": {
+    "formats": {
+      "short": {
+        "day": "%M %d %Y",
+        "month": "%M %Y",
+        "text": "%M %d"
+      }
+    },
     "months": [
       "january",
       "february",
@@ -13,149 +43,126 @@
       "october",
       "november",
       "december"
-    ],
-    "formats": {
-      "short": {
-        "day": "%M %d %Y",
-        "text": "%M %d",
-        "month": "%M %Y"
-      }
+    ]
+  },
+  "download": {
+    "mp3": "Download MP3",
+    "title": "Download our track '{{track}}'"
+  },
+  "gigs": {
+    "20250317": {
+      "button": "Buy tickets",
+      "date": "March 17th",
+      "text": "We are back to the stage with a new gig at Vivo Back to Bands. Don't miss it!",
+      "title": "Vivo Back to Bands"
+    },
+    "label": "Gigs",
+    "viewInGoogleMap": "View in Google Maps"
+  },
+  "goToItsFacebook": "Go to its Facebook page",
+  "goToItsInstagram": "Go to its Instagram page",
+  "info": {
+    "button": "Listen in Spotify",
+    "subtitle": "Already available",
+    "text": "You can already listen in every platform <span class='bold'>'Golpe de suerte'</span>, our new single. A song about the changes in our lives, the mistakes we've made, the things we never said, and second chances. We hope you like it!",
+    "title": "Golpe de suerte"
+  },
+  "links": {
+    "appleAvailable": "Apple Music link (available {{date}})",
+    "appleMusic": "Apple Music",
+    "contest": {
+      "lesarts": "Vote for us to play at Festival de les Arts!"
+    },
+    "gigs": {
+      "20250317": "'Vivo Back to Bands' March 17th"
+    },
+    "presave": {
+      "golpedesuerte": "'Golpe de suerte' presave"
+    },
+    "spotify": "Spotify",
+    "spotifyAvailable": "Spotify link (available {{date}})",
+    "subtitle": "New single 'Golpe de suerte'",
+    "title": "Sweet Q",
+    "youtube": {
+      "arganzuela": "Watch 'Fiestas de Arganzuela 2024' live gig",
+      "ley": "Music Video 'Ley de la atracción'"
+    },
+    "youtubeMusic": "Youtube Music"
+  },
+  "listen": {
+    "contactUs": "Contact us!",
+    "latestRelease": {
+      "date": "March 28th, 2025",
+      "label": "Latest release",
+      "title": "Golpe de suerte",
+      "totalPlays": "{{total}} plays"
+    },
+    "monthlyListeners": "{{total}} monthly listeners",
+    "nextReleases": {
+      "pillText": "Listen our incoming singles exclusively!"
     }
   },
+  "listenAlsoIn": "Also available in...",
+  "listenInSpotify": "Listen in Spotify",
+  "presave": {
+    "appleMusic": "Pre-add on Apple Music",
+    "button": "Pre-save here",
+    "deezer": "Pre-save on Deezer",
+    "done": {
+      "appleMusic": "Pre-add done successfully!",
+      "deezer": "Pre-save done successfully!",
+      "spotify": "Pre-save done successfully!"
+    },
+    "spotify": "Pre-save on Spotify",
+    "subtitle": "Avaiable on March 28th",
+    "text": "Be the first to listen to our new single <span class='bold'>'Golpe de suerte'</span>, a song about the changes in our lives, the mistakes we've made, the things we never said, and second chances. Pre-save it now!",
+    "title": "Golpe de suerte"
+  },
+  "pressKit": {
+    "button": "Download <span class='peso'>(4.5MB)</span>",
+    "download": "Download press kit",
+    "text": "Here you can download our <span class='bold'>press kit</span>",
+    "title": "Press kit"
+  },
+  "releaseMessage": "You can listen to \"Golpe de suerte\" now!",
+  "smartLinks": {
+    "amazonMusic": "Amazon Music",
+    "appleMusic": "Apple Music",
+    "spotify": "Spotify",
+    "title": "Listen '{{title}}' in your favorite platform",
+    "youtubeMusic": "Youtube Music"
+  },
+  "stayTuned": "At this time we haven't any gig scheduled soon. Stay tuned!",
   "time": {
     "short": {
       "min": "min",
       "sec": "s"
     }
   },
-  "releaseMessage": "You can listen to \"Ley de la atracción\" now!",
-  "listenInSpotify": "Listen in Spotify",
-  "listenAlsoIn": "Also available in...",
-  "videos": "Videos",
-  "videoLabel": {
-    "ley": "Video - Ley de la atracción",
-    "losiento": "Video - Lo siento, pero no",
-    "quevamosahacer": "Video - ¿Qué vamos a hacer?",
-    "atrapadoeneltiempo": "Video - Atrapado en el tiempo",
-    "caminocorrecto": "Video - El camino correcto"
-  },
-  "availableSince": "Available from october 16th in:",
-  "info": {
-    "title": "Ley de la atracción",
-    "subtitle": "Already available",
-    "text": "You can already listen in every platform <span class='bold'>'Ley de la atracción'</span>, the fifth single from our future LP. What happens when someone disarms you with just one look? This song captures that moment when everything changes, where the magnetism between two people is so strong that there’s no turning back, and you don’t even know why... find out if this law is more than just a simple theory!",
-    "button": "Listen in Spotify"
-  },
-  "pressKit": {
-    "title": "Press kit",
-    "text": "Here you can download our <span class='bold'>press kit</span>",
-    "button": "Download <span class='peso'>(5.5MB)</span>",
-    "download": "Download press kit"
-  },
-  "contest": {
-    "lesarts": {
-      "title": "Festival de les Arts contest",
-      "subtitle": "Vote for us to see us in the lineup!",
-      "text": "We are participating in the contest to play at Festival de les Arts! If you want us to be in the lineup of the next edition, vote for us!",
-      "button": "Vote for us here"
-    }
-  },
-  "gigs": {
-    "label": "Gigs",
-    "viewInGoogleMap": "View in Google Maps",
-    "20250317": {
-      "title": "Vivo Back to Bands",
-      "date": "March 17th",
-      "text": "We are back to the stage with a new gig at Vivo Back to Bands. Don't miss it!",
-      "button": "Buy tickets"
-    }
-  },
-  "stayTuned": "At this time we haven't any gig scheduled soon. Stay tuned!",
-  "buyTickets": "Buy tickets",
-  "goToItsFacebook": "Go to its Facebook page",
-  "goToItsInstagram": "Go to its Instagram page",
-  "presave": {
-    "spotify": "Pre-save on Spotify",
-    "appleMusic": "Pre-add on Apple Music",
-    "deezer": "Pre-save on Deezer",
-    "done": {
-      "spotify": "Pre-save done successfully!",
-      "appleMusic": "Pre-add done successfully!",
-      "deezer": "Pre-save done successfully!"
-    },
-    "title": "Golpe de suerte",
-    "subtitle": "Avaiable on March 28th",
-    "text": "Be the first to listen to our new single <span class='bold'>'Golpe de suerte'</span>, a song about the changes in our lives, the mistakes we've made, the things we never said, and second chances. Pre-save it now!",
-    "button": "Pre-save here"
-  },
-  "links": {
-    "title": "Sweet Q",
-    "subtitle": "New single 'Ley de la atracción'",
-    "spotify": "Spotify",
-    "spotifyAvailable": "Spotify link (available {{date}})",
-    "appleMusic": "Apple Music",
-    "appleAvailable": "Apple Music link (available {{date}})",
-    "youtubeMusic": "Youtube Music",
-    "youtube": {
-      "ley": "Music Video 'Ley de la atracción'",
-      "arganzuela": "Watch 'Fiestas de Arganzuela 2024' live gig"
-    },
-    "presave": {
-      "golpedesuerte": "'Golpe de suerte' presave"
-    },
-    "contest": {
-      "lesarts": "Vote for us to play at Festival de les Arts!"
-    },
-    "gigs": {
-      "20250317": "'Vivo Back to Bands' March 17th"
-    }
-  },
-  "listen": {
-    "monthlyListeners": "{{total}} monthly listeners",
-    "latestRelease": {
-      "label": "Latest release",
-      "date": "September 27th, 2024",
-      "title": "Ley de la atracción",
-      "totalPlays": "{{total}} plays"
-    },
-    "nextReleases": {
-      "pillText": "Listen our incoming singles exclusively!"
-    },
-    "contactUs": "Contact us!"
-  },
-  "video": {
-    "fiestasArganzuela": {
-      "title": "Fiestas de Arganzuela 2024",
-      "subtitle": "Full show on Youtube",
-      "text": "You can already watch our latest full live show at Fiestas de La Melonera in Arganzuela in our Youtube channel. If you want to hear our new forthcoming releases in a live format... Don't miss it out!",
-      "button": "Watch on Youtube"
-    },
-    "ley": {
-      "title": "New music video",
-      "subtitle": "Ley de la atracción",
-      "text": "We’ve just released our music video for 'Ley de la atracción', filmed in the heart of Madrid with the collaboration of real couples who shared unique moments with us to bring this song to life. We hope you like it!",
-      "button": "Watch on YouTube"
-    }
-  },
-  "album": {
-    "label": "Album",
-    "styles": "Indie, Pop, Rock",
-    "tracks": "tracks"
-  },
-  "albums": {
-    "released": "Latest releases",
-    "upcoming": "Upcoming"
-  },
   "track": {
     "description": "Description",
     "lyrics": "Lyrics"
   },
-  "aboutUs": {
-    "title": "About us",
-    "info": "<p>We are a Madrid-based indie pop rock band formed by Sara, Hari, Manuel, Curro, and Jesús Manuel.</p><p>Our songs stand out for their overwhelming energy, rhythms that will make your hips move on their own, and catchy melodies that will stick in your head.</p><p>In 2024, we were finalists in the FIB Heineken Silver Rising Stars, second place in the Fiestas de Arganzuela, finalists in the band battle at the Vicálvaro festivals, performed in Málaga at the Brisa en tu Barrio festival, and played at the Plaza de Callao in the Zurich Madrid Rock'n'roll Running Series, among other notable events.</p><p>In 2025, we performed in Logroño at the band battle of the Festival Actual and at Vivo Back to Bands organized by Universal Music.</p><p>Additionally, we’ve started working with All Sounds on the communication for our upcoming LP ‘Que sólo nos quede ganar’.</p>"
+  "video": {
+    "fiestasArganzuela": {
+      "button": "Watch on Youtube",
+      "subtitle": "Full show on Youtube",
+      "text": "You can already watch our latest full live show at Fiestas de La Melonera in Arganzuela in our Youtube channel. If you want to hear our new forthcoming releases in a live format... Don't miss it out!",
+      "title": "Fiestas de Arganzuela 2024"
+    },
+    "ley": {
+      "button": "Watch on YouTube",
+      "subtitle": "Ley de la atracción",
+      "text": "We’ve just released our music video for 'Ley de la atracción', filmed in the heart of Madrid with the collaboration of real couples who shared unique moments with us to bring this song to life. We hope you like it!",
+      "title": "New music video"
+    }
   },
-  "download": {
-    "title": "Download our track '{{track}}'",
-    "mp3": "Download MP3"
-  }
+  "videoLabel": {
+    "atrapadoeneltiempo": "Video - Atrapado en el tiempo",
+    "caminocorrecto": "Video - El camino correcto",
+    "ley": "Video - Ley de la atracción",
+    "losiento": "Video - Lo siento, pero no",
+    "quevamosahacer": "Video - ¿Qué vamos a hacer?"
+  },
+  "videos": "Videos"
 }

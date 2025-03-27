@@ -1,0 +1,37 @@
+<div class="sq-smart-link">
+  <div class="sq-smart-link-cover"></div>
+  <div class="sq-smart-link-scroll" [class]="{ scroll: fitScroll }" #scroll>
+    <div class="sq-smart-link-wrapper" *ngIf="item">
+      <div class="sq-header">
+        <sweetq-album [item]="item"></sweetq-album>
+        <div class="sq-image"></div>
+        <h1 class="sq-title">{{ item.title }}</h1>
+        <h2 class="sq-subtitle">
+          {{ "links.title" | translate }}
+        </h2>
+      </div>
+      <div class="sq-links" *ngIf="links.length > 0">
+        <div class="sq-primary-links">
+          <a
+            class="sq-button"
+            target="_blank"
+            [ngClass]="[link.type]"
+            [href]="link.link"
+            *ngFor="let link of links"
+          >
+            <div class="sq-button-content">
+              <span
+                class="sq-icon-wrapper"
+                [ngClass]="link.type"
+                *ngIf="link.icon"
+                ><span class="sq-icon" [ngClass]="link.icon"></span
+              ></span>
+
+              <div class="sq-smart-link-play">PLAY</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

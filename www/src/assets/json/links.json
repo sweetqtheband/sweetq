@@ -4,14 +4,14 @@
     "icon": "icon-spotify",
     "text": "links.spotify",
     "button": "primary",
-    "link": "https://open.spotify.com/album/2muhEidJ0souFsYvPd3ioU"
+    "link": "https://open.spotify.com/album/2Ul8oyq3vUqZC6cIFVIGME"
   },
   {
     "type": "appleMusic",
     "icon": "icon-apple-music",
     "text": "links.appleMusic",
     "button": "primary",
-    "link": "https://music.apple.com/es/album/ley-de-la-atracci%C3%B3n-single/1767473340"
+    "link": "https://music.apple.com/es/album/golpe-de-suerte-single/1802283427"
   },
   {
     "type": "youtubeMusic",

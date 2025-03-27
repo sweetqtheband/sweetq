@@ -59,6 +59,8 @@ export default function ListTable({
   onItemClick = () => {},
   onDelete = async () => true,
   noAdd = false,
+  noDelete = false,
+  noBatchActions = false,
   translations = {},
   actions = {},
   batchActions = {},
@@ -80,6 +82,8 @@ export default function ListTable({
   onItemClick?: (item: any) => void;
   onDelete?: (ids: string[]) => Promise<boolean>;
   noAdd?: boolean;
+  noDelete?: boolean;
+  noBatchActions?: boolean;
   translations?: Record<string, any>;
   fields?: Record<string, any>;
   actions?: Record<string, any>;
@@ -672,31 +676,39 @@ export default function ListTable({
                     </Button>
                   ) : null}
                 </TableToolbarContent>
-                <TableBatchActions
-                  {...batchActionProps}
-                  translateWithId={tableBatchActionsTranslate}
-                >
-                  {renderBatchActions(batchActionProps, selectedRows)}
-                  <TableBatchAction
-                    tabIndex={batchActionProps.shouldShowBatchActions ? 0 : -1}
-                    renderIcon={TrashCan}
-                    onClick={() => tableDeleteHandler(selectedRows)}
+                {!noBatchActions ? (
+                  <TableBatchActions
+                    {...batchActionProps}
+                    translateWithId={tableBatchActionsTranslate}
                   >
-                    {translations.delete}
-                  </TableBatchAction>
-                </TableBatchActions>
+                    {renderBatchActions(batchActionProps, selectedRows)}
+                    {!noDelete ? (
+                      <TableBatchAction
+                        tabIndex={
+                          batchActionProps.shouldShowBatchActions ? 0 : -1
+                        }
+                        renderIcon={TrashCan}
+                        onClick={() => tableDeleteHandler(selectedRows)}
+                      >
+                        {translations.delete}
+                      </TableBatchAction>
+                    ) : null}
+                  </TableBatchActions>
+                ) : null}
               </TableToolbar>
               <Table data-id={tableId}>
                 <TableHead>
                   <TableRow>
-                    <TableSelectAll
-                      {...getSelectionProps()}
-                      id={`${id}-select-all`}
-                      name={`${id}-select-all`}
-                      onSelect={() => {
-                        onSelectAllHandler(rows, selectRow);
-                      }}
-                    />
+                    {!noBatchActions ? (
+                      <TableSelectAll
+                        {...getSelectionProps()}
+                        id={`${id}-select-all`}
+                        name={`${id}-select-all`}
+                        onSelect={() => {
+                          onSelectAllHandler(rows, selectRow);
+                        }}
+                      />
+                    ) : null}
                     {headers.map((header, index) => {
                       return (
                         <TableHeader
@@ -723,11 +735,13 @@ export default function ListTable({
                         tableRowClickHandler(row.id, target as HTMLElement)
                       }
                     >
-                      <TableSelectRow
-                        {...getSelectionProps({
-                          row,
-                        })}
-                      />
+                      {!noBatchActions ? (
+                        <TableSelectRow
+                          {...getSelectionProps({
+                            row,
+                          })}
+                        />
+                      ) : null}
                       {row.cells.map((cell, index) => (
                         <TableCell
                           className={`cell-${cell.id.split(':')[1]}`}

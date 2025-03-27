@@ -78,4 +78,19 @@ body {
       grid-auto-flow: row;
     }
   }
+
+  .cds--language-selector {
+    display: flex;
+    padding-top: var(--padding);
+    gap: calc(var(--padding) / 2);
+    justify-content: flex-end;
+
+    img {
+      padding: 0px calc(var(--padding) / 2);
+      box-sizing: content-box;
+    }
+    .selected {
+      box-shadow: 0 0 0 1px var(--selected-border-color);
+    }
+  }
 }

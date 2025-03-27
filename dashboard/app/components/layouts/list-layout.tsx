@@ -23,6 +23,8 @@ export default function ListLayout({
   actionLabel = '',
   onAction = async () => true,
   noAdd = false,
+  noDelete = false,
+  noBatchActions = false,
   translations = {},
   actions = {},
   batchActions = {},
@@ -47,6 +49,8 @@ export default function ListLayout({
   actionLabel?: string;
   onAction?: Function;
   noAdd?: boolean;
+  noDelete?: boolean;
+  noBatchActions?: boolean;
   translations?: Record<string, string>;
   actions?: Record<string, any>;
   batchActions?: Record<string, any>;
@@ -163,6 +167,8 @@ export default function ListLayout({
         filters={filters}
         translations={translations}
         noAdd={noAdd}
+        noDelete={noDelete}
+        noBatchActions={noBatchActions}
         fields={fields}
         isLoading={isLoading}
         isWaiting={isWaiting}

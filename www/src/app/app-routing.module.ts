@@ -30,6 +30,13 @@ const routes: Routes = [
       import('@views/track/track.module').then((m) => m.TrackViewModule),
   },
   {
+    path: 'smart-link/:track',
+    loadChildren: () =>
+      import('@views/smart-link/smart-link.module').then(
+        (m) => m.SmartLinkViewModule
+      ),
+  },
+  {
     path: 'album',
     loadChildren: () =>
       import('@views/album/album.module').then((m) => m.AlbumViewModule),

@@ -13,7 +13,7 @@ import {
   IconButton,
   PasswordInput,
   Stack,
-  Tag,
+  TextArea,
   TextInput,
   Tile,
 } from '@carbon/react';
@@ -26,7 +26,7 @@ import {
 } from './constants';
 import Image from 'next/image';
 import { ChangeEvent } from 'react';
-import { Add, Close, Interactions } from '@carbon/react/icons';
+import { Add, Close } from '@carbon/react/icons';
 import { Size } from '@/types/size';
 import { renderItem } from './renderItem';
 import { getClasses, s3File } from './utils';
@@ -34,7 +34,7 @@ import { getClasses, s3File } from './utils';
 interface Field {
   field: string;
   type: string;
-  value: string;
+  value: any;
   disabled: boolean;
   removable: boolean;
   translations: Record<string, any>;
@@ -87,12 +87,14 @@ const renderImage = ({ field, value }: Field) => {
 };
 
 // Hidden field
-const renderLabel = ({ field, value, translations }: Field) => (
-  <FormItem key={field}>
-    <p className="cds--label">{translations.fields[field]}</p>
-    <p>{value}</p>
-  </FormItem>
-);
+const renderLabel = ({ field, value, translations }: Field) => {
+  return (
+    <FormItem key={field}>
+      <p className="cds--label">{translations?.[field]}</p>
+      <div>{value}</div>
+    </FormItem>
+  );
+};
 
 // Text input field
 const renderTextInput = ({
@@ -116,6 +118,115 @@ const renderTextInput = ({
     />
   );
 };
+
+// Text area field
+const renderTextArea = ({
+  field,
+  value,
+  fields,
+  translations,
+  formState,
+  internalState,
+  onInputHandler,
+  onInternalStateHandler,
+}: Field) => {
+  const inputValue = formState?.[field] || value;
+
+  const maxCount = fields?.options[field]?.maxLength;
+  const language = fields?.options[field]?.language;
+  const onChangeHandler = (field: string, value: string) => {
+    if (language) {
+      const newInternalState = {
+        ...internalState[field],
+        [internalState[field]?.locale]: value,
+      };
+
+      onInternalStateHandler(field, newInternalState);
+
+      const newFormState = JSON.parse(JSON.stringify(newInternalState));
+      delete newFormState.locale;
+
+      onInputHandler(field, newFormState);
+    } else {
+      onInternalStateHandler(field, value);
+      onInputHandler(field, value);
+    }
+  };
+
+  if (!internalState[field]) {
+    const newInternalState = {
+      ...translations.availableLanguages.reduce(
+        (acc: Record<string, string>, locale: string) => ({
+          ...acc,
+          [locale]: inputValue?.[locale] || '',
+        }),
+        {}
+      ),
+      locale: translations.locale,
+    };
+    onInternalStateHandler(field, newInternalState);
+  }
+
+  const onLanguageChangeHandler: Function = (field: string, locale: string) => {
+    onInternalStateHandler(field, {
+      ...internalState[field],
+      locale,
+    });
+  };
+
+  return (
+    <>
+      <TextArea
+        enableCounter={maxCount > 0}
+        key={field}
+        id={field}
+        maxCount={maxCount}
+        labelText={translations.fields[field]}
+        value={
+          (language
+            ? inputValue?.[internalState?.[field]?.locale]
+            : inputValue) || ''
+        }
+        onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+          onChangeHandler(field, e.target.value)
+        }
+      />
+      {language
+        ? renderLanguageSelector({
+            field,
+            translations,
+            value: internalState?.[field]?.locale,
+            onInputHandler: onLanguageChangeHandler,
+          } as Field)
+        : null}
+    </>
+  );
+};
+
+const renderLanguageSelector = ({
+  field,
+  translations,
+  value,
+  onInputHandler,
+}: Field) => (
+  <div className="cds--language-selector ">
+    {translations?.availableLanguages.map((locale: string) => {
+      const img = '/imgs/flags/' + locale + '.svg';
+      return (
+        <Image
+          key={`${field}-${locale}`}
+          src={img}
+          className={value === locale ? 'selected' : ''}
+          alt={translations.languages[locale]}
+          width={IMAGE_SIZES.sm}
+          height={IMAGE_SIZES.sm}
+          crossOrigin="anonymous"
+          onClick={() => onInputHandler(field, locale)}
+        />
+      );
+    })}
+  </div>
+);
 
 const renderTextMap = ({
   field,
@@ -152,7 +263,7 @@ const renderSelect = ({
   renders,
   ready = true,
 }: Field) => {
-  const items = fields.options[field].options.map((option: any) => ({
+  const items = fields?.options[field]?.options.map((option: any) => ({
     id: option.id,
     text: translations?.options[field]?.[option.id] || option.value,
   }));
@@ -824,6 +935,18 @@ const renderCity = ({
   );
 };
 
+const renderDatePickerLabel = ({
+  field,
+  value,
+  translations,
+  formState,
+}: Field) =>
+  renderLabel({
+    field,
+    translations,
+    value: renderDatePicker({ field, value, translations, formState } as Field),
+  } as Field);
+
 const renderDatePicker = ({ field, value, translations, formState }: Field) => {
   const defaultValue = formState[field] || value;
   return (
@@ -867,6 +990,7 @@ const renderers = {
   [FIELD_TYPES.CITY]: renderCity,
   [FIELD_TYPES.IMAGE]: renderImage,
   [FIELD_TYPES.TEXT]: renderTextInput,
+  [FIELD_TYPES.TEXTAREA]: renderTextArea,
   [FIELD_TYPES.TEXTMAP]: renderTextMap,
   [FIELD_TYPES.HOUR]: renderHour,
   [FIELD_TYPES.SELECT]: renderSelect,
@@ -874,6 +998,7 @@ const renderers = {
   [FIELD_TYPES.IMAGE_UPLOADER]: renderUploader,
   [FIELD_TYPES.VIDEO_UPLOADER]: renderUploader,
   [FIELD_TYPES.DATE]: renderDatePicker,
+  [FIELD_TYPES.DATE_LABEL]: renderDatePickerLabel,
   [FIELD_TYPES.LABEL]: renderLabel,
   [FIELD_TYPES.PASSWORD]: renderPassword,
 };

@@ -4,7 +4,7 @@ import { Layouts } from '@/app/services/layouts';
 import type { Layout } from '@/types/layout';
 import i18n from '@/app/services/translate';
 import LayoutsView from './view';
-import { getActionsTranslations } from '@/app/services/_list';
+import { getTranslation } from '@/app/services/_list';
 
 export default async function LayoutsPage({
   searchParams,
@@ -20,7 +20,7 @@ export default async function LayoutsPage({
 
   const translations = {
     ...Layouts.getTranslations(i18n, Layouts),
-    ...getActionsTranslations(i18n),
+    ...getTranslation(i18n, 'actions'),
   };
 
   return (

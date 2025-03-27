@@ -1,7 +1,6 @@
 import { I18n } from 'next-i18next';
 import { v4 as uuidv4 } from 'uuid';
 import { BREAKPOINTS, FIELD_TYPES } from './constants';
-import { table } from 'console';
 
 export const getClasses = (obj: Record<string, any>) =>
   Object.keys(obj)
@@ -39,7 +38,9 @@ export const getFormData = (data: any, files: any) => {
   Object.keys(data).forEach((key) => {
     if (files[key]?.length && files[key][0].file instanceof File) {
       formData.append(key, files[key][0].file);
-    } else if (data[key]) {
+    } else if (typeof data[key] === 'object') {
+      formData.append(key, JSON.stringify(data[key]));
+    } else {
       formData.append(key, data[key]);
     }
   });
@@ -52,7 +53,8 @@ export const s3File = (fileName: string) =>
 
 export const formDataToObject = (
   formData: FormData,
-  types: Record<string, any>
+  types: Record<string, any>,
+  options: Record<string, any>
 ): Record<string, any> => {
   const obj: Record<string, any> = {};
 
@@ -64,6 +66,9 @@ export const formDataToObject = (
           : value;
     } else if (types[key] === FIELD_TYPES.MULTISELECT) {
       obj[key] = value !== 'undefined' ? String(value).split(',') : [];
+    } else if (options?.[key]?.language) {
+      obj[key] = JSON.parse(value as string);
+      return;
     } else {
       obj[key] = value !== 'undefined' ? value : null;
     }

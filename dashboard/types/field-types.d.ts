@@ -5,6 +5,7 @@ export enum FieldTypes {
   filter_city = 'filterCity',
   hidden = 'hidden',
   text = 'text',
+  textarea = 'textarea',
   uploader = 'uploader',
   imageUploader = 'imageUploader',
   videoUploader = 'videoUploader',

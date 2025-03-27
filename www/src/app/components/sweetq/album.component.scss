@@ -1,4 +1,6 @@
 :host {
+  --border-radius: var(--sweetq-album-border-radius, 10px);
+
   display: block;
 
   .album {
@@ -19,7 +21,7 @@
     display: block;
     width: 100%;
     height: 100%;
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     position: relative;
     background-position: center top;
     background-size: cover;

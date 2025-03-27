@@ -204,7 +204,7 @@ export const postItem = async ({
     }
   });
 
-  return svc.create({ ...formDataToObject(formData, types) });
+  return svc.create({ ...formDataToObject(formData, types, options) });
 };
 
 export const putItem = async ({
@@ -248,7 +248,10 @@ export const putItem = async ({
     }
   });
 
-  const updateObject = { ...formDataToObject(formData, types), _id: id };
+  const updateObject = {
+    ...formDataToObject(formData, types, options),
+    _id: id,
+  };
 
   return svc.update(updateObject, avoidUnset);
 };

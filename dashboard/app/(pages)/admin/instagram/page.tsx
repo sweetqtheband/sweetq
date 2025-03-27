@@ -2,7 +2,7 @@ import { Followers } from '@/app/services/followers';
 import type { Follower } from '@/types/follower';
 import i18n from '@/app/services/translate';
 import InstagramView from './view';
-import { getActionsTranslations } from '@/app/services/_list';
+import { getTranslation } from '@/app/services/_list';
 import './page.scss';
 import { Layouts } from '@/app/services/layouts';
 
@@ -66,7 +66,7 @@ export default async function InstagramPage({
 
   const translations = {
     ...Followers.getTranslations(i18n, Followers),
-    ...getActionsTranslations(i18n),
+    ...getTranslation(i18n, 'actions'),
     title: i18n.t('pages.instagram.title'),
     description: i18n.t('pages.instagram.description', { total: data.total }),
   };

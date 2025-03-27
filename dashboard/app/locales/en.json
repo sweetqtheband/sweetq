@@ -12,7 +12,10 @@
     "confirmDeleteSelected": "Are you sure you want to delete the selected items?",
     "delete": "Delete",
     "edit": "Edit",
+    "email": "Email",
     "filter": "Filter",
+    "hidePassword": "Hide password",
+    "login": "Login",
     "preview": "Preview",
     "save": "Save",
     "search": "Search",
@@ -22,28 +25,39 @@
     "selectedShort": "Sel.",
     "selecteds": "Selected",
     "selectedsShort": "Sel.",
+    "sendMessage": "Send message",
+    "showPassword": "Show password",
     "unselectAll": "Unselect all",
     "unselectAllShort": "Unsel.",
-    "upload": "Upload",
-    "login": "Login",
-    "email": "Email",
-    "showPassword": "Show password",
-    "hidePassword": "Hide password",
-    "sendMessage": "Send message"
+    "upload": "Upload"
+  },
+  "colors": {
+    "blue": "Blue",
+    "cool-gray": "Cool gray",
+    "cyan": "Cyan",
+    "gray": "Gray",
+    "green": "Green",
+    "high-contrast": "High contrast",
+    "magenta": "Magenta",
+    "outline": "Outline",
+    "purple": "Purple",
+    "red": "Red",
+    "teal": "Teal",
+    "warm-gray": "Warm gray"
   },
   "date": {
     "formats": {
-      "short": {
-        "date": "%m/%D/%Y",
-        "day": "%M %d %Y",
-        "text": "%M %d",
-        "month": "%M %Y"
-      },
       "chat": {
         "date": "%d %MM %H:%i",
         "dateToday": "Today at %H:%i",
-        "dateYesterday": "Yesterday at %H:%i",
-        "dateYear": "%d %MM %Y"
+        "dateYear": "%d %MM %Y",
+        "dateYesterday": "Yesterday at %H:%i"
+      },
+      "short": {
+        "date": "%m/%D/%Y",
+        "day": "%M %d %Y",
+        "month": "%M %Y",
+        "text": "%M %d"
       },
       "timestamp": "%Y%m%D"
     },
@@ -63,109 +77,120 @@
     ]
   },
   "fields": {
+    "address": "Address",
     "alias": "Alias",
+    "bands": "Bands",
     "button": "Button",
     "buttonText": "Button text",
-    "cover": "Cover",
+    "city": "City",
     "color": "Color",
-    "title": "Title",
-    "subtitle": "Subtitle",
-    "name": "Name",
+    "country": "Country",
+    "cover": "Cover",
     "date": "Date",
+    "description": "Description",
+    "email": "Email",
+    "event": "Event / news URL",
+    "from": "From",
+    "fullName": "Full name",
     "hour": "Hour",
+    "image": "Image",
+    "keywords": "Keywords",
+    "layout": "Layout",
+    "limit": "Limit",
     "link": "Link",
     "linkType": "Link type",
-    "status": "Status",
-    "image": "Image",
-    "video": "Video",
-    "venue": "Venue",
-    "city": "City",
-    "profile": "Profile",
-    "state": "State",
-    "country": "Country",
-    "address": "Address",
     "map": "Google Maps embed URL",
-    "event": "Event / news URL",
-    "tickets": "Tickets URL",
-    "type": "Type",
-    "username": "Username",
-    "treatment": "Treatment",
+    "name": "Name",
+    "password": "Password",
+    "pendingMessages": "Pending messages",
+    "profile": "Profile",
+    "robots": "Robots",
     "shortName": "Short name",
-    "fullName": "Full name",
-    "tags": "Tags",
     "social": {
       "facebook": "Facebook",
       "instagram": "Instagram",
-      "x": "X",
-      "youtube": "YouTube",
       "spotify": "Spotify",
-      "web": "Web"
+      "web": "Web",
+      "x": "X",
+      "youtube": "YouTube"
     },
-    "password": "Password",
-    "layout": "Layout",
-    "pendingMessages": "Pending messages",
-    "bands": "Bands",
-    "limit": "Limit",
-    "withoutTags": "Without tags",
-    "email": "Email"
-  },
-  "userProfiles": {
-    "admin": "Administrator",
-    "user": "User"
+    "state": "State",
+    "status": "Status",
+    "subtitle": "Subtitle",
+    "tags": "Tags",
+    "tickets": "Tickets URL",
+    "title": "Title",
+    "treatment": "Treatment",
+    "type": "Type",
+    "until": "Until",
+    "username": "Username",
+    "venue": "Venue",
+    "video": "Video",
+    "withoutTags": "Without tags"
   },
   "filters": {
     "show": {
-      "label": "Show",
+      "all": "All",
       "following": "Following",
-      "notFollowing": "Not following",
-      "all": "All"
+      "label": "Show",
+      "notFollowing": "Not following"
     },
     "withoutTags": "Without tags"
   },
+  "languages": {
+    "en": "English",
+    "es": "Spanish"
+  },
   "news": {
     "types": {
+      "gig": "Gig",
       "news": "News",
-      "release": "Release",
-      "gig": "Gig"
+      "release": "Release"
     }
   },
   "pages": {
+    "gigs": {
+      "title": "Gigs"
+    },
     "instagram": {
-      "title": "Instagram",
       "description": "{{total}} followers",
       "panel": {
-        "title": "Send message",
-        "vars": "Variables",
-        "personalMessage": "Personal message",
         "collectiveMessage": "Collective message",
-        "variables": {
-          "alias": "Short name"
-        },
         "modes": {
           "createNew": "Create new",
           "loadLayout": "Load layout"
         },
         "openChat": "Open chat",
-        "subtitle": "The message will be sent to "
-      }
-    },
-    "gigs": {
-      "title": "Gigs"
+        "personalMessage": "Personal message",
+        "subtitle": "The message will be sent to ",
+        "title": "Send message",
+        "variables": {
+          "alias": "Short name"
+        },
+        "vars": "Variables"
+      },
+      "title": "Instagram"
     }
   },
+  "robots": {
+    "indexFollow": "Index",
+    "indexNoFollow": "No follow",
+    "noIndexFollow": "No index",
+    "noIndexNoFollow": "No index, no follow"
+  },
   "routes": {
-    "instagram": "Instagram",
-    "gmail": "Gmail",
-    "gigs": "Gigs",
-    "tracks": "Tracks",
-    "videos": "Videos",
-    "news": "News",
-    "contact": "Contact",
     "bands": "Bands",
-    "tags": "Tags",
-    "users": "Users",
     "config": "Configuration",
-    "layouts": "Layouts"
+    "contact": "Contact",
+    "gigs": "Gigs",
+    "gmail": "Gmail",
+    "instagram": "Instagram",
+    "layouts": "Layouts",
+    "news": "News",
+    "tags": "Tags",
+    "tracks": "Tracks",
+    "users": "Users",
+    "videos": "Videos"
   },
   "status": {
     "published": "Published",
@@ -173,28 +198,18 @@
   },
   "tracks": {
     "status": {
-      "released": "Released",
       "latest": "Latest release",
+      "released": "Released",
       "upcoming": "Upcoming"
     }
   },
   "treatments": {
-    "person": "Person",
-    "collective": "Collective"
+    "collective": "Collective",
+    "person": "Person"
   },
   "uploader": "Drag and drop a file here or click to select a file",
-  "colors": {
-    "red": "Red",
-    "magenta": "Magenta",
-    "purple": "Purple",
-    "blue": "Blue",
-    "cyan": "Cyan",
-    "teal": "Teal",
-    "green": "Green",
-    "gray": "Gray",
-    "cool-gray": "Cool gray",
-    "warm-gray": "Warm gray",
-    "high-contrast": "High contrast",
-    "outline": "Outline"
+  "userProfiles": {
+    "admin": "Administrator",
+    "user": "User"
   }
 }

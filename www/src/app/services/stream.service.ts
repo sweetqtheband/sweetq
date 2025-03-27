@@ -62,15 +62,25 @@ export class StreamService {
                   lyrics: track.lyrics
                     ? track.lyrics.replaceAll('\n', '<br/>')
                     : null,
-                  spotify: track.spotifyId
+                  spotify: track?.links?.spotify
                     ? {
-                        url: `https://open.spotify.com/${track.spotifyId}`,
-                        embedUrl: `https://open.spotify.com/embed/${track.spotifyId}`,
+                        url: `https://open.spotify.com/${track.links.spotify}`,
+                        embedUrl: `https://open.spotify.com/embed/${track.spotify}`,
                       }
                     : null,
-                  apple: track.appleId
+                  apple: track?.links?.apple
                     ? {
-                        url: `https://music.apple.com/es/${track.appleId}`,
+                        url: `https://music.apple.com/es/${track.links.apple}`,
+                      }
+                    : null,
+                  amazon: track?.links?.amazon
+                    ? {
+                        url: `https://www.amazon.com/${track.links.amazon}`,
+                      }
+                    : null,
+                  youtubeMusic: track?.links?.youtube
+                    ? {
+                        url: `https://music.youtube.com/${track.links.youtube}`,
                       }
                     : null,
                 } as Media)
@@ -85,32 +95,43 @@ export class StreamService {
   getTrack({ params = null, headers = null, trackId = null }: Options = {}) {
     return new Promise<Media>((resolve, reject) => {
       if (trackId) {
-        this.http
-          .get(`${this.apiUrl}/media/${trackId}`, { params, headers })
-          .subscribe((res: any) => {
-            const track = res.data;
-            track.date = new Date(track.date);
-            track.ended = false;
-            track.description = track.description
-              ? track.description.replaceAll('\n', '<br/>')
-              : null;
-            track.lyrics = track.lyrics
-              ? track.lyrics.replaceAll('\n', '<br/>')
-              : null;
-            track.spotify = track.spotifyId
-              ? {
-                  url: `https://open.spotify.com/${track.spotifyId}`,
-                  embedUrl: `https://open.spotify.com/embed/${track.spotifyId}`,
-                }
-              : null;
-            track.apple = track.appleId
-              ? {
-                  url: `https://music.apple.com/es/${track.appleId}`,
-                }
-              : null;
+        const ep = params?.public
+          ? `${this.apiUrl}/public/track/${trackId}`
+          : `${this.apiUrl}/media/${trackId}`;
+        this.http.get(ep, { params, headers }).subscribe((res: any) => {
+          const track = res.data;
+          track.date = new Date(track.date);
+          track.ended = false;
+          track.description = track.description
+            ? track.description.replaceAll('\n', '<br/>')
+            : null;
+          track.lyrics = track.lyrics
+            ? track.lyrics.replaceAll('\n', '<br/>')
+            : null;
+          track.spotify = track?.links?.spotify
+            ? {
+                url: `https://open.spotify.com/${track.links.spotify}`,
+                embedUrl: `https://open.spotify.com/embed/${track.links.spotify}`,
+              }
+            : null;
+          track.apple = track?.links?.apple
+            ? {
+                url: `https://music.apple.com/es/${track.links.apple}`,
+              }
+            : null;
+          track.amazon = track?.links?.amazon
+            ? {
+                url: `https://www.amazon.com/${track.links.amazon}`,
+              }
+            : null;
+          track.youtubeMusic = track?.links?.youtube
+            ? {
+                url: `https://music.youtube.com/${track.links.youtube}`,
+              }
+            : null;
 
-            resolve(track);
-          });
+          resolve(track);
+        });
       } else {
         reject(new Error('No trackId sent'));
       }
