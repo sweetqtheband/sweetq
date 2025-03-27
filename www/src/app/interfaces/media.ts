@@ -13,10 +13,13 @@ export interface Media {
   previousId?: number;
   spotify?: any;
   apple?: any;
+  amazon?: any;
+  youtubeMusic?: any;
   description?: string | null;
   lyrics?: string | null;
   isPlaying?: boolean;
   isLoading?: boolean;
   isCurrent?: boolean;
   fileSize?: number;
+  links?: Record<string, string>;
 }

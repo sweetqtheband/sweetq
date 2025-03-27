@@ -1,21 +1,12 @@
 [
   {
     "type": "info cover golpedesuerte",
-    "title": "presave.title",
-    "subtitle": "presave.subtitle",
-    "text": "presave.text",
-    "button": "presave.button",
+    "title": "info.title",
+    "subtitle": "info.subtitle",
+    "text": "info.text",
+    "button": "info.button",
     "squared": true,
     "icon": "icon-spotify",
-    "spotifyHref": "https://kraken.ffm.to/golpedesuerte"
-  },
-  {
-    "type": "info contest lesarts",
-    "title": "contest.lesarts.title",
-    "subtitle": "contest.lesarts.subtitle",
-    "text": "contest.lesarts.text",
-    "squared": true,
-    "button": "contest.lesarts.button",
-    "href": "https://concurs.festivaldelesarts.com/artists/3925"
+    "spotifyHref": "https://open.spotify.com/intl-es/album/2Ul8oyq3vUqZC6cIFVIGME"
   }
 ]

@@ -30,8 +30,10 @@ export default [
     cover: "quevamos.jpg",
     video: "quevamos.mp4",
     status: "released",
-    spotifyId: "album/732Pm0mxnNeGec676x28vW",
-    appleId: "album/qué-vamos-a-hacer/1734913974",
+    links: {
+      spotify: "album/732Pm0mxnNeGec676x28vW",
+      apple: "album/qué-vamos-a-hacer/1734913974",
+    },
   },
   {
     id: "ley",
@@ -40,8 +42,10 @@ export default [
     cover: "ley.jpg",
     video: "ley.mp4",
     status: "latest",
-    spotifyId: "album/2muhEidJ0souFsYvPd3ioU",
-    appleId: "album/ley-de-la-atracción-single/1767473340",
+    links: {
+      spotify: "album/2muhEidJ0souFsYvPd3ioU",
+      apple: "album/ley-de-la-atracción-single/1767473340",
+    },
     description:
       '¿Qué pasa cuando alguien te desarma con solo una mirada? ¿Alguna vez has sentido una conexión que no puedes explicar?\n\n "Ley de la atracción" captura ese momento en el que todo cambia, donde el magnetismo entre dos personas es tan fuerte que no hay vuelta atrás y no sabes por qué. \n\nCon una producción brillante por parte de Iker Arranz, este tema te llevará a descubrir si la atracción es algo más que una simple teoría.',
     lyrics:
@@ -54,8 +58,10 @@ export default [
     cover: "yaesnavidad.jpg",
     video: "default.mp4",
     status: "released",
-    spotifyId: "album/62V1DcmJGqry4z7m8FS011",
-    appleId: "album/ya-es-navidad-single//1780778113",
+    links: {
+      spotify: "album/62V1DcmJGqry4z7m8FS011",
+      apple: "album/ya-es-navidad-single//1780778113",
+    },
     description:
       "'Ya es Navidad' es un tema muy especial que mantiene la esencia cálida y nostálgica de la música navideña tradicional fusionándola con un estilo indie contemporáneo. La letra de la canción evoca sentimientos de esperanza y reencuentro, resonando con la atmósfera que se vive en las calles en estas fechas tan especiales.",
     lyrics:
@@ -89,6 +95,12 @@ export default [
     cover: "golpedesuerte.jpg",
     video: "default.mp4",
     status: "upcoming",
+    links: {
+      spotify: "album/2Ul8oyq3vUqZC6cIFVIGME",
+      apple: "album/golpe-de-suerte-single/1802283427",
+      amazon: "dp/B0DGJPDRTT",
+      youtubeMusic: "playlist?list=OLAK5uy_mLRXuPUlh7lYzPYMEfS0sY5OF8VwTN_zg",
+    },
     lyrics:
       "Día raro, día gris\nun atardecer\nopacado por las nubes\nque amenazan lluvia\n\nNueva oportunidad\npara reencontrarnos\npara perdonar errores\ny borrar su rastro\n\nQuiero que pienses en mí\ncuando el tiempo cambie\nCuando soplen nuevos vientos\ny el sol reaparezca\n\nQue Dios se apiade de mi alma\nque no deje nada al azar\nque muestre sus cartas de cara\ny sienta que puedo ganar\n\nQue Dios sea benevolente\nque no me aproxime al final\nque encuentre mi golpe de suerte\n\nAhora creo recordar\ntodas esas cosas\nque quedaron enterradas\ny nunca te dije\n\nQuiero que estés junto a mí\ncuando venza al miedo\ncuando todos mis fantasmas\nse vuelvan recuerdos\n\nQue Dios se apiade de mi alma\nque no deje nada al azar\nque muestre sus cartas de cara\ny sienta que puedo ganar\n\nQue Dios sea benevolente\nque no me aproxime al final\nque encuentre mi golpe de suerte\n\nY prefiero perder la razón\na tener que aceptar mi verdad\nesta vez no lo haremos peor\n\nY si vuelvo otra vez a empezar\nte prometo no pedir perdón\nse que hay algo bonito al final\n\nNo lo dudes, allí estaré\ncuando el tiempo cambie\ncuando soplen nuevos vientos y el sol reaparezca\n\nQue Dios se apiade de mi alma\nque no deje nada al azar\nque muestre sus cartas de cara\n\nQue Dios sea benevolente\nque no me aproxime al final\nque encuentre mi golpe de suerte\n\nQue Dios se apiade de mi alma\nque no deje nada al azar\nque muestre sus cartas de cara\n\nQue Dios sea benevolente\nque no me aproxime al final\nque encuentre mi golpe de suerte\nque sólo nos quede ganar.\n\nQue sólo nos quede ganar.",
   },

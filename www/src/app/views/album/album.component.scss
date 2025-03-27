@@ -502,7 +502,7 @@
         }
 
         &.primary {
-          font-family: "titillium-web-bold";
+          font-family: var(--font-family-primary, "titillium-web-bold");
           font-size: 18px;
           border-radius: 4px;
           border-width: 1px;
@@ -511,7 +511,7 @@
         }
 
         &.secondary {
-          font-family: "titillium-web-bold";
+          font-family: var(--font-family-secondary, "titillium-web-bold");
           font-size: 18px;
           border-radius: 4px;
           border-width: 1px;

@@ -1,0 +1,208 @@
+body {
+  overflow: hidden;
+}
+
+@function px8($quantity) {
+  @return calc(8px * $quantity);
+}
+
+// Variables
+:host(.black) {
+  --backgroundColor: #16181a;
+  --borderColor: #7d91a1;
+  --primaryColor: #ffffff;
+  --secondaryColor: rgba(255, 255, 255, 0.7);
+}
+
+// Styles
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background-color: var(--backgroundColor);
+  text-align: center;
+  overflow: auto;
+  font-family: "mont";
+  .sq-smart-link {
+    height: 100%;
+    &-scroll {
+      overflow-y: auto;
+      width: 100%;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      left: 50%;
+
+      &.scroll {
+        box-sizing: border-box;
+        padding: px8(4);
+        height: 100vh;
+      }
+    }
+    &-wrapper {
+      max-width: 312px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    &-cover {
+      background-image: var(--background-image);
+      background-size: cover;
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      background-position: center bottom;
+      filter: blur(80px);
+    }
+    &-play {
+      display: flex;
+      align-items: center;
+      gap: px8(1);
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--primaryColor);
+      padding: px8(1);
+      border-radius: 4px;
+      border-width: 0.5px;
+      border-style: solid;
+      border-color: var(--borderColor);
+      &:after {
+        content: "";
+        background-image: url("/assets/imgs/icons/right-arrow.svg");
+        width: 8px;
+        height: 8px;
+        display: block;
+        background-repeat: no-repeat;
+      }
+    }
+  }
+  .sq-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    sweetq-album {
+      --sweetq-album-border-radius: 0px;
+      overflow: hidden;
+      width: 100%;
+    }
+  }
+}
+
+.logo {
+  &-spotify {
+    background-image: url("/assets/imgs/logos/logo-spotify.svg");
+  }
+  &-apple {
+    background-image: url("/assets/imgs/logos/logo-apple.svg");
+  }
+  &-youtubeMusic {
+    background-image: url("/assets/imgs/logos/logo-youtubeMusic.svg");
+  }
+  &-amazon {
+    background-image: url("/assets/imgs/logos/logo-amazon.svg");
+  }
+}
+
+.sq-smart-link-wrapper {
+  text-align: center;
+  margin: 0 auto;
+  display: flex;
+  flex-flow: column;
+  background-color: var(--backgroundColor);
+  position: relative;
+  z-index: 1;
+
+  .sq-header {
+    .sq-image {
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin: 0 auto;
+    }
+
+    .sq-title {
+      color: var(--primaryColor);
+      font-family: "mont";
+      font-weight: 700;
+      font-size: 18px;
+      padding: px8(3) 0 px8(1);
+    }
+
+    .sq-subtitle {
+      color: var(--secondaryColor);
+      font-family: "mont";
+      font-weight: 400;
+      font-size: 12px;
+      padding: 0 0 px8(1);
+    }
+  }
+
+  .sq-links {
+    text-align: center;
+    padding: px8(2);
+    flex: 1;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+
+    .sq-button {
+      border-width: 1px;
+      border-style: solid;
+      border-color: var(--borderColor);
+      padding: px8(2);
+      .sq-button-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+
+        .sq-icon-wrapper {
+          height: 24px;
+          width: 100px;
+          .sq-icon {
+            height: 100%;
+            width: auto;
+            object-fit: cover;
+            background-position: left center;
+          }
+        }
+      }
+    }
+
+    .sq-primary-links {
+      flex: 1;
+    }
+    .sq-secondary-links {
+      flex: 1;
+      margin-top: px8(2);
+    }
+    .sq-button {
+      width: 100%;
+      border-style: solid;
+      margin-top: px8(2);
+      min-height: 61px;
+      &:first-child {
+        margin-top: 0;
+      }
+
+      &.primary {
+        font-family: "titillium-web-bold";
+        font-size: 18px;
+        border-radius: 4px;
+        border-width: 1px;
+        border-color: var(--primaryColor);
+        color: var(--primaryColor);
+      }
+
+      &.secondary {
+        font-family: "titillium-web-bold";
+        font-size: 18px;
+        border-radius: 4px;
+        border-width: 1px;
+        border-color: var(--secondaryColor);
+        color: var(--secondaryColor);
+      }
+    }
+  }
+}
