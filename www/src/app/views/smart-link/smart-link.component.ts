@@ -44,7 +44,7 @@ export class SmartLinkComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.meta.removeTag('name="description"');
     this.meta.updateTag({ name: 'robots', content: 'noindex' });
     this.windowResizeHandler = () => {
-      this.vh = window.innerHeight * 0.01;
+      this.vh = (window.visualViewport?.height || window.innerHeight) * 0.01;
       document.documentElement.style.setProperty('--vh', `${this.vh}px`);
       this.setViewport();
     };
