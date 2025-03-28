@@ -22,14 +22,14 @@ body {
 // Styles
 :host {
   display: block;
-  height: 100%;
+  height: var(--full-height);
   width: 100%;
   background-color: var(--backgroundColor);
   text-align: center;
   overflow: hidden;
   font-family: "mont";
   .sq-smart-link {
-    height: 100%;
+    height: var(--full-height);
     &-scroll {
       overscroll-behavior: contain;
       overflow-y: auto;
@@ -55,8 +55,8 @@ body {
       background-image: var(--background-image);
       background-size: cover;
       position: fixed;
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      padding-top: var(--full-height);
       background-position: center bottom;
       filter: blur(80px);
     }

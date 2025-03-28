@@ -1,5 +1,6 @@
 import {
   Component,
+  OnDestroy,
   OnInit,
   ElementRef,
   ViewChild,
@@ -21,7 +22,7 @@ import { Media } from '@interfaces/media';
   ],
   host: { class: 'black' },
 })
-export class SmartLinkComponent implements OnInit, AfterViewChecked {
+export class SmartLinkComponent implements OnInit, OnDestroy, AfterViewChecked {
   @ViewChild('scroll') _scroll!: ElementRef<HTMLDivElement>;
 
   windowResizeHandler;
@@ -43,10 +44,9 @@ export class SmartLinkComponent implements OnInit, AfterViewChecked {
     this.meta.removeTag('name="description"');
     this.meta.updateTag({ name: 'robots', content: 'noindex' });
     this.windowResizeHandler = () => {
-      this.fitScroll = false;
-      requestAnimationFrame(() => {
-        this.setViewport();
-      });
+      this.vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${this.vh}px`);
+      this.setViewport();
     };
   }
 
@@ -54,20 +54,24 @@ export class SmartLinkComponent implements OnInit, AfterViewChecked {
     this.track = this.route.snapshot.params['track'];
 
     this.setData();
+    window.addEventListener('resize', this.windowResizeHandler);
   }
 
   ngAfterViewChecked() {
     if (!this.initialized && this._scroll?.nativeElement?.clientHeight) {
       this.initialized = true; // Evita llamadas múltiples
-      this.vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${this.vh}px`);
       this.setViewport();
     }
   }
 
+  ngOnDestroy() {
+    window.removeEventListener('resize', this.windowResizeHandler);
+  }
+
   setViewport() {
     if (this._scroll?.nativeElement) {
-      this.fitScroll = this._scroll.nativeElement.clientHeight > this.vh * 100;
+      const el = this._scroll.nativeElement.firstElementChild;
+      this.fitScroll = (el?.clientHeight || 0) > this.vh * 100;
     }
   }
 
