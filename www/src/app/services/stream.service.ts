@@ -75,12 +75,12 @@ export class StreamService {
                     : null,
                   amazon: track?.links?.amazon
                     ? {
-                        url: `https://www.amazon.com/${track.links.amazon}`,
+                        url: `https://music.amazon.com/${track.links.amazon}`,
                       }
                     : null,
-                  youtubeMusic: track?.links?.youtube
+                  youtubeMusic: track?.links?.youtubeMusic
                     ? {
-                        url: `https://music.youtube.com/${track.links.youtube}`,
+                        url: `https://music.youtube.com/${track.links.youtubeMusic}`,
                       }
                     : null,
                 } as Media)
@@ -121,12 +121,12 @@ export class StreamService {
             : null;
           track.amazon = track?.links?.amazon
             ? {
-                url: `https://www.amazon.com/${track.links.amazon}`,
+                url: `https://music.amazon.com/${track.links.amazon}`,
               }
             : null;
-          track.youtubeMusic = track?.links?.youtube
+          track.youtubeMusic = track?.links?.youtubeMusic
             ? {
-                url: `https://music.youtube.com/${track.links.youtube}`,
+                url: `https://music.youtube.com/${track.links.youtubeMusic}`,
               }
             : null;
 

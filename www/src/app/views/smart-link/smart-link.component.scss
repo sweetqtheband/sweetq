@@ -31,7 +31,8 @@ body {
     &-scroll {
       overflow-y: auto;
       width: 100%;
-      position: absolute;
+      height: var(--full-height);
+      position: fixed;
       top: 50%;
       transform: translate(-50%, -50%);
       left: 50%;
