@@ -26,11 +26,12 @@ body {
   width: 100%;
   background-color: var(--backgroundColor);
   text-align: center;
-  overflow: auto;
+  overflow: hidden;
   font-family: "mont";
   .sq-smart-link {
     height: 100%;
     &-scroll {
+      overscroll-behavior: contain;
       overflow-y: auto;
       width: 100%;
       position: fixed;
