@@ -42,7 +42,10 @@ body {
       &.scroll {
         box-sizing: border-box;
         padding: px8(4);
-        height: var(--full-height);
+        top: 0;
+        left: 0;
+        transform: unset;
+        height: calc(var(--full-height) - px8(6));
       }
     }
     &-wrapper {
