@@ -33,6 +33,7 @@ export class SmartLinkComponent implements OnInit, OnDestroy, AfterViewChecked {
   public track: Nullable<string> = null;
   public item: Nullable<Media> = null;
   private initialized: boolean = false;
+  private vh: number = 0;
 
   constructor(
     private streamSvc: StreamService,
@@ -60,6 +61,8 @@ export class SmartLinkComponent implements OnInit, OnDestroy, AfterViewChecked {
   ngAfterViewChecked() {
     if (!this.initialized && this._scroll?.nativeElement?.clientHeight) {
       this.initialized = true; // Evita llamadas múltiples
+      this.vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${this.vh}px`);
       this.setViewport();
     }
   }
@@ -69,11 +72,8 @@ export class SmartLinkComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   setViewport() {
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-    this.fitScroll = false;
     if (this._scroll?.nativeElement) {
-      this.fitScroll = this._scroll.nativeElement.clientHeight > vh * 100;
+      this.fitScroll = this._scroll.nativeElement.clientHeight > this.vh * 100;
     }
   }
 
