@@ -1,6 +1,5 @@
 import {
   Component,
-  OnDestroy,
   OnInit,
   ElementRef,
   ViewChild,
@@ -22,7 +21,7 @@ import { Media } from '@interfaces/media';
   ],
   host: { class: 'black' },
 })
-export class SmartLinkComponent implements OnInit, OnDestroy, AfterViewChecked {
+export class SmartLinkComponent implements OnInit, AfterViewChecked {
   @ViewChild('scroll') _scroll!: ElementRef<HTMLDivElement>;
 
   windowResizeHandler;
@@ -55,7 +54,6 @@ export class SmartLinkComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.track = this.route.snapshot.params['track'];
 
     this.setData();
-    window.addEventListener('resize', this.windowResizeHandler);
   }
 
   ngAfterViewChecked() {
@@ -65,10 +63,6 @@ export class SmartLinkComponent implements OnInit, OnDestroy, AfterViewChecked {
       document.documentElement.style.setProperty('--vh', `${this.vh}px`);
       this.setViewport();
     }
-  }
-
-  ngOnDestroy() {
-    window.removeEventListener('resize', this.windowResizeHandler);
   }
 
   setViewport() {
