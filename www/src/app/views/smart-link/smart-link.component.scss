@@ -1,6 +1,6 @@
 html {
-  --full-height: calc(var(--vh, 1vh) * 100);
   height: var(--full-height);
+  overflow: hidden;
 }
 body {
   overflow: hidden;
@@ -12,6 +12,7 @@ body {
 
 // Variables
 :host(.black) {
+  --full-height: calc(var(--vh, 1vh) * 100);
   --backgroundColor: #16181a;
   --borderColor: #7d91a1;
   --primaryColor: #ffffff;
@@ -32,7 +33,6 @@ body {
     &-scroll {
       overflow-y: auto;
       width: 100%;
-      height: var(--full-height);
       position: fixed;
       top: 50%;
       transform: translate(-50%, -50%);
@@ -41,7 +41,7 @@ body {
       &.scroll {
         box-sizing: border-box;
         padding: px8(4);
-        height: 100vh;
+        height: var(--full-height);
       }
     }
     &-wrapper {

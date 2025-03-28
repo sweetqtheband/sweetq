@@ -73,8 +73,7 @@ export class SmartLinkComponent implements OnInit, OnDestroy, AfterViewChecked {
     document.documentElement.style.setProperty('--vh', `${vh}px`);
     this.fitScroll = false;
     if (this._scroll?.nativeElement) {
-      this.fitScroll =
-        this._scroll.nativeElement.clientHeight > document.body.clientHeight;
+      this.fitScroll = this._scroll.nativeElement.clientHeight > vh * 100;
     }
   }
 
