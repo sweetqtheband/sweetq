@@ -1,18 +1,6 @@
 [
   {
-    "id": 3,
-    "date": "2024-04-28 11:00",
-    "city": "Madrid",
-    "hour": "11:00",
-    "venue": "Zurich Rock'n'Roll Running Series Madrid",
-    "address": "Plaza de Callao",
-    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.5006875396157!2d-3.708486222301044!3d40.419910871439114!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42287c516491eb%3A0xa53f91991ef7794c!2sPl.%20del%20Callao%2C%20Centro%2C%2028013%20Madrid!5e0!3m2!1ses!2ses!4v1713967972034!5m2!1ses!2ses",
-    "bands": [],
-    "event": null,
-    "tickets": null
-  },
-  {
-    "id": 5,
+    "id": 1,
     "date": "2024-06-29 19:00",
     "city": "Valencia",
     "hour": "19:00",
@@ -24,7 +12,7 @@
     "tickets": null
   },
   {
-    "id": 6,
+    "id": 2,
     "date": "2024-07-20",
     "city": "Málaga",
     "hour": null,
@@ -36,7 +24,7 @@
     "tickets": null
   },
   {
-    "id": 7,
+    "id": 3,
     "date": "2024-09-06 20:00",
     "city": "Madrid",
     "hour": "20:00",
@@ -46,18 +34,6 @@
     "bands": [],
     "event": null,
     "tickets": null
-  },
-  {
-    "id": 8,
-    "date": "2024-10-04 19:30",
-    "city": "Madrid",
-    "hour": "19:30",
-    "venue": "Primera Fila Fest Madrid",
-    "address": "Fun House",
-    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3036.983055592305!2d-3.7011369000000003!3d40.4313741!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42288af1a198e3%3A0xa3e349b77417e9e9!2sFun%20House!5e0!3m2!1ses!2ses!4v1711014526803!5m2!1ses!2ses",
-    "bands": [24, 25],
-    "event": null,
-    "tickets": "https://entradium.com/es/events/primera-fila-fest-vol-3-edicion-madrid-madrid/sessions/04-10-2024-44b63c14-a9f6-45fa-850b-9d9f21382f5c"
   },
   {
     "id": 9,
@@ -72,7 +48,7 @@
     "tickets": null
   },
   {
-    "id": 10,
+    "id": 4,
     "date": "2025-01-03 19:00",
     "city": "Logroño",
     "hour": "19:00",
@@ -84,7 +60,7 @@
     "tickets": null
   },
   {
-    "id": 11,
+    "id": 5,
     "date": "2025-02-14 21:00",
     "city": "Madrid",
     "hour": "21:00",
@@ -96,7 +72,7 @@
     "tickets": "https://www.notikumi.com/channel/sweet-q/2025/2/14/canciller-sweet-q"
   },
   {
-    "id": 12,
+    "id": 6,
     "date": "2025-03-17 20:30",
     "city": "Madrid",
     "hour": "20:30",
@@ -108,7 +84,7 @@
     "tickets": "https://tickets.oneboxtds.com/umusichotelteatroalbeniz/select/2367122?viewCode=Vista_Principal"
   },
   {
-    "id": 13,
+    "id": 7,
     "date": "2025-04-25 20:00",
     "city": "Madrid",
     "hour": "20:00",
