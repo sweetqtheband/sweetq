@@ -3,93 +3,28 @@
     <div class="sq-title-wrapper">
       <div class="sq-subtitle">{{ "gigs.label" | translate }}</div>
     </div>
-    <div class="sq-gigs-list">
-      <div class="sq-text" *ngIf="gigs && !gigs.length">
+    <div class="sq-gigs-list-wrapper">
+      <div class="sq-text" *ngIf="next && !next.length && past && !past.length">
+        {{ "gigs.noGigs" | translate }}
         {{ "stayTuned" | translate }}
       </div>
-      <div
-        class="sq-item {{ gig.expired ? 'old-gig' : '' }}"
-        *ngFor="let gig of gigs"
-      >
-        <div class="sq-gig-day">
-          <span class="day">{{ gig.day }}</span>
-          <span class="month">{{ gig.month }}</span>
-          <span class="year">{{ gig.year }}</span>
-        </div>
-        <div class="sq-item-data">
-          <div class="sq-title">
-            <div class="sq-item-title">{{ gig.venue }}</div>
-          </div>
-          <div class="sq-gig-info">
-            <div class="sq-line">
-              <div class="sq-text sq-city">
-                {{ gig.city }}
-              </div>
-              <div class="sq-line-space" *ngIf="gig.hour">·</div>
-              <div class="sq-text sq-hour" *ngIf="gig.hour">
-                {{ gig.hour }}
-              </div>
-            </div>
-          </div>
-          <div class="sq-gig-info" *ngIf="gig.address">
-            <div
-              title="{{ 'gigs.viewInGoogleMap' | translate }}"
-              class="sq-text sq-link sq-address {{ gig.map ? 'sq-link' : '' }}"
-              *ngIf="gig.map"
-              (click)="showModal(gig)"
-            >
-              {{ gig.address }}
-            </div>
-          </div>
-          <div class="sq-participants" *ngIf="gig.bands.length">
-            <div class="sq-line">
-              <div
-                class="sq-text"
-                *ngFor="let band of gig.bands; first as isFirst"
-              >
-                <div class="sq-line-space" *ngIf="!isFirst">/</div>
-                <a
-                  class="sq-link"
-                  [href]="band.link"
-                  target="_blank"
-                  title="{{
-                    (band.facebook
-                      ? 'goToItsFacebook'
-                      : band.instagram
-                      ? 'goToItsInstagram'
-                      : ''
-                    ) | translate
-                  }}"
-                  >{{ band.name }}</a
-                >
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          class="sq-item-aside"
-          *ngIf="(gig.event || gig.tickets) && !gig.expired"
-        >
-          <div class="sq-aside-actions">
-            <a
-              class="sq-button rounded line-blue mini-padding"
-              target="_blank"
-              [href]="gig.tickets"
-              *ngIf="gig.tickets"
-              title="{{ 'buyTickets' | translate }}"
-            >
-              <span class="sq-icon icon-gigs"></span>
-            </a>
-            <a
-              class="sq-button rounded line-blue mini-padding"
-              target="_blank"
-              [href]="gig.event"
-              *ngIf="gig.event"
-            >
-              <span class="sq-button-text">+ info</span>
-            </a>
-          </div>
-        </div>
+      <div class="sq-heading">{{ "gigs.next" | translate }}</div>
+      <div class="sq-gigs-list">
+        <sweetq-gig
+          class="sq-item"
+          *ngFor="let gig of next"
+          (showModal)="showModal(gig)"
+          [gig]="gig"
+        ></sweetq-gig>
+      </div>
+      <div class="sq-heading disabled">{{ "gigs.past" | translate }}</div>
+      <div class="sq-gigs-list">
+        <sweetq-gig
+          class="sq-item old-gig"
+          *ngFor="let gig of past"
+          (showModal)="showModal($event)"
+          [gig]="gig"
+        ></sweetq-gig>
       </div>
     </div>
   </div>

@@ -1,5 +1,37 @@
 <div class="sq-bg">
   <div class="sq-wrapper">
+    <div class="sq-platforms-icons">
+      <a
+        [target]="target"
+        [href]="links.youtubeMusic"
+        class="sq-button sq-youtube-music {{ release ? '' : 'disabled' }}"
+        title="Youtube Music"
+      >
+        <span class="sq-logo logo-youtube-music"></span>
+      </a>
+      <a
+        class="sq-button {{ release ? '' : 'disabled' }}"
+        title="links.spotify"
+      >
+        <span class="sq-logo logo-spotify"></span>
+      </a>
+      <a
+        [target]="target"
+        [href]="links.appleMusic"
+        class="sq-button sq-apple-music {{ release ? '' : 'disabled' }}"
+        title="Apple Music"
+      >
+        <span class="sq-logo logo-apple-music"></span>
+      </a>
+      <a
+        [target]="target"
+        [href]="links.amazon"
+        class="sq-button sq-amazon {{ release ? '' : 'disabled' }}"
+        title="Amazon"
+      >
+        <span class="sq-logo logo-amazon"></span>
+      </a>
+    </div>
     <h1 class="sq-logo">
       <div class="sq-logo-image">
         <span class="visuallyhidden">Sweet Q</span>
@@ -7,9 +39,6 @@
     </h1>
     <div class="sq-ep sq-hero" *ngIf="!release"></div>
     <div class="sq-platforms">
-      <div class="sq-ep sq-hero" *ngIf="release">
-        <h2 class="sq-headline">{{ "releaseMessage" | translate }}</h2>
-      </div>
       <iframe
         style="border-radius: 12px"
         src="https://open.spotify.com/embed/album/2Ul8oyq3vUqZC6cIFVIGME?utm_source=generator&theme=0"
@@ -19,39 +48,6 @@
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
         loading="lazy"
       ></iframe>
-      <div class="sq-platforms-icons">
-        <a
-          class="sq-button {{ release ? '' : 'disabled' }}"
-          title="Spotify"
-          *ngIf="!release"
-        >
-          <span class="sq-icon icon-spotify"></span>
-        </a>
-        <a
-          [target]="target"
-          [href]="links.amazon"
-          class="sq-button sq-amazon {{ release ? '' : 'disabled' }}"
-          title="Amazon"
-        >
-          <span class="sq-icon icon-amazon"></span>
-        </a>
-        <a
-          [target]="target"
-          [href]="links.appleMusic"
-          class="sq-button sq-apple-music {{ release ? '' : 'disabled' }}"
-          title="Apple Music"
-        >
-          <span class="sq-icon icon-apple-music"></span>
-        </a>
-        <a
-          [target]="target"
-          [href]="links.youtubeMusic"
-          class="sq-button sq-youtube-music {{ release ? '' : 'disabled' }}"
-          title="Youtube Music"
-        >
-          <span class="sq-icon icon-youtube-music"></span>
-        </a>
-      </div>
     </div>
   </div>
 </div>

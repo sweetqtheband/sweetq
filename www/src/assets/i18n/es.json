@@ -59,6 +59,8 @@
       "title": "Vivo Back to Bands"
     },
     "label": "Conciertos",
+    "next": "Próximos",
+    "past": "Pasados",
     "viewInGoogleMap": "Ver en Google Maps"
   },
   "goToItsFacebook": "Ir a su página de Facebook",
@@ -135,6 +137,7 @@
     "youtubeMusic": "Youtube Music"
   },
   "stayTuned": "Por el momento no tenemos conciertos a la vista. ¡Permanece atento!",
+  "tickets": "Entradas",
   "time": {
     "short": {
       "min": "min",

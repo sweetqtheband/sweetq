@@ -19,6 +19,7 @@ import { HomeComponent } from './home.component';
 import { HomeRoutingModule } from './home.routes';
 import { SpotifyService } from '@services/spotify.service';
 import { NewsService } from '@services/news.service';
+import { SweetQGigComponent } from '@components/sweetq/gig.component';
 
 // configures NgModule imports and exports
 @NgModule({
@@ -28,6 +29,7 @@ import { NewsService } from '@services/news.service';
     HomeComponent,
     SweetQHeaderComponent,
     SweetQGigsComponent,
+    SweetQGigComponent,
     SweetQVideosComponent,
     SweetQInfoComponent,
     SweetQKitComponent,
@@ -37,13 +39,14 @@ import { NewsService } from '@services/news.service';
     ModalComponent,
     SpotifyComponent,
   ],
-  exports: [    
+  exports: [
     SweetQHeaderComponent,
     SweetQGigsComponent,
+    SweetQGigComponent,
     SweetQVideosComponent,
     SweetQInfoComponent,
     SweetQKitComponent,
-    SweetQFooterComponent,    
+    SweetQFooterComponent,
     MapComponent,
     ModalComponent,
     SpotifyComponent,
