@@ -13,7 +13,7 @@ export class SweetQHeaderComponent implements OnInit {
 
   public links: any = {
     spotify: 'https://open.spotify.com/album/2Ul8oyq3vUqZC6cIFVIGME',
-    amazon: 'https://www.amazon.es/albums/B0F1J7LDQP',
+    amazon: 'https://music.amazon.com/albums/B0F1J7LDQP',
     appleMusic:
       'https://music.apple.com/es/album/golpe-de-suerte-single/1802283427',
     youtubeMusic:
