@@ -50,11 +50,11 @@
     "title": "Download our track '{{track}}'"
   },
   "gigs": {
-    "20250317": {
+    "20250325": {
       "button": "Buy tickets",
-      "date": "March 17th",
-      "text": "We are back to the stage with a new gig at Vivo Back to Bands. Don't miss it!",
-      "title": "Vivo Back to Bands"
+      "date": "April 25th",
+      "text": "Next Friday, April 25th, we will be at <span class='bold'>Sala Morocco</span> in Madrid at the <span class='bold'>Indievisible Fest</span> along with other cool bands from the scene. If you don't want to miss it, we have a discount code for advance tickets: <span class='bold'>SWEET25</span>.<br/> See you there!",
+      "title": "Indievisible Fest"
     },
     "label": "Gigs",
     "next": "Upcoming",
@@ -76,7 +76,7 @@
       "lesarts": "Vote for us to play at Festival de les Arts!"
     },
     "gigs": {
-      "20250317": "'Vivo Back to Bands' March 17th"
+      "20250325": "Indievisible Fest 25 Apr (Discount code: SWEET25)"
     },
     "presave": {
       "golpedesuerte": "'Golpe de suerte' presave"
@@ -87,7 +87,7 @@
     "title": "Sweet Q",
     "youtube": {
       "arganzuela": "Watch 'Fiestas de Arganzuela 2024' live gig",
-      "ley": "Music Video 'Ley de la atracción'"
+      "golpedesuerte": "Music Video 'Golpe de suerte'"
     },
     "youtubeMusic": "Youtube Music"
   },
@@ -163,6 +163,7 @@
   "videoLabel": {
     "atrapadoeneltiempo": "Video - Atrapado en el tiempo",
     "caminocorrecto": "Video - El camino correcto",
+    "golpedesuerte": "Video - Golpe de suerte",
     "ley": "Video - Ley de la atracción",
     "losiento": "Video - Lo siento, pero no",
     "quevamosahacer": "Video - ¿Qué vamos a hacer?"

@@ -52,11 +52,11 @@
     }
   },
   "gigs": {
-    "20250317": {
+    "20250325": {
       "button": "Link a entradas",
-      "date": "17 Marzo",
-      "text": "Hemos sido seleccionados entre más de 600 bandas para participar en el Vivo Back to Bands en un escenario increíble como es el Teatro Albéniz. ¿Quieres vernos darlo todo? ¡Pues te esperamos!",
-      "title": "Vivo Back to Bands"
+      "date": "25 Abril",
+      "text": "El próximo viernes 25 de abril estaremos en la <span class='bold'>Sala Morocco</span> de Madrid en el <span class='bold'>Indievisible Fest</span> junto a otras bandas muy guays de la escena. Si no te lo quieres perder, te dejamos un código de de descuento para las entradas anticipadas: <span class='bold'>SWEET25</span>.<br/> ¡Nos vemos por allí!",
+      "title": "Indievisible Fest"
     },
     "label": "Conciertos",
     "next": "Próximos",
@@ -78,7 +78,7 @@
       "lesarts": "¡Vótanos para tocar en el Festival de les Arts!"
     },
     "gigs": {
-      "20250317": "Entradas Vivo Back to Bands 17 Mar"
+      "20250325": "Entradas Indievisible Fest 25 Apr (Cod. descuento: SWEET25)"
     },
     "presave": {
       "golpedesuerte": "Pre-save 'Golpe de suerte'"
@@ -89,7 +89,7 @@
     "title": "Sweet Q",
     "youtube": {
       "arganzuela": "Ver directo 'Fiestas de Arganzuela 2024'",
-      "ley": "Videoclip 'Ley de la atracción'"
+      "golpedesuerte": "Videoclip 'Golpe de suerte'"
     },
     "youtubeMusic": "Youtube Music"
   },
@@ -165,6 +165,7 @@
   "videoLabel": {
     "atrapadoeneltiempo": "Vídeo - Atrapado en el tiempo",
     "caminocorrecto": "Vídeo - El camino correcto",
+    "golpedesuerte": "Vídeo - Golpe de suerte",
     "ley": "Vídeo - Ley de la atracción",
     "losiento": "Vídeo - Lo siento, pero no",
     "quevamosahacer": "Vídeo - ¿Qué vamos a hacer?"
