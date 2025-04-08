@@ -24,8 +24,15 @@
   {
     "type": "youtube",
     "icon": "icon-youtube",
-    "text": "links.youtube.ley",
+    "text": "links.youtube.golpedesuerte",
     "button": "secondary",
-    "link": "https://www.youtube.com/watch?v=IN0iZTZkN2Q&pp=0gcJCXcA-SJGOe9V"
+    "link": "https://www.youtube.com/watch?v=K-jINdTeOFw"
+  },
+  {
+    "type": "gig",
+    "icon": "icon-gigs",
+    "text": "links.gigs.20250325",
+    "button": "secondary",
+    "link": "https://tickets.salamoroccomadrid.com/es/events/indievisible-fest-25-de-abril"
   }
 ]

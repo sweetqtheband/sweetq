@@ -20,6 +20,7 @@ import { HomeRoutingModule } from './home.routes';
 import { SpotifyService } from '@services/spotify.service';
 import { NewsService } from '@services/news.service';
 import { SweetQGigComponent } from '@components/sweetq/gig.component';
+import { SystemService } from '@services/system.service';
 
 // configures NgModule imports and exports
 @NgModule({
@@ -57,6 +58,7 @@ import { SweetQGigComponent } from '@components/sweetq/gig.component';
     SwipeService,
     SpotifyService,
     NewsService,
+    SystemService,
   ],
 })
 export class HomeViewModule {}

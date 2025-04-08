@@ -11,6 +11,10 @@ export class SweetQVideosComponent {
   public videoUrl: string = '';
   public videos = [
     {
+      id: 'golpedesuerte',
+      url: 'https://www.youtube.com/embed/K-jINdTeOFw',
+    },
+    {
       id: 'ley',
       url: 'https://www.youtube.com/embed/IN0iZTZkN2Q',
     },

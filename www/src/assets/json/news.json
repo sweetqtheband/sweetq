@@ -8,5 +8,15 @@
     "squared": true,
     "icon": "icon-spotify",
     "spotifyHref": "https://open.spotify.com/intl-es/album/2Ul8oyq3vUqZC6cIFVIGME"
+  },
+  {
+    "type": "info gig g20250325",
+    "title": "gigs.20250325.title",
+    "subtitle": "gigs.20250325.date",
+    "text": "gigs.20250325.text",
+    "button": "gigs.20250325.button",
+    "squared": true,
+    "icon": "icon-gigs",
+    "href": "https://tickets.salamoroccomadrid.com/es/events/indievisible-fest-25-de-abril"
   }
 ]
