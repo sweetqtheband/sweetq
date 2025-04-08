@@ -1,11 +1,21 @@
-import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Output,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { SystemService } from '@services/system.service';
 
 @Component({
   selector: 'sweetq-header',
   templateUrl: './header.component.html',
 })
-export class SweetQHeaderComponent implements OnInit {
+export class SweetQHeaderComponent implements OnInit, AfterViewInit {
+  @ViewChild('videoEl') videoRef!: ElementRef<HTMLVideoElement>;
+
   public release = true;
   public target = '_blank';
   public playAlbum = false;
@@ -38,6 +48,15 @@ export class SweetQHeaderComponent implements OnInit {
         this.target = '_self';
       });
     }
+  }
+
+  ngAfterViewInit() {
+    const video = this.videoRef.nativeElement;
+
+    // Intenta forzar el autoplay
+    video.play().catch((err) => {
+      console.warn('Autoplay bloqueado:', err);
+    });
   }
 
   showSpotifyModal(value?: any): void {

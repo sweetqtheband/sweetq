@@ -1,10 +1,11 @@
 <div class="sq-bg">
   <video
+    #videoEl
     class="sq-bg-video"
-    [attr.autoplay]="true"
     [attr.muted]="true"
     [attr.loop]="true"
     [attr.playsinline]="true"
+    preload="auto"
     [src]="videoUrl"
   ></video>
   <div class="sq-wrapper">

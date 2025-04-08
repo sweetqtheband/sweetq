@@ -979,6 +979,10 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
 }
 
 @media (max-width: 480px) {
+  .sq-bg-video {
+    height: unset;
+    width: 100%;
+  }
   .sq-button .sq-icon.icon-play {
     height: 52px;
     width: 52px;
