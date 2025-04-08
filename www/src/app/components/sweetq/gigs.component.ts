@@ -25,22 +25,27 @@ export class SweetQGigsComponent implements OnInit {
   async getGigs() {
     const { next, past } = await this.gigsSvc.getGigs();
 
-    this.next = next.map((gig: Gig): Gig => {
-      gig.bands = gig.bands.map((band: Band): Band => {
-        band.link = band?.facebook ?? band.instagram;
-        band.link = band?.link ?? '#';
-        return band;
-      });
-      return gig;
-    });
-    this.past = past.map((gig: Gig): Gig => {
-      gig.bands = gig.bands.map((band: Band): Band => {
-        band.link = band?.facebook ?? band.instagram;
-        band.link = band?.link ?? '#';
-        return band;
-      });
-      return gig;
-    });
+    this.next = next.map(
+      (gig: Gig): Gig => ({
+        ...gig,
+        bands: gig.bands.map((band: Band): Band => {
+          band.link = band?.facebook ?? band?.instagram;
+          band.link = band?.link ?? '#';
+          return band;
+        }),
+      })
+    );
+
+    this.past = past.map(
+      (gig: Gig): Gig => ({
+        ...gig,
+        bands: gig.bands.map((band: Band): Band => {
+          band.link = band?.facebook ?? band?.instagram;
+          band.link = band?.link ?? '#';
+          return band;
+        }),
+      })
+    );
   }
 
   showModal(gig: Gig): void {

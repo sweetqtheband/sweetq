@@ -1,7 +1,12 @@
 <div class="sq-bg">
-  <video class="sq-bg-video" autoplay muted loop playsinline>
-    <source [src]="videoUrl" type="video/mp4" />
-  </video>
+  <video
+    class="sq-bg-video"
+    [attr.autoplay]="true"
+    [attr.muted]="true"
+    [attr.loop]="true"
+    [attr.playsinline]="true"
+    [src]="videoUrl"
+  ></video>
   <div class="sq-wrapper">
     <div class="sq-platforms-icons">
       <a
