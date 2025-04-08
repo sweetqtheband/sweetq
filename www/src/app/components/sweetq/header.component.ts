@@ -54,9 +54,11 @@ export class SweetQHeaderComponent implements OnInit, AfterViewInit {
     const video = this.videoRef.nativeElement;
 
     // Intenta forzar el autoplay
-    video.play().catch((err) => {
-      console.warn('Autoplay bloqueado:', err);
-    });
+    setTimeout(() => {
+      video.play().catch((err) => {
+        console.warn('Autoplay bloqueado:', err);
+      });
+    }, 100);
   }
 
   showSpotifyModal(value?: any): void {
