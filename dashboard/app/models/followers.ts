@@ -16,7 +16,7 @@ type Model = {
   state?: number;
   city?: number;
   treatment?: number;
-  tags?: Array<number>;
+  tags?: Array<string>;
 };
 export const Model = (data: any): Model => {
   const obj = {} as Model;

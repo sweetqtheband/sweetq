@@ -30,8 +30,23 @@ export async function POST(req: NextRequest) {
     await getCollection('followers')
   );
 
+  const isUpdate = dataObj.layoutId && dataObj.layoutId !== 'undefined';
+
+  if (isUpdate) {
+    await layoutSvc.update(
+      {
+        _id: new ObjectId(dataObj.layoutId),
+        tpl: {
+          personalMessage: dataObj.personalMessage,
+          collectiveMessage: dataObj.collectiveMessage,
+        },
+      },
+      true
+    );
+  }
+
   try {
-    const layout = dataObj.layoutId
+    const layout = isUpdate
       ? await layoutSvc.getById(dataObj.layoutId)
       : await layoutSvc.create({
           name: dataObj.layout,

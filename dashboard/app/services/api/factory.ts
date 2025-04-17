@@ -15,7 +15,6 @@ import { layoutsSvc } from './layouts';
 import { messagesSvc } from './messages';
 import { configSvc } from './config';
 import { camelCase } from '@/app/utils';
-
 type FactoryType = {
   [key: string]: (collection: Collection<Document>) => any;
 };

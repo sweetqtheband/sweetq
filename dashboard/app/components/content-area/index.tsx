@@ -125,12 +125,14 @@ export default function ContentArea({
 
   const handleSend = () => {
     onChangeHandler();
-    if (onSend) onSend(contentEditableRef.current?.innerText);
-    setDefaultValue('');
+    if (onSend) {
+      onSend(contentEditableRef.current?.innerText);
+      setDefaultValue('');
+    }
   };
 
   const onKeyDownHandler = (e: any) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (onSend && e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     }

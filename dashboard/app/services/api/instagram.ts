@@ -3,6 +3,7 @@ import { POST, GET } from '../_api';
 import { BaseSvc } from './_base';
 import { Collection, Document } from 'mongodb';
 import { Model } from '@/app/models/instagram';
+import qs from 'qs';
 
 const api = axios.create({
   baseURL: process.env.API_INSTAGRAM,
@@ -142,11 +143,12 @@ const getMessages = async (
   instance: any,
   conversationId: string,
   limit: number = MAX_LIMITS.MESSAGES,
-  after: string | null = null
-): Promise<any> => {
+  next: string | null = null
+): Promise<any[]> => {
   if (!accessToken) {
     await getHeaders(instance);
   }
+
   try {
     const params: Record<string, any> = {
       limit: 100,
@@ -154,44 +156,38 @@ const getMessages = async (
       access_token: accessToken,
     };
 
-    if (after) {
-      params.after = after;
-    }
+    const response = await GET(
+      graph,
+      next
+        ? next.replace(process.env.GRAPH_INSTAGRAM || '', '')
+        : `/${conversationId}`,
+      next ? {} : params,
+      {}
+    );
 
-    const response = await GET(graph, `/${conversationId}`, params);
+    const { data = [], paging } =
+      (next ? response?.data : response?.data?.messages) || {};
 
-    const { data, paging } = response?.data?.messages;
+    const messages = await Promise.all(
+      data.map((message: Record<string, any>) =>
+        getMessage(instance, message.id)
+      )
+    );
 
-    if (
-      paging?.cursors?.after &&
-      paging?.cursors?.after !== after &&
-      limit === MAX_LIMITS.MESSAGES &&
-      data.length === limit
-    ) {
-      return [
-        ...((await Promise.all(
-          data.map(async (message: Record<string, any>) =>
-            getMessage(instance, message.id)
-          )
-        )) || []),
-        ...(await getMessages(
-          instance,
-          conversationId,
-          limit,
-          paging.cursors.after
-        )),
-      ];
-    } else {
-      return (
-        Promise.all(
-          data.map(async (message: Record<string, any>) =>
-            getMessage(instance, message.id)
-          )
-        ) || []
+    if (paging?.cursors?.after && paging?.cursors?.next !== next) {
+      const nextMessages = await getMessages(
+        instance,
+        conversationId,
+        limit,
+        paging.next
       );
+      return [...messages, ...nextMessages];
     }
+
+    return messages;
   } catch (error) {
-    console.error(error);
+    console.error('Error en getMessages:', error);
+    return [];
   }
 };
 

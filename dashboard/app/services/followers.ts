@@ -265,6 +265,9 @@ const getMethods = (router?: any, translations?: any): Record<string, any> => ({
     onSave: Tags.getMethods(router).onListSave,
   },
   onMessageSave: async (data: any) => {
+    if (!data.layoutId) {
+      delete data.layoutId;
+    }
     return onSave(InstagramMessages, router, data, []);
   },
   onSendInstagramMessage: async (data: any) => {

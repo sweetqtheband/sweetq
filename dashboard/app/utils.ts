@@ -54,7 +54,7 @@ export const s3File = (fileName: string) =>
 export const formDataToObject = (
   formData: FormData,
   types: Record<string, any>,
-  options: Record<string, any>
+  options?: Record<string, any>
 ): Record<string, any> => {
   const obj: Record<string, any> = {};
 
@@ -65,7 +65,14 @@ export const formDataToObject = (
           ? [...obj[key], value]
           : value;
     } else if (types[key] === FIELD_TYPES.MULTISELECT) {
-      obj[key] = value !== 'undefined' ? String(value).split(',') : [];
+      obj[key] =
+        value !== 'undefined'
+          ? String(value)
+              .replace('[', '')
+              .replace(']', '')
+              .replaceAll('"', '')
+              .split(',')
+          : [];
     } else if (options?.[key]?.language) {
       obj[key] = JSON.parse(value as string);
       return;

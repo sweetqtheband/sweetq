@@ -51,6 +51,7 @@ export default function ListTable({
   imageSize = 'md',
   limit = config.table.limit,
   total = 0,
+  timestamp = 0,
   pages = 0,
   isLoading = false,
   isWaiting = false,
@@ -74,6 +75,7 @@ export default function ListTable({
   imageSize: SizeType;
   limit: number;
   total?: number;
+  timestamp?: number;
   pages: number;
   isLoading?: boolean;
   isWaiting?: boolean;
@@ -162,6 +164,11 @@ export default function ListTable({
       return filterInternalState;
     });
   };
+  useEffect(() => {
+    if (timestamp) {
+      setIsWaiting(false);
+    }
+  }, [timestamp]);
 
   useTableRenderComplete(tableId, () => {
     setTimeout(() => {

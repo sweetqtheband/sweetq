@@ -22,6 +22,9 @@ export default function InstagramView(params: Readonly<any>) {
     methods.action.onClick(data, setItem);
   };
 
+  const setIsLoadingHandler = (loading: boolean) => {
+    setIsLoading(loading);
+  };
   return (
     <>
       <InstagramLogin />
@@ -33,6 +36,7 @@ export default function InstagramView(params: Readonly<any>) {
         onSave={methods.onSave}
         onDelete={methods.onDelete}
         loading={isLoading}
+        setExternalLoading={setIsLoadingHandler}
         noAdd={true}
         actionLabel={methods.action.label}
         actionIcon={methods.action.icon}
@@ -45,7 +49,7 @@ export default function InstagramView(params: Readonly<any>) {
         setIds={setIds}
         layouts={params.layouts}
         onSave={methods.onMessageSave}
-        setIsLoading={setIsLoading}
+        setIsLoading={setIsLoadingHandler}
       />
       <InstagramChat
         item={item}

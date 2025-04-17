@@ -14,9 +14,9 @@ export default function ListLayout({
   total = 0,
   limit = 0,
   pages = 0,
-  timestamp = 0,
   id = '',
   loading = false,
+  setExternalLoading = () => true,
   onSave = async () => true,
   onDelete = async () => true,
   actionIcon = null,
@@ -40,9 +40,9 @@ export default function ListLayout({
   total?: number;
   limit?: number;
   pages?: number;
-  timestamp?: number;
   id?: string;
   loading?: boolean;
+  setExternalLoading?: Function;
   onSave?: (data: any, files: any) => Promise<any>;
   onDelete?: (ids: string[]) => Promise<boolean>;
   actionIcon?: string | null;
@@ -64,25 +64,22 @@ export default function ListLayout({
   const [isLoading, setIsLoading] = useState(false);
   const [isWaiting, setIsWaiting] = useState(false);
 
+  const setIsLoadingHandler = (newLoading: boolean) => {
+    setIsLoading(newLoading);
+    setExternalLoading(newLoading);
+  };
+
+  useEffect(() => {
+    setIsLoadingHandler(loading);
+  }, [loading]);
+
   const [parsedItems, setParsedItems] = useState<any[]>([]);
 
   useEffect(() => {
-    if (loading !== isLoading && !isWaiting) {
-      setIsLoading(loading);
-    }
-  }, [loading, isLoading, isWaiting]);
-
-  useEffect(() => {
     setParsedItems(items);
-    setIsLoading(false);
+    setIsLoadingHandler(false);
     setIsWaiting(false);
   }, [items]);
-
-  useEffect(() => {
-    if (timestamp) {
-      setIsWaiting(false);
-    }
-  }, [timestamp]);
 
   const onClose = async (item = null) => {
     setItem(null);
@@ -90,7 +87,7 @@ export default function ListLayout({
   };
 
   const onSaveHandler = async (data: any, files: any) => {
-    setIsLoading(true);
+    setIsLoadingHandler(true);
     const response = await onSave(data, files);
 
     if (response) {
@@ -138,7 +135,7 @@ export default function ListLayout({
         return [...newItems];
       });
       onClose();
-      setIsLoading(false);
+      setIsLoadingHandler(false);
     }
     return true;
   };
@@ -173,7 +170,7 @@ export default function ListLayout({
         isLoading={isLoading}
         isWaiting={isWaiting}
         setIsWaiting={setIsWaiting}
-        setIsLoading={setIsLoading}
+        setIsLoading={setIsLoadingHandler}
         renders={renders}
         actions={actions}
         batchActions={batchActions}
