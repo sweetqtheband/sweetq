@@ -32,7 +32,6 @@ jobs:
             echo "INSTAGRAM_PASSWORD=${{ secrets.INSTAGRAM_PASSWORD }}" >> .env.production
             echo "INSTAGRAM_CLIENT_ID=${{ secrets.INSTAGRAM_CLIENT_ID }}" >> .env.production
             echo "INSTAGRAM_CLIENT_SECRET=${{ secrets.INSTAGRAM_CLIENT_SECRET }}" >> .env.production
-            echo "INSTAGRAM_REDIRECT_URI=${{ secrets.INSTAGRAM_REDIRECT_URI }}" >> .env.production
             echo "TOKEN_SECRET=${{ secrets.TOKEN_SECRET }}" >> .env.production
             echo "META_WEBHOOK_TOKEN=${{ secrets.META_WEBHOOK_TOKEN }}" >> .env.production
             echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> .env.production
@@ -50,6 +49,7 @@ jobs:
             echo "NEXT_PUBLIC_META_VERSION=${{ vars.NEXT_PUBLIC_META_VERSION }}" >> .env.production
             echo "NEXT_PUBLIC_INSTAGRAM_ID=${{ vars.NEXT_PUBLIC_INSTAGRAM_ID }}" >> .env.production
             echo "NEXT_PUBLIC_INSTAGRAM_USERNAME=${{ vars.NEXT_PUBLIC_INSTAGRAM_USERNAME }}" >> .env.production
+            echo "NEXT_PUBLIC_INSTAGRAM_REDIRECT_URI=${{ vars.NEXT_PUBLIC_INSTAGRAM_REDIRECT_URI }}" >> .env.production
             rm -Rf /var/www/sweetq/dist /var/www/sweetq/www
             docker image prune -f
             docker-compose down

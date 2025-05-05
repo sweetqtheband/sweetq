@@ -3,7 +3,6 @@ import { POST, GET } from '../_api';
 import { BaseSvc } from './_base';
 import { Collection, Document } from 'mongodb';
 import { Model } from '@/app/models/instagram';
-import qs from 'qs';
 
 const api = axios.create({
   baseURL: process.env.API_INSTAGRAM,
@@ -37,7 +36,7 @@ const getShortLiveAccessToken = async (code: string) => {
         client_id: process.env.INSTAGRAM_CLIENT_ID,
         client_secret: process.env.INSTAGRAM_CLIENT_SECRET,
         grant_type: 'authorization_code',
-        redirect_uri: process.env.INSTAGRAM_REDIRECT_URI,
+        redirect_uri: process.env.NEXT_PUBLIC_INSTAGRAM_REDIRECT_URI,
         code,
       },
       `/${EP.OAUTH}/${EP.ACCESS_TOKEN}`
