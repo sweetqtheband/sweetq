@@ -8,8 +8,9 @@ import i18n from '@/app/services/translate';
 export async function generateMetadata() {
   await i18n.init();
 
-  const metadataObj = await Config.getMetadata(i18n);
-  return metadataObj;
+  return process.env.NEXT_PHASE !== 'phase-production-build' && i18n
+    ? await Config.getMetadata(i18n)
+    : {};
 }
 
 export default function RootLayout({
