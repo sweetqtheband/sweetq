@@ -61,7 +61,7 @@ export async function GET(req: NextRequest) {
       status: HTTP_STATUS_CODES.ERROR,
     });
   } finally {
-    return Response.json('Ok', {
+    return Response.json(stored ? 'OK' : 'Error', {
       ...corsParams,
       status: HTTP_STATUS_CODES.OK,
     });

@@ -5,7 +5,7 @@ import { useEventBus } from '@/app/hooks/event';
 import { instagram } from '@/app/services/instagram';
 import { Storage } from '@/app/services/storage';
 import Script from 'next/script';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 declare global {
   interface Window {
@@ -57,11 +57,30 @@ const checkToken = async () => {
 
 export default function InstagramLogin() {
   const { on, off } = useEventBus('instagram');
+  const initializedRef = useRef(false);
+
+  const runInstagramLogin = () => {
+    const loginWindow = doInstagramLogin();
+    on((data) => {
+      if (data) {
+        storeResponse(data);
+        loginWindow?.close();
+      }
+      off();
+    });
+  };
 
   useEffect(() => {
+    if (initializedRef.current) return;
+    initializedRef.current = true;
+
     async function initialize(skip = false) {
       try {
-        if (!skip && (await checkToken())) {
+        const tokenCheck = (await checkToken()) as Record<string, any>;
+
+        const invalidToken = tokenCheck?.data === 'Error';
+
+        if (!skip && tokenCheck && !invalidToken) {
           on((data) => {
             if (data) {
               storeResponse(data);
@@ -70,22 +89,17 @@ export default function InstagramLogin() {
             off();
           });
         } else {
-          // First of all, check we have any token
-          if (isExpired()) {
-            const loginWindow = doInstagramLogin();
-            on((data) => {
-              if (data) {
-                storeResponse(data);
-                loginWindow?.close();
-              }
-              off();
-            });
+          if (isExpired() || invalidToken) {
+            runInstagramLogin();
           }
         }
-      } catch (err) {}
+      } catch (err) {
+        runInstagramLogin();
+      }
     }
+
     initialize();
-  });
+  }, []);
 
   return (
     <Script
