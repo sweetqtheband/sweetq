@@ -330,7 +330,7 @@ const renderSelect = ({
         {removable && currentValue ? (
           <IconButton
             className="cds--button--remove"
-            size={SIZES.SM}
+            size={'sm'}
             kind="secondary"
             label={translations.delete}
             onClick={handleRemoveClick}
