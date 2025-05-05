@@ -50,11 +50,11 @@
     "title": "Download our track '{{track}}'"
   },
   "gigs": {
-    "20250325": {
+    "20250419": {
       "button": "Buy tickets",
-      "date": "April 25th",
-      "text": "Next Friday, April 25th, we will be at <span class='bold'>Sala Morocco</span> in Madrid at the <span class='bold'>Indievisible Fest</span> along with other cool bands from the scene. If you don't want to miss it, we have a discount code for advance tickets: <span class='bold'>SWEET25</span>.<br/> See you there!",
-      "title": "Indievisible Fest"
+      "date": "May 19th",
+      "text": "On Monday, May 19th, we return to the <span class='bold'>Teatro Albéniz</span> in Madrid to participate in the second semifinal of <span class='bold'>Vivo Back to Bands</span>. If you want to see us live again in this iconic theater, don't hesitate to buy your ticket!",
+      "title": "Vivo Back to Bands"
     },
     "label": "Gigs",
     "next": "Upcoming",
@@ -76,7 +76,7 @@
       "lesarts": "Vote for us to play at Festival de les Arts!"
     },
     "gigs": {
-      "20250325": "Indievisible Fest 25 Apr (Discount code: SWEET25)"
+      "20250419": "Vivo Back to Bands 19 May Tickets"
     },
     "presave": {
       "golpedesuerte": "'Golpe de suerte' presave"

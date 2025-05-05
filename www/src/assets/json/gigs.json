@@ -94,5 +94,28 @@
     "bands": [],
     "event": null,
     "tickets": "https://tickets.salamoroccomadrid.com/events/indievisible-fest-25-de-abril"
+  },
+  {
+    "id": 8,
+    "date": "2025-05-19 20:00",
+    "city": "Madrid",
+    "hour": "20:30",
+    "venue": "Vivo Back to Bands Semifinal II",
+    "address": "Teatro Albéniz",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1456.7144460404322!2d-3.7045900259373776!3d40.415239611497725!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42287e3452f6f1%3A0xdb0b8a0bc443290d!2sTeatro%20Alb%C3%A9niz!5e1!3m2!1ses!2ses!4v1741080208337!5m2!1ses!2ses",
+    "bands": [38],
+    "event": null,
+    "tickets": "https://tickets.oneboxtds.com/umusichotelteatroalbeniz/select/2367128?viewCode=Vista_Principal"
+  },
+  {
+    "id": 9,
+    "date": "2025-08-02",
+    "city": "Berceo (La Rioja)",
+    "venue": "Festival Sonoverso",
+    "address": "Plaza Peña Villarejo",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2949.1860327010254!2d-2.85266805!3d42.33855695!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4568c9ff67d0a7%3A0x6a4a72b10f830ea8!2sPlaza%20Pe%C3%B1a%20Villarejo%2C%2026327%20Berceo%2C%20La%20Rioja!5e0!3m2!1ses!2ses!4v1746361111230!5m2!1ses!2ses",
+    "bands": [],
+    "event": null,
+    "tickets": "https://sonoversofest.lariojaeventos.com/"
   }
 ]

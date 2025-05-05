@@ -52,11 +52,11 @@
     }
   },
   "gigs": {
-    "20250325": {
+    "20250419": {
       "button": "Link a entradas",
-      "date": "25 Abril",
-      "text": "El próximo viernes 25 de abril estaremos en la <span class='bold'>Sala Morocco</span> de Madrid en el <span class='bold'>Indievisible Fest</span> junto a otras bandas muy guays de la escena. Si no te lo quieres perder, te dejamos un código de descuento para las entradas anticipadas: <span class='bold'>SWEET25</span>.<br/> ¡Nos vemos por allí!",
-      "title": "Indievisible Fest"
+      "date": "19 Mayo",
+      "text": "El próximo lunes 19 de mayo volvemos al <span class='bold'>Teatro Albéniz</span> de Madrid para participar en la segunda semifinal del <span class='bold'>Vivo Back to Bands</span>. Si nos quieres ver de nuevo en directo en este icónico teatro, ¡no dudes en comprar tu entrada!",
+      "title": "Vivo Back to Bands"
     },
     "label": "Conciertos",
     "next": "Próximos",
@@ -78,7 +78,7 @@
       "lesarts": "¡Vótanos para tocar en el Festival de les Arts!"
     },
     "gigs": {
-      "20250325": "Entradas Indievisible Fest 25 Apr (Cod. descuento: SWEET25)"
+      "20250419": "Entradas Vivo Back to Bands 19 Mayo"
     },
     "presave": {
       "golpedesuerte": "Pre-save 'Golpe de suerte'"
