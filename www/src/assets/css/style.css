@@ -610,19 +610,24 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   background-image: url("../imgs/contest/lesarts.jpg");
 }
 
-.sq-section.notice.info.gig.g20250419 .sq-image.image-cover:before {
-  background-image: url("../imgs/gigs/20250419.jpg");
+.sq-section.notice.info.gig.g20250519 .sq-image.image-cover:before {
+  background-image: url("../imgs/gigs/20250519.jpg");
+}
+.sq-section.notice.info.gig.g20250614 .sq-image.image-cover:before {
+  background-image: url("../imgs/gigs/20250614.jpg");
 }
 .sq-section.notice.info.gig.g20250325 .sq-image.image-cover:before {
   background-image: url("../imgs/gigs/20250325.png");
 }
 
-.sq-section.notice.info.gig.g20250419 .sq-image.image-cover:before,
+.sq-section.notice.info.gig.g20250519 .sq-image.image-cover:before,
+.sq-section.notice.info.gig.g20250614 .sq-image.image-cover:before,
 .sq-section.notice.info.gig.g20250325 .sq-image.image-cover:before {
   left: 50%;
   transform: translateX(-50%);
 }
-.sq-section.notice.info.gig.g20250419 .sq-column.column-left,
+.sq-section.notice.info.gig.g20250519 .sq-column.column-left,
+.sq-section.notice.info.gig.g20250614 .sq-column.column-left,
 .sq-section.notice.info.gig.g20250325 .sq-column.column-left {
   min-width: 45%;
   padding-bottom: 24px;

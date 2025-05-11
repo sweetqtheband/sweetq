@@ -50,11 +50,17 @@
     "title": "Download our track '{{track}}'"
   },
   "gigs": {
-    "20250419": {
+    "20250519": {
       "button": "Buy tickets",
       "date": "May 19th",
       "text": "On Monday, May 19th, we return to the <span class='bold'>Teatro Albéniz</span> in Madrid to participate in the second semifinal of <span class='bold'>Vivo Back to Bands</span>. If you want to see us live again in this iconic theater, don't hesitate to buy your ticket!",
       "title": "Vivo Back to Bands"
+    },
+    "20250614": {
+      "button": "Buy tickets",
+      "date": "June 14th",
+      "text": "Don't miss a night that promises to be unforgettable. On Saturday, June 14th, we'll be sharing the stage at <span class='bold'>El Perro</span> with <span class='bold'>Valiente Bosque</span> for an indie party packed with bangers — we'll be waiting for you!",
+      "title": "Valiente Bosque + Sweet Q"
     },
     "label": "Gigs",
     "next": "Upcoming",
@@ -76,7 +82,8 @@
       "lesarts": "Vote for us to play at Festival de les Arts!"
     },
     "gigs": {
-      "20250419": "Vivo Back to Bands 19 May Tickets"
+      "20250519": "Vivo Back to Bands 19 May Tickets",
+      "20250614": "Valiente Bosque + Sweet Q 14 June Tickets"
     },
     "presave": {
       "golpedesuerte": "'Golpe de suerte' presave"
