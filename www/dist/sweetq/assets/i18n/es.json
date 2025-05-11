@@ -52,11 +52,17 @@
     }
   },
   "gigs": {
-    "20250419": {
+    "20250519": {
       "button": "Link a entradas",
       "date": "19 Mayo",
       "text": "El próximo lunes 19 de mayo volvemos al <span class='bold'>Teatro Albéniz</span> de Madrid para participar en la segunda semifinal del <span class='bold'>Vivo Back to Bands</span>. Si nos quieres ver de nuevo en directo en este icónico teatro, ¡no dudes en comprar tu entrada!",
       "title": "Vivo Back to Bands"
+    },
+    "20250614": {
+      "button": "Link a entradas",
+      "date": "14 Junio",
+      "text": "No te pierdas una noche que promete ser inolvidable. El sábado 14 de junio compartiremos el escenario de la sala <span class='bold'>El Perro</span> junto a <span class='bold'>Valiente Bosque</span> para montar una fiesta indie llena de temazos, ¡te esperamos!",
+      "title": "Valiente Bosque + Sweet Q"
     },
     "label": "Conciertos",
     "next": "Próximos",
@@ -78,7 +84,8 @@
       "lesarts": "¡Vótanos para tocar en el Festival de les Arts!"
     },
     "gigs": {
-      "20250419": "Entradas Vivo Back to Bands 19 Mayo"
+      "20250519": "Entradas Vivo Back to Bands 19 Mayo",
+      "20250614": "Entradas Valiente Bosque + Sweet Q"
     },
     "presave": {
       "golpedesuerte": "Pre-save 'Golpe de suerte'"

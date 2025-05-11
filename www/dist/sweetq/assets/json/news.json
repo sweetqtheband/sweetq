@@ -10,13 +10,23 @@
     "spotifyHref": "https://open.spotify.com/intl-es/album/2Ul8oyq3vUqZC6cIFVIGME"
   },
   {
-    "type": "info gig g20250419",
-    "title": "gigs.20250419.title",
-    "subtitle": "gigs.20250419.date",
-    "text": "gigs.20250419.text",
-    "button": "gigs.20250419.button",
+    "type": "info gig g20250519",
+    "title": "gigs.20250519.title",
+    "subtitle": "gigs.20250519.date",
+    "text": "gigs.20250519.text",
+    "button": "gigs.20250519.button",
     "squared": true,
     "icon": "icon-gigs",
     "href": "https://tickets.oneboxtds.com/umusichotelteatroalbeniz/select/2367128?viewCode=Vista_Principal"
+  },
+  {
+    "type": "info gig g20250614",
+    "title": "gigs.20250614.title",
+    "subtitle": "gigs.20250614.date",
+    "text": "gigs.20250614.text",
+    "button": "gigs.20250614.button",
+    "squared": true,
+    "icon": "icon-gigs",
+    "href": "https://www.notikumi.com/channel/sweet-q/2025/6/14/valiente-bosque-sweet-q-en-madrid"
   }
 ]
