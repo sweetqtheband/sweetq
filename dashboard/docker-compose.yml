@@ -7,3 +7,5 @@ services:
     ports:
       - '3000:3000'
     restart: always
+    extra_hosts:
+      - 'srv659934.hstgr.cloud:46.202.168.61'

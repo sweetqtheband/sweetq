@@ -97,7 +97,6 @@ export const GET = async (
     if (headers?.['Cache-Control']) {
       return await fetchWithCache(client, url, params, headers);
     } else {
-      console.log(client);
       return await client.get(url, { params, headers });
     }
   } else {
