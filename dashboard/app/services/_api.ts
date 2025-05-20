@@ -95,8 +95,10 @@ export const GET = async (
 ): Promise<any> => {
   if (!isBuild) {
     if (headers?.['Cache-Control']) {
+      console.log('Cached request', url);
       return await fetchWithCache(client, url, params, headers);
     } else {
+      console.log('Non-cached request', url);
       return await client.get(url, { params, headers });
     }
   } else {
