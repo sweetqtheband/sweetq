@@ -88,23 +88,20 @@ const getMethods = (router?: any) => ({
 });
 
 const getMetadata = async (i18n: any) => {
-  const metadata = await Config.getAll({ limit: 1, sort: 'created' });
-  console.log('metadata', metadata);
-  return metadata?.items?.length
-    ? parseMetadata(
-        Object.keys(metadata.items[0]).reduce(
-          (cfg: Record<string, any>, key: string) => {
-            if (Options?.[key]?.language) {
-              cfg[key] = i18n.t(metadata.items[0][key][i18n.locale]);
-            } else {
-              cfg[key] = metadata.items[0][key];
-            }
-            return cfg;
-          },
-          {}
-        )
-      )
-    : {};
+  const metadata = await Config.getAll({ limit: 1, sort: 'from' });
+  return parseMetadata(
+    Object.keys(metadata.items[0]).reduce(
+      (cfg: Record<string, any>, key: string) => {
+        if (Options?.[key]?.language) {
+          cfg[key] = i18n.t(metadata.items[0][key][i18n.locale]);
+        } else {
+          cfg[key] = metadata.items[0][key];
+        }
+        return cfg;
+      },
+      {}
+    )
+  );
 };
 
 const parseMetadata = (metadata: Record<string, any>) => {
