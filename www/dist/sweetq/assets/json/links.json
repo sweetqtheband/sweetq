@@ -20,13 +20,12 @@
     "button": "primary",
     "link": "https://music.youtube.com/playlist?list=OLAK5uy_l1TG-Flu5KOSszu5ktBvg0B-huh0DmnJw"
   },
-
   {
-    "type": "youtube",
-    "icon": "icon-youtube",
-    "text": "links.youtube.golpedesuerte",
+    "type": "spotify",
+    "icon": "icon-spotify",
+    "text": "links.presave.fiesta",
     "button": "secondary",
-    "link": "https://www.youtube.com/watch?v=K-jINdTeOFw"
+    "link": "https://ffm.to/sweet-q-fiesta"
   },
   {
     "type": "gig",
