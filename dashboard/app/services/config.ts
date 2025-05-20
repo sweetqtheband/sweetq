@@ -89,7 +89,8 @@ const getMethods = (router?: any) => ({
 
 const getMetadata = async (i18n: any) => {
   const metadata = await Config.getAll({ limit: 1, sort: 'from' });
-  return metadata?.items.length
+  console.log('metadata', metadata);
+  return metadata?.items?.length
     ? parseMetadata(
         Object.keys(metadata.items[0]).reduce(
           (cfg: Record<string, any>, key: string) => {
