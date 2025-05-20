@@ -36,7 +36,7 @@
     "tickets": null
   },
   {
-    "id": 9,
+    "id": 4,
     "date": "2024-11-02 19:00",
     "city": "Madrid",
     "hour": "19:00",
@@ -48,7 +48,7 @@
     "tickets": null
   },
   {
-    "id": 4,
+    "id": 5,
     "date": "2025-01-03 19:00",
     "city": "Logroño",
     "hour": "19:00",
@@ -58,18 +58,6 @@
     "bands": [31, 32, 33, 34],
     "event": null,
     "tickets": null
-  },
-  {
-    "id": 5,
-    "date": "2025-02-14 21:00",
-    "city": "Madrid",
-    "hour": "21:00",
-    "venue": "Sweet Q + Canciller",
-    "address": "El Perro de la Parte de Atrás del Coche",
-    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.3947121181004!2d-3.706448922301062!3d40.422257971438725!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42287d45b7e65f%3A0xee76b4babb779be0!2sEl%20Perro%20de%20la%20Parte%20de%20Atr%C3%A1s%20del%20Coche!5e0!3m2!1ses!2ses!4v1711014732662!5m2!1ses!2ses",
-    "bands": [35],
-    "event": null,
-    "tickets": "https://www.notikumi.com/channel/sweet-q/2025/2/14/canciller-sweet-q"
   },
   {
     "id": 6,
@@ -128,5 +116,17 @@
     "bands": [],
     "event": null,
     "tickets": "https://sonoversofest.lariojaeventos.com/"
+  },
+  {
+    "id": 11,
+    "date": "2025-05-31 19:00",
+    "city": "Madrid",
+    "hour": "19:00",
+    "venue": "Fiestas de Primavera de Hortaleza",
+    "address": "Auditorio Pilar García Peña",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3252.9090607559274!2d-3.658909723909042!3d40.463727452777434!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422fb4c9a71ecf%3A0x483f7a05572ea7d4!2sAuditorio%20al%20aire%20libre%20%22Pilar%20Garc%C3%ADa%20Pe%C3%B1a%22%20del%20Parque%20Pinar%20del%20Rey!5e1!3m2!1ses!2ses!4v1747753456104!5m2!1ses!2ses",
+    "bands": [],
+    "event": null,
+    "tickets": null
   }
 ]

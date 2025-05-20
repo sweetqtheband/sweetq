@@ -30,32 +30,28 @@
         "text": "%M %d"
       }
     },
-    "months": [
-      "january",
-      "february",
-      "march",
-      "april",
-      "may",
-      "june",
-      "july",
-      "august",
-      "september",
-      "october",
-      "november",
-      "december"
-    ]
+    "months": {
+      "0": "january",
+      "1": "february",
+      "2": "march",
+      "3": "april",
+      "4": "may",
+      "5": "june",
+      "6": "july",
+      "7": "august",
+      "8": "september",
+      "9": "october",
+      "10": "november",
+      "11": "december"
+    }
   },
-  "download": {
-    "mp3": "Download MP3",
-    "title": "Download our track '{{track}}'"
+  "file": {
+    "download": {
+      "mp3": "Download MP3",
+      "title": "Download our track '{{track}}'"
+    }
   },
   "gigs": {
-    "20250519": {
-      "button": "Buy tickets",
-      "date": "May 19th",
-      "text": "On Monday, May 19th, we return to the <span class='bold'>Teatro Albéniz</span> in Madrid to participate in the second semifinal of <span class='bold'>Vivo Back to Bands</span>. If you want to see us live again in this iconic theater, don't hesitate to buy your ticket!",
-      "title": "Vivo Back to Bands"
-    },
     "20250614": {
       "button": "Buy tickets",
       "date": "June 14th",
@@ -123,9 +119,9 @@
       "spotify": "Pre-save done successfully!"
     },
     "spotify": "Pre-save on Spotify",
-    "subtitle": "Avaiable on March 28th",
-    "text": "Be the first to listen to our new single <span class='bold'>'Golpe de suerte'</span>, a song about the changes in our lives, the mistakes we've made, the things we never said, and second chances. Pre-save it now!",
-    "title": "Golpe de suerte"
+    "subtitle": "Available on May 23rd",
+    "text": "Don't miss our upcoming single <span class='bold'>'Fiesta'</span>, one of our most powerful tracks that will make you give it your all on the dance floor. Pre-save now!",
+    "title": "Fiesta"
   },
   "pressKit": {
     "button": "Download <span class='peso'>(4.5MB)</span>",

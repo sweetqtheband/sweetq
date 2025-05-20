@@ -8,7 +8,9 @@
         {{ "gigs.noGigs" | translate }}
         {{ "stayTuned" | translate }}
       </div>
-      <div class="sq-heading">{{ "gigs.next" | translate }}</div>
+      <div class="sq-heading" *ngIf="next.length > 0">
+        {{ "gigs.next" | translate }}
+      </div>
       <div class="sq-gigs-list">
         <sweetq-gig
           class="sq-item"
@@ -17,7 +19,9 @@
           [gig]="gig"
         ></sweetq-gig>
       </div>
-      <div class="sq-heading disabled">{{ "gigs.past" | translate }}</div>
+      <div class="sq-heading disabled" *ngIf="next.length > 0">
+        {{ "gigs.past" | translate }}
+      </div>
       <div class="sq-gigs-list">
         <sweetq-gig
           class="sq-item old-gig"

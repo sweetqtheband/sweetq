@@ -1,23 +1,13 @@
 [
   {
-    "type": "info cover golpedesuerte",
-    "title": "info.title",
-    "subtitle": "info.subtitle",
-    "text": "info.text",
-    "button": "info.button",
+    "type": "info cover fiesta",
+    "title": "presave.title",
+    "subtitle": "presave.subtitle",
+    "text": "presave.text",
+    "button": "presave.button",
     "squared": true,
     "icon": "icon-spotify",
-    "spotifyHref": "https://open.spotify.com/intl-es/album/2Ul8oyq3vUqZC6cIFVIGME"
-  },
-  {
-    "type": "info gig g20250519",
-    "title": "gigs.20250519.title",
-    "subtitle": "gigs.20250519.date",
-    "text": "gigs.20250519.text",
-    "button": "gigs.20250519.button",
-    "squared": true,
-    "icon": "icon-gigs",
-    "href": "https://tickets.oneboxtds.com/umusichotelteatroalbeniz/select/2367128?viewCode=Vista_Principal"
+    "spotifyHref": "https://ffm.to/sweet-q-fiesta"
   },
   {
     "type": "info gig g20250614",

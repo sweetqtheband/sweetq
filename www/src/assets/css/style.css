@@ -1140,6 +1140,11 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
     min-width: unset;
     max-width: unset;
   }
+
+  .sq-section.notice.contest .sq-half-columns .column-left,
+  .sq-section.notice.gig .sq-half-columns .column-left {
+    max-width: 45%;
+  }
 }
 @media (min-width: 2560px) {
   .sq-bg {

@@ -52,12 +52,6 @@
     }
   },
   "gigs": {
-    "20250519": {
-      "button": "Link a entradas",
-      "date": "19 Mayo",
-      "text": "El próximo lunes 19 de mayo volvemos al <span class='bold'>Teatro Albéniz</span> de Madrid para participar en la segunda semifinal del <span class='bold'>Vivo Back to Bands</span>. Si nos quieres ver de nuevo en directo en este icónico teatro, ¡no dudes en comprar tu entrada!",
-      "title": "Vivo Back to Bands"
-    },
     "20250614": {
       "button": "Link a entradas",
       "date": "14 Junio",
@@ -125,9 +119,9 @@
       "spotify": "¡Pre-save realizado correctamente!"
     },
     "spotify": "Pre-save en Spotify",
-    "subtitle": "Estreno 28 de marzo",
-    "text": "Se el primero en escuchar nuestro nuevo single <span class='bold'>'Golpe de suerte'</span>, un tema acerca de los cambios en nuestras vidas, los errores cometidos, las cosas que nunca dijimos y las segundas oportunidades. ¡Haz presave!",
-    "title": "Golpe de suerte"
+    "subtitle": "Estreno 23 de mayo",
+    "text": "No te pierdas nuestro próximo single <span class='bold'>'Fiesta'</span>, uno de nuestros temas más potentes y que os hará darlo todo en la pista de baile. ¡Haz presave!",
+    "title": "Fiesta"
   },
   "pressKit": {
     "button": "Descargar <span class='peso'>(4.5MB)</span>",
