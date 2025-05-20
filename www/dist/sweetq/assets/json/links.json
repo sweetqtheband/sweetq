@@ -31,13 +31,6 @@
   {
     "type": "gig",
     "icon": "icon-gigs",
-    "text": "links.gigs.20250519",
-    "button": "secondary",
-    "link": "https://tickets.oneboxtds.com/umusichotelteatroalbeniz/select/2367128?viewCode=Vista_Principal"
-  },
-  {
-    "type": "gig",
-    "icon": "icon-gigs",
     "text": "links.gigs.20250614",
     "button": "secondary",
     "link": "https://www.notikumi.com/channel/sweet-q/2025/6/14/valiente-bosque-sweet-q-en-madrid"
