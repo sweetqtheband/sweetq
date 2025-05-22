@@ -4,28 +4,28 @@
     "icon": "icon-spotify",
     "text": "links.spotify",
     "button": "primary",
-    "link": "https://open.spotify.com/album/2Ul8oyq3vUqZC6cIFVIGME"
+    "link": "https://open.spotify.com/album/5RBCYsCJoKdxuNU4OHut2J"
   },
   {
     "type": "appleMusic",
     "icon": "icon-apple-music",
     "text": "links.appleMusic",
     "button": "primary",
-    "link": "https://music.apple.com/es/album/golpe-de-suerte-single/1802283427"
+    "link": "https://music.apple.com/es/album/fiesta-single/1813854238"
   },
   {
     "type": "youtubeMusic",
     "icon": "icon-youtube-music",
     "text": "links.youtubeMusic",
     "button": "primary",
-    "link": "https://music.youtube.com/playlist?list=OLAK5uy_l1TG-Flu5KOSszu5ktBvg0B-huh0DmnJw"
+    "link": "https://music.youtube.com/watch?v=nUoA61GXWsQ"
   },
   {
-    "type": "spotify",
-    "icon": "icon-spotify",
-    "text": "links.presave.fiesta",
+    "type": "youtube",
+    "icon": "icon-youtube",
+    "text": "links.youtube.golpedesuerte",
     "button": "secondary",
-    "link": "https://ffm.to/sweet-q-fiesta"
+    "link": "https://www.youtube.com/watch?v=K-jINdTeOFw"
   },
   {
     "type": "gig",

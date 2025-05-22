@@ -122,9 +122,21 @@
     "date": "2025-05-31 19:00",
     "city": "Madrid",
     "hour": "19:00",
-    "venue": "Fiestas de Primavera de Hortaleza",
+    "venue": "Final Certamen Roberto Mira (Fiestas de Primavera de Hortaleza)",
     "address": "Auditorio Pilar García Peña",
     "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3252.9090607559274!2d-3.658909723909042!3d40.463727452777434!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422fb4c9a71ecf%3A0x483f7a05572ea7d4!2sAuditorio%20al%20aire%20libre%20%22Pilar%20Garc%C3%ADa%20Pe%C3%B1a%22%20del%20Parque%20Pinar%20del%20Rey!5e1!3m2!1ses!2ses!4v1747753456104!5m2!1ses!2ses",
+    "bands": [],
+    "event": null,
+    "tickets": null
+  },
+  {
+    "id": 11,
+    "date": "2025-06-01 20:30",
+    "city": "Madrid",
+    "hour": "20:30",
+    "venue": "Fiestas de Las Tablas",
+    "address": "Recinto Ferial",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2302.562926538374!2d-3.669956187438399!3d40.5066789628255!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422b001c1895a7%3A0x64bd15b9a23be2f3!2sFeria%20de%20Navidad%20de%20Las%20Tablas!5e1!3m2!1ses!2ses!4v1747941960944!5m2!1ses!2ses",
     "bands": [],
     "event": null,
     "tickets": null

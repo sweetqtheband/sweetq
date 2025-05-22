@@ -58,6 +58,12 @@
       "text": "No te pierdas una noche que promete ser inolvidable. El sábado 14 de junio compartiremos el escenario de la sala <span class='bold'>El Perro</span> junto a <span class='bold'>Valiente Bosque</span> para montar una fiesta indie llena de temazos, ¡te esperamos!",
       "title": "Valiente Bosque + Sweet Q"
     },
+    "20250802": {
+      "button": "Link a entradas",
+      "date": "2 Agosto",
+      "text": "Para todos los amantes de la naturaleza, estaremos tocando en el precioso pueblo de Berceo (La Rioja) dentro del cartel del Festival Sonoverso el día 2 de agosto. Buen vino, buena música y buena compañía, ¡no se puede pedir más! Bueno sí... ¡verte allí!",
+      "title": "Festival Sonoverso"
+    },
     "label": "Conciertos",
     "next": "Próximos",
     "past": "Pasados",
@@ -68,8 +74,8 @@
   "info": {
     "button": "Escuchar en Spotify",
     "subtitle": "Ya disponible",
-    "text": "Ya podéis escuchar en todas las plataformas <span class='bold'>'Golpe de suerte'</span>, un tema acerca de los cambios en nuestras vidas, los errores cometidos, las cosas que nunca dijimos y las segundas oportunidades. ¡Esperamos que os guste!",
-    "title": "Golpe de suerte"
+    "text": "Ya podéis escuchar <span class='bold'>'Fiesta'</span> en todas las plataformas, un homenaje a esos momentos en los que lo único que importa es vivir el presente con toda la intensidad posible ¡A darlo todo!",
+    "title": "Fiesta"
   },
   "links": {
     "appleAvailable": "Link Apple Music (disponible {{date}})",
@@ -86,7 +92,7 @@
     },
     "spotify": "Spotify",
     "spotifyAvailable": "Link Spotify (disponible {{date}})",
-    "subtitle": "'Golpe de suerte' nuevo single",
+    "subtitle": "'Fiesta' nuevo single",
     "title": "Sweet Q",
     "youtube": {
       "arganzuela": "Ver directo 'Fiestas de Arganzuela 2024'",
@@ -97,9 +103,9 @@
   "listen": {
     "contactUs": "¡Contáctanos!",
     "latestRelease": {
-      "date": "28 de marzo 2025",
+      "date": "23 de mayo 2025",
       "label": "Último lanzamiento",
-      "title": "Golpe de suerte",
+      "title": "Fiesta",
       "totalPlays": "{{total}} reproducciones"
     },
     "monthlyListeners": "{{total}} oyentes mensuales",
@@ -129,7 +135,7 @@
     "text": "Aquí puedes descargar nuestro <span class='bold'>kit de prensa</span>",
     "title": "Kit de prensa"
   },
-  "releaseMessage": "¡Ya podéis escuchar \"Golpe de suerte\"!",
+  "releaseMessage": "¡Ya podéis escuchar \"Fiesta\"!",
   "smartLinks": {
     "amazonMusic": "Amazon Music",
     "appleMusic": "Apple Music",

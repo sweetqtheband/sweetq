@@ -58,6 +58,12 @@
       "text": "Don't miss a night that promises to be unforgettable. On Saturday, June 14th, we'll be sharing the stage at <span class='bold'>El Perro</span> with <span class='bold'>Valiente Bosque</span> for an indie party packed with bangers — we'll be waiting for you!",
       "title": "Valiente Bosque + Sweet Q"
     },
+    "20250802": {
+      "button": "Buy tickets",
+      "date": "August 2nd",
+      "text": "For all nature lovers, we'll be playing in the beautiful village of Berceo (La Rioja) as part of the Sonoverso Festival lineup on August 2nd. Great wine, great music, and great company — what more could you ask for? Well, yes... to see you there!",
+      "title": "Sonoverso Festival"
+    },
     "label": "Gigs",
     "next": "Upcoming",
     "past": "Past",
@@ -68,8 +74,8 @@
   "info": {
     "button": "Listen in Spotify",
     "subtitle": "Already available",
-    "text": "You can already listen in every platform <span class='bold'>'Golpe de suerte'</span>, our new single. A song about the changes in our lives, the mistakes we've made, the things we never said, and second chances. We hope you like it!",
-    "title": "Golpe de suerte"
+    "text": "You can now listen to <span class='bold'>'Fiesta'</span> on all platforms, a tribute to those moments when the only thing that matters is living in the present with all possible intensity. Give it your all!",
+    "title": "Fiesta"
   },
   "links": {
     "appleAvailable": "Apple Music link (available {{date}})",
@@ -86,7 +92,7 @@
     },
     "spotify": "Spotify",
     "spotifyAvailable": "Spotify link (available {{date}})",
-    "subtitle": "New single 'Golpe de suerte'",
+    "subtitle": "New single 'Fiesta'",
     "title": "Sweet Q",
     "youtube": {
       "arganzuela": "Watch 'Fiestas de Arganzuela 2024' live gig",
@@ -97,9 +103,9 @@
   "listen": {
     "contactUs": "Contact us!",
     "latestRelease": {
-      "date": "March 28th, 2025",
+      "date": "May 23rd, 2025",
       "label": "Latest release",
-      "title": "Golpe de suerte",
+      "title": "Fiesta",
       "totalPlays": "{{total}} plays"
     },
     "monthlyListeners": "{{total}} monthly listeners",
@@ -129,7 +135,7 @@
     "text": "Here you can download our <span class='bold'>press kit</span>",
     "title": "Press kit"
   },
-  "releaseMessage": "You can listen to \"Golpe de suerte\" now!",
+  "releaseMessage": "You can listen to \"Fiesta\" now!",
   "smartLinks": {
     "amazonMusic": "Amazon Music",
     "appleMusic": "Apple Music",

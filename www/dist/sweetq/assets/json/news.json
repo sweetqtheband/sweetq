@@ -1,13 +1,13 @@
 [
   {
     "type": "info cover fiesta",
-    "title": "presave.title",
-    "subtitle": "presave.subtitle",
-    "text": "presave.text",
-    "button": "presave.button",
+    "title": "info.title",
+    "subtitle": "info.subtitle",
+    "text": "info.text",
+    "button": "info.button",
     "squared": true,
     "icon": "icon-spotify",
-    "spotifyHref": "https://ffm.to/sweet-q-fiesta"
+    "spotifyHref": "https://open.spotify.com/intl-es/album/5RBCYsCJoKdxuNU4OHut2J"
   },
   {
     "type": "info gig g20250614",
@@ -18,5 +18,15 @@
     "squared": true,
     "icon": "icon-gigs",
     "href": "https://www.notikumi.com/channel/sweet-q/2025/6/14/valiente-bosque-sweet-q-en-madrid"
+  },
+  {
+    "type": "info gig g20250802",
+    "title": "gigs.20250802.title",
+    "subtitle": "gigs.20250802.date",
+    "text": "gigs.20250802.text",
+    "button": "gigs.20250802.button",
+    "squared": true,
+    "icon": "icon-gigs",
+    "href": "https://sonoversofest.lariojaeventos.com/"
   }
 ]
