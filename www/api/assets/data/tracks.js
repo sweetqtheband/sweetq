@@ -41,7 +41,7 @@ export default [
     date: "2024-09-01",
     cover: "ley.jpg",
     video: "ley.mp4",
-    status: "latest",
+    status: "released",
     links: {
       spotify: "album/2muhEidJ0souFsYvPd3ioU",
       apple: "album/ley-de-la-atracción-single/1767473340",
@@ -71,10 +71,16 @@ export default [
   {
     id: "fiesta",
     title: "Fiesta",
-    date: "2025",
+    date: "2025-05-23",
     cover: "fiesta.jpg",
     video: "default.mp4",
-    status: "upcoming",
+    status: "latest",
+    links: {
+      spotify: "album/5RBCYsCJoKdxuNU4OHut2J",
+      apple: "album/fiesta-single/1813854238",
+      amazon: "albums/B0F8BSDFVB",
+      youtubeMusic: "playlist?list=OLAK5uy_mbQ2gDzB9l5nYHVccWfP1O3fHauYZslcs",
+    },
     description:
       'Prepárate para algo espectacular con "Fiesta", un tema de indie rock lleno de energía. \n\nEsta canción captura a la perfección esa adrenalina que sientes antes de una gran noche, donde todo puede pasar y las reglas no existen. \n\nDesde los primeros acordes, te invita a dejarlo todo en la pista y vivir el momento al máximo. \n\nCon un sonido eléctrico y una producción intensa de Iker Arranz, experimentarás la sensación de estar en el centro de la acción. ¿Listo para jugar sin reglas?',
     lyrics:
@@ -94,7 +100,7 @@ export default [
     date: "2025-03-28",
     cover: "golpedesuerte.jpg",
     video: "default.mp4",
-    status: "upcoming",
+    status: "released",
     links: {
       spotify: "album/2Ul8oyq3vUqZC6cIFVIGME",
       apple: "album/golpe-de-suerte-single/1802283427",

@@ -21,12 +21,11 @@ export class SweetQHeaderComponent implements OnInit {
   }.mp4`;
 
   public links: any = {
-    spotify: 'https://open.spotify.com/album/2Ul8oyq3vUqZC6cIFVIGME',
-    amazon: 'https://music.amazon.com/albums/B0F1J7LDQP',
-    appleMusic:
-      'https://music.apple.com/es/album/golpe-de-suerte-single/1802283427',
+    spotify: 'https://open.spotify.com/album/5RBCYsCJoKdxuNU4OHut2J',
+    amazon: 'https://music.amazon.com/albums/B0F8BSDFVB',
+    appleMusic: 'https://music.apple.com/es/album/fiesta-single/1813854238',
     youtubeMusic:
-      'https://music.youtube.com/playlist?list=OLAK5uy_l1TG-Flu5KOSszu5ktBvg0B-huh0DmnJw',
+      'https://music.youtube.com/playlist?list=OLAK5uy_mbQ2gDzB9l5nYHVccWfP1O3fHauYZslcs',
   };
   constructor(private system: SystemService) {
     this.system = system;
