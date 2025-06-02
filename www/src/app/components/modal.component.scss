@@ -1,11 +1,12 @@
 :host {
-
+  position: relative;
+  z-index: 3;
   .sq-modal-preview {
     display: flex;
     align-items: center;
     &--wrapper {
       width: 100%;
-      aspect-ratio: 16/9;            
+      aspect-ratio: 16/9;
     }
   }
 }
