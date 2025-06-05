@@ -164,7 +164,7 @@ const getFilters = async ({
         options: {
           state: await States.getOptions({
             locale: i18n.locale,
-            filters: searchParams?.['filters[country]']
+            query: searchParams?.['filters[country]']
               ? { country_id: searchParams['filters[country]'] }
               : null,
           }),
@@ -182,7 +182,7 @@ const getFilters = async ({
         options: {
           city: await Cities.getOptions({
             locale: i18n.locale,
-            filters: searchParams?.['filters[state]']
+            query: searchParams?.['filters[state]']
               ? { state_id: searchParams['filters[state]'] }
               : null,
           }),
