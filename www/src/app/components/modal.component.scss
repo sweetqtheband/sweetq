@@ -7,6 +7,32 @@
     &--wrapper {
       width: 100%;
       aspect-ratio: 16/9;
+      max-height: 100vh;
+      display: flex;
+      align-items: center;
     }
+  }
+}
+
+:host(.mobile) {
+  @media (orientation: portrait) {
+    .sq-modal-preview {
+      rotate: 90deg;
+      width: 100vh;
+      align-items: flex-end;
+      &--wrapper {
+        aspect-ratio: 9 / 16;
+        display: flex;
+        max-height: 100vw;
+        align-items: center;
+      }
+      iframe {
+        height: 95vw;
+        width: 95vh;
+        aspect-ratio: 9 / 16;
+      }
+    }
+  }
+  @media (orientation: landscape) {
   }
 }

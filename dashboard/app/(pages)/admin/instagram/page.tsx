@@ -84,7 +84,7 @@ export default async function InstagramPage({
         filters: { type: 'instagram' },
         limit: 10000,
       },
-      true
+      false
     )
   ).items;
 

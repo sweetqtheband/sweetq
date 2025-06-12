@@ -650,6 +650,7 @@ export default function ListTable({
               },
             }),
           };
+
           return (
             <TableContainer
               title={translations.title}
