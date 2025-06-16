@@ -6,6 +6,7 @@ import { SpotifyComponent } from '@components/spotify.component';
 import { SafePipeModule } from '@components/pipes/safe.module';
 import { GigsService } from '@services/gigs.service';
 import { BandsService } from '@services/bands.service';
+import { VideosService } from '@services/videos.service';
 import { SwipeService } from '@services/swipe.service';
 import { SweetQHeaderComponent } from '@components/sweetq/header.component';
 import { SweetQGigsComponent } from '@components/sweetq/gigs.component';
@@ -55,6 +56,7 @@ import { SystemService } from '@services/system.service';
   providers: [
     GigsService,
     BandsService,
+    VideosService,
     SwipeService,
     SpotifyService,
     NewsService,

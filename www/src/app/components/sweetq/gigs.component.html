@@ -19,16 +19,26 @@
           [gig]="gig"
         ></sweetq-gig>
       </div>
-      <div class="sq-heading disabled" *ngIf="next.length > 0">
-        {{ "gigs.past" | translate }}
-      </div>
-      <div class="sq-gigs-list">
-        <sweetq-gig
-          class="sq-item old-gig"
-          *ngFor="let gig of past"
-          (showModal)="showModal($event)"
-          [gig]="gig"
-        ></sweetq-gig>
+      <div *ngIf="next.length > 0">
+        <div class="sq-heading-wrapper">
+          <div class="sq-heading disabled">
+            {{ "gigs.past" | translate }}
+          </div>
+          <div
+            class="sq-button mini-padding transparent-blue"
+            (click)="pastExpanded = !pastExpanded"
+          >
+            {{ (pastExpanded ? "gigs.hide" : "gigs.show") | translate }}
+          </div>
+        </div>
+        <div class="sq-gigs-list" [class]="{ shrinked: !this.pastExpanded }">
+          <sweetq-gig
+            class="sq-item old-gig"
+            *ngFor="let gig of past"
+            (showModal)="showModal($event)"
+            [gig]="gig"
+          ></sweetq-gig>
+        </div>
       </div>
     </div>
   </div>

@@ -1,0 +1,17 @@
+.sq-heading-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .sq-button {
+    align-self: flex-end;
+    padding-bottom: 12px;
+  }
+}
+.sq-gigs-list {
+  overflow: hidden;
+
+  &.shrinked {
+    max-height: 235px;
+  }
+}

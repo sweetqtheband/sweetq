@@ -1,21 +1,49 @@
 <div class="sq-section videos">
-    <div class="sq-title-wrapper">
-        <div class="sq-subtitle">{{'videos' | translate}}</div>
-    </div>
-    <div class="sq-videos-list {{halfVideos ? 'flex-width' : ''}}">
+  <div class="sq-title-wrapper">
+    <div class="sq-subtitle">{{ "videos" | translate }}</div>
+  </div>
+  <div
+    class="sq-videos-list-wrapper"
+    [class]="{ 'hide-left': hideLeft, 'hide-right': hideRight }"
+  >
+    <div
+      class="sq-videos-list {{ halfVideos ? 'flex-width' : '' }}"
+      (mousedown)="onDragStart($event)"
+      (mousemove)="onDragMove($event)"
+      (mouseup)="onDragEnd()"
+      (mouseleave)="onDragEnd()"
+      (touchstart)="onDragStart($event)"
+      (touchmove)="onDragMove($event)"
+      (touchend)="onDragEnd()"
+    >
+      <div class="scroll">
         <div class="sq-item" *ngFor="let video of videos">
-            <div class="sq-video" [class]="video.id"  (click)="showModal(null, video.url)"  (showChange)="showModal($event, video.url)">
-                <div class="sq-frame">
-                    <div class="sq-play-wrapper">
-                        <div class="sq-button sq-play">
-                            <span class="sq-icon icon-play"></span>
-                        </div>
-                    </div>
+          <div
+            class="sq-video"
+            [class]="video.id"
+            (click)="showModal(null, video.url, $event)"
+            (showChange)="showModal($event, video.url)"
+          >
+            <div
+              class="sq-frame"
+              [style]="{
+                backgroundImage: 'url(' + video.cover + ')'
+              }"
+            >
+              <div class="sq-play-wrapper">
+                <div class="sq-button sq-play">
+                  <span class="sq-icon icon-play"></span>
                 </div>
-                <div class="sq-video-title">
-                    <div class="sq-video-title-text">{{ 'videoLabel.' + video.id | translate }}</div>
-                </div>
+              </div>
             </div>
+            <div class="sq-video-title">
+              <div class="sq-video-title-text">
+                {{ "videoLabel." + video.id | translate }}
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

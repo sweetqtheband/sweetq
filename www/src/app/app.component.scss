@@ -1,0 +1,36 @@
+body:not(.mobile) {
+  /* Oculta la barra de desplazamiento pero permite el desplazamiento */
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  /* Fondo de la barra de desplazamiento (transparente) */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Estilo del "thumb" (la parte que se mueve) */
+  ::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+
+  /* Al pasar el mouse por encima */
+  ::-webkit-scrollbar-thumb:hover {
+    background: transparent;
+  }
+  div:hover {
+    /* Muestra la barra de desplazamiento al pasar el mouse */
+    &::-webkit-scrollbar {
+      display: block;
+    }
+    /* Estilo del "thumb" (la parte que se mueve) */
+    &::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.4); /* Color semitransparente */
+    }
+    /* Estilo del "thumb" (la parte que se mueve) */
+    &::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 0, 0, 0.5); /* Color semitransparente */
+    }
+  }
+}

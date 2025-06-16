@@ -7,12 +7,14 @@ import { Band } from '@interfaces/band';
 @Component({
   selector: 'sweetq-gigs',
   templateUrl: './gigs.component.html',
+  styleUrls: ['./gigs.component.scss'],
 })
 export class SweetQGigsComponent implements OnInit {
   @Output() showMapEvent = new EventEmitter<any>();
 
   public showMap: boolean = false;
   public mapUrl?: string = '';
+  public pastExpanded: boolean = false;
   public next: Gig[] = [];
   public past: Gig[] = [];
 
@@ -29,9 +31,12 @@ export class SweetQGigsComponent implements OnInit {
       (gig: Gig): Gig => ({
         ...gig,
         bands: gig.bands.map((band: Band): Band => {
-          band.link = band?.facebook ?? band?.instagram;
-          band.link = band?.link ?? '#';
-          return band;
+          if (band) {
+            band.link = band?.facebook ?? band?.instagram;
+            band.link = band?.link ?? '#';
+            return band;
+          }
+          return { id: 0, name: '', link: '' } as Band;
         }),
       })
     );
@@ -40,9 +45,12 @@ export class SweetQGigsComponent implements OnInit {
       (gig: Gig): Gig => ({
         ...gig,
         bands: gig.bands.map((band: Band): Band => {
-          band.link = band?.facebook ?? band?.instagram;
-          band.link = band?.link ?? '#';
-          return band;
+          if (band) {
+            band.link = band?.facebook ?? band?.instagram;
+            band.link = band?.link ?? '#';
+            return band;
+          }
+          return { id: 0, name: '', link: '' } as Band;
         }),
       })
     );
