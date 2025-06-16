@@ -52,11 +52,10 @@
     }
   },
   "gigs": {
-    "20250614": {
-      "button": "Link a entradas",
-      "date": "14 Junio",
-      "text": "No te pierdas una noche que promete ser inolvidable. El sábado 14 de junio compartiremos el escenario de la sala <span class='bold'>El Perro</span> junto a <span class='bold'>Valiente Bosque</span> para montar una fiesta indie llena de temazos, ¡te esperamos!",
-      "title": "Valiente Bosque + Sweet Q"
+    "20250627": {
+      "date": "27 Junio",
+      "text": "Si estás por Valencia no te pierdas la oportunidad de vernos en directo en las finales del <span class='bold'>FIB Heineken Rising Stars</span>. Será en la sala <span class='bold'>Varadero</span> en <span class='bold'>Veles e Vents</span>, y la entrada es gratuita hasta completar aforo. ¡Nos vemos allí!",
+      "title": "Finales del FIB"
     },
     "20250802": {
       "button": "Link a entradas",
@@ -130,7 +129,7 @@
     "title": "Fiesta"
   },
   "pressKit": {
-    "button": "Descargar <span class='peso'>(4.5MB)</span>",
+    "button": "Descargar <span class='peso'>(5.3MB)</span>",
     "download": "Descargar kit de prensa",
     "text": "Aquí puedes descargar nuestro <span class='bold'>kit de prensa</span>",
     "title": "Kit de prensa"

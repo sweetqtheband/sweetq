@@ -10,11 +10,11 @@
     "spotifyHref": "https://open.spotify.com/intl-es/album/5RBCYsCJoKdxuNU4OHut2J"
   },
   {
-    "type": "info gig g20250614",
-    "title": "gigs.20250614.title",
-    "subtitle": "gigs.20250614.date",
-    "text": "gigs.20250614.text",
-    "button": "gigs.20250614.button",
+    "type": "info gig g20250627",
+    "title": "gigs.20250627.title",
+    "subtitle": "gigs.20250627.date",
+    "text": "gigs.20250627.text",
+    "button": null,
     "squared": true,
     "icon": "icon-gigs",
     "href": "https://www.notikumi.com/channel/sweet-q/2025/6/14/valiente-bosque-sweet-q-en-madrid"

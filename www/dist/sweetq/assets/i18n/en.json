@@ -52,11 +52,10 @@
     }
   },
   "gigs": {
-    "20250614": {
-      "button": "Buy tickets",
-      "date": "June 14th",
-      "text": "Don't miss a night that promises to be unforgettable. On Saturday, June 14th, we'll be sharing the stage at <span class='bold'>El Perro</span> with <span class='bold'>Valiente Bosque</span> for an indie party packed with bangers — we'll be waiting for you!",
-      "title": "Valiente Bosque + Sweet Q"
+    "20250627": {
+      "date": "June 27th",
+      "text": "If you're in Valencia, don't miss the chance to see us live at the finals of the <span class='bold'>FIB Heineken Rising Stars</span>. It will be at <span class='bold'>Varadero</span> in <span class='bold'>Veles e Vents</span>, and entry is free until full capacity. See you there!",
+      "title": "FIB Heineken Rising Stars Finals"
     },
     "20250802": {
       "button": "Buy tickets",
@@ -130,7 +129,7 @@
     "title": "Fiesta"
   },
   "pressKit": {
-    "button": "Download <span class='peso'>(4.5MB)</span>",
+    "button": "Download <span class='peso'>(5.3MB)</span>",
     "download": "Download press kit",
     "text": "Here you can download our <span class='bold'>press kit</span>",
     "title": "Press kit"
