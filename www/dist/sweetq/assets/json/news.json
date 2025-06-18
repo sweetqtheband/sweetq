@@ -1,13 +1,12 @@
 [
   {
-    "type": "info cover fiesta",
-    "title": "info.title",
-    "subtitle": "info.subtitle",
-    "text": "info.text",
-    "button": "info.button",
-    "squared": true,
-    "icon": "icon-spotify",
-    "spotifyHref": "https://open.spotify.com/intl-es/album/5RBCYsCJoKdxuNU4OHut2J"
+    "type": "info video fiesta",
+    "title": "video.fiesta.title",
+    "subtitle": "video.fiesta.subtitle",
+    "text": "video.fiesta.text",
+    "button": "video.fiesta.button",
+    "icon": "icon-youtube",
+    "youtubeHref": "https://www.youtube.com/watch?v=2FryW1MtBus"
   },
   {
     "type": "info gig g20250627",

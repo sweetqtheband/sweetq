@@ -66,7 +66,9 @@
     "label": "Conciertos",
     "next": "Próximos",
     "past": "Pasados",
-    "viewInGoogleMap": "Ver en Google Maps"
+    "viewInGoogleMap": "Ver en Google Maps",
+    "show": "Ver todos",
+    "hide": "Ocultar"
   },
   "goToItsFacebook": "Ir a su página de Facebook",
   "goToItsInstagram": "Ir a su página de Instagram",
@@ -161,16 +163,17 @@
       "text": "Ya podéis ver nuestro concierto completo en las Fiestas de La Melonera de Arganzuela en nuestro canal de Youtube. Si queréis escuchar nuestros próximos temas en formato directo... ¡No os lo perdáis!",
       "title": "Fiestas de Arganzuela 2024"
     },
-    "ley": {
+    "fiesta": {
       "button": "Ver en Youtube",
-      "subtitle": "Ley de la atracción",
-      "text": "Acabamos de lanzar nuestro videoclip de 'Ley de la atracción', grabado en el centro de Madrid con la colaboración de parejas reales que nos regalaron momentos únicos para dar vida a este tema. ¡Esperemos que te guste!",
+      "subtitle": "Fiesta",
+      "text": "Acabamos de lanzar el videoclip de nuestro último single 'Fiesta', grabado en Radical Sonora con la colaboración de la Escuela de Baile Pilar Rivas. ¡Esperemos que te guste!",
       "title": "Nuevo videoclip"
     }
   },
   "videoLabel": {
     "atrapadoeneltiempo": "Vídeo - Atrapado en el tiempo",
     "caminocorrecto": "Vídeo - El camino correcto",
+    "fiesta": "Vídeo - Fiesta",
     "golpedesuerte": "Vídeo - Golpe de suerte",
     "ley": "Vídeo - Ley de la atracción",
     "losiento": "Vídeo - Lo siento, pero no",

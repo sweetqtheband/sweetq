@@ -161,16 +161,17 @@
       "text": "You can already watch our latest full live show at Fiestas de La Melonera in Arganzuela in our Youtube channel. If you want to hear our new forthcoming releases in a live format... Don't miss it out!",
       "title": "Fiestas de Arganzuela 2024"
     },
-    "ley": {
+    "fiesta": {
       "button": "Watch on YouTube",
-      "subtitle": "Ley de la atracción",
-      "text": "We’ve just released our music video for 'Ley de la atracción', filmed in the heart of Madrid with the collaboration of real couples who shared unique moments with us to bring this song to life. We hope you like it!",
+      "subtitle": "Fiesta",
+      "text": "We've just released the music video of our latest single <span class='bold'>'Fiesta'</span>, recorded at Radical Sonora and with the collaboration of Escuela de Baile Pilar Rivas. We hope you like it!",
       "title": "New music video"
     }
   },
   "videoLabel": {
     "atrapadoeneltiempo": "Video - Atrapado en el tiempo",
     "caminocorrecto": "Video - El camino correcto",
+    "fiesta": "Video - Fiesta",
     "golpedesuerte": "Video - Golpe de suerte",
     "ley": "Video - Ley de la atracción",
     "losiento": "Video - Lo siento, pero no",

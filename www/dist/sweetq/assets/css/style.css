@@ -232,6 +232,10 @@ sweetq-gigs {
   color: #24aeb8;
 }
 
+.sq-button.transparent-blue {
+  color: #24aeb8;
+}
+
 .sq-button.sq-spotify {
   padding: 6px 10px 6px 6px;
   background-color: #1db954;
@@ -242,14 +246,39 @@ sweetq-gigs {
 .sq-button.sq-spotify:hover {
   box-shadow: 0 0 0 4px rgba(29, 185, 84, 0.5);
 }
+
 .sq-button .sq-icon.icon-spotify:before {
   top: calc(50% + 2px);
 }
 
-.sq-button.sq-spotify:active .sq-button.sq-spotify:visited,
+.sq-button.sq-spotify:active,
+.sq-button.sq-spotify:visited,
 .sq-button.sq-spotify:focus,
 .sq-button.sq-spotify:hover,
 .sq-button.sq-spotify .sq-button-text {
+  color: #ffffff;
+}
+
+.sq-actions .sq-button.sq-youtube {
+  padding: 6px 10px 6px 6px;
+  background-color: #ff0033;
+  border: solid 1px #ff0033;
+  border-radius: 50px;
+  box-shadow: 0 0 0 0 rgba(255, 0, 51, 0.5);
+}
+.sq-actions .sq-button.sq-youtube:hover {
+  box-shadow: 0 0 0 4px rgba(255, 0, 51, 0.5);
+}
+
+.sq-actions .sq-button .sq-icon.icon-youtube:before {
+  top: calc(50% + 2px);
+}
+
+.sq-actions .sq-button.sq-youtube:active,
+.sq-actions .sq-button.sq-youtube:visited,
+.sq-actions .sq-button.sq-youtube:focus,
+.sq-actions .sq-button.sq-youtube:hover,
+.sq-actions .sq-button.sq-youtube .sq-button-text {
   color: #ffffff;
 }
 
@@ -268,6 +297,7 @@ sweetq-gigs {
   font-size: 18px;
   text-transform: uppercase;
 }
+
 .sq-section .sq-heading.disabled {
   opacity: 0.3;
 }
@@ -558,14 +588,6 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   background-position: center top;
 }
 
-.sq-section.notice.video .sq-half-columns {
-  align-items: flex-start;
-}
-
-.sq-section.notice.video .column-left {
-  padding-top: 24px;
-}
-
 .sq-section.notice.video .sq-image.image-cover {
   position: relative;
 }
@@ -574,8 +596,8 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   background-image: url("../imgs/youtube/live/fiestasarganzuela.jpg");
 }
 
-.sq-section.notice.video.ley .sq-image.image-cover {
-  background-image: url("../imgs/youtube/videoclips/ley.webp");
+.sq-section.notice.video.fiesta .sq-image.image-cover {
+  background-image: url("../imgs/youtube/videoclips/fiesta.webp");
 }
 
 .sq-section.notice.video.fiestas-arganzuela .column-left {
@@ -794,106 +816,35 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   display: block;
 }
 
-/* Videos */
-.sq-section.videos {
-  padding: 70px 20px 30px 20px;
-  background-color: #282c33;
-  color: #fff;
-}
-.sq-section.videos .sq-title-wrapper {
-  padding-bottom: 60px;
-  text-align: center;
-}
-.sq-section.videos .sq-subtitle {
-  color: #e3e6ea;
-}
-.sq-videos-list .sq-item {
-  margin-bottom: 24px;
-}
-.sq-video {
-  cursor: pointer;
-  z-index: 1;
-  border-radius: 2px;
-  overflow: hidden;
-}
-.sq-video .sq-frame {
-  position: relative;
-  width: 100%;
-  padding-top: 42.6%;
-  box-sizing: border-box;
-  background-size: contain;
-  background-size: cover;
-  background-repeat: no-repeat;
-  box-shadow: 0 0 1px 1px #15181b;
-}
-
-.sq-video.atrapadoeneltiempo .sq-frame {
-  background-image: url("../imgs/youtube/videoclips/atrapadoeneltiempo.webp");
-}
-
-.sq-video.caminocorrecto .sq-frame {
-  background-image: url("../imgs/youtube/videoclips/caminocorrecto.webp");
-}
-
-.sq-video.cosasclaras .sq-frame {
-  background-image: url("../imgs/youtube/videoclips/cosasclaras.webp");
-}
-.sq-video.quevamosahacer .sq-frame {
-  background-image: url("../imgs/youtube/videoclips/quevamosahacer.webp");
-}
-.sq-video.losiento .sq-frame {
-  background-image: url("../imgs/youtube/videoclips/losiento.webp");
-}
-.sq-video.ley .sq-frame {
-  background-image: url("../imgs/youtube/videoclips/ley.webp");
-}
-.sq-video.golpedesuerte .sq-frame {
-  background-image: url("../imgs/youtube/videoclips/golpedesuerte.webp");
-}
-.sq-video .sq-video-title {
-  padding-top: 18px;
-}
-.sq-video .sq-video-title-text {
-  font-size: 20px;
-  line-height: 24px;
-  font-family: "titillium-web-semibold";
-  padding: 6px 10px;
-  display: inline-block;
-}
-.sq-video:hover .sq-video-title-text {
-  background-color: rgba(21, 24, 27, 0.75);
-  border-radius: 3px;
-}
 .sq-play-wrapper {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
-.sq-button .sq-icon.icon-play {
-  height: 88px;
-  width: 88px;
-  font-size: 74px;
-  transition: all 0.2s cubic-bezier(0.4, 0, 1, 1);
-  opacity: 0.9;
-}
-.sq-video:hover .sq-button .sq-icon.icon-play {
-  font-size: 88px;
-  opacity: 1;
+
+.sq-section.notice.video .sq-play-wrapper .sq-icon {
+  transition: all 0.25s linear;
 }
 
-.sq-videos-list.flex-width {
-  align-items: center;
-  margin: 0 auto;
-  justify-content: center;
-  flex-wrap: wrap;
+.sq-section.notice.video .sq-image-wrapper:hover {
+  cursor: pointer;
 }
-
-.sq-videos-list.flex-width .sq-item {
-  flex: 1;
-  margin: 0 18px 24px 18px;
-  min-width: 300px;
-  max-width: 300px;
+.sq-section.notice.video
+  .sq-image-wrapper
+  .sq-play-wrapper
+  .sq-button
+  .sq-icon {
+  font-size: 3rem;
+}
+.sq-section.notice.video
+  .sq-image-wrapper:hover
+  .sq-play-wrapper
+  .sq-button
+  .sq-icon {
+  height: 60px;
+  width: 60px;
+  font-size: 4rem;
 }
 
 @media (max-width: 767px) {
@@ -901,17 +852,6 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
     background-image: url("../imgs/img-sweetq-mobile.webp");
   }
 
-  .sq-button .sq-icon.icon-play {
-    height: 68px;
-    width: 68px;
-    font-size: 58px;
-  }
-  .sq-video:hover .sq-button .sq-icon.icon-play {
-    font-size: 72px;
-  }
-  .sq-video .sq-frame .sq-video-title-text {
-    font-size: 18px;
-  }
   .sq-contact-icons {
     padding: 20px 0;
   }
@@ -932,14 +872,12 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   .sq-image-wrapper {
     margin: 0 auto;
   }
-  .notice.contest .sq-image-wrapper,
-  .notice.gig .sq-image-wrapper {
-    max-width: 320px;
-  }
 
+  .sq-section.notice.video .sq-half-columns .column-left,
   .sq-section.notice.contest .sq-half-columns .column-left,
   .sq-section.notice.gig .sq-half-columns .column-left {
     max-width: unset;
+    padding-bottom: 24px;
   }
   .sq-section .sq-title {
     font-size: 54px;
@@ -956,16 +894,6 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   }
   .sq-section.gigs .sq-title-wrapper {
     padding-bottom: 10px;
-  }
-  .sq-section.videos {
-    padding: 50px 20px 20px 20px;
-  }
-  .sq-section.videos .sq-title-wrapper {
-    padding-bottom: 50px;
-  }
-  .sq-section.notice .sq-image-wrapper {
-    margin: 0 auto 38px auto;
-    max-width: 200px;
   }
 
   .sq-section.notice .sq-actions {
@@ -996,27 +924,13 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
     height: unset;
     width: 100%;
   }
-  .sq-button .sq-icon.icon-play {
-    height: 52px;
-    width: 52px;
-    font-size: 40px;
-  }
-  .sq-video:hover .sq-button .sq-icon.icon-play {
-    font-size: 52px;
-  }
-  .sq-video .sq-frame .sq-video-title-text {
-    font-size: 16px;
-  }
   .sq-contact-icons {
     padding: 14px 0;
   }
   .sq-contact-icons .sq-button .sq-icon {
     font-size: 22px;
   }
-  .notice.contest .sq-image-wrapper,
-  .notice.gig .sq-image-wrapper {
-    max-width: 270px;
-  }
+
   .gigs .sq-gigs-list .sq-item {
     display: block;
   }
@@ -1035,9 +949,6 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   }
   .sq-section.gigs .sq-title-wrapper {
     padding-bottom: 10px;
-  }
-  .sq-section.videos .sq-title-wrapper {
-    padding-bottom: 40px;
   }
   .sq-headline {
     font-size: 22px;
@@ -1066,17 +977,6 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
 }
 
 @media (max-width: 380px) {
-  .sq-video .sq-frame .sq-video-title-text {
-    font-size: 14px;
-  }
-  .sq-button .sq-icon.icon-play {
-    height: 40px;
-    width: 40px;
-    font-size: 30px;
-  }
-  .sq-video:hover .sq-button .sq-icon.icon-play {
-    font-size: 42px;
-  }
   .sq-section .sq-subtitle {
     font-size: 32px;
   }
@@ -1086,33 +986,24 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   .sq-section.gigs {
     padding: 42px 20px 58px 20px;
   }
-  .sq-section.videos {
-    padding: 36px 20px 10px 20px;
-  }
-  .sq-section.videos .sq-title-wrapper {
-    padding-bottom: 32px;
-  }
-  .sq-video .sq-video-title-text {
-    font-size: 18px;
-    line-height: 22px;
-    padding: 4px 10px;
-  }
   .sq-section.notice .sq-text {
     padding-bottom: 2px;
   }
   .sq-section .sq-title-wrapper {
     padding-bottom: 22px;
   }
-  .sq-section.notice .sq-image-wrapper {
-    margin: 0 auto 38px auto;
-    max-width: 170px;
-  }
+
   .sq-section.kit .sq-text {
     max-width: 254px;
     margin: 0 auto;
   }
   .sq-section.notice .sq-title-wrapper {
     margin-top: 40px;
+  }
+
+  .sq-section.notice.video .sq-image-wrapper {
+    width: 100%;
+    margin: 0 auto;
   }
 }
 
@@ -1136,10 +1027,6 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
 @media (min-width: 1440px) {
   .sq-bg {
     max-height: 84vh;
-  }
-  .sq-videos-list.flex-width .sq-item {
-    min-width: unset;
-    max-width: unset;
   }
 
   .sq-section.notice.contest .sq-half-columns .column-left,
