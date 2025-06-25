@@ -133,8 +133,8 @@ const getConversations = async (
     } else {
       return data || [];
     }
-  } catch (error) {
-    console.error(error);
+  } catch {
+    return [];
   }
 };
 

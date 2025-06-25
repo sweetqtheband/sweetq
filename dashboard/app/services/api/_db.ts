@@ -8,25 +8,60 @@ import { FactorySvc } from '@/app/services/api/factory';
 import { formDataToObject } from '@/app/utils';
 import qs from 'qs';
 
-let _db: Db;
+let _db: Db | null = null;
+let _client: MongoClient | null = null;
+let _connecting = false;
 
-export const getDb = async () => {
-  if (!_db) {
-    const client = new MongoClient(process.env.MONGODB_URI as string, {
-      ...{
+const MONGODB_URI = process.env.MONGODB_URI as string;
+
+async function connectWithRetry(
+  retries = 5,
+  delayMs = 5000
+): Promise<MongoClient> {
+  let lastError: any;
+  for (let i = 0; i < retries; i++) {
+    try {
+      const client = new MongoClient(MONGODB_URI, {
         auth: {
           username: process.env.MONGODB_USER,
           password: process.env.MONGODB_PASSWORD,
         },
         authSource: process.env.MONGODB_AUTH_SOURCE,
-      },
-    });
-
-    await client.connect();
-
-    _db = client.db(process.env.MONGODB_DATABASE);
+      });
+      await client.connect();
+      console.log('MongoDB conectado correctamente');
+      return client;
+    } catch (error: any) {
+      lastError = error;
+      console.error(
+        `MongoDB conexión fallida. Intento ${i + 1} de ${retries}:`,
+        error.message
+      );
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
+    }
   }
-  return _db;
+  throw lastError;
+}
+
+export const getDb = async (): Promise<Db> => {
+  if (_db) {
+    return _db;
+  }
+  if (_connecting) {
+    while (_connecting) {
+      await new Promise((r) => setTimeout(r, 100));
+    }
+    if (_db) return _db;
+  }
+
+  _connecting = true;
+  try {
+    _client = await connectWithRetry(5, 5000);
+    _db = _client.db(process.env.MONGODB_DATABASE);
+    return _db;
+  } finally {
+    _connecting = false;
+  }
 };
 
 export const getCollection = async (collection: string) => {
