@@ -96,6 +96,7 @@ sweetq-gigs {
   position: absolute;
   object-fit: cover;
   height: 100%;
+  width: 100%;
   z-index: 0;
   top: 0;
   left: 50%;
@@ -850,6 +851,7 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
 @media (max-width: 767px) {
   .sq-bg {
     background-image: url("../imgs/img-sweetq-mobile.webp");
+    max-height: unset;
   }
 
   .sq-contact-icons {
@@ -920,10 +922,6 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
 }
 
 @media (max-width: 480px) {
-  .sq-bg-video {
-    height: unset;
-    width: 100%;
-  }
   .sq-contact-icons {
     padding: 14px 0;
   }
@@ -1016,11 +1014,6 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
 @media (min-width: 1366px) {
   .sq-section.notice .sq-wrapper {
     max-width: 1366px;
-  }
-
-  .sq-bg-video {
-    height: unset;
-    width: 100%;
   }
 }
 
