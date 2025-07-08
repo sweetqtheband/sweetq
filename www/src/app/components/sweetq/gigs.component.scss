@@ -13,5 +13,9 @@
 
   &.shrinked {
     max-height: 235px;
+
+    @media screen and (max-width: 400px) {
+      max-height: 246px;
+    }
   }
 }

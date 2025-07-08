@@ -38,7 +38,7 @@ export const followersSvc = (collection: Collection<Document>) => ({
       ).name;
     }
 
-    if (obj.city) {
+    if (obj.city && !isNaN(obj.city)) {
       obj.relations.city = (
         await citiesSvc.findOne({ id: String(obj.city) })
       ).name;

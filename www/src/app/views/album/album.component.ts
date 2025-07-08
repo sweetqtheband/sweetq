@@ -112,56 +112,68 @@ export class AlbumComponent implements OnInit {
     }
   }
 
+  handlers: any = {
+    play: () => {
+      const event: CustomEvent = new CustomEvent('startPlay', {
+        bubbles: true,
+      });
+      window.dispatchEvent(event);
+    },
+    pause: () => {
+      const event: CustomEvent = new CustomEvent('stopPlay', {
+        bubbles: true,
+      });
+      window.dispatchEvent(event);
+    },
+    stop: () => {
+      const event: CustomEvent = new CustomEvent('stopPlay', {
+        bubbles: true,
+      });
+      window.dispatchEvent(event);
+    },
+    previousTrack: () => {
+      if (navigator.mediaSession.metadata?.title) {
+        const track = this.album.tracks?.find(
+          (track) => track.title === navigator.mediaSession.metadata?.title
+        );
+        if (track?.previousId) {
+          const event: CustomEvent = new CustomEvent('playNext', {
+            bubbles: true,
+            detail: { id: track.previousId },
+          });
+          window.dispatchEvent(event);
+        }
+      }
+    },
+    nextTrack: () => {
+      if (navigator.mediaSession.metadata?.title) {
+        const track = this.album.tracks?.find(
+          (track) => track.title === navigator.mediaSession.metadata?.title
+        );
+        if (track?.nextId) {
+          const event: CustomEvent = new CustomEvent('playNext', {
+            bubbles: true,
+            detail: { id: track.nextId },
+          });
+          window.dispatchEvent(event);
+        }
+      }
+    },
+  };
+
   setMediaSessionHandlers() {
     if ('mediaSession' in navigator) {
-      navigator.mediaSession.setActionHandler('play', () => {
-        const event: CustomEvent = new CustomEvent('startPlay', {
-          bubbles: true,
-        });
-        window.dispatchEvent(event);
-      });
-      navigator.mediaSession.setActionHandler('pause', () => {
-        const event: CustomEvent = new CustomEvent('stopPlay', {
-          bubbles: true,
-        });
-        window.dispatchEvent(event);
-      });
-      navigator.mediaSession.setActionHandler('stop', (el) => {
-        const event: CustomEvent = new CustomEvent('stopPlay', {
-          bubbles: true,
-        });
-        window.dispatchEvent(event);
-      });
-      navigator.mediaSession.setActionHandler('previoustrack', () => {
-        if (navigator.mediaSession.metadata?.title) {
-          const track = this.album.tracks?.find(
-            (track) => track.title === navigator.mediaSession.metadata?.title
-          );
-
-          if (track?.previousId) {
-            const event: CustomEvent = new CustomEvent('playNext', {
-              bubbles: true,
-              detail: { id: track.previousId },
-            });
-            window.dispatchEvent(event);
-          }
-        }
-      });
-      navigator.mediaSession.setActionHandler('nexttrack', () => {
-        if (navigator.mediaSession.metadata?.title) {
-          const track = this.album.tracks?.find(
-            (track) => track.title === navigator.mediaSession.metadata?.title
-          );
-
-          if (track?.nextId) {
-            const event: CustomEvent = new CustomEvent('playNext', {
-              bubbles: true,
-              detail: { id: track.nextId },
-            });
-            window.dispatchEvent(event);
-          }
-        }
-      });
+      navigator.mediaSession.setActionHandler('play', this.handlers.play);
+      navigator.mediaSession.setActionHandler('pause', this.handlers.pause);
+      navigator.mediaSession.setActionHandler('stop', this.handlers.stop);
+      navigator.mediaSession.setActionHandler(
+        'previoustrack',
+        this.handlers.previousTrack
+      );
+      navigator.mediaSession.setActionHandler(
+        'nexttrack',
+        this.handlers.nextTrack
+      );
     }
   }
 }

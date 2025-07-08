@@ -29,7 +29,6 @@ async function connectWithRetry(
         authSource: process.env.MONGODB_AUTH_SOURCE,
       });
       await client.connect();
-      console.log('MongoDB conectado correctamente');
       return client;
     } catch (error: any) {
       lastError = error;

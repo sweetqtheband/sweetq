@@ -18,7 +18,7 @@
   @media (orientation: portrait) {
     .sq-modal-preview {
       rotate: 90deg;
-      width: 100vh;
+      width: calc(100 * var(--vh));
       align-items: flex-end;
       &--wrapper {
         aspect-ratio: 9 / 16;
@@ -27,8 +27,8 @@
         align-items: center;
       }
       iframe {
-        height: 95vw;
-        width: 95vh;
+        height: 100vw;
+        width: calc(100 * var(--vh));
         aspect-ratio: 9 / 16;
       }
     }

@@ -183,7 +183,7 @@ export class PlayerComponent
       }
     };
 
-    if (!this.streamUrl) {
+    if (!this.streamUrl && this.type !== 'album') {
       this.getStreamUrl();
     }
   }
@@ -310,7 +310,7 @@ export class PlayerComponent
   }
 
   async launchPlay() {
-    if (this.audio && this.audio.paused) {
+    if (this.audio && this.audio.paused && !this.track.isPlaying) {
       this.onPlaying();
       this.track.isPlaying = true;
       await this.audio.play();
