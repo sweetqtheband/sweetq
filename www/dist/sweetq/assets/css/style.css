@@ -584,6 +584,11 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   background-image: url("../imgs/cover/golpedesuerte.jpg");
 }
 
+.sq-section.notice.info.nohabriasidoasi .sq-image.image-cover:before,
+.sq-section.notice.info.nohabriasidoasi .sq-image.image-cover:after {
+  background-image: url("../imgs/cover/nohabriasidoasi.jpg");
+}
+
 .sq-section.notice.info .sq-image.image-cover {
   position: relative;
   background-position: center top;

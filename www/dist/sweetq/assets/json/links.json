@@ -21,17 +21,24 @@
     "link": "https://music.youtube.com/watch?v=nUoA61GXWsQ"
   },
   {
+    "type": "spotify",
+    "icon": "icon-spotify",
+    "text": "links.presave.nohabriasidoasi",
+    "button": "secondary",
+    "link": "https://ffm.to/sweet-q-no-habria-sido-asi"
+  },
+  {
     "type": "youtube",
     "icon": "icon-youtube",
-    "text": "links.youtube.golpedesuerte",
+    "text": "links.youtube.fiesta",
     "button": "secondary",
-    "link": "https://www.youtube.com/watch?v=K-jINdTeOFw"
+    "link": "https://www.youtube.com/watch?v=2FryW1MtBus"
   },
   {
     "type": "gig",
     "icon": "icon-gigs",
-    "text": "links.gigs.20250614",
+    "text": "links.gigs.20250802",
     "button": "secondary",
-    "link": "https://www.notikumi.com/channel/sweet-q/2025/6/14/valiente-bosque-sweet-q-en-madrid"
+    "link": "https://sonoversofest.lariojaeventos.com/"
   }
 ]
