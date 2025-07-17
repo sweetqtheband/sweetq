@@ -83,19 +83,17 @@
       "lesarts": "Vote for us to play at Festival de les Arts!"
     },
     "gigs": {
-      "20250519": "Vivo Back to Bands 19 May Tickets",
-      "20250614": "Valiente Bosque + Sweet Q 14 June Tickets"
+      "20250802": "Tickets for Sonoverso Festival"
     },
     "presave": {
-      "fiesta": "'Fiesta' presave"
+      "nohabriasidoasi": "'No habría sido así' presave"
     },
     "spotify": "Spotify",
     "spotifyAvailable": "Spotify link (available {{date}})",
     "subtitle": "New single 'Fiesta'",
     "title": "Sweet Q",
     "youtube": {
-      "arganzuela": "Watch 'Fiestas de Arganzuela 2024' live gig",
-      "golpedesuerte": "Music Video 'Golpe de suerte'"
+      "fiesta": "Music Video 'Fiesta'"
     },
     "youtubeMusic": "Youtube Music"
   },
