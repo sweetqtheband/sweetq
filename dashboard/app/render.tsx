@@ -104,8 +104,8 @@ const renderTextInput = ({
   formState,
   onInputHandler,
 }: Field) => {
-  const inputValue = formState?.[field] || value;
-
+  const inputValue = formState?.[field];
+  
   return (
     <TextInput
       key={field}
@@ -895,7 +895,7 @@ const renderCity = ({
   internalState,
   onInternalStateHandler,
   onInputHandler,
-}: Field) => {
+}: Field) => {  
   return (
     <div className="cds--flex">
       {countryDropdown({
@@ -927,7 +927,7 @@ const renderCity = ({
         translations,
         internalState,
         formState,
-        disabled: !formState.state,
+        disabled: !internalState?.state?.id,
         onInternalStateHandler,
         onInputHandler,
       } as Field)}
