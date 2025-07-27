@@ -1,31 +1,24 @@
 [
-  {
+  {    
     "type": "spotify",
     "icon": "icon-spotify",
     "text": "links.spotify",
     "button": "primary",
-    "link": "https://open.spotify.com/album/5RBCYsCJoKdxuNU4OHut2J"
+    "link": "https://open.spotify.com/album/0jYNYEI1QI8LtDYpbCr1Vt"
   },
   {
     "type": "appleMusic",
     "icon": "icon-apple-music",
     "text": "links.appleMusic",
     "button": "primary",
-    "link": "https://music.apple.com/es/album/fiesta-single/1813854238"
+    "link": "https://music.apple.com/es/album/no-habría-sido-así-single/1825155245"
   },
   {
     "type": "youtubeMusic",
     "icon": "icon-youtube-music",
     "text": "links.youtubeMusic",
     "button": "primary",
-    "link": "https://music.youtube.com/watch?v=nUoA61GXWsQ"
-  },
-  {
-    "type": "spotify",
-    "icon": "icon-spotify",
-    "text": "links.presave.nohabriasidoasi",
-    "button": "secondary",
-    "link": "https://ffm.to/sweet-q-no-habria-sido-asi"
+    "link": "https://music.youtube.com/playlist?list=OLAK5uy_miCMPTokYkDQG3QhULinUfSCWDKocwVhE"
   },
   {
     "type": "youtube",
