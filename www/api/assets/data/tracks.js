@@ -73,8 +73,8 @@ export default [
     title: "Fiesta",
     date: "2025-05-23",
     cover: "fiesta.jpg",
-    video: "default.mp4",
-    status: "latest",
+    video: "fiesta.mp4",
+    status: "released",
     links: {
       spotify: "album/5RBCYsCJoKdxuNU4OHut2J",
       apple: "album/fiesta-single/1813854238",
@@ -121,9 +121,19 @@ export default [
   {
     id: "nohabriasidoasi",
     title: "No habría sido así",
-    date: "2025",
+    date: "2025-07-25",
     cover: "nohabriasidoasi.jpg",
-    video: "default.mp4",
-    status: "upcoming",
+    video: "nohabriasidooasi.mp4",
+    status: "latest",
+    links: {
+      spotify: "album/0jYNYEI1QI8LtDYpbCr1Vt",
+      apple: "album/no-habría-sido-así-single/1825155245",
+      amazon: "albums/B0FGYC6QXH",
+      youtubeMusic: "playlist?list=OLAK5uy_miCMPTokYkDQG3QhULinUfSCWDKocwVhE",
+    },
+    description:
+      'Errores, silencios y sentimientos que se quedaron a medio camino. Una noche de fiesta, una revelación inesperada y todo lo que nunca se dijo. Todo esto y mucho más en "No habría sido así"',
+    lyrics:
+      "Es el día señalado y el lugar, \ntodos mis nervios están a flor de piel.\nVente lista y preparada para algo espectacular.\n\nA las diez abren las puertas y aquí estoy\nen la barra quitándome la presión\nsin saber qué nos deparará la noche…\nno me importa, hoy tu y yo vamos.\n\nA darlo todo en esta fiesta \ny si subes la apuesta voy a jugar.\nNo pienso desperdiciar mi oportunidad.\n\nA darlo todo en esta fiesta \njugando sin reglas hasta el final. \nHagamos que sea digno de recordar.\n\nLa locura se desata en el lugar,\ntodo el mundo está en un éxtasis total.\nLa electricidad se expande por tus labios\n¡Luces fuera!\n\nVoy a darlo todo en esta fiesta \ny si subes la apuesta voy a jugar.\nNo pienso desperdiciar mi oportunidad.\n\nA darlo todo en esta fiesta \njugando sin reglas hasta el final. \nHagamos que sea digno de recordar.\n\nVoy a darlo todo en esta fiesta.\nA darlo todo en esta fiesta.",
   },
 ];

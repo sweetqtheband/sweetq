@@ -73,8 +73,8 @@
   "info": {
     "button": "Listen in Spotify",
     "subtitle": "Already available",
-    "text": "You can now listen to <span class='bold'>'Fiesta'</span> on all platforms, a tribute to those moments when the only thing that matters is living in the present with all possible intensity. Give it your all!",
-    "title": "Fiesta"
+    "text": "Errors, silences, and feelings that were left halfway. A night of partying, an unexpected revelation, and everything that was never said. You can now listen to <span class='bold'>'No habría sido así'</span> on all platforms!",
+    "title": "No habría sido así"
   },
   "links": {
     "appleAvailable": "Apple Music link (available {{date}})",
@@ -90,7 +90,7 @@
     },
     "spotify": "Spotify",
     "spotifyAvailable": "Spotify link (available {{date}})",
-    "subtitle": "New single 'Fiesta'",
+    "subtitle": "New single 'No habría sido así'",
     "title": "Sweet Q",
     "youtube": {
       "fiesta": "Music Video 'Fiesta'"

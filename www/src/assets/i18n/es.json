@@ -75,8 +75,8 @@
   "info": {
     "button": "Escuchar en Spotify",
     "subtitle": "Ya disponible",
-    "text": "Ya podéis escuchar <span class='bold'>'Fiesta'</span> en todas las plataformas, un homenaje a esos momentos en los que lo único que importa es vivir el presente con toda la intensidad posible ¡A darlo todo!",
-    "title": "Fiesta"
+    "text": "Errores, silencios y sentimientos que se quedaron a medio camino. Una noche de fiesta, una revelación inesperada y todo lo que nunca se dijo. ¡Ya podéis escuchar <span class='bold'>'No habría sido así'</span> en todas las plataformas!",
+    "title": "No habría sido así"
   },
   "links": {
     "appleAvailable": "Link Apple Music (disponible {{date}})",
@@ -92,7 +92,7 @@
     },
     "spotify": "Spotify",
     "spotifyAvailable": "Link Spotify (disponible {{date}})",
-    "subtitle": "'Fiesta' nuevo single",
+    "subtitle": "'No habría sido así' nuevo single",
     "title": "Sweet Q",
     "youtube": {
       "fiesta": "Videoclip 'Fiesta'"

@@ -1,12 +1,12 @@
 [
   {
     "type": "info cover nohabriasidoasi",
-    "title": "presave.title",
-    "subtitle": "presave.subtitle",
-    "text": "presave.text",
-    "button": "presave.spotify",
+    "title": "info.title",
+    "subtitle": "info.subtitle",
+    "text": "info.text",
+    "button": "info.button",
     "icon": "icon-spotify",
-    "spotifyHref": "https://ffm.to/sweet-q-no-habria-sido-asi"
+    "spotifyHref": "https://open.spotify.com/intl-es/album/0jYNYEI1QI8LtDYpbCr1Vt"
   },
   {
     "type": "info video fiesta",
