@@ -211,5 +211,8 @@
   "userProfiles": {
     "admin": "Administrador",
     "user": "Usuario"
+  },
+  "charts": {
+    "censedFollowers": "Seguidores censados"
   }
 }

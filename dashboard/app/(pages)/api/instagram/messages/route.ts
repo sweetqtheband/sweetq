@@ -30,12 +30,13 @@ export async function POST(req: NextRequest) {
     await getCollection('followers')
   );
 
-  const isUpdate = dataObj.layoutId && dataObj.layoutId !== 'undefined';
+  const isUpdate = (dataObj.layoutId  && dataObj.layoutId !== 'undefined') || (dataObj._id && dataObj._id !== 'undefined');
+  const layoutId = dataObj.layoutId || dataObj._id;
 
   if (isUpdate) {
     await layoutSvc.update(
       {
-        _id: new ObjectId(dataObj.layoutId),
+        _id: new ObjectId(layoutId),
         tpl: {
           personalMessage: dataObj.personalMessage,
           collectiveMessage: dataObj.collectiveMessage,
@@ -47,7 +48,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const layout = isUpdate
-      ? await layoutSvc.getById(dataObj.layoutId)
+      ? await layoutSvc.getById(layoutId)
       : await layoutSvc.create({
           name: dataObj.layout,
           type: 'instagram',

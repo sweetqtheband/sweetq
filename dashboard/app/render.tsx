@@ -30,6 +30,7 @@ import { Add, Close } from '@carbon/react/icons';
 import { Size } from '@/types/size';
 import { renderItem } from './renderItem';
 import { getClasses, s3File } from './utils';
+import { ContentArea } from './components';
 
 interface Field {
   field: string;
@@ -981,30 +982,48 @@ const renderPassword = ({ field, translations, onInputHandler }: Field) => {
   );
 };
 
+const renderContentArea = ({ field, value, translations, formState, onInputHandler }: Field) => {
+  const defaultValue = (formState[field] || value).replace(/\n/g, "<br>");
+
+  return (
+    <FormItem key={field}>
+      <p className="cds--label">{translations.fields[field]}</p>
+      <ContentArea
+        key={field}
+        id={field}
+        translations={translations}
+        value={defaultValue}
+        hasParameter={true}
+      />
+    </FormItem>
+  );
+};
+
 const renderers = {
-  [FIELD_TYPES.HIDDEN]: renderHidden,
+  [FIELD_TYPES.CHECKBOX]: renderCheckbox,
+  [FIELD_TYPES.CONTENTAREA]: renderContentArea,
+  [FIELD_TYPES.CITY]: renderCity,
+  [FIELD_TYPES.DATE_LABEL]: renderDatePickerLabel,
+  [FIELD_TYPES.DATE]: renderDatePicker,
+  [FIELD_TYPES.FILTER_CITY]: renderCityFilter,
   [FIELD_TYPES.FILTER_COUNTRY]: renderCountryFilter,
   [FIELD_TYPES.FILTER_STATE]: renderStateFilter,
-  [FIELD_TYPES.FILTER_CITY]: renderCityFilter,
-  [FIELD_TYPES.CHECKBOX]: renderCheckbox,
-  [FIELD_TYPES.CITY]: renderCity,
+  [FIELD_TYPES.HIDDEN]: renderHidden,
+  [FIELD_TYPES.HOUR]: renderHour,
+  [FIELD_TYPES.IMAGE_UPLOADER]: renderUploader,
   [FIELD_TYPES.IMAGE]: renderImage,
+  [FIELD_TYPES.LABEL]: renderLabel,
+  [FIELD_TYPES.MULTISELECT]: renderMultiSelect,
+  [FIELD_TYPES.PASSWORD]: renderPassword,
+  [FIELD_TYPES.SELECT]: renderSelect,
   [FIELD_TYPES.TEXT]: renderTextInput,
   [FIELD_TYPES.TEXTAREA]: renderTextArea,
   [FIELD_TYPES.TEXTMAP]: renderTextMap,
-  [FIELD_TYPES.HOUR]: renderHour,
-  [FIELD_TYPES.SELECT]: renderSelect,
-  [FIELD_TYPES.MULTISELECT]: renderMultiSelect,
-  [FIELD_TYPES.IMAGE_UPLOADER]: renderUploader,
   [FIELD_TYPES.VIDEO_UPLOADER]: renderUploader,
-  [FIELD_TYPES.DATE]: renderDatePicker,
-  [FIELD_TYPES.DATE_LABEL]: renderDatePickerLabel,
-  [FIELD_TYPES.LABEL]: renderLabel,
-  [FIELD_TYPES.PASSWORD]: renderPassword,
 };
 
 // Main renderer
-export const renderField = (obj: any) => {
+export const renderField = (obj: any) => {  
   const { type, field } = obj;
   if (typeof renderers[type] === 'function') {
     const className = getClasses({

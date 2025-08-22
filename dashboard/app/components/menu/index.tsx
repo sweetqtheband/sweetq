@@ -16,12 +16,14 @@ import {
   HeaderMenu,
   HeaderMenuButton,
   HeaderMenuItem,
+  HeaderName,
   HeaderNavigation,
   HeaderSideNavItems,
   SideNav,
   SideNavItems,
   Theme,
 } from '@carbon/react';
+import Image from 'next/image';
 import { Power, UpdateNow } from '@carbon/react/icons';
 import { routes } from '@/app/(pages)/admin/routes';
 
@@ -76,6 +78,15 @@ export default function MenuComponent({
           onClickSideNavExpand: any;
         }>) => (
           <Header aria-label="Sweet Q Dashboard">
+            <HeaderName prefix='' href='/admin/dashboard' as={Link}>
+              <Image
+                alt={'Logo'}
+                className="image"
+                width={100}
+                height={40}
+                src={'/logo-alt.svg'}
+              ></Image>
+            </HeaderName>
             <HeaderMenuButton
               aria-label={isSideNavExpanded ? 'Close menu' : 'Open menu'}
               onClick={onClickSideNavExpand}

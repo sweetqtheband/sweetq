@@ -12,6 +12,7 @@ export const BaseSvc = (model: Collection<Document>, Model: Function) => {
      * @returns {User}
      */
     findOne: async (query: Record<string, any>) => model.findOne(query),
+    findAll: async (query: Record<string, any> = {}) => model.find(query).toArray(),
     getById: async (value: string) =>
       model.findOne({ _id: new ObjectId(value) }),
     getAllById: async (values: string[]) =>

@@ -6,6 +6,8 @@ import { onDelete, onSave } from './_methods';
 export const Types = {
   _id: FIELD_TYPES.HIDDEN,
   name: FIELD_TYPES.TEXT,
+  personalMessage: FIELD_TYPES.CONTENTAREA,
+  collectiveMessage: FIELD_TYPES.CONTENTAREA,
 };
 
 export const Options = {};
@@ -15,6 +17,8 @@ const fields = {
   titles: {
     name: 'fields.name',
     type: 'fields.type',
+    personalMessage: 'pages.instagram.panel.personalMessage',
+    collectiveMessage: 'pages.instagram.panel.collectiveMessage',
   },
   types: Types,
   options: Options,
@@ -46,6 +50,17 @@ const getMethods = (router?: any) => ({
   onDelete: async (ids: string[]) => onDelete(Layouts, router, ids),
 });
 
+// Parse all method
+const parseAll = (data: any[] = []) =>
+  data.map((item: any) => {
+    return {
+      ...item,
+      personalMessage: item.tpl.personalMessage,
+      collectiveMessage: item.tpl.collectiveMessage,
+    };
+  });
+
+
 export const Layouts = {
   ...BaseList(
     axios.create({
@@ -55,4 +70,5 @@ export const Layouts = {
   fields,
   getOptions,
   getMethods,
+  parseAll
 };

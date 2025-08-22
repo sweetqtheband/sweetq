@@ -71,7 +71,6 @@ class HttpService {
   post(endpoint = "", data = null, config = {}) {
     const baseCfg = this.setConfig(config, "POST");
     const body = this.setBody(data, baseCfg);
-    console.log(body);
     const cfg = Object.assign(baseCfg, { body: body });
 
     return this.request(endpoint, cfg);

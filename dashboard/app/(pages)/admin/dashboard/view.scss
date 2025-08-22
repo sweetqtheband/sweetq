@@ -1,0 +1,32 @@
+@use '@scss/mixins' as *;
+
+.dashboard-view {  
+  padding: calc(var(--padding) * 2);
+
+  .cds--cc--chart-wrapper .layout-child {    
+    .legend {
+        max-height: 400px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        flex: unset;
+        width: 100% !important;
+    }
+
+    .graph-frame {
+      flex: auto;
+      width: 100% !important;
+    }
+  }
+
+  div.cds--cc--legend.vertical 
+  { 
+    display: flex;
+    flex-flow: wrap;
+    div.legend-item {
+      margin-right: 0;
+      margin-bottom: 10px;
+      white-space: nowrap;
+      width: 150px;
+    }
+  }
+}

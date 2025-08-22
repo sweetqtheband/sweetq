@@ -8,7 +8,6 @@ export default function LayoutsView(params: Readonly<any>) {
   const router = useRouter();
   const methods = Layouts.getMethods(router);
   const renders = Layouts.getRenders();
-
   return (
     <ListLayout
       {...params}

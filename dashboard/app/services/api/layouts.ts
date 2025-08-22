@@ -7,4 +7,10 @@ import { Collection, Document } from 'mongodb';
  */
 export const layoutsSvc = (collection: Collection<Document>) => ({
   ...BaseSvc(collection, Model),
+  parse: async (item: Record<string, any>) => {
+    const obj = {
+      ...item,
+    };
+    return obj;
+  },
 });

@@ -23,6 +23,10 @@ export default async function LayoutsPage({
     ...getTranslation(i18n, 'actions'),
   };
 
+  translations.vars = i18n.t('pages.instagram.panel.variables', {
+    returnObjects: true,
+  });
+
   return (
     <LayoutsView
       items={items}

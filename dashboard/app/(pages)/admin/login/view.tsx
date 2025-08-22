@@ -75,7 +75,7 @@ export default function LoginView({
           <Image
             alt={'Logo'}
             className="image"
-            width={80}
+            width={200}
             height={80}
             src={'/logo.svg'}
           ></Image>

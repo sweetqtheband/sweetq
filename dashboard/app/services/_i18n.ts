@@ -5,7 +5,7 @@ export const getTranslations = (i18n: any, instance: Record<string, any>) => ({
   date: i18n.t('date', { returnObjects: true }),
   languages: i18n.t('languages', { returnObjects: true }),
   fields: {
-    ...Object.keys(instance.fields.titles).reduce(
+    ...Object.keys(instance?.fields.titles || {}).reduce(
       (acc, key) => ({
         ...acc,
         [key]: i18n.t(instance.fields.titles[key]),
@@ -14,7 +14,7 @@ export const getTranslations = (i18n: any, instance: Record<string, any>) => ({
     ),
     limit: i18n.t('fields.limit'),
   } as Record<string, string>,
-  options: Object.keys(instance.fields.options)
+  options: Object.keys(instance?.fields.options || {})
     .filter((field) => instance.fields.options[field]?.options)
     .reduce(
       (options, field) => ({

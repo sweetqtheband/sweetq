@@ -149,6 +149,22 @@ export const breakpoint = (size: Breakpoint): boolean => {
   return sizes[size];
 };
 
+export const from = (size: Breakpoint): boolean => {
+  const width = document.body.clientWidth;
+  const sizes = {
+    mobile: width < BREAKPOINTS.MOBILE,
+    tablet:
+      width < BREAKPOINTS.TABLET,
+    laptop:
+      width < BREAKPOINTS.LAPTOP,
+    desktop:
+      width < BREAKPOINTS.DESKTOP,
+    large: width >= BREAKPOINTS.DESKTOP,
+  };  
+
+  return sizes[size];
+};
+
 export const camelCase = (str: string) =>
   str
     .replace(/[-_](.)/g, (_, char) => char.toUpperCase())

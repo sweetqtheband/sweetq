@@ -46,10 +46,10 @@ export default function ContentArea({
   const emojiWrapperRef = useRef<HTMLDivElement>(null);
   const emojiRef = useRef(null) as RefObject<HTMLElement>;
 
-  const [defaultVarValue, setDefaultVarValue] = useState<string>(value);
+  const [defaultVarValue, setDefaultVarValue] = useState<string>();
   const [defaultValue, setDefaultValue] = useState<string>(value);
 
-  const onChangeHandler = useCallback(() => {
+  const onChangeHandler = useCallback(() => {    
     const text = contentEditableRef.current?.innerText;
     if (text) {
       onChange(text);
@@ -62,7 +62,7 @@ export default function ContentArea({
     }
   }, [value]);
 
-  const handleChange = (e: ContentEditableEvent) => {
+  const handleChange = (e: ContentEditableEvent) => {    
     setDefaultValue(e.target.value);
   };
   const [showPicker, setShowPicker] = useState<boolean>(false);
@@ -84,9 +84,11 @@ export default function ContentArea({
   }, [emojiRef, emojiLoaded, defaultValue, onChangeHandler]);
 
   useEffect(() => {
-    setDefaultValue(defaultValue + defaultVarValue);
-    setDefaultVarValue('');
-    setShowParameter(false);
+    if (defaultVarValue) {
+      setDefaultValue(defaultValue + defaultVarValue);
+      setDefaultVarValue('');
+      setShowParameter(false);
+    }
   }, [defaultValue, defaultVarValue]);
 
   useEffect(() => {

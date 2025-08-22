@@ -69,27 +69,28 @@ export const SORT: Record<string, number> = {
 };
 
 export const FIELD_TYPES: Record<string, FieldTypesType> = {
+  CHECKBOX: 'checkbox',
+  CITY: 'city',
+  CONTENTAREA: 'contentArea',
+  DATE_LABEL: 'dateLabel',
+  DATE: 'date',
+  FILTER_CITY: 'filterCity',
+  FILTER_COUNTRY: 'filterCountry',
+  FILTER_STATE: 'filterState',
   HIDDEN: 'hidden',
+  HOUR: 'hour',
+  IMAGE_UPLOADER: 'imageUploader',
+  IMAGE: 'image',
+  LABEL: 'label',
+  MULTISELECT: 'multiSelect',
+  NONE: 'none',
+  PASSWORD: 'password',
+  SELECT: 'select',
   TEXT: 'text',
   TEXTAREA: 'textarea',
   UPLOADER: 'uploader',
-  IMAGE_UPLOADER: 'imageUploader',
   VIDEO_UPLOADER: 'videoUploader',
-  DATE: 'date',
-  SELECT: 'select',
-  MULTISELECT: 'multiSelect',
-  CHECKBOX: 'checkbox',
-  IMAGE: 'image',
   VIDEO: 'video',
-  HOUR: 'hour',
-  FILTER_COUNTRY: 'filterCountry',
-  FILTER_STATE: 'filterState',
-  FILTER_CITY: 'filterCity',
-  CITY: 'city',
-  NONE: 'none',
-  LABEL: 'label',
-  DATE_LABEL: 'dateLabel',
-  PASSWORD: 'password',
 };
 
 export const IG = {
@@ -103,6 +104,10 @@ export const RENDER_TYPES: Record<string, string> = {
   COLOR: 'color',
   STATUS_MESSAGE: 'statusMessage',
   INSTAGRAM_MESSAGE: 'instagramMessage',
+};
+
+export const CHART_TYPES: Record<string, string> = {
+  DONUT: 'donut',
 };
 
 export const FIELD_DEFAULTS: Record<string, any> = {
