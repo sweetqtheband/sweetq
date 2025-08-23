@@ -5,7 +5,7 @@ import { useEventBus } from '@/app/hooks/event';
 import { instagram } from '@/app/services/instagram';
 import { Storage } from '@/app/services/storage';
 import Script from 'next/script';
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 declare global {
   interface Window {
@@ -61,7 +61,7 @@ export default function InstagramLogin() {
   const { on, off } = useEventBus('instagram');
   const initializedRef = useRef(false);
 
-  const runInstagramLogin = () => {
+  const runInstagramLogin = useCallback(() => {
     const loginWindow = doInstagramLogin();
     on((data) => {
       if (data) {
@@ -70,7 +70,7 @@ export default function InstagramLogin() {
       }
       off();
     });
-  };
+  }, [on, off]);
 
   useEffect(() => {
     if (initializedRef.current) return;
@@ -101,7 +101,7 @@ export default function InstagramLogin() {
     }
 
     initialize();
-  }, []);
+  }, [off, on, runInstagramLogin]);
 
   return (
     <Script

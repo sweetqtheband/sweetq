@@ -84,6 +84,7 @@ export default function MenuComponent({
                 className="image"
                 width={100}
                 height={40}
+                priority={true}
                 src={'/logo-alt.svg'}
               ></Image>
             </HeaderName>

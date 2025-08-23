@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import ListTable from './list-table';
 import ListPanel from './list-panel';
 import { SizeType } from '@/types/size';
@@ -64,14 +64,14 @@ export default function ListLayout({
   const [isLoading, setIsLoading] = useState(false);
   const [isWaiting, setIsWaiting] = useState(false);
 
-  const setIsLoadingHandler = (newLoading: boolean) => {
+  const setIsLoadingHandler = useCallback((newLoading: boolean) => {
     setIsLoading(newLoading);
     setExternalLoading(newLoading);
-  };
+  }, [setExternalLoading]);
 
   useEffect(() => {
     setIsLoadingHandler(loading);
-  }, [loading]);
+  }, [setIsLoadingHandler, loading]);
 
   const [parsedItems, setParsedItems] = useState<any[]>([]);
 
@@ -79,7 +79,7 @@ export default function ListLayout({
     setParsedItems(items);
     setIsLoadingHandler(false);
     setIsWaiting(false);
-  }, [items]);
+  }, [setIsLoadingHandler, setParsedItems, setIsWaiting, items]);
 
   const onClose = async (item = null) => {
     setItem(null);

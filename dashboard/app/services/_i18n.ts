@@ -19,7 +19,7 @@ export const getTranslations = (i18n: any, instance: Record<string, any>) => ({
     .reduce(
       (options, field) => ({
         ...options,
-        [field]: Object.keys(instance.fields.options[field].options).reduce(
+        [field]: Object.keys(instance?.fields.options[field].options || {}).reduce(
           (acc, key) => {
             return {
               ...acc,

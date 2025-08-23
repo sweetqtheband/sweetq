@@ -109,6 +109,7 @@ export default function ListTable({
   const [deleteRows, setDeleteRows] = useState<any[]>([]);
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false);
   const [internalState, setInternalState] = useState<Record<string, any>>({});
+  const [pendingInternalState, setPendingInternalState] = useState<null | { field: string; value: any }>(null);
   const [formState, setFormState] = useState<Record<string, any>>({});
   const [filtering, setFiltering] = useState<boolean>(false);
 
@@ -118,57 +119,60 @@ export default function ListTable({
     params.entries().filter(([key]) => key.includes('filters'))
   );
 
-  if (Object.keys(paramFiltersObj).length > 0) {
-    Object.keys(paramFiltersObj).forEach((key: string) => {
-      const filterName = key.match(/filters\[(.*)\]/)?.[1];
-      if (filterName && !formState[filterName]) {
-        setFormState({
-          ...formState,
-          [filterName]: paramFiltersObj[key].split(','),
-        });
-      }
-    });
-  } else {
-    const currentFormState = { ...formState };
-    let setForm = false;
-    Object.keys(filters).forEach((filterName) => {
-      if (currentFormState[filterName]) {
-        delete currentFormState[filterName];
-        setForm = true;
-      }
-    });
-
-    if (setForm) {
-      setFormState(currentFormState);
+  // Aplica cambios pendientes de internalState de forma segura
+  useEffect(() => {
+    if (pendingInternalState) {
+      const { field, value } = pendingInternalState;
+      setInternalState(prev => ({
+        ...prev,
+        [field]: value,
+      }));
+      setPendingInternalState(null);
     }
-  }
+  }, [pendingInternalState]);
+
+  useEffect(() => {
+    if (Object.keys(paramFiltersObj).length > 0) {
+      Object.keys(paramFiltersObj).forEach((key: string) => {
+        const filterName = key.match(/filters\[(.*)\]/)?.[1];
+        if (filterName && !formState[filterName]) {
+          setFormState({
+            ...formState,
+            [filterName]: paramFiltersObj[key].split(','),
+          });
+        }
+      });
+    } else {
+      const currentFormState = { ...formState };
+      let setForm = false;
+      Object.keys(filters).forEach((filterName) => {
+        if (currentFormState[filterName]) {
+          delete currentFormState[filterName];
+          setForm = true;
+        }
+      });
+
+      if (setForm) {
+        setFormState(currentFormState);
+      }
+    }
+  }, [paramFiltersObj, filters]);
 
   const onInternalStateHandler = (fields: string | string[], value: any) => {
-    setInternalState((prevState) => {
-      const filterInternalState = { ...prevState };
-      if (fields instanceof Array) {
-        fields.forEach((field, index) => {
-          delete filterInternalState[field];
-
-          if (value) {
-            filterInternalState[field] = value[index];
-          }
-        });
-      } else {
-        delete filterInternalState[fields];
-
-        if (value) {
-          filterInternalState[fields] = value;
-        }
-      }
-      return filterInternalState;
-    });
+    if (fields instanceof Array) {
+      fields.forEach((field, index) => {
+        setPendingInternalState({ field, value: value ? value[index] : null });
+      });
+    } else {
+      setPendingInternalState({ field: fields, value });
+    }
   };
+
   useEffect(() => {
     if (timestamp) {
       setIsWaiting(false);
     }
-  }, [timestamp]);
+  }, [timestamp, setIsWaiting]);
 
   useTableRenderComplete(tableId, () => {
     setTimeout(() => {
@@ -201,24 +205,12 @@ export default function ListTable({
   ) => {
     if (field.value) {
       const fieldName = field.id.split(':')[1];
-
-      const isImage = String(field.value).match(
-        /\.(png|gif|jpg|jpeg|webp|svg)/i
-      );
-
-      const defaultValue =
-        item?.relations?.[fieldName]?.[translations.locale] || field.value;
-
-      let value = translations.options?.[fieldName]
-        ? translations.options?.[fieldName][field.value]
-        : defaultValue;
+      const isImage = String(field.value).match(/\.(png|gif|jpg|jpeg|webp|svg)/i);
+      const defaultValue = item?.relations?.[fieldName]?.[translations.locale] || field.value;
+      let value = translations.options?.[fieldName] ? translations.options?.[fieldName][field.value] : defaultValue;
 
       if (renders[fieldName]) {
-        const func =
-          typeof renders[fieldName] === 'function'
-            ? renders[fieldName]
-            : renders[fieldName].render;
-
+        const func = typeof renders[fieldName] === 'function' ? renders[fieldName] : renders[fieldName].render;
         if (typeof func === 'function') {
           const render = func(fieldName, value, item);
           return render instanceof Array ? (
@@ -236,41 +228,22 @@ export default function ListTable({
       }
 
       if (isImage) {
-        if (value?.startsWith('imgs')) {
-          value = s3File('/' + value);
-        }
-
-        if (value?.startsWith('/imgs')) {
-          value = s3File(value);
-        }
-
-        return (
-          // eslint-disable-next-line @next/next/no-img-element
-          <Image
-            src={value}
-            alt={row.id}
-            height={IMAGE_SIZES[imageSize]}
-            width={IMAGE_SIZES[imageSize]}
-            crossOrigin="anonymous"
-          />
-        );
+        if (value?.startsWith('imgs')) value = s3File('/' + value);
+        if (value?.startsWith('/imgs')) value = s3File(value);
+        return <Image src={value} alt={row.id} height={IMAGE_SIZES[imageSize]} width={IMAGE_SIZES[imageSize]} crossOrigin="anonymous" />;
       }
 
       return value;
-    } else {
-      return null;
     }
+    return null;
   };
 
   const checkRowsForWindowSize = (rows: any[]) => {
     let rowsHeight = rows.length * 48;
     const maxHeight = window.innerHeight - 48 * 4;
-
     if (tableRef) {
       const tbody = tableRef.current?.querySelector('tbody');
-      if (tbody) {
-        rowsHeight = tbody.clientHeight;
-      }
+      if (tbody) rowsHeight = tbody.clientHeight;
     }
     return rowsHeight > maxHeight;
   };
@@ -282,10 +255,7 @@ export default function ListTable({
   const [itemsShown, setItemsShown] = useState(config.table.shown);
 
   const tableRowClickHandler = (id: string | number, target: HTMLElement) => {
-    if (
-      !target.classList.contains('cds--checkbox') &&
-      !target.classList.contains('cds--table-column-checkbox')
-    ) {
+    if (!target.classList.contains('cds--checkbox') && !target.classList.contains('cds--table-column-checkbox')) {
       const row = tableRows.find((row) => row.id === id);
       onItemClick(row);
     }
@@ -311,19 +281,12 @@ export default function ListTable({
   };
 
   const tableRowSortHandler = (index: number) => {
-    const dir = [
-      ...direction.map((d, i) =>
-        i === index && direction[i] === 'DESC' ? 'ASC' : 'DESC'
-      ),
-    ];
-
+    const dir = [...direction.map((d, i) => i === index && direction[i] === 'DESC' ? 'ASC' : 'DESC')];
     setDirection(dir);
 
     const params = new URLSearchParams(searchParams);
-
     params.set('sort', headers[index].key);
     params.set('sortDir', String(SORT[dir[index]]));
-
     replace(`${pathname}?${params.toString()}`);
   };
 
@@ -331,74 +294,28 @@ export default function ListTable({
     setSortable(sortable.map((dir, i) => (i === index ? !dir : dir)));
   };
 
-  const tableBatchActionsTranslate = (
-    id: string,
-    { totalSelected, totalCount } = {
-      totalSelected: 0,
-      totalCount: 0,
-    }
-  ) => {
-    if (id === 'carbon.table.batch.cancel') {
-      return translations.cancel;
-    }
-    if (id === 'carbon.table.batch.selectAll') {
-      if (breakpoint('mobile')) {
-        return `${
-          allSelected
-            ? translations.unselectAllShort
-            : translations.selectAllShort
-        } (${totalCount})`;
-      }
-      return `${
-        allSelected ? translations.unselectAll : translations.selectAll
-      } (${totalCount})`;
-    }
-    if (id === 'carbon.table.batch.selectNone') {
-      return translations.selectNone;
-    }
-    if (id === 'carbon.table.batch.item.selected') {
-      if (breakpoint('mobile')) {
-        return `${totalSelected} ${translations.selectedShort.toLocaleLowerCase()}`;
-      }
-      return `${totalSelected} ${translations.selected.toLocaleLowerCase()}`;
-    }
-    if (id === 'carbon.table.batch.items.selected') {
-      if (breakpoint('mobile')) {
-        return `${totalSelected} ${translations.selectedsShort.toLocaleLowerCase()}`;
-      }
-      return `${totalSelected} ${translations.selecteds.toLocaleLowerCase()}`;
-    }
-    if (id === 'carbon.table.batch.actions') {
-      return translations.actions;
-    }
-    if (id === 'carbon.table.batch.action') {
-      return translations.action;
-    }
-    if (id === 'carbon.table.batch.clear') {
-      return translations.clear;
-    }
-    if (id === 'carbon.table.batch.save') {
-      return translations.save;
-    }
+  const tableBatchActionsTranslate = (id: string, { totalSelected, totalCount } = { totalSelected: 0, totalCount: 0 }) => {
+    if (id === 'carbon.table.batch.cancel') return translations.cancel;
+    if (id === 'carbon.table.batch.selectAll') return breakpoint('mobile') ? `${allSelected ? translations.unselectAllShort : translations.selectAllShort} (${totalCount})` : `${allSelected ? translations.unselectAll : translations.selectAll} (${totalCount})`;
+    if (id === 'carbon.table.batch.selectNone') return translations.selectNone;
+    if (id === 'carbon.table.batch.item.selected') return breakpoint('mobile') ? `${totalSelected} ${translations.selectedShort.toLocaleLowerCase()}` : `${totalSelected} ${translations.selected.toLocaleLowerCase()}`;
+    if (id === 'carbon.table.batch.items.selected') return breakpoint('mobile') ? `${totalSelected} ${translations.selectedsShort.toLocaleLowerCase()}` : `${totalSelected} ${translations.selecteds.toLocaleLowerCase()}`;
+    if (id === 'carbon.table.batch.actions') return translations.actions;
+    if (id === 'carbon.table.batch.action') return translations.action;
+    if (id === 'carbon.table.batch.clear') return translations.clear;
+    if (id === 'carbon.table.batch.save') return translations.save;
     return id;
   };
 
   const tableSearchTranslate = (id: string) => {
-    if (id === 'carbon.table.toolbar.search.placeholder') {
-      return translations.filter;
-    }
-    if (id === 'carbon.table.toolbar.search.label') {
-      return translations.search;
-    }
-
+    if (id === 'carbon.table.toolbar.search.placeholder') return translations.filter;
+    if (id === 'carbon.table.toolbar.search.label') return translations.search;
     return id;
   };
 
   const onTableSearch = (value: string) => {
     const params = new URLSearchParams(searchParams);
-
     setIsLoading(true);
-
     if (value) {
       params.set('query', value);
       params.set('page', '0');
@@ -406,19 +323,13 @@ export default function ListTable({
       params.delete('query');
       params.delete('page');
     }
-
     replace(`${pathname}?${params.toString()}`);
   };
 
-  const onSelectAllHandler = (
-    rows: DataTableRow<any[]>[],
-    selectRow: Function
-  ) => {
+  const onSelectAllHandler = (rows: DataTableRow<any[]>[], selectRow: Function) => {
     if (!allSelected) {
       rows.forEach((row) => {
-        if (!row.isSelected) {
-          selectRow(row.id);
-        }
+        if (!row.isSelected) selectRow(row.id);
       });
       setAllSelected(true);
     } else {
@@ -431,14 +342,11 @@ export default function ListTable({
 
   const onLimitChangeHandler = ({ selectedItem }: any) => {
     const params = new URLSearchParams(searchParams);
-
     params.delete('page');
     params.set('limit', String(selectedItem?.id));
-
     setSelectedLimit(limitItems.find((item) => item.id === selectedItem?.id));
     setIsLoading(true);
     setIsWaiting(true);
-
     replace(`${pathname}?${params.toString()}`);
   };
 
@@ -446,9 +354,7 @@ export default function ListTable({
     setIsLoading(true);
     setIsWaiting(true);
     const params = new URLSearchParams(searchParams);
-
     params.set('page', String(page));
-
     replace(`${pathname}?${params.toString()}`);
   };
 
@@ -458,36 +364,29 @@ export default function ListTable({
       const max = Math.floor(window.innerWidth / 48 - 5);
       setItemsShown(max);
     };
-
     window.addEventListener('resize', resizeHandler);
-
     clearTimeout(timeout);
     timeout = setTimeout(() => {
       window.dispatchEvent(new Event('resize'));
     }, 10);
-
     return () => {
       window.removeEventListener('resize', resizeHandler);
     };
   }, [tableRef, tableRows]);
+
   const classes = getClasses({
     'table-wrapper': true,
     'with-title': !!translations.title,
     'max-top': fitTable,
   });
 
-  const limitItems = [10, 25, 50, 100, 200, 500].map((item) => ({
-    id: item,
-    text: item,
-  }));
+  const limitItems = [10, 25, 50, 100, 200, 500].map((item) => ({ id: item, text: item }));
 
-  const [selectedLimit, setSelectedLimit] = useState(
-    limitItems.find((item) => item.id === limit)
-  );
+  const [selectedLimit, setSelectedLimit] = useState(limitItems.find((item) => item.id === limit));
 
   const defaultCell = headers.find((header) => header.default);
 
-  const renderFilters = () => {
+ const renderFilters = () => {
     const filterFields = Object.keys(filters);
 
     const onCloseHandler = () => {
@@ -561,8 +460,8 @@ export default function ListTable({
                 }
               };
 
-              const handleFilterInternalState = (field: string, value: any) => {
-                onInternalStateHandler(field, value);
+              const handleFilterInternalStateSafe = (field: string, value: any) => {
+                onInternalStateHandler(field, value); // usa pendingInternalState para no setState en render
                 handleFilter(field, null);
               };
 
@@ -589,7 +488,7 @@ export default function ListTable({
                 formState,
                 internalState,
                 onFormStateHandler: handleFilterFormState,
-                onInternalStateHandler: handleFilterInternalState,
+                onInternalStateHandler: handleFilterInternalStateSafe,
                 onInputHandler: handleFilter,
               });
             })}
@@ -601,22 +500,12 @@ export default function ListTable({
     return null;
   };
 
-  const renderActions = () => {
-    return null;
-  };
+  const renderActions = () => null;
 
   const renderBatchActions = (batchActionProps: any, selectedRows: any) => {
     if (batchActions) {
       return Object.keys(batchActions).map((action, index) => (
-        <Button
-          key={`batch-action-${index}`}
-          tabIndex={batchActionProps.shouldShowBatchActions ? -1 : 0}
-          onClick={() =>
-            batchActions[action].onClick(selectedRows.map((row: any) => row.id))
-          }
-          renderIcon={batchActions[action].icon}
-          kind={batchActions[action].kind || 'primary'}
-        >
+        <Button key={`batch-action-${index}`} tabIndex={batchActionProps.shouldShowBatchActions ? -1 : 0} onClick={() => batchActions[action].onClick(selectedRows.map((row: any) => row.id))} renderIcon={batchActions[action].icon} kind={batchActions[action].kind || 'primary'}>
           {batchActions[action].translations.title}
         </Button>
       ));
@@ -627,36 +516,12 @@ export default function ListTable({
   let debounce: any = null;
 
   return (
-    <div
-      className={classes}
-      ref={tableRef}
-      onKeyDown={(ev) => ev.key === 'Escape' && setFiltersOpen(false)}
-    >
+    <div className={getClasses({'table-wrapper': true})} ref={tableRef} onKeyDown={(ev) => ev.key === 'Escape' && setFiltersOpen(false)}>
       <DataTable headers={headers} rows={tableRows} stickyHeader={true}>
-        {({
-          rows,
-          headers,
-          getBatchActionProps,
-          getTableContainerProps,
-          getToolbarProps,
-          getSelectionProps,
-          selectRow,
-          selectedRows,
-        }) => {
-          const batchActionProps = {
-            ...getBatchActionProps({
-              onSelectAll: () => {
-                onSelectAllHandler(rows, selectRow);
-              },
-            }),
-          };
-
+        {({ rows, headers, getBatchActionProps, getTableContainerProps, getToolbarProps, getSelectionProps, selectRow, selectedRows }) => {
+          const batchActionProps = { ...getBatchActionProps({ onSelectAll: () => onSelectAllHandler(rows, selectRow) }) };
           return (
-            <TableContainer
-              title={translations.title}
-              description={translations.description}
-              {...getTableContainerProps()}
-            >
+            <TableContainer title={translations.title} description={translations.description} {...getTableContainerProps()}>
               <TableToolbar {...getToolbarProps()}>
                 <TableToolbarContent>
                   <TableToolbarSearch
@@ -672,17 +537,11 @@ export default function ListTable({
                   {renderFilters()}
                   {renderActions()}
                   {!noAdd ? (
-                    <Button
-                      tabIndex={
-                        batchActionProps.shouldShowBatchActions ? -1 : 0
-                      }
-                      onClick={tableAddNewHandler}
-                      renderIcon={Add}
-                      kind="primary"
-                    >
+                    <Button tabIndex={batchActionProps.shouldShowBatchActions ? -1 : 0} onClick={tableAddNewHandler} renderIcon={Add} kind="primary">
                       {translations.add}
                     </Button>
                   ) : null}
+
                 </TableToolbarContent>
                 {!noBatchActions ? (
                   <TableBatchActions

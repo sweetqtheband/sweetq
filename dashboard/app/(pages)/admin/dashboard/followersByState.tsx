@@ -4,7 +4,7 @@ import i18n from "@/app/services/translate";
 import { Dashboard } from '@/app/services/dashboard';
 import { CHART_TYPES } from "@/app/constants";
 
-const getTranslations = (translations: any[]) => {
+const getTranslations = (translations: any[] = []) => {
    return {
 
     ...translations.reduce((acc: Record<string, any>, item: any) => {
@@ -56,7 +56,7 @@ export default async function getChart() {
 
     acc[countryId].type = CHART_TYPES.DONUT;
     acc[countryId].options = {
-      title: translations.countries[key],
+      title: translations?.countries?.[key],
       resizable: true,
       toolbar: {
         enabled: false

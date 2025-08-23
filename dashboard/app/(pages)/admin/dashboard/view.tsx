@@ -2,14 +2,16 @@
 
 import { renderChart } from "@/app/renderChart";
 import { from } from "@/app/utils";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export default function DashboardView({ translations, charts }: Readonly<{ translations: Record<string, any>, charts: Record<string, any> }>) {   
-  let timeout:any = null;
+  
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   const [position, setPosition] = useState(from('tablet') ? 'bottom' : 'left') as [String, Function]
   const [useCharts, setUseCharts] = useState({}) as [Record<string, any>, Function]
 
-  const updateChartsPosition = () => {    
+  const updateChartsPosition = useCallback(() => {    
       if (!Object.keys(useCharts).length || (from('tablet') && position !== 'bottom') || (!from('tablet') && position !== 'left')) 
       {
         const newPosition = from('tablet') ? 'bottom' : 'left';        
@@ -23,18 +25,17 @@ export default function DashboardView({ translations, charts }: Readonly<{ trans
 
         setUseCharts(changedCharts);
       }
-  };
+  }, [charts, position, useCharts]);
   
   useEffect(() => {
     updateChartsPosition();
     window.addEventListener('resize', () => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => { updateChartsPosition()} , 100);      
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      timeoutRef.current = setTimeout(() => { updateChartsPosition()} , 100);      
       
     });
-  }, [updateChartsPosition, timeout]);
-
-
+  }, [updateChartsPosition]);
+  
   return (
     <div className="dashboard-view">
     {

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 type EventHandler = (data: any) => void;
 
@@ -18,7 +18,19 @@ export function useEventBus(channel: string) {
     delete eventHandlers.current[channel];
   };
 
-  const connect = () => {
+  // Reintentar la conexión en caso de error
+  const retryConnection = useCallback(() => {
+    if (retryTimeout.current) {
+      clearTimeout(retryTimeout.current);
+    }
+
+    retryTimeout.current = setTimeout(() => {
+      console.log('Retrying connection...');
+      connect(); // Intentar reconectar
+    }, 3000); // Reintentar cada 3 segundos
+  }, []);
+
+  const connect = useCallback(() => {
     if (eventSourceRef.current) {
       eventSourceRef.current.close(); // Cerrar cualquier conexión previa
     }
@@ -51,19 +63,9 @@ export function useEventBus(channel: string) {
         console.error('Failed to parse event:', event.data);
       }
     };
-  };
+  }, [retryConnection]);
 
-  // Reintentar la conexión en caso de error
-  const retryConnection = () => {
-    if (retryTimeout.current) {
-      clearTimeout(retryTimeout.current);
-    }
 
-    retryTimeout.current = setTimeout(() => {
-      console.log('Retrying connection...');
-      connect(); // Intentar reconectar
-    }, 3000); // Reintentar cada 3 segundos
-  };
 
   // Conectar al iniciar el componente
   useEffect(() => {
@@ -78,7 +80,7 @@ export function useEventBus(channel: string) {
         clearTimeout(retryTimeout.current);
       }
     };
-  }, []);
+  }, [connect]);
 
   return { on, off, isConnected };
 }
