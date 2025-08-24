@@ -2,7 +2,7 @@
 
 import i18n from "@/app/services/translate";
 import DashboardView from "./view";
-import { FollowersByState } from "./charts.";
+import { FollowersByState } from "./charts";
 import { Dashboard } from "@/app/services/dashboard";
 import './view.scss';
 
