@@ -2,7 +2,7 @@ import { AxiosInstance, AxiosResponse } from 'axios';
 import config from '@/app/config';
 import { HTTP_STATUS_CODES } from '../constants';
 
-const isBuild = process.env.NEXT_PHASE === 'phase-production-build';
+const isBuild = !process.env.IS_RUNTIME;
 
 const cache = new Map();
 

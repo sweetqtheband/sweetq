@@ -13,4 +13,5 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/.env.production ./
 EXPOSE 3000
+ENV IS_RUNTIME=true
 CMD ["npm", "run", "start"]
