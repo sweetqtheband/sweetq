@@ -34,6 +34,8 @@ export default async function getChart() {
 
   const response = await Dashboard.getFollowersByState();
 
+  console.log("GET FOLLOWERS BY STATE", response);
+
   const translations = getTranslations(response.translations);
 
   const charts:Record<string, any> = Object.keys(response).filter(key => !['total','translations','unknown'].includes(key)).reduce((acc, key) => { 
