@@ -3,7 +3,6 @@
 import i18n from "@/app/services/translate";
 import { Dashboard } from '@/app/services/dashboard';
 import { CHART_TYPES } from "@/app/constants";
-import { logger } from "@/app/logger";
 
 const getTranslations = (translations: any[] = []) => {
    return {
@@ -34,7 +33,6 @@ export default async function getChart() {
   await i18n.init();
 
   const response = await Dashboard.getFollowersByState();
-  logger('Followers by state', response);
 
   const translations = getTranslations(response.translations);
 

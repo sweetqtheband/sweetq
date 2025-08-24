@@ -9,3 +9,5 @@ services:
     restart: always
     extra_hosts:
       - 'srv659934.hstgr.cloud:46.202.168.61'
+    volumes:
+      - /var/log/:/var/log
