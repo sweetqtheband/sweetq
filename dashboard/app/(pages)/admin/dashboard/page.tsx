@@ -19,7 +19,7 @@ export default async function DashboardPage() {
     
   const charts = {
     ...followersByStateCharts,
-  }
+  }  
 
   return <DashboardView 
     charts={charts}

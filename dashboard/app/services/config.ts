@@ -104,6 +104,37 @@ const getMetadata = async (i18n: any) => {
   );
 };
 
+const faviconMetadata = {
+  manifest: '/site.webmanifest',
+  icons: {
+    icon: [
+      { url: "/favicons/favicon.ico" },
+      { url: "/favicons/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicons/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+      { url: "/favicons/favicon-96x96.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicons/favicon-96x96.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: [
+      { url: '/favicons/apple-touch-icon.png', sizes: '57x57' },
+      { url: '/favicons/apple-touch-icon.png', sizes: '60x60' },
+      { url: '/favicons/apple-touch-icon.png', sizes: '72x72' },
+      { url: '/favicons/apple-touch-icon.png', sizes: '76x76' },
+      { url: '/favicons/apple-touch-icon.png', sizes: '114x114' },
+      { url: '/favicons/apple-touch-icon.png', sizes: '120x120' },
+      { url: '/favicons/apple-touch-icon.png', sizes: '144x144' },
+      { url: '/favicons/apple-touch-icon.png', sizes: '152x152' },
+      { url: '/favicons/apple-touch-icon.png', sizes: '180x180' },
+    ],
+    other: [
+    {
+        rel: "mask-icon",
+        url: "/favicons/safari-pinned-tab.svg",
+        color: "#5bbad5", // Safari pinned tabs
+      },
+    ],
+  },
+};
+
 const parseMetadata = (metadata: Record<string, any>) => {
   const obj: Record<string, any> = {
     title: 'Sweet Q',
@@ -118,34 +149,7 @@ const parseMetadata = (metadata: Record<string, any>) => {
     alternates: {
       canonical: process.env.NEXT_PUBLIC_URL,
     },
-    manifest: '/site.webmanifest',
-    icons: {
-      icon: [
-        { url: '/favicons/favicon.ico' },
-        { url: "/favicons/favicon.svg", type: "image/svg+xml" },
-        { url: "/favicons/favicon-96x96.png", sizes: "96x96", type: "image/png" },
-        { url: "/favicons/favicon-96x96.png", sizes: "32x32", type: "image/png" },
-        { url: "/favicons/favicon-96x96.png", sizes: "16x16", type: "image/png" },
-      ],
-      apple: [
-        { url: '/favicons/apple-touch-icon.png', sizes: '57x57' },
-        { url: '/favicons/apple-touch-icon.png', sizes: '60x60' },
-        { url: '/favicons/apple-touch-icon.png', sizes: '72x72' },
-        { url: '/favicons/apple-touch-icon.png', sizes: '76x76' },
-        { url: '/favicons/apple-touch-icon.png', sizes: '114x114' },
-        { url: '/favicons/apple-touch-icon.png', sizes: '120x120' },
-        { url: '/favicons/apple-touch-icon.png', sizes: '144x144' },
-        { url: '/favicons/apple-touch-icon.png', sizes: '152x152' },
-        { url: '/favicons/apple-touch-icon.png', sizes: '180x180' },
-      ],
-      other: [
-      {
-          rel: "mask-icon",
-          url: "/favicons/safari-pinned-tab.svg",
-          color: "#5bbad5", // Safari pinned tabs
-        },
-      ],
-    },
+    ...faviconMetadata
   };
 
   return obj;
@@ -154,6 +158,7 @@ const parseMetadata = (metadata: Record<string, any>) => {
 export const Config = {
   ...BaseList(client),
   fields,
+  faviconMetadata,
   getOptions,
   getMethods,
   getMetadata,
