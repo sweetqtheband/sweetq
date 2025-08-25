@@ -1,5 +1,3 @@
-'use server';
-
 import { Users } from '@/app/services/users';
 import type { User } from '@/types/user';
 import i18n from '@/app/services/translate';

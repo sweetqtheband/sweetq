@@ -1,5 +1,3 @@
-'use server';
-
 import i18n from "@/app/services/translate";
 import { Dashboard } from '@/app/services/dashboard';
 import { CHART_TYPES } from "@/app/constants";

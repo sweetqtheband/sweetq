@@ -1,5 +1,3 @@
-'use server';
-
 import { Config } from '@/app/services/config';
 import type { ConfigType } from '@/types/config';
 import i18n from '@/app/services/translate';

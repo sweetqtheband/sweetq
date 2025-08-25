@@ -4,7 +4,6 @@ import { Charts } from "./charts";
 import { Dashboard } from "@/app/services/dashboard";
 import './view.scss';
 
-
 export default async function DashboardPage() {
   await i18n.init();
 
