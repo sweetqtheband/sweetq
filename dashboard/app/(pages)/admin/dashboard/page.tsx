@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import i18n from "@/app/services/translate";
 import DashboardView from "./view";
 import { Charts } from "./charts";

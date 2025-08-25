@@ -6,7 +6,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 export default function DashboardView({ translations, charts }: Readonly<{ translations: Record<string, any>, charts: Record<string, any> }>) {   
   
-  console.log(charts);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const [position, setPosition] = useState(from('tablet') ? 'bottom' : 'left') as [String, Function]
