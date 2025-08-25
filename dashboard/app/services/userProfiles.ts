@@ -1,13 +1,12 @@
 import axios from 'axios';
 import { GET } from './_api';
-const isBuild = process.env.NEXT_PHASE === 'phase-production-build';
 const client = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URI}/user-profiles`,
 });
 
 export const UserProfiles = {
   getAll: async (params: Record<string, any> | null = null) => {
-    if (!isBuild) {
+    if (process.env.IS_BUILD !== "true") {
       const response = await GET(client, '', params);
       return response.data;
     } else {

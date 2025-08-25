@@ -2,8 +2,6 @@ import { AxiosInstance, AxiosResponse } from 'axios';
 import config from '@/app/config';
 import { HTTP_STATUS_CODES } from '../constants';
 
-const isBuild = !process.env.IS_RUNTIME;
-
 const cache = new Map();
 
 const fetchWithCache = async (
@@ -75,7 +73,7 @@ export const getAll = async (
       params.sortDir = sortDir;
     }
 
-    if (!isBuild) {
+    if (process.env.IS_BUILD !== "true") {
       const response = await GET(client, '', params, cache ? cacheHeaders : {});
 
       return response.data;
@@ -93,7 +91,7 @@ export const GET = async (
   params: Record<string, any> | null = {},
   headers: Record<string, any> = {}
 ): Promise<any> => {
-  if (!isBuild) {
+  if (process.env.IS_BUILD !== "true") {
     if (headers?.['Cache-Control']) {
       return await fetchWithCache(client, url, params, headers);
     } else {

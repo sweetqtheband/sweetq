@@ -1,8 +1,6 @@
-'use server';
-
 import i18n from "@/app/services/translate";
 import DashboardView from "./view";
-import { FollowersByState } from "./charts";
+import { Charts } from "./charts";
 import { Dashboard } from "@/app/services/dashboard";
 import './view.scss';
 
@@ -10,7 +8,7 @@ import './view.scss';
 export default async function DashboardPage() {
   await i18n.init();
 
-  const [followersByStateCharts, followersByStateTranslations] = await FollowersByState(); // precache data
+  const [followersByStateCharts, followersByStateTranslations] = await Charts.getFollowersByState();
 
   const translations = {
     ...Dashboard.getTranslations(i18n, Dashboard),

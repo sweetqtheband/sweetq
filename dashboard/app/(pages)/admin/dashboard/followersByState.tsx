@@ -29,9 +29,7 @@ const getTranslations = (translations: any[] = []) => {
   };
 };
 
-export default async function getChart() {
-  await i18n.init();
-
+export default async function () {
   const response = await Dashboard.getFollowersByState();
 
   const translations = getTranslations(response.translations);
@@ -49,7 +47,7 @@ export default async function getChart() {
 
     Object.keys(response[key]).forEach(stateKey => {
       acc[countryId].data.push({
-        group: `${translations.states[stateKey]} ${response[key][stateKey]}`,
+        group: `${translations?.states?.[stateKey]} ${response[key][stateKey]}`,
         value: response[key][stateKey],
       });
     });

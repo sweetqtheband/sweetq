@@ -1,2 +1,5 @@
 
-export { default as FollowersByState } from './followersByState';
+import { default as getFollowersByState } from './followersByState';
+export const Charts = {
+  getFollowersByState 
+};

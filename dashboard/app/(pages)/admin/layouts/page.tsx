@@ -1,5 +1,3 @@
-'use server';
-
 import { Layouts } from '@/app/services/layouts';
 import type { Layout } from '@/types/layout';
 import i18n from '@/app/services/translate';
