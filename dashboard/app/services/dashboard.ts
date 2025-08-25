@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { BaseList } from './_list';
-import { cacheHeaders, GET } from './_api';
+import { GET } from './_api';
 
 const fields = {};
 
@@ -12,7 +12,7 @@ export const Dashboard = {
   ...BaseList(client),
   fields,
   getFollowersByState: async (params: Record<string, any> | null = null) => {
-    const response = await GET(client, 'followersByState', params, cacheHeaders);
+    const response = await GET(client, 'followersByState', params);
     return response.data;
   },
 };
