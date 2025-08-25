@@ -211,5 +211,14 @@
   "userProfiles": {
     "admin": "Administrator",
     "user": "User"
+  },
+  "charts": {
+    "followers": "Followers",
+    "censedFollowers": "Censed followers",
+    "totalFollowers": "Total followers",
+    "contactedFollowers": "Contacted followers",
+    "answeringFollowers": "Answering followers",
+    "superfanFollowers": "Superfans",
+    "fanFollowers": "Fans"
   }
 }

@@ -41,7 +41,8 @@ export default function DashboardView({ translations, charts }: Readonly<{ trans
     {
       Object.keys(useCharts).map((key) => {
         const chart = useCharts[key];        
-        return <div key={key}>{renderChart(chart)}</div>;
+        const className = `chart ${chart.type}-chart`;
+        return <div key={key} className={className}>{renderChart(chart)}</div>;
       })
     }
     </div>

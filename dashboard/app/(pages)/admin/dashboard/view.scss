@@ -29,4 +29,19 @@
       width: 150px;
     }
   }
+
+  .chart + .chart {
+    padding-top: calc(var(--padding) * 2);    
+  }
+
+  .values-chart {
+    .value-item {
+      padding-top: var(--padding);
+      font-size: 0.9rem;
+      .value-label {
+        font-weight: 600;
+        margin-right: var(--padding)
+      }
+    }
+  }
 }

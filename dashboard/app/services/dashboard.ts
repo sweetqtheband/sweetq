@@ -15,4 +15,8 @@ export const Dashboard = {
     const response = await GET(client, 'followersByState', params);
     return response.data;
   },
+  getTotalFollowers: async (params: Record<string, any> | null = null) => {
+    const response = await GET(client, 'totalFollowers', params);
+    return response.data;
+  },
 };

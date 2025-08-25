@@ -213,6 +213,12 @@
     "user": "Usuario"
   },
   "charts": {
-    "censedFollowers": "Seguidores censados"
+    "followers": "Seguidores",
+    "censedFollowers": "Seguidores censados",
+    "totalFollowers": "Total de seguidores",
+    "contactedFollowers": "Seguidores contactados",
+    "answeringFollowers": "Seguidores que responden",
+    "superfanFollowers": "Superfans",
+    "fanFollowers": "Fans"
   }
 }

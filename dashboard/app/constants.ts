@@ -108,6 +108,7 @@ export const RENDER_TYPES: Record<string, string> = {
 
 export const CHART_TYPES: Record<string, string> = {
   DONUT: 'donut',
+  VALUES: 'values'
 };
 
 export const FIELD_DEFAULTS: Record<string, any> = {
