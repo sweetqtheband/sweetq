@@ -1,8 +1,8 @@
-import axios from 'axios';
-import { POST, GET } from '../_api';
-import { BaseSvc } from './_base';
-import { Collection, Document } from 'mongodb';
-import { Model } from '@/app/models/instagram';
+import axios from "axios";
+import { POST, GET } from "../_api";
+import { BaseSvc } from "./_base";
+import { Collection, Document } from "mongodb";
+import { Model } from "@/app/models/instagram";
 
 const api = axios.create({
   baseURL: process.env.API_INSTAGRAM,
@@ -13,9 +13,9 @@ const graph = axios.create({
 });
 
 const EP = {
-  OAUTH: 'oauth',
-  ACCESS_TOKEN: 'access_token',
-  REFRESH_ACCESS_TOKEN: 'refresh_access_token',
+  OAUTH: "oauth",
+  ACCESS_TOKEN: "access_token",
+  REFRESH_ACCESS_TOKEN: "refresh_access_token",
 };
 
 const MAX_LIMITS = {
@@ -25,8 +25,7 @@ const MAX_LIMITS = {
 
 let accessToken: string | any = null;
 
-const getAccessToken = async (instance: any) =>
-  instance.findOne({ id: 'instagram' });
+const getAccessToken = async (instance: any) => instance.findOne({ id: "instagram" });
 
 const getShortLiveAccessToken = async (code: string) => {
   try {
@@ -35,7 +34,7 @@ const getShortLiveAccessToken = async (code: string) => {
       {
         client_id: process.env.INSTAGRAM_CLIENT_ID,
         client_secret: process.env.INSTAGRAM_CLIENT_SECRET,
-        grant_type: 'authorization_code',
+        grant_type: "authorization_code",
         redirect_uri: process.env.NEXT_PUBLIC_INSTAGRAM_REDIRECT_URI,
         code,
       },
@@ -50,7 +49,7 @@ const getShortLiveAccessToken = async (code: string) => {
 
 const storeShortLiveAccessToken = async (instance: any, tokenResponse: any) =>
   instance.create({
-    id: 'instagram',
+    id: "instagram",
     user_id: tokenResponse.user_id,
     short_live_access_token: tokenResponse.access_token,
   });
@@ -59,7 +58,7 @@ const getLongLiveAccessToken = async (shortLiveAccessToken: string) => {
   try {
     const response = await GET(graph, `/${EP.ACCESS_TOKEN}`, {
       client_secret: process.env.INSTAGRAM_CLIENT_SECRET,
-      grant_type: 'ig_exchange_token',
+      grant_type: "ig_exchange_token",
       access_token: shortLiveAccessToken,
     });
 
@@ -75,7 +74,7 @@ const parseAuthToken = (item: any) => ({
 });
 
 const storeLongLiveAccessToken = async (instance: any, tokenResponse: any) => {
-  const item = await instance.findOne({ id: 'instagram' });
+  const item = await instance.findOne({ id: "instagram" });
 
   await instance.update(
     {
@@ -86,7 +85,7 @@ const storeLongLiveAccessToken = async (instance: any, tokenResponse: any) => {
     true
   );
 
-  return parseAuthToken(await instance.findOne({ id: 'instagram' }));
+  return parseAuthToken(await instance.findOne({ id: "instagram" }));
 };
 
 const getHeaders = async (instance: any) => {
@@ -112,12 +111,7 @@ const getConversations = async (
     if (after) {
       params.after = after;
     }
-    const response = await GET(
-      graph,
-      `/me/conversations`,
-      params,
-      await getHeaders(instance)
-    );
+    const response = await GET(graph, `/me/conversations`, params, await getHeaders(instance));
 
     const { data, paging } = response?.data;
 
@@ -126,10 +120,7 @@ const getConversations = async (
       paging?.cursors?.after !== after &&
       limit === MAX_LIMITS.CONVERSATIONS
     ) {
-      return [
-        ...data,
-        ...(await getConversations(instance, limit, paging.cursors.after)),
-      ];
+      return [...data, ...(await getConversations(instance, limit, paging.cursors.after))];
     } else {
       return data || [];
     }
@@ -148,46 +139,31 @@ const getMessages = async (
     await getHeaders(instance);
   }
 
-  try {
-    const params: Record<string, any> = {
-      limit: 100,
-      fields: 'messages',
-      access_token: accessToken,
-    };
+  const params: Record<string, any> = {
+    limit: 100,
+    fields: "messages",
+    access_token: accessToken,
+  };
 
-    const response = await GET(
-      graph,
-      next
-        ? next.replace(process.env.GRAPH_INSTAGRAM || '', '')
-        : `/${conversationId}`,
-      next ? {} : params,
-      {}
-    );
+  const response = await GET(
+    graph,
+    next ? next.replace(process.env.GRAPH_INSTAGRAM || "", "") : `/${conversationId}`,
+    next ? {} : params,
+    {}
+  );
 
-    const { data = [], paging } =
-      (next ? response?.data : response?.data?.messages) || {};
+  const { data = [], paging } = (next ? response?.data : response?.data?.messages) || {};
 
-    const messages = await Promise.all(
-      data.map((message: Record<string, any>) =>
-        getMessage(instance, message.id)
-      )
-    );
+  const messages = await Promise.all(
+    data.map((message: Record<string, any>) => getMessage(instance, message.id))
+  );
 
-    if (paging?.cursors?.after && paging?.cursors?.next !== next) {
-      const nextMessages = await getMessages(
-        instance,
-        conversationId,
-        limit,
-        paging.next
-      );
-      return [...messages, ...nextMessages];
-    }
-
-    return messages;
-  } catch (error) {
-    console.error('Error en getMessages:', error);
-    return [];
+  if (paging?.cursors?.after && paging?.cursors?.next !== next) {
+    const nextMessages = await getMessages(instance, conversationId, limit, paging.next);
+    return [...messages, ...nextMessages];
   }
+
+  return messages;
 };
 
 const getMessage = async (instance: any, messageId: string) => {
@@ -196,7 +172,7 @@ const getMessage = async (instance: any, messageId: string) => {
   }
   try {
     const params = {
-      fields: 'id,created_time,from,to,message',
+      fields: "id,created_time,from,to,message",
       access_token: accessToken,
     };
     const response = await GET(graph, `/${messageId}`, params);
@@ -212,7 +188,7 @@ const sendMessage = async (instance: any, data: Record<string, any>) => {
   }
   try {
     const params = {
-      fields: 'id,created_time,from,to,message',
+      fields: "id,created_time,from,to,message",
       access_token: accessToken,
     };
     const response = await POST(
@@ -227,7 +203,7 @@ const sendMessage = async (instance: any, data: Record<string, any>) => {
       },
       `/me/messages`,
       {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`,
       }
     );

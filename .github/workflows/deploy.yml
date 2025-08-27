@@ -51,7 +51,7 @@ jobs:
             echo "NEXT_PUBLIC_INSTAGRAM_USERNAME=${{ vars.NEXT_PUBLIC_INSTAGRAM_USERNAME }}" >> .env.production
             echo "NEXT_PUBLIC_INSTAGRAM_REDIRECT_URI=${{ vars.NEXT_PUBLIC_INSTAGRAM_REDIRECT_URI }}" >> .env.production
             rm -Rf /var/www/sweetq/dist /var/www/sweetq/www
-            docker image prune -f
-            docker-compose down
+            docker system prune -af --volumes
+            docker-compose down --remove-orphans
             docker-compose build
             docker-compose up -d

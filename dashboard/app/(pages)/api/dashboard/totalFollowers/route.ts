@@ -3,7 +3,6 @@ import { corsOptions, getCollection } from '@/app/services/api/_db';
 import { ERRORS } from '@/app/constants';
 import { FactorySvc } from '@/app/services/api/factory';
 import { Follower } from '@/types/follower';
-import { ObjectId } from 'mongodb';
 
 export async function GET(req: NextRequest) {
   const [message, corsParams] = corsOptions(req);
