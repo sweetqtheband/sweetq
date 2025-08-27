@@ -16,21 +16,15 @@ import {
   TextArea,
   TextInput,
   Tile,
-} from '@carbon/react';
-import {
-  FIELD_DEFAULTS,
-  FIELD_TYPES,
-  IMAGE_SIZES,
-  SIZES,
-  TAG_TYPES,
-} from './constants';
-import Image from 'next/image';
-import { ChangeEvent } from 'react';
-import { Add, Close } from '@carbon/react/icons';
-import { Size } from '@/types/size';
-import { renderItem } from './renderItem';
-import { getClasses, s3File } from './utils';
-import { ContentArea } from './components';
+} from "@carbon/react";
+import { FIELD_DEFAULTS, FIELD_TYPES, IMAGE_SIZES, SIZES, TAG_TYPES } from "./constants";
+import Image from "next/image";
+import { ChangeEvent } from "react";
+import { Add, Close } from "@carbon/react/icons";
+import { Size } from "@/types/size";
+import { renderItem } from "./renderItem";
+import { getClasses, s3File } from "./utils";
+import { ContentArea } from "./components";
 
 interface Field {
   field: string;
@@ -61,18 +55,16 @@ interface Field {
 // Renderers
 
 // Hidden field
-const renderHidden = ({ field, value }: Field) => (
-  <input type="hidden" key={field} value={value} />
-);
+const renderHidden = ({ field, value }: Field) => <input type="hidden" key={field} value={value} />;
 
 // Image field
 const renderImage = ({ field, value }: Field) => {
   let defaultValue = value;
-  if (value?.startsWith('imgs')) {
-    defaultValue = s3File('/' + value);
+  if (value?.startsWith("imgs")) {
+    defaultValue = s3File("/" + value);
   }
 
-  if (value?.startsWith('/imgs')) {
+  if (value?.startsWith("/imgs")) {
     defaultValue = s3File(value);
   }
   return (
@@ -98,24 +90,16 @@ const renderLabel = ({ field, value, translations }: Field) => {
 };
 
 // Text input field
-const renderTextInput = ({
-  field,
-  value,
-  translations,
-  formState,
-  onInputHandler,
-}: Field) => {
+const renderTextInput = ({ field, value, translations, formState, onInputHandler }: Field) => {
   const inputValue = formState?.[field];
-  
+
   return (
     <TextInput
       key={field}
       id={field}
       labelText={translations.fields[field]}
-      value={inputValue || ''}
-      onChange={(e: ChangeEvent<HTMLInputElement>) =>
-        onInputHandler(field, e.target.value)
-      }
+      value={inputValue || ""}
+      onChange={(e: ChangeEvent<HTMLInputElement>) => onInputHandler(field, e.target.value)}
     />
   );
 };
@@ -159,7 +143,7 @@ const renderTextArea = ({
       ...translations.availableLanguages.reduce(
         (acc: Record<string, string>, locale: string) => ({
           ...acc,
-          [locale]: inputValue?.[locale] || '',
+          [locale]: inputValue?.[locale] || "",
         }),
         {}
       ),
@@ -183,14 +167,8 @@ const renderTextArea = ({
         id={field}
         maxCount={maxCount}
         labelText={translations.fields[field]}
-        value={
-          (language
-            ? inputValue?.[internalState?.[field]?.locale]
-            : inputValue) || ''
-        }
-        onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-          onChangeHandler(field, e.target.value)
-        }
+        value={(language ? inputValue?.[internalState?.[field]?.locale] : inputValue) || ""}
+        onChange={(e: ChangeEvent<HTMLTextAreaElement>) => onChangeHandler(field, e.target.value)}
       />
       {language
         ? renderLanguageSelector({
@@ -204,20 +182,15 @@ const renderTextArea = ({
   );
 };
 
-const renderLanguageSelector = ({
-  field,
-  translations,
-  value,
-  onInputHandler,
-}: Field) => (
+const renderLanguageSelector = ({ field, translations, value, onInputHandler }: Field) => (
   <div className="cds--language-selector ">
     {translations?.availableLanguages.map((locale: string) => {
-      const img = '/imgs/flags/' + locale + '.svg';
+      const img = "/imgs/flags/" + locale + ".svg";
       return (
         <Image
           key={`${field}-${locale}`}
           src={img}
-          className={value === locale ? 'selected' : ''}
+          className={value === locale ? "selected" : ""}
           alt={translations.languages[locale]}
           width={IMAGE_SIZES.sm}
           height={IMAGE_SIZES.sm}
@@ -229,13 +202,7 @@ const renderLanguageSelector = ({
   </div>
 );
 
-const renderTextMap = ({
-  field,
-  value,
-  translations,
-  formState,
-  onInputHandler,
-}: Field) => (
+const renderTextMap = ({ field, value, translations, formState, onInputHandler }: Field) => (
   <>
     {renderTextInput({
       field,
@@ -272,22 +239,14 @@ const renderSelect = ({
     formState?.[field] instanceof Array
       ? formState?.[field][0]
       : formState?.[field]
-      ? formState?.[field]
-      : value;
+        ? formState?.[field]
+        : value;
 
   const selectedItem = defaultValue
-    ? items.find(
-        (item: Record<string, any>) =>
-          item.id === value || item.id === String(value)
-      )
+    ? items.find((item: Record<string, any>) => item.id === value || item.id === String(value))
     : undefined;
 
-  if (
-    ready &&
-    selectedItem &&
-    !internalState?.[field] &&
-    !internalState?.[`removed[${field}]`]
-  ) {
+  if (ready && selectedItem && !internalState?.[field] && !internalState?.[`removed[${field}]`]) {
     setTimeout(() => {
       onInternalStateHandler(field, selectedItem, formState);
       onInputHandler(field, selectedItem?.id);
@@ -331,7 +290,7 @@ const renderSelect = ({
         {removable && currentValue ? (
           <IconButton
             className="cds--button--remove"
-            size={'sm'}
+            size={"sm"}
             kind="secondary"
             label={translations.delete}
             onClick={handleRemoveClick}
@@ -366,10 +325,7 @@ const renderCheckbox = ({
     ? items.find((item: Record<string, any>) => item.id === value)
     : undefined;
 
-  const handleCheckboxChange = (
-    e: ChangeEvent<HTMLInputElement>,
-    id: string
-  ) => {
+  const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>, id: string) => {
     const newValue = e.target.checked ? id : null;
 
     const newState = {
@@ -380,18 +336,12 @@ const renderCheckbox = ({
     onInternalStateHandler(field, newState);
     onInputHandler(
       field,
-      Object.keys(newState).filter(
-        (key: string | number) => newState[key] !== null
-      )
+      Object.keys(newState).filter((key: string | number) => newState[key] !== null)
     );
   };
 
   return (
-    <CheckboxGroup
-      legendText={translations.fields[field]}
-      key={field}
-      className={className}
-    >
+    <CheckboxGroup legendText={translations.fields[field]} key={field} className={className}>
       {items.map((item: Record<string, any>) => (
         <Checkbox
           key={item.id}
@@ -430,14 +380,13 @@ const renderMultiSelect = ({
   const value = formState?.[field] || [];
 
   const selectedItems = value
-    ? items.filter((item: Record<string, any>) => value.includes(item.id)) ?? []
+    ? (items.filter((item: Record<string, any>) => value.includes(item.id)) ?? [])
     : [];
 
   const onInputValueChangeHandler = (changes: any) => {
     const itemExists = items.filter(
       (item: Record<string, string>) =>
-        item.text.toLocaleLowerCase().indexOf(changes.toLocaleLowerCase()) !==
-        -1
+        item.text.toLocaleLowerCase().indexOf(changes.toLocaleLowerCase()) !== -1
     ).length;
 
     onInternalStateHandler(field, {
@@ -464,7 +413,7 @@ const renderMultiSelect = ({
     if (!newState.length) {
       onInternalStateHandler(field, {
         ...internalState[field],
-        value: '',
+        value: "",
         canAdd: false,
       });
     }
@@ -487,13 +436,8 @@ const renderMultiSelect = ({
     }
   };
 
-  const onChangeHandler = ({
-    selectedItems,
-  }: Readonly<{ selectedItems: Record<string, any> }>) => {
-    onInputHandler(
-      field,
-      selectedItems?.map((item: Record<string, any>) => item.id) ?? []
-    );
+  const onChangeHandler = ({ selectedItems }: Readonly<{ selectedItems: Record<string, any> }>) => {
+    onInputHandler(field, selectedItems?.map((item: Record<string, any>) => item.id) ?? []);
 
     if (!selectedItems.length) {
       onInternalStateHandler(field, {
@@ -508,7 +452,7 @@ const renderMultiSelect = ({
   };
 
   const onKeyDownHandler = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && internalState[field]?.canAdd) {
+    if (e.key === "Enter" && internalState[field]?.canAdd) {
       onAddHandler();
     }
   };
@@ -520,8 +464,8 @@ const renderMultiSelect = ({
       page: internalState[field]?.page ?? 0,
     });
 
-    const ul = ref.current.querySelector('ul');
-    ul?.addEventListener('scroll', () => {
+    const ul = ref.current.querySelector("ul");
+    ul?.addEventListener("scroll", () => {
       const { scrollTop, scrollHeight, clientHeight } = ul;
       if (scrollTop + clientHeight >= scrollHeight) {
         const page = (internalState[field]?.page ?? 0) + 1;
@@ -546,12 +490,7 @@ const renderMultiSelect = ({
   return (
     <FormItem key={field} className="multiselect">
       <p className="cds--label">{translations.fields[field]}</p>
-      <div
-        className="cds--multiselect"
-        role="listbox"
-        tabIndex={0}
-        onKeyDown={onKeyDownHandler}
-      >
+      <div className="cds--multiselect" role="listbox" tabIndex={0} onKeyDown={onKeyDownHandler}>
         <FilterableMultiSelect
           className={className}
           disabled={internalState[field]?.disabled ?? disabled}
@@ -563,12 +502,12 @@ const renderMultiSelect = ({
           placeholder={translations.fields[field]}
           items={items}
           selectedItems={selected}
-          itemToString={(item: Record<string, any>) => (item ? item?.text : '')}
+          itemToString={(item: Record<string, any>) => (item ? item?.text : "")}
           onChange={onChangeHandler}
           onMenuChange={onMenuChangeHandler}
           filterItems={(items, { inputValue }) =>
             items.filter((item) =>
-              item.text.toLowerCase().includes(inputValue?.toLowerCase() ?? '')
+              item.text.toLowerCase().includes(inputValue?.toLowerCase() ?? "")
             )
           }
         />
@@ -593,9 +532,7 @@ const renderMultiSelect = ({
       </div>
       <Stack gap={4} orientation="horizontal">
         {value.map((id: Record<string, any>, index: number) => {
-          const item = items.find(
-            (item: Record<string, any>) => item.id === id
-          );
+          const item = items.find((item: Record<string, any>) => item.id === id);
           return item?.text ? (
             <DismissibleTag
               size={SIZES.SM as Size.sm}
@@ -628,9 +565,7 @@ const renderHour = ({
       return Array.from({ length: 60 }, (_, m) => {
         if (m % 15 !== 0) return null; // Filtrar los minutos que no son múltiplos de 15
 
-        const hour = `${h.toString().padStart(2, '0')}:${m
-          .toString()
-          .padStart(2, '0')}`;
+        const hour = `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}`;
         return {
           id: hour,
           value: hour,
@@ -661,7 +596,7 @@ const getFileAside = (type: string, file: File | Record<any, string>) => {
         alt={file.name}
         width={IMAGE_SIZES.lg}
         height={0}
-        style={{ width: IMAGE_SIZES.lg + 'px', height: 'auto' }}
+        style={{ width: IMAGE_SIZES.lg + "px", height: "auto" }}
       />
     ),
     [FIELD_TYPES.VIDEO_UPLOADER]: (
@@ -671,7 +606,7 @@ const getFileAside = (type: string, file: File | Record<any, string>) => {
     ),
   };
 
-  return renderAside[type] || '';
+  return renderAside[type] || "";
 };
 
 // Uploader field
@@ -685,8 +620,8 @@ const renderUploader = ({
 }: Field) => {
   const accepted =
     type === FIELD_TYPES.IMAGE_UPLOADER
-      ? ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
-      : ['video/mp4'];
+      ? ["image/jpeg", "image/png", "image/gif", "image/webp"]
+      : ["video/mp4"];
   return (
     <FormItem key={field}>
       <p className="cds--file--label">{translations.fields[field]}</p>
@@ -699,9 +634,7 @@ const renderUploader = ({
             name={field}
             disabled={false}
             onChange={(e) => true}
-            onAddFiles={(_, { addedFiles: files }) =>
-              onAddFileHandler(field, files)
-            }
+            onAddFiles={(_, { addedFiles: files }) => onAddFileHandler(field, files)}
             accept={accepted}
           />
           <div className="cds--file-container cds--file-container--drop" />
@@ -711,11 +644,7 @@ const renderUploader = ({
           {files[field].map((fileObj: Record<string, any>) => {
             return (
               <Tile key={fileObj.id}>
-                <Stack
-                  gap={4}
-                  orientation="horizontal"
-                  className="align-center"
-                >
+                <Stack gap={4} orientation="horizontal" className="align-center">
                   {getFileAside(type, fileObj.file)}
                   <FileUploaderItem
                     name={fileObj.file.name}
@@ -733,7 +662,7 @@ const renderUploader = ({
 };
 
 const countryDropdown = ({
-  field = 'country',
+  field = "country",
   value = FIELD_DEFAULTS.COUNTRY,
   fields,
   translations,
@@ -760,7 +689,7 @@ const countryDropdown = ({
   } as Field);
 
 const stateDropdown = ({
-  field = 'state',
+  field = "state",
   value,
   fields,
   disabled,
@@ -788,7 +717,7 @@ const stateDropdown = ({
     className,
   } as Field);
 const cityDropdown = ({
-  field = 'city',
+  field = "city",
   value,
   fields,
   disabled,
@@ -826,7 +755,7 @@ const renderCountryFilter = ({
   onInputHandler,
 }: Field) => {
   return countryDropdown({
-    className: 'cds--text-input__field-outer-wrapper',
+    className: "cds--text-input__field-outer-wrapper",
     value: String(formState?.country) || FIELD_DEFAULTS.country,
     fields,
     translations,
@@ -849,7 +778,7 @@ const renderStateFilter = ({
   onInputHandler,
 }: Field) => {
   return stateDropdown({
-    className: 'cds--text-input__field-outer-wrapper',
+    className: "cds--text-input__field-outer-wrapper",
     value: String(formState?.state) || null,
     fields,
     translations,
@@ -873,7 +802,7 @@ const renderCityFilter = ({
   onInputHandler,
 }: Field) => {
   return cityDropdown({
-    className: 'cds--text-input__field-outer-wrapper',
+    className: "cds--text-input__field-outer-wrapper",
     value: String(formState?.city) || null,
     fields,
     translations,
@@ -896,14 +825,12 @@ const renderCity = ({
   internalState,
   onInternalStateHandler,
   onInputHandler,
-}: Field) => {  
+}: Field) => {
   return (
     <div className="cds--flex">
       {countryDropdown({
-        className: 'cds--text-input__field-outer-wrapper',
-        value: formState.country
-          ? String(formState.country)
-          : FIELD_DEFAULTS.country,
+        className: "cds--text-input__field-outer-wrapper",
+        value: formState.country ? String(formState.country) : FIELD_DEFAULTS.country,
         fields,
         translations,
         internalState,
@@ -912,7 +839,7 @@ const renderCity = ({
         onInputHandler,
       } as Field)}
       {stateDropdown({
-        className: 'cds--text-input__field-outer-wrapper',
+        className: "cds--text-input__field-outer-wrapper",
         value: formState.state ? String(formState.state) : undefined,
         fields,
         translations,
@@ -922,7 +849,7 @@ const renderCity = ({
         onInputHandler,
       } as Field)}
       {cityDropdown({
-        className: 'cds--text-input__field-outer-wrapper',
+        className: "cds--text-input__field-outer-wrapper",
         value: formState.city ? String(formState.city) : undefined,
         fields,
         translations,
@@ -936,12 +863,7 @@ const renderCity = ({
   );
 };
 
-const renderDatePickerLabel = ({
-  field,
-  value,
-  translations,
-  formState,
-}: Field) =>
+const renderDatePickerLabel = ({ field, value, translations, formState }: Field) =>
   renderLabel({
     field,
     translations,
@@ -975,9 +897,7 @@ const renderPassword = ({ field, translations, onInputHandler }: Field) => {
       showPasswordLabel={translations.showPassword}
       hidePasswordLabel={translations.hidePassword}
       labelText={translations.fields[field]}
-      onChange={(e: ChangeEvent<HTMLInputElement>) =>
-        onInputHandler(field, e.target.value)
-      }
+      onChange={(e: ChangeEvent<HTMLInputElement>) => onInputHandler(field, e.target.value)}
     />
   );
 };
@@ -1023,9 +943,9 @@ const renderers = {
 };
 
 // Main renderer
-export const renderField = (obj: any) => {  
+export const renderField = (obj: any) => {
   const { type, field } = obj;
-  if (typeof renderers[type] === 'function') {
+  if (typeof renderers[type] === "function") {
     const className = getClasses({
       field: true,
       [`field-${field}`]: true,
