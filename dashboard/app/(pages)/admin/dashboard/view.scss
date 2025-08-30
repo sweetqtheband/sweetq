@@ -2,6 +2,8 @@
 
 .dashboard-view {
   padding: calc(var(--padding) * 2);
+  max-width: 1366px;
+  margin: 0 auto;
 
   .cds--cc--chart-wrapper .layout-child {
     .legend {
@@ -37,20 +39,51 @@
     padding-top: var(--padding);
     display: flex;
     flex-wrap: wrap;
+    gap: calc(var(--padding) * 4);
+    @include from(tablet) {
+      justify-content: center;
+    }
+    .chart-cell {
+      &.flex-1 {
+        @include from(tablet) {
+          max-width: 50vw;
+        }
+        flex: 1;
+      }
+    }
   }
 
   .values-chart {
     .value-item {
       padding-top: var(--padding);
-      font-size: 0.9rem;
+      font-size: var(--charts-font-size);
       .value-label {
-        font-weight: 600;
         margin-right: var(--padding);
+      }
+      .value-number {
+        font-weight: 600;
       }
     }
   }
 }
 
-.spacer {
-  height: var(--padding) !important;
+div.cds--cc--legend div.legend-item div.checkbox {
+  margin-left: 2px;
+}
+
+.simpleBar-chart,
+.multiBar-chart {
+  max-width: 90vw;
+  .spacer {
+    height: var(--padding) !important;
+  }
+}
+
+.multiBar-chart {
+  &.follower-types {
+    .layout-child.legend {
+      position: absolute;
+      top: 39px;
+    }
+  }
 }

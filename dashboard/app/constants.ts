@@ -112,6 +112,8 @@ export const CHART_TYPES: Record<string, string> = {
   ROW: "row",
   PIE: "pie",
   BAR: "bar",
+  SIMPLE_BAR: "simpleBar",
+  MULTI_BAR: "multiBar",
 };
 
 export const FIELD_DEFAULTS: Record<string, any> = {

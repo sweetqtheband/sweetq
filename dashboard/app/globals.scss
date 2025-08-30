@@ -1,4 +1,4 @@
-@use '@scss/mixins' as *;
+@use "@scss/mixins" as *;
 
 :root {
   --hover: blue;
@@ -23,6 +23,7 @@
   --controls-border-radius: 4px;
   --controls-font-size: 16px;
   --text-font-size: 14px;
+  --charts-font-size: 13px;
   --chat-font-size: 13px;
   --cds-tag-background-red: #ffd7d9;
   --cds-tag-color-red: #a2191f;
@@ -68,7 +69,7 @@
   --cds-tag-color-high-contrast: #ffffff;
   --full-height: calc(var(--vh, 1vh) * 100);
 
-  font-family: 'sans-serif';
+  font-family: "sans-serif";
 }
 
 @include theme(light) {

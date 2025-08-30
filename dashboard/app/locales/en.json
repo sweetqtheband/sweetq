@@ -230,6 +230,7 @@
     "fanFollowersLost": "Fans lost",
     "censed": "Censed",
     "censedTotal": "Censed total",
-    "censedLost": "Censed lost"
+    "censedLost": "Censed lost",
+    "followerTypes": "Follower types"
   }
 }

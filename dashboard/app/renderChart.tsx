@@ -4,23 +4,33 @@ import { getClasses } from "./utils";
 
 import "@carbon/charts/styles.css";
 
-const renderRow = ({ data }: { data: any }) => {
+const renderRow = ({ data, options }: { data: any; options: Record<string, any> }, key: string) => {
   const className = getClasses({
     "chart-row": true,
     [`row-${data.length}`]: true,
   });
 
   return (
-    <div className={className}>
-      {data.map((charts: Record<string, any>) => {
+    <div className={className} key={`${key}-row-chart`}>
+      {data.map((charts: Record<string, any>, index: number) => {
+        const cellClassName = getClasses({
+          "chart-cell": true,
+          [`cell-${index}`]: true,
+          [options?.cells && options.cells[index]?.className ? options.cells[index].className : ""]:
+            !!(options?.cells && options.cells[index]?.className),
+        });
         return (
-          <div className="chart-cell">
-            {Object.keys(charts).map((key: string) => {
-              const chart = charts[key];
-              const className = `chart ${chart.type}-chart`;
+          <div className={cellClassName} key={`${key}-row-cell-${index}`}>
+            {Object.keys(charts).map((chartKey: string) => {
+              const chart = charts[chartKey];
+              const className = getClasses({
+                chart: true,
+                [`${chart.type}-chart`]: true,
+                [charts[chartKey].options?.className || ""]: !!charts[chartKey].options?.className,
+              });
               return (
-                <div key={key} className={className}>
-                  {renderChart(chart)}
+                <div key={chartKey} className={className}>
+                  {renderChart(chart, `${key}-${chartKey}`)}
                 </div>
               );
             })}
@@ -31,13 +41,21 @@ const renderRow = ({ data }: { data: any }) => {
   );
 };
 
-const renderDonut = ({ data, options }: { data: any; options: Record<string, any> }) => {
-  return <DonutChart key={`donut-${options.legend.position}`} data={data} options={options} />;
+const renderDonut = (
+  { data, options }: { data: any; options: Record<string, any> },
+  key: string
+) => {
+  return (
+    <DonutChart key={`${key}-donut-${options.legend.position}`} data={data} options={options} />
+  );
 };
 
-const renderValues = ({ data, options }: { data: any; options: Record<string, any> }) => {
+const renderValues = (
+  { data, options }: { data: any; options: Record<string, any> },
+  key: string
+) => {
   return (
-    <>
+    <div key={`${key}-values`}>
       <h5>{options.title}</h5>
       <div className="values-container">
         {data.map((item: any, index: number) => (
@@ -47,20 +65,39 @@ const renderValues = ({ data, options }: { data: any; options: Record<string, an
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 
-const renderPie = ({ data, options }: { data: any; options: Record<string, any> }) => {
+const renderPie = ({ data, options }: { data: any; options: Record<string, any> }, key: string) => {
   return "Hola";
 };
-const renderBar = ({ data, options }: { data: any; options: Record<string, any> }) => {
+
+const renderBar = ({ data, options }: { data: any; options: Record<string, any> }, key: string) => {
+  return <MeterChart key={`${key}-bar`} data={data} options={options}></MeterChart>;
+};
+
+const renderSimpleBar = (
+  { data, options }: { data: any; options: Record<string, any> },
+  key: string
+) => {
   options.meter.proportional.totalFormatter = (e: any) => e;
   options.meter.proportional.breakdownFormatter = (e: any) => {
     return `${data[0].group} ${e.datasetsTotal} (${Math.round((e.datasetsTotal * 100) / e.total)}%)`;
   };
 
-  return <MeterChart data={data} options={options}></MeterChart>;
+  return renderBar({ data, options }, key);
+};
+
+const renderMultiBar = (
+  { data, options }: { data: any; options: Record<string, any> },
+  key: string
+) => {
+  options.meter.proportional.totalFormatter = (e: any) => e;
+  options.meter.proportional.breakdownFormatter = (e: any) => {
+    return "";
+  };
+  return renderBar({ data, options }, key);
 };
 
 const renderers = {
@@ -69,10 +106,12 @@ const renderers = {
   [CHART_TYPES.ROW]: renderRow,
   [CHART_TYPES.PIE]: renderPie,
   [CHART_TYPES.BAR]: renderBar,
+  [CHART_TYPES.SIMPLE_BAR]: renderSimpleBar,
+  [CHART_TYPES.MULTI_BAR]: renderMultiBar,
 };
 
 // Main renderer
-export const renderChart = (obj: any) => {
+export const renderChart = (obj: any, key: string) => {
   const { type } = obj;
-  return typeof renderers[type] === "function" && renderers[type](obj);
+  return typeof renderers[type] === "function" && renderers[type](obj, key);
 };
