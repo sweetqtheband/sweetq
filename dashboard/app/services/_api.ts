@@ -1,8 +1,8 @@
-import { AxiosInstance, AxiosResponse } from 'axios';
-import config from '@/app/config';
-import { HTTP_STATUS_CODES } from '../constants';
+import { AxiosInstance, AxiosResponse } from "axios";
+import config from "@/app/config";
+import { HTTP_ENCTYPES, HTTP_STATUS_CODES } from "../constants";
 
-const isBuild = process.env.NEXT_PHASE === 'phase-production-build';
+const isBuild = process.env.NEXT_PHASE === "phase-production-build";
 
 const cache = new Map();
 
@@ -31,25 +31,19 @@ export const getAll = async (
 ) => {
   try {
     const limit =
-      searchParams.limit !== undefined
-        ? Number(searchParams.limit)
-        : config.table.limit;
-    const currentPage =
-      searchParams.page !== undefined ? Number(searchParams.page) : 0;
-    const query =
-      searchParams.query !== undefined ? String(searchParams.query) : '';
-    const sort =
-      searchParams.sort !== undefined ? String(searchParams.sort) : '';
-    const sortDir =
-      searchParams.sortDir !== undefined ? String(searchParams.sortDir) : '';
+      searchParams.limit !== undefined ? Number(searchParams.limit) : config.table.limit;
+    const currentPage = searchParams.page !== undefined ? Number(searchParams.page) : 0;
+    const query = searchParams.query !== undefined ? String(searchParams.query) : "";
+    const sort = searchParams.sort !== undefined ? String(searchParams.sort) : "";
+    const sortDir = searchParams.sortDir !== undefined ? String(searchParams.sortDir) : "";
     const cursor = limit * currentPage;
     const filters: Record<string, any> = Object.entries(searchParams).reduce(
       (acc, [key, value]) => {
         const match = key.match(/^filters\[(.+)\]$/); // Detectar claves como 'filters[...]'
         if (match) {
           const filterKey = match[1]; // Extraer el nombre del filtro (e.g., "treatment")
-          acc[filterKey] = String(value).split(','); // Añadirlo al objeto `filters`
-        } else if (key === 'filters') {
+          acc[filterKey] = String(value).split(","); // Añadirlo al objeto `filters`
+        } else if (key === "filters") {
           acc = {
             ...acc,
             ...searchParams[key],
@@ -66,7 +60,7 @@ export const getAll = async (
       filters: filters || {},
     };
 
-    if (query && query !== 'null') {
+    if (query && query !== "null") {
       params.query = query;
     }
 
@@ -76,7 +70,7 @@ export const getAll = async (
     }
 
     if (!isBuild) {
-      const response = await GET(client, '', params, cache ? cacheHeaders : {});
+      const response = await GET(client, "", params, cache ? cacheHeaders : {});
 
       return response.data;
     } else {
@@ -94,7 +88,7 @@ export const GET = async (
   headers: Record<string, any> = {}
 ): Promise<any> => {
   if (!isBuild) {
-    if (headers?.['Cache-Control']) {
+    if (headers?.["Cache-Control"]) {
       return await fetchWithCache(client, url, params, headers);
     } else {
       return await client.get(url, { params, headers });
@@ -110,40 +104,31 @@ export const GET = async (
 export const POST = async (
   client: AxiosInstance,
   data: any,
-  url: string = '',
+  url: string = "",
   headers: Record<string, any> = {}
 ) => {
   const response = await client.request({
-    method: 'post',
+    method: "post",
     data,
     url,
     headers: {
-      'Content-Type': 'multipart/form-data',
+      "Content-Type": HTTP_ENCTYPES.FORMDATA,
       ...headers,
     },
   });
   return response;
 };
 
-export const PUT = async (
-  client: AxiosInstance,
-  id: string,
-  data: any,
-  url: string = ''
-) => {
+export const PUT = async (client: AxiosInstance, id: string, data: any, url: string = "") => {
   const response = await client.put(url + id, data, {
     headers: {
-      'Content-Type': 'multipart/form-data',
+      "Content-Type": HTTP_ENCTYPES.FORMDATA,
     },
   });
   return response;
 };
 
-export const DELETE = async (
-  client: AxiosInstance,
-  ids: string | string[],
-  url: string = ''
-) => {
+export const DELETE = async (client: AxiosInstance, ids: string | string[], url: string = "") => {
   const response = await (ids instanceof Array
     ? Promise.all(ids.map((id) => client.delete(url + id)))
     : client.delete(url + ids));
@@ -151,5 +136,5 @@ export const DELETE = async (
 };
 
 export const cacheHeaders = {
-  'Cache-Control': 'max-age=86400',
+  "Cache-Control": "max-age=86400",
 };

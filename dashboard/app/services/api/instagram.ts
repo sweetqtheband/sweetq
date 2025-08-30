@@ -1,8 +1,14 @@
 import axios from "axios";
-import { POST, GET } from "../_api";
+import { POST, GET, DELETE } from "../_api";
 import { BaseSvc } from "./_base";
 import { Collection, Document } from "mongodb";
 import { Model } from "@/app/models/instagram";
+import { Model as CacheModel } from "@/app/models/cache";
+import { getFormData } from "@/app/utils";
+
+const CACHE_KEYS = {
+  CONVERSATIONS: "ig_conversations",
+};
 
 const api = axios.create({
   baseURL: process.env.API_INSTAGRAM,
@@ -10,6 +16,10 @@ const api = axios.create({
 
 const graph = axios.create({
   baseURL: process.env.GRAPH_INSTAGRAM,
+});
+
+const cache = axios.create({
+  baseURL: `${process.env.NEXT_PUBLIC_API_URI}/cache`,
 });
 
 const EP = {
@@ -98,12 +108,33 @@ const getHeaders = async (instance: any) => {
   };
 };
 
+const deduplicateByLatest = (arr: any[]) => {
+  const map = new Map();
+
+  arr.forEach((obj) => {
+    const existing = map.get(obj.id);
+    if (!existing || new Date(obj.updated_time) > new Date(existing.updated_time)) {
+      map.set(obj.id, obj);
+    }
+  });
+
+  return Array.from(map.values());
+};
+
 const getConversations = async (
   instance: any,
   limit: number = MAX_LIMITS.CONVERSATIONS,
-  after: string | null = null
+  after: string | null = null,
+  conversations: any[] = []
 ): Promise<any> => {
   try {
+    if (!after) {
+      const cachedConversations = await GET(cache, "", { type: CACHE_KEYS.CONVERSATIONS });
+      if (cachedConversations) {
+        conversations = JSON.parse(cachedConversations.data.data);
+      }
+    }
+
     const params: Record<string, any> = {
       limit,
     };
@@ -115,18 +146,53 @@ const getConversations = async (
 
     const { data, paging } = response?.data;
 
+    if (conversations.length) {
+      // Check max updated time from cache
+      const maxDate = conversations[0].updated_time;
+
+      const newConversations = data.filter(
+        (conversation: Record<string, any>) => conversation.updated_time > maxDate
+      );
+
+      // We have new conversations, but only a few
+      if (newConversations.length < data.length) {
+        // First of all, remove all existing conversations from newConversations
+        const idsSet = new Set(
+          newConversations.map((conversation: Record<string, any>) => conversation.id)
+        );
+        return [
+          ...newConversations,
+          ...deduplicateByLatest(
+            conversations.filter(
+              (conversation: Record<string, any>) => !idsSet.has(conversation.id)
+            )
+          ),
+        ];
+      }
+
+      return conversations;
+    }
+
     if (
       paging?.cursors?.after &&
       paging?.cursors?.after !== after &&
       limit === MAX_LIMITS.CONVERSATIONS
     ) {
-      return [...data, ...(await getConversations(instance, limit, paging.cursors.after))];
-    } else {
-      return data || [];
+      return [
+        ...data,
+        ...(await getConversations(instance, limit, paging.cursors.after, conversations)),
+      ];
     }
+
+    return data || [];
   } catch {
     return [];
   }
+};
+
+const cacheConversations = async (data: any) => {
+  await DELETE(cache, CACHE_KEYS.CONVERSATIONS);
+  await POST(cache, getFormData(CacheModel({ type: CACHE_KEYS.CONVERSATIONS, data })));
 };
 
 const getMessages = async (
@@ -138,7 +204,6 @@ const getMessages = async (
   if (!accessToken) {
     await getHeaders(instance);
   }
-
   const params: Record<string, any> = {
     limit: 100,
     fields: "messages",
@@ -226,6 +291,7 @@ export const instagramSvc = (collection: Collection<Document>) => ({
   getAccessToken,
   parseAuthToken,
   getConversations,
+  cacheConversations,
   getMessages,
   getMessage,
   sendMessage,

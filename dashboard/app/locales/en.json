@@ -213,12 +213,23 @@
     "user": "User"
   },
   "charts": {
+    "answering": "Answering",
+    "responseRate": "Response rate",
     "followers": "Followers",
+    "followersLost": "Lost followers",
     "censedFollowers": "Censed followers",
     "totalFollowers": "Total followers",
+    "totalFollowersLost": "Total followers lost",
     "contactedFollowers": "Contacted followers",
     "answeringFollowers": "Answering followers",
     "superfanFollowers": "Superfans",
-    "fanFollowers": "Fans"
+    "fanFollowers": "Fans",
+    "contactedFollowersLost": "Contacted followers lost",
+    "answeringFollowersLost": "Answering followers lost",
+    "superfanFollowersLost": "Superfans lost",
+    "fanFollowersLost": "Fans lost",
+    "censed": "Censed",
+    "censedTotal": "Censed total",
+    "censedLost": "Censed lost"
   }
 }

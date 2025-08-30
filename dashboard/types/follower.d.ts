@@ -1,4 +1,4 @@
-import { ObjectId } from 'mongodb';
+import { ObjectId } from "mongodb";
 
 export type Follower = {
   _id: ObjectId;
@@ -18,5 +18,6 @@ export type Follower = {
   state?: string;
   city?: string;
   treatment?: number;
-  tags?: Array<number>;
+  tags?: Array<string | null>;
+  unfollow?: boolean;
 };

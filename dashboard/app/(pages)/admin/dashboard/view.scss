@@ -1,15 +1,15 @@
-@use '@scss/mixins' as *;
+@use "@scss/mixins" as *;
 
-.dashboard-view {  
+.dashboard-view {
   padding: calc(var(--padding) * 2);
 
-  .cds--cc--chart-wrapper .layout-child {    
+  .cds--cc--chart-wrapper .layout-child {
     .legend {
-        max-height: 400px;
-        overflow-y: auto;
-        overflow-x: hidden;
-        flex: unset;
-        width: 100% !important;
+      max-height: 400px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      flex: unset;
+      width: 100% !important;
     }
 
     .graph-frame {
@@ -18,8 +18,7 @@
     }
   }
 
-  div.cds--cc--legend.vertical 
-  { 
+  div.cds--cc--legend.vertical {
     display: flex;
     flex-flow: wrap;
     div.legend-item {
@@ -31,7 +30,13 @@
   }
 
   .chart + .chart {
-    padding-top: calc(var(--padding) * 2);    
+    padding-top: calc(var(--padding) * 2);
+  }
+
+  .chart-row {
+    padding-top: var(--padding);
+    display: flex;
+    flex-wrap: wrap;
   }
 
   .values-chart {
@@ -40,8 +45,12 @@
       font-size: 0.9rem;
       .value-label {
         font-weight: 600;
-        margin-right: var(--padding)
+        margin-right: var(--padding);
       }
     }
   }
+}
+
+.spacer {
+  height: var(--padding) !important;
 }

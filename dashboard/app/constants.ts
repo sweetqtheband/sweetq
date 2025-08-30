@@ -1,5 +1,5 @@
-import { FieldTypesType } from '@/types/field-types';
-import { SizeType } from '@/types/size';
+import { FieldTypesType } from "@/types/field-types";
+import { SizeType } from "@/types/size";
 
 export const HTTP_STATUS_CODES = {
   OK: 200,
@@ -16,37 +16,37 @@ export const HTTP_STATUS_CODES = {
 };
 
 export const HTTP_ENCTYPES = {
-  FORMDATA: 'multipart/form-data',
-  URLENCODED: 'application/x-www-form-urlencoded; charset=UTF-8',
-  JSON: 'application/json',
+  FORMDATA: "multipart/form-data",
+  URLENCODED: "application/x-www-form-urlencoded; charset=UTF-8",
+  JSON: "application/json",
 };
 
 export const USER_PROFILES = {
-  ADMIN: 'admin',
-  USER: 'user',
+  ADMIN: "admin",
+  USER: "user",
 };
 
 export const TOKENS = {
-  ADMIN: 'admin',
-  ACCESS: 'access',
+  ADMIN: "admin",
+  ACCESS: "access",
 };
 
 export const STORAGE = {
-  SESSION: 'session',
-  LOCAL: 'local',
-  COOKIES: 'cookies',
+  SESSION: "session",
+  LOCAL: "local",
+  COOKIES: "cookies",
 };
 
 export const ERRORS = {
-  INVALID_CREDENTIALS: 'Invalid credentials',
-  CORS: 'CORS not allowed',
-  IMAGE_URL_MISSING: 'Missing URL',
+  INVALID_CREDENTIALS: "Invalid credentials",
+  CORS: "CORS not allowed",
+  IMAGE_URL_MISSING: "Missing URL",
 };
 
 export const ACTIONS = {
-  ADD: 'add',
-  SAVE: 'save',
-  DATA_UPDATE: 'need-data-update',
+  ADD: "add",
+  SAVE: "save",
+  DATA_UPDATE: "need-data-update",
 };
 
 export const IMAGE_SIZES = {
@@ -57,10 +57,10 @@ export const IMAGE_SIZES = {
 };
 
 export const SIZES: Record<string, SizeType> = {
-  SM: 'sm',
-  MD: 'md',
-  LG: 'lg',
-  XL: 'xl',
+  SM: "sm",
+  MD: "md",
+  LG: "lg",
+  XL: "xl",
 };
 
 export const SORT: Record<string, number> = {
@@ -69,66 +69,69 @@ export const SORT: Record<string, number> = {
 };
 
 export const FIELD_TYPES: Record<string, FieldTypesType> = {
-  CHECKBOX: 'checkbox',
-  CITY: 'city',
-  CONTENTAREA: 'contentArea',
-  DATE_LABEL: 'dateLabel',
-  DATE: 'date',
-  FILTER_CITY: 'filterCity',
-  FILTER_COUNTRY: 'filterCountry',
-  FILTER_STATE: 'filterState',
-  HIDDEN: 'hidden',
-  HOUR: 'hour',
-  IMAGE_UPLOADER: 'imageUploader',
-  IMAGE: 'image',
-  LABEL: 'label',
-  MULTISELECT: 'multiSelect',
-  NONE: 'none',
-  PASSWORD: 'password',
-  SELECT: 'select',
-  TEXT: 'text',
-  TEXTAREA: 'textarea',
-  UPLOADER: 'uploader',
-  VIDEO_UPLOADER: 'videoUploader',
-  VIDEO: 'video',
+  CHECKBOX: "checkbox",
+  CITY: "city",
+  CONTENTAREA: "contentArea",
+  DATE_LABEL: "dateLabel",
+  DATE: "date",
+  FILTER_CITY: "filterCity",
+  FILTER_COUNTRY: "filterCountry",
+  FILTER_STATE: "filterState",
+  HIDDEN: "hidden",
+  HOUR: "hour",
+  IMAGE_UPLOADER: "imageUploader",
+  IMAGE: "image",
+  LABEL: "label",
+  MULTISELECT: "multiSelect",
+  NONE: "none",
+  PASSWORD: "password",
+  SELECT: "select",
+  TEXT: "text",
+  TEXTAREA: "textarea",
+  UPLOADER: "uploader",
+  VIDEO_UPLOADER: "videoUploader",
+  VIDEO: "video",
 };
 
 export const IG = {
-  USER: 'instagram:user',
-  TOKEN: 'instagram:authToken',
-  EXPIRES: 'instagram:expires',
+  USER: "instagram:user",
+  TOKEN: "instagram:authToken",
+  EXPIRES: "instagram:expires",
 };
 export const RENDER_TYPES: Record<string, string> = {
-  TAG: 'tag',
-  LINK: 'link',
-  COLOR: 'color',
-  STATUS_MESSAGE: 'statusMessage',
-  INSTAGRAM_MESSAGE: 'instagramMessage',
+  TAG: "tag",
+  LINK: "link",
+  COLOR: "color",
+  STATUS_MESSAGE: "statusMessage",
+  INSTAGRAM_MESSAGE: "instagramMessage",
 };
 
 export const CHART_TYPES: Record<string, string> = {
-  DONUT: 'donut',
-  VALUES: 'values'
+  DONUT: "donut",
+  VALUES: "values",
+  ROW: "row",
+  PIE: "pie",
+  BAR: "bar",
 };
 
 export const FIELD_DEFAULTS: Record<string, any> = {
-  COUNTRY: '205',
+  COUNTRY: "205",
 };
 
-export const TREATMENTS = ['treatments.person', 'treatments.collective'];
+export const TREATMENTS = ["treatments.person", "treatments.collective"];
 
 export const TAG_TYPES: (
-  | 'red'
-  | 'magenta'
-  | 'purple'
-  | 'blue'
-  | 'cyan'
-  | 'teal'
-  | 'green'
-  | 'gray'
-  | 'cool-gray'
-  | 'warm-gray'
-)[] = ['red', 'magenta', 'purple', 'blue', 'cyan', 'teal', 'green', 'gray'];
+  | "red"
+  | "magenta"
+  | "purple"
+  | "blue"
+  | "cyan"
+  | "teal"
+  | "green"
+  | "gray"
+  | "cool-gray"
+  | "warm-gray"
+)[] = ["red", "magenta", "purple", "blue", "cyan", "teal", "green", "gray"];
 
 export const BREAKPOINTS = {
   MOBILE: 640,
@@ -144,5 +147,5 @@ export const ICON_SIZES = {
 };
 
 export const VARIABLES = [
-  { id: 'short_name', text: 'Nombre corto', replacement: '{{short_name}}' },
+  { id: "short_name", text: "Nombre corto", replacement: "{{short_name}}" },
 ];

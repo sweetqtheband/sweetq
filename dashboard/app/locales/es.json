@@ -213,12 +213,23 @@
     "user": "Usuario"
   },
   "charts": {
+    "answering": "Responden",
+    "responseRate": "Tasa de respuesta",
     "followers": "Seguidores",
+    "followersLost": "Seguidores perdidos",
     "censedFollowers": "Seguidores censados",
     "totalFollowers": "Total de seguidores",
+    "totalFollowersLost": "Total de seguidores perdidos",
     "contactedFollowers": "Seguidores contactados",
     "answeringFollowers": "Seguidores que responden",
     "superfanFollowers": "Superfans",
-    "fanFollowers": "Fans"
+    "fanFollowers": "Fans",
+    "contactedFollowersLost": "Seguidores perdidos contactados",
+    "answeringFollowersLost": "Seguidores perdidos que responden",
+    "superfanFollowersLost": "Superfans perdidos",
+    "fanFollowersLost": "Fans perdidos",
+    "censed": "Censados",
+    "censedTotal": "Total de censados",
+    "censedLost": "Censados perdidos"
   }
 }
