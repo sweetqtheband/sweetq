@@ -52,7 +52,7 @@ export default function DashboardView({
         const className = `chart ${chart.type}-chart`;
         return (
           <div key={key} className={className}>
-            {renderChart(chart)}
+            {renderChart(chart, key)}
           </div>
         );
       })}
