@@ -3,6 +3,8 @@ type Model = {
   name: string;
   type: string;
   tpl: Record<string, any>;
+  personalMessage?: string;
+  collectiveMessage?: string;
 };
 export const Model = (data: any): Model => {
   const obj = {} as Model;
@@ -20,7 +22,14 @@ export const Model = (data: any): Model => {
   }
 
   if (data.tpl) {
-    obj.tpl = typeof data.tpl === 'string' ? JSON.parse(data.tpl) : data.tpl;
+    obj.tpl = typeof data.tpl === "string" ? JSON.parse(data.tpl) : data.tpl;
+  }
+
+  if (data.personalMessage || data.collectiveMesage) {
+    obj.tpl = {
+      personalMessage: data.personalMessage ? String(data.personalMessage) : "",
+      collectiveMessage: data.collectiveMessage ? String(data.collectiveMessage) : "",
+    };
   }
 
   return obj;

@@ -1,11 +1,12 @@
-import axios from 'axios';
-import { BaseList } from './_list';
-import { FIELD_TYPES } from '../constants';
-import { onDelete, onSave } from './_methods';
+import axios from "axios";
+import { BaseList } from "./_list";
+import { FIELD_TYPES } from "../constants";
+import { onDelete, onSave } from "./_methods";
 
 export const Types = {
   _id: FIELD_TYPES.HIDDEN,
   name: FIELD_TYPES.TEXT,
+  type: FIELD_TYPES.HIDDEN,
   personalMessage: FIELD_TYPES.CONTENTAREA,
   collectiveMessage: FIELD_TYPES.CONTENTAREA,
 };
@@ -15,10 +16,10 @@ export const Options = {};
 // Fields
 const fields = {
   titles: {
-    name: 'fields.name',
-    type: 'fields.type',
-    personalMessage: 'pages.instagram.panel.personalMessage',
-    collectiveMessage: 'pages.instagram.panel.collectiveMessage',
+    name: "fields.name",
+    type: "fields.type",
+    personalMessage: "pages.instagram.panel.personalMessage",
+    collectiveMessage: "pages.instagram.panel.collectiveMessage",
   },
   types: Types,
   options: Options,
@@ -32,20 +33,17 @@ const getOptions = async (params: any = {}) => {
   return {
     options: [
       ...options,
-      ...(await Layouts.getAll(params, true)).items.map(
-        (item: Record<string, string>) => ({
-          id: item._id,
-          value: item.name,
-        })
-      ),
+      ...(await Layouts.getAll(params, true)).items.map((item: Record<string, string>) => ({
+        id: item._id,
+        value: item.name,
+      })),
     ],
   };
 };
 
 // Get methods
 const getMethods = (router?: any) => ({
-  onListSave: async (value: string) =>
-    onSave(Layouts, router, { name: value }, {}),
+  onListSave: async (value: string) => onSave(Layouts, router, { name: value }, {}),
   onSave: async (data: any, files: any) => onSave(Layouts, router, data, files),
   onDelete: async (ids: string[]) => onDelete(Layouts, router, ids),
 });
@@ -60,7 +58,6 @@ const parseAll = (data: any[] = []) =>
     };
   });
 
-
 export const Layouts = {
   ...BaseList(
     axios.create({
@@ -70,5 +67,5 @@ export const Layouts = {
   fields,
   getOptions,
   getMethods,
-  parseAll
+  parseAll,
 };

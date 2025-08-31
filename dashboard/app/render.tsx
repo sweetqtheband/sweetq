@@ -910,6 +910,12 @@ const renderPassword = ({ field, translations, onInputHandler }: Field) => {
 const renderContentArea = ({ field, value, translations, formState, onInputHandler }: Field) => {
   const defaultValue = (formState[field] || value).replace(/\n/g, "<br>");
 
+  const onContentAreaChangeHandler = (text: string) => {
+    if (text.replace(/\n/g, "<br>") !== defaultValue) {
+      onInputHandler(field, text);
+    }
+  };
+
   return (
     <FormItem key={field}>
       <p className="cds--label">{translations.fields[field]}</p>
@@ -919,6 +925,7 @@ const renderContentArea = ({ field, value, translations, formState, onInputHandl
         translations={translations}
         value={defaultValue}
         hasParameter={true}
+        onChange={(text: string) => onContentAreaChangeHandler(text)}
       />
     </FormItem>
   );

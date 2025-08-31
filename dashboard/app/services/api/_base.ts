@@ -1,4 +1,4 @@
-import { Collection, Document, ObjectId } from 'mongodb';
+import { Collection, Document, ObjectId } from "mongodb";
 
 /**
  * Base service
@@ -13,12 +13,9 @@ export const BaseSvc = (model: Collection<Document>, Model: Function) => {
      */
     findOne: async (query: Record<string, any>) => model.findOne(query),
     findAll: async (query: Record<string, any> = {}) => model.find(query).toArray(),
-    getById: async (value: string) =>
-      model.findOne({ _id: new ObjectId(value) }),
+    getById: async (value: string) => model.findOne({ _id: new ObjectId(value) }),
     getAllById: async (values: string[]) =>
-      model
-        .find({ _id: { $in: values.map((value) => new ObjectId(value)) } })
-        .toArray(),
+      model.find({ _id: { $in: values.map((value) => new ObjectId(value)) } }).toArray(),
     /**
      * Parse user before returning
      * @param {Object} user
@@ -62,36 +59,24 @@ export const BaseSvc = (model: Collection<Document>, Model: Function) => {
       };
 
       if (!avoidUnset) {
-        modifiers['$unset'] = dbObj
+        modifiers["$unset"] = dbObj
           ? Object.keys(dbObj)
-              .filter((key) => !(key in obj) && key !== '_id')
-              .reduce(
-                (acc: Record<string, string>, key: string) => (
-                  (acc[key] = ''), acc
-                ),
-                {}
-              )
+              .filter((key) => !(key in obj) && key !== "_id")
+              .reduce((acc: Record<string, string>, key: string) => ((acc[key] = ""), acc), {})
           : [];
       } else {
-        modifiers['$unset'] = Object.keys(obj).reduce(
-          (acc: Record<string, any>, key: string) => {
-            if (obj[key] === undefined || obj[key] === null) {
-              acc[key] = '';
-              delete modifiers.$set[key];
-            }
-            return acc;
-          },
-          {}
-        );
+        modifiers["$unset"] = Object.keys(obj).reduce((acc: Record<string, any>, key: string) => {
+          if (obj[key] === undefined || obj[key] === null) {
+            acc[key] = "";
+            delete modifiers.$set[key];
+          }
+          return acc;
+        }, {});
       }
 
-      await instance.model.findOneAndUpdate(
-        { _id: new ObjectId(item._id) },
-        modifiers,
-        {
-          includeResultMetadata: true,
-        }
-      );
+      await instance.model.findOneAndUpdate({ _id: new ObjectId(item._id) }, modifiers, {
+        includeResultMetadata: true,
+      });
 
       return instance.parse({ value: obj });
     },

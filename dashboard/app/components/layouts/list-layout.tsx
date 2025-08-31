@@ -105,10 +105,6 @@ export default function ListLayout({
                 const filterOptions = filters[key].fields.options[key].options;
                 // If it's an array, traverse through the options and find the value
 
-                if (key === "tags") {
-                  console.log(filterOptions);
-                }
-
                 if (Array.isArray(response?.data[key])) {
                   acc[key] = response?.data[key].map(
                     (value: any) =>
