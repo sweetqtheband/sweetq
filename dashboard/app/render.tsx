@@ -249,7 +249,7 @@ const renderSelect = ({
   if (ready && selectedItem && !internalState?.[field] && !internalState?.[`removed[${field}]`]) {
     setTimeout(() => {
       onInternalStateHandler(field, selectedItem, formState);
-      onInputHandler(field, selectedItem?.id);
+      // onInputHandler(field, selectedItem?.id);
     }, 0);
   }
 
@@ -533,12 +533,17 @@ const renderMultiSelect = ({
       <Stack gap={4} orientation="horizontal">
         {value.map((id: Record<string, any>, index: number) => {
           const item = items.find((item: Record<string, any>) => item.id === id);
+          let type = TAG_TYPES[index];
+
+          if (fields?.options?.[field]?.options) {
+            type = fields.options[field].options.find((option: any) => option.id === id)?.color;
+          }
           return item?.text ? (
             <DismissibleTag
               size={SIZES.SM as Size.sm}
               key={item?.id}
               text={item?.text}
-              type={TAG_TYPES[index]}
+              type={type}
               title={translations.delete}
               onClose={() => onDismissHandler(item?.id)}
             />

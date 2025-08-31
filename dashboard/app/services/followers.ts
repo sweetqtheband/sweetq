@@ -1,19 +1,14 @@
-import axios from 'axios';
-import { BaseList } from './_list';
-import {
-  FIELD_DEFAULTS,
-  FIELD_TYPES,
-  RENDER_TYPES,
-  TREATMENTS,
-} from '../constants';
-import { Countries } from './countries';
-import { States } from './states';
-import { Cities } from './cities';
-import { onSave } from './_methods';
-import { Tags } from './tags';
-import { SendAlt } from '@carbon/react/icons';
-import { InstagramMessages } from './instagramMessages';
-import { instagram } from './instagram';
+import axios from "axios";
+import { BaseList } from "./_list";
+import { FIELD_DEFAULTS, FIELD_TYPES, RENDER_TYPES, TREATMENTS } from "../constants";
+import { Countries } from "./countries";
+import { States } from "./states";
+import { Cities } from "./cities";
+import { onSave } from "./_methods";
+import { Tags } from "./tags";
+import { SendAlt } from "@carbon/react/icons";
+import { InstagramMessages } from "./instagramMessages";
+import { instagram } from "./instagram";
 
 export const Types = {
   id: FIELD_TYPES.HIDDEN,
@@ -45,28 +40,25 @@ export const Options = {
 // Fields
 const fields = {
   titles: {
-    id: 'fields.id',
-    username: 'fields.username',
-    short_name: 'fields.shortName',
-    full_name: 'fields.fullName',
-    profile_pic_url: 'fields.profileImage',
-    country: 'fields.country',
-    state: 'fields.state',
-    city: 'fields.city',
-    treatment: 'fields.treatment',
-    tags: 'fields.tags',
+    id: "fields.id",
+    username: "fields.username",
+    short_name: "fields.shortName",
+    full_name: "fields.fullName",
+    profile_pic_url: "fields.profileImage",
+    country: "fields.country",
+    state: "fields.state",
+    city: "fields.city",
+    treatment: "fields.treatment",
+    tags: "fields.tags",
   },
   types: Types,
   options: Options,
 };
 
 // Get fields function
-const getFields = async ({
-  searchParams,
-  i18n,
-}: Readonly<{ searchParams: any; i18n: any }>) => {
-  if (!searchParams?.['panel.country']) {
-    searchParams['panel.country'] = FIELD_DEFAULTS.COUNTRY;
+const getFields = async ({ searchParams, i18n }: Readonly<{ searchParams: any; i18n: any }>) => {
+  if (!searchParams?.["panel.country"]) {
+    searchParams["panel.country"] = FIELD_DEFAULTS.COUNTRY;
   }
 
   return {
@@ -79,15 +71,13 @@ const getFields = async ({
       },
       state: await States.getOptions({
         locale: i18n.locale,
-        query: searchParams?.['panel.country']
-          ? { country_id: searchParams['panel.country'] }
+        query: searchParams?.["panel.country"]
+          ? { country_id: searchParams["panel.country"] }
           : null,
       }),
       city: await Cities.getOptions({
         locale: i18n.locale,
-        query: searchParams?.['panel.state']
-          ? { state_id: searchParams['panel.state'] }
-          : null,
+        query: searchParams?.["panel.state"] ? { state_id: searchParams["panel.state"] } : null,
       }),
       treatment: {
         options: Followers.fields.options.treatment.options.map((option) => ({
@@ -101,10 +91,10 @@ const getFields = async ({
     },
     search: {
       country: {
-        deletes: ['state', 'city'],
+        deletes: ["state", "city"],
       },
       state: {
-        deletes: ['city'],
+        deletes: ["city"],
       },
       city: {}, // No deletes
     },
@@ -112,15 +102,12 @@ const getFields = async ({
 };
 
 // Get filters function
-const getFilters = async ({
-  searchParams,
-  i18n,
-}: Readonly<{ searchParams: any; i18n: any }>) => {
+const getFilters = async ({ searchParams, i18n }: Readonly<{ searchParams: any; i18n: any }>) => {
   return {
     treatment: {
       translations: {
         fields: {
-          treatment: i18n.t('fields.treatment'),
+          treatment: i18n.t("fields.treatment"),
         },
         options: {
           treatment: Followers.fields.options.treatment.options.reduce(
@@ -144,7 +131,7 @@ const getFilters = async ({
     country: {
       translations: {
         fields: {
-          country: i18n.t('fields.country'),
+          country: i18n.t("fields.country"),
         },
       },
       fields: {
@@ -157,15 +144,15 @@ const getFilters = async ({
     state: {
       translations: {
         fields: {
-          state: i18n.t('fields.state'),
+          state: i18n.t("fields.state"),
         },
       },
       fields: {
         options: {
           state: await States.getOptions({
             locale: i18n.locale,
-            query: searchParams?.['filters[country]']
-              ? { country_id: searchParams['filters[country]'] }
+            query: searchParams?.["filters[country]"]
+              ? { country_id: searchParams["filters[country]"] }
               : null,
           }),
         },
@@ -175,15 +162,15 @@ const getFilters = async ({
     city: {
       translations: {
         fields: {
-          city: i18n.t('fields.city'),
+          city: i18n.t("fields.city"),
         },
       },
       fields: {
         options: {
           city: await Cities.getOptions({
             locale: i18n.locale,
-            query: searchParams?.['filters[state]']
-              ? { state_id: searchParams['filters[state]'] }
+            query: searchParams?.["filters[state]"]
+              ? { state_id: searchParams["filters[state]"] }
               : null,
           }),
         },
@@ -193,35 +180,35 @@ const getFilters = async ({
     show: {
       translations: {
         fields: {
-          show: i18n.t('filters.show.label'),
+          show: i18n.t("filters.show.label"),
         },
       },
       fields: {
         options: {
           show: {
             options: [
-              { id: '0', value: i18n.t('filters.show.following') },
-              { id: '1', value: i18n.t('filters.show.notFollowing') },
-              { id: '2', value: i18n.t('filters.show.all') },
+              { id: "0", value: i18n.t("filters.show.following") },
+              { id: "1", value: i18n.t("filters.show.notFollowing") },
+              { id: "2", value: i18n.t("filters.show.all") },
             ],
           },
         },
       },
-      value: '0',
+      value: "0",
       type: FIELD_TYPES.SELECT,
     },
     tags: {
       translations: {
         fields: {
-          tags: i18n.t('fields.tags'),
+          tags: i18n.t("fields.tags"),
         },
       },
       fields: {
         options: {
           tags: await Tags.getOptions({
             locale: i18n.locale,
-            filters: searchParams?.['filters[tags]']
-              ? { tags: searchParams['filters[tags]'] }
+            filters: searchParams?.["filters[tags]"]
+              ? { tags: searchParams["filters[tags]"] }
               : null,
           }),
         },
@@ -231,15 +218,15 @@ const getFilters = async ({
     withoutTags: {
       translations: {
         fields: {
-          withoutTags: i18n.t('filters.withoutTags'),
+          withoutTags: i18n.t("filters.withoutTags"),
         },
       },
       fields: {
         options: {
           withoutTags: await Tags.getOptions({
             locale: i18n.locale,
-            filters: searchParams?.['filters[withoutTags]']
-              ? { tags: searchParams['filters[withoutTags]'] }
+            filters: searchParams?.["filters[withoutTags]"]
+              ? { tags: searchParams["filters[withoutTags]"] }
               : null,
           }),
         },
@@ -257,7 +244,7 @@ const getMethods = (router?: any, translations?: any): Record<string, any> => ({
     }
 
     if (data.tags && data.tags instanceof Array && data.tags.length === 0) {
-      data.tags = null;
+      data.tags = [];
     }
     return onSave(Followers, router, data, files);
   },
@@ -306,8 +293,7 @@ const getBatchActions = (setIds: Function, translations: any) => {
         title: translations.sendMessage,
       },
       icon: SendAlt,
-      onClick: (selectedRows: string[]) =>
-        openMessagePanel(selectedRows, setIds),
+      onClick: (selectedRows: string[]) => openMessagePanel(selectedRows, setIds),
     },
   };
 };

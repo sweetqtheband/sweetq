@@ -1,20 +1,20 @@
-'use client';
+"use client";
 
-import { Panel } from '@/app/components';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { Button, Form, Stack } from '@carbon/react';
-import { renderField } from '@/app/render';
-import { ACTIONS, FIELD_TYPES } from '@/app/constants';
-import { s3File, uuid } from '@/app/utils';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { Panel } from "@/app/components";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Button, Form, Stack } from "@carbon/react";
+import { renderField } from "@/app/render";
+import { ACTIONS, FIELD_TYPES } from "@/app/constants";
+import { s3File, uuid } from "@/app/utils";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function ListPanel({
-  id = '',
+  id = "",
   data = null,
   onSave = async () => true,
   onClose = async (item: any) => {},
   onAction = async () => {},
-  actionLabel = '',
+  actionLabel = "",
   actionIcon = null,
   checkAction = null,
   translations = {},
@@ -38,10 +38,7 @@ export default function ListPanel({
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
-  const params = useMemo(
-    () => new URLSearchParams(searchParams),
-    [searchParams]
-  );
+  const params = useMemo(() => new URLSearchParams(searchParams), [searchParams]);
 
   const [action, setAction] = useState<string | null>(null);
 
@@ -53,16 +50,11 @@ export default function ListPanel({
     {}
   );
 
-  const [isInitialized, setIsInitialized] =
-    useState<Record<string, boolean>>(defaultIsInitialized);
+  const [isInitialized, setIsInitialized] = useState<Record<string, boolean>>(defaultIsInitialized);
 
   const defaultSetFiles = Object.keys(fields.types).reduce(
     (acc: Record<string, any[]>, field: string) => {
-      if (
-        [FIELD_TYPES.VIDEO_UPLOADER, FIELD_TYPES.IMAGE_UPLOADER].includes(
-          fields.types[field]
-        )
-      ) {
+      if ([FIELD_TYPES.VIDEO_UPLOADER, FIELD_TYPES.IMAGE_UPLOADER].includes(fields.types[field])) {
         acc[field] = [];
       }
       return acc;
@@ -70,79 +62,66 @@ export default function ListPanel({
     {}
   );
 
-  const [formState, setFormState] = useState(
-    data !== ACTIONS.ADD ? { ...data } : {}
-  );
+  const [formState, setFormState] = useState(data !== ACTIONS.ADD ? { ...data } : {});
 
   const [internalState, setInternalState] = useState({});
 
   const [searchState, setSearchState] = useState({
     ...(fields?.search
-      ? Object.keys(fields?.search).reduce(
-          (acc: Record<string, any>, field: string) => {
-            acc[field] = false;
-            return acc;
-          },
-          {}
-        )
+      ? Object.keys(fields?.search).reduce((acc: Record<string, any>, field: string) => {
+          acc[field] = false;
+          return acc;
+        }, {})
       : {}),
   });
 
   const [files, setFiles] = useState<Record<string, any[]>>(defaultSetFiles);
 
   useEffect(() => {
-    const formData: Record<string, any> | null = null;
     if (data) {
       const formData = Object.keys(fields.types).reduce(
         (acc: Record<string, any>, field: string) => {
           if (!isInitialized[field]) {
-            setIsInitialized({
-              ...isInitialized,
+            setIsInitialized((prev) => ({
+              ...prev,
               [field]: true,
-            });
+            }));
 
             acc[field] = data[field];
 
             if (
-              [FIELD_TYPES.VIDEO_UPLOADER, FIELD_TYPES.IMAGE_UPLOADER].includes(
-                fields.types[field]
-              )
+              [FIELD_TYPES.VIDEO_UPLOADER, FIELD_TYPES.IMAGE_UPLOADER].includes(fields.types[field])
             ) {
-              if (!files[field].length && data[field]) {
-                setFiles({
-                  ...files,
+              if (!files[field]?.length && data[field]) {
+                setFiles((prev) => ({
+                  ...prev,
                   [field]: [
                     {
                       id: data.id,
                       file: {
                         id: data.id,
                         name: data[field],
-                        src: s3File(
-                          `${fields.options[field].path}/${data[field]}`
-                        ),
+                        src: s3File(`${fields.options[field].path}/${data[field]}`),
                       },
                     },
                   ],
-                });
+                }));
               }
             }
           }
-
           return acc;
         },
         {}
       );
 
-      if (Object.keys(formData).length)
-        setFormState({ ...formState, ...formData, _id: data._id });
+      if (Object.keys(formData).length) {
+        setFormState((prev: any) => ({ ...prev, ...formData, _id: data._id }));
+      }
     }
-  }, [data, fields.types, fields.options, files, isInitialized, formState]);
-
+  }, [data, fields.types, fields.options]);
   // Search params effect
   useEffect(() => {
-    const searchFields = Object.keys(searchState).filter(
-      (field) => searchState[field]
-    );
+    const searchFields = Object.keys(searchState).filter((field) => searchState[field]);
 
     if (searchFields.length) {
       searchFields.forEach((field) => {
@@ -158,9 +137,7 @@ export default function ListPanel({
     setAction(null);
     setFiles({ ...defaultSetFiles });
     setIsInitialized({ ...defaultIsInitialized });
-    const searchFields = Object.keys(searchState).filter(
-      (field) => searchState[field]
-    );
+    const searchFields = Object.keys(searchState).filter((field) => searchState[field]);
     if (searchFields.length) {
       searchFields.forEach((field) => {
         params.delete(`panel.${field}`);
@@ -240,9 +217,7 @@ export default function ListPanel({
   };
 
   const onRemoveFileHandler = (field: string, fileObj: Record<string, any>) => {
-    const index = files[field].findIndex(
-      (file: Record<string, any>) => file.id === fileObj.id
-    );
+    const index = files[field].findIndex((file: Record<string, any>) => file.id === fileObj.id);
     delete files[field][index];
 
     setFiles({
@@ -268,13 +243,10 @@ export default function ListPanel({
     });
   };
 
-  const ref = Object.keys(fields.types).reduce(
-    (acc: Record<string, any>, field: string) => {
-      acc[field] = null;
-      return acc;
-    },
-    {}
-  );
+  const ref = Object.keys(fields.types).reduce((acc: Record<string, any>, field: string) => {
+    acc[field] = null;
+    return acc;
+  }, {});
 
   Object.keys(fields.types).forEach((field: string) => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -289,7 +261,7 @@ export default function ListPanel({
             {Object.keys(fields.types).map((field: string, index: number) =>
               renderField({
                 field,
-                key: 'field-' + index,
+                key: "field-" + index,
                 type: fields.types[field],
                 value: data[field] || fields.options[field]?.value,
                 translations,
@@ -320,7 +292,7 @@ export default function ListPanel({
 
   useEffect(() => {
     if (!action && actionIcon) {
-      if (typeof checkAction === 'function') {
+      if (typeof checkAction === "function") {
         setAction(checkAction(data) ? actionIcon : null);
       }
     }

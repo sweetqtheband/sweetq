@@ -1,7 +1,7 @@
-import axios from 'axios';
-import { BaseList } from './_list';
-import { FIELD_TYPES, RENDER_TYPES } from '../constants';
-import { onDelete, onSave } from './_methods';
+import axios from "axios";
+import { BaseList } from "./_list";
+import { FIELD_TYPES, RENDER_TYPES } from "../constants";
+import { onDelete, onSave } from "./_methods";
 
 export const Types = {
   _id: FIELD_TYPES.HIDDEN,
@@ -10,18 +10,18 @@ export const Types = {
 };
 
 const colors = [
-  'red',
-  'magenta',
-  'purple',
-  'blue',
-  'cyan',
-  'teal',
-  'green',
-  'gray',
-  'cool-gray',
-  'warm-gray',
-  'high-contrast',
-  'outline',
+  "red",
+  "magenta",
+  "purple",
+  "blue",
+  "cyan",
+  "teal",
+  "green",
+  "gray",
+  "cool-gray",
+  "warm-gray",
+  "high-contrast",
+  "outline",
 ];
 
 export const Options = {
@@ -36,8 +36,8 @@ export const Options = {
 // Fields
 const fields = {
   titles: {
-    name: 'fields.name',
-    color: 'fields.color',
+    name: "fields.name",
+    color: "fields.color",
   },
   types: Types,
   options: Options,
@@ -48,12 +48,11 @@ let options: Record<string, any>[] = [];
 // Get options
 const getOptions = async (params: any = {}) => {
   params.limit = 10000;
-  const options = (await Tags.getAll(params, true)).items.map(
-    (item: Record<string, string>) => ({
-      id: item._id,
-      value: item.name,
-    })
-  );
+  const options = (await Tags.getAll(params, true)).items.map((item: Record<string, string>) => ({
+    id: item._id,
+    value: item.name,
+    color: item.color,
+  }));
 
   return {
     options,
@@ -62,8 +61,7 @@ const getOptions = async (params: any = {}) => {
 
 // Get methods
 const getMethods = (router?: any) => ({
-  onListSave: async (value: string) =>
-    onSave(Tags, router, { name: value }, {}),
+  onListSave: async (value: string) => onSave(Tags, router, { name: value }, {}),
   onSave: async (data: any, files: any) => onSave(Tags, router, data, files),
   onDelete: async (ids: string[]) => onDelete(Tags, router, ids),
 });
@@ -73,9 +71,7 @@ const itemRender = (field: string, id: any, base: any) => {
   let value = id;
   let color = null;
   if (base?.relations[field]) {
-    const item = base.relations[field].find(
-      (item: Record<string, any>) => item._id === id
-    );
+    const item = base.relations[field].find((item: Record<string, any>) => item._id === id);
     if (item) {
       value = item.name;
       color = item.color;
@@ -96,8 +92,7 @@ const itemsRender = (field: string, items: any, base: any): any => {
 
 const getRenders = () => ({
   item: (field: string, item: any, base: any) => itemRender(field, item, base),
-  items: (field: string, items: any, base: any) =>
-    itemsRender(field, items, base),
+  items: (field: string, items: any, base: any) => itemsRender(field, items, base),
   color: {
     itemToString: (field: string, item: any) => {
       return {

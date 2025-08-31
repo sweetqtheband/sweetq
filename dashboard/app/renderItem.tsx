@@ -1,8 +1,8 @@
-import { Size } from '@/types/size';
-import { ICON_SIZES, RENDER_TYPES, SIZES } from './constants';
-import { Tag, Tooltip } from '@carbon/react';
-import Link from 'next/link';
-import { LogoWechat, NotSentFilled } from '@carbon/react/icons';
+import { Size } from "@/types/size";
+import { ICON_SIZES, RENDER_TYPES, SIZES } from "./constants";
+import { Tag, Tooltip } from "@carbon/react";
+import Link from "next/link";
+import { LogoWechat, NotSentFilled } from "@carbon/react/icons";
 
 const renderColor = (obj: any) => (
   <>
@@ -11,11 +11,13 @@ const renderColor = (obj: any) => (
   </>
 );
 
-const renderTag = (obj: any) => (
-  <Tag size={SIZES.SM as Size.sm} type={obj.color}>
-    {obj.value}
-  </Tag>
-);
+const renderTag = (obj: any) => {
+  return (
+    <Tag size={SIZES.SM as Size.sm} type={obj.color}>
+      {obj.value}
+    </Tag>
+  );
+};
 
 const renderLink = (obj: any) => (
   <Link href={obj.href} target="_blank" onClick={(e) => e.stopPropagation()}>
@@ -46,5 +48,5 @@ const renderers = {
 // Main renderer
 export const renderItem = (obj: any) => {
   const { type } = obj;
-  return typeof renderers[type] === 'function' && renderers[type](obj);
+  return typeof renderers[type] === "function" && renderers[type](obj);
 };

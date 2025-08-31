@@ -61,12 +61,13 @@ export const Model = (data: any): Model => {
     obj.instagram_conversation_id = String(data.instagram_conversation_id);
   }
 
-  obj.tags =
-    data.tags instanceof Array
-      ? data.tags
-      : data.tags !== '' && data.tags
-      ? [data.tags]
-      : null;
+  obj.tags = [];
+
+  if (data.tags && data.tags instanceof Array) {
+    obj.tags = data.tags.filter((tag: string) => tag !== "");
+  } else if (data.tags !== "" && data.tags) {
+    obj.tags = [data.tags];
+  }
 
   return obj;
 };

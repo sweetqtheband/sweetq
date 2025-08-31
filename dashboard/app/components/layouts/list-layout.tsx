@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { useCallback, useEffect, useState } from 'react';
-import ListTable from './list-table';
-import ListPanel from './list-panel';
-import { SizeType } from '@/types/size';
-import { SIZES } from '@/app/constants';
-import './list.scss';
+import { useCallback, useEffect, useState } from "react";
+import ListTable from "./list-table";
+import ListPanel from "./list-panel";
+import { SizeType } from "@/types/size";
+import { SIZES } from "@/app/constants";
+import "./list.scss";
 
 export default function ListLayout({
   items = [],
@@ -14,13 +14,13 @@ export default function ListLayout({
   total = 0,
   limit = 0,
   pages = 0,
-  id = '',
+  id = "",
   loading = false,
   setExternalLoading = () => true,
   onSave = async () => true,
   onDelete = async () => true,
   actionIcon = null,
-  actionLabel = '',
+  actionLabel = "",
   onAction = async () => true,
   noAdd = false,
   noDelete = false,
@@ -64,10 +64,13 @@ export default function ListLayout({
   const [isLoading, setIsLoading] = useState(false);
   const [isWaiting, setIsWaiting] = useState(false);
 
-  const setIsLoadingHandler = useCallback((newLoading: boolean) => {
-    setIsLoading(newLoading);
-    setExternalLoading(newLoading);
-  }, [setExternalLoading]);
+  const setIsLoadingHandler = useCallback(
+    (newLoading: boolean) => {
+      setIsLoading(newLoading);
+      setExternalLoading(newLoading);
+    },
+    [setExternalLoading]
+  );
 
   useEffect(() => {
     setIsLoadingHandler(loading);
@@ -93,45 +96,42 @@ export default function ListLayout({
     if (response) {
       setParsedItems((prevItems) => {
         const newItems = [...prevItems];
-        const index = prevItems.findIndex(
-          (item) => item.id === response?.data.id
-        );
+        const index = prevItems.findIndex((item) => item.id === response?.data.id);
         if (index >= 0) {
           newItems[index] = {
             ...prevItems[index],
-            ...Object.keys(response?.data).reduce(
-              (acc: Record<string, any>, key: string) => {
-                if (filters?.[key]?.fields?.options?.[key].options) {
-                  const filterOptions =
-                    filters[key].fields.options[key].options;
-                  // If it's an array, traverse through the options and find the value
+            ...Object.keys(response?.data).reduce((acc: Record<string, any>, key: string) => {
+              if (filters?.[key]?.fields?.options?.[key].options) {
+                const filterOptions = filters[key].fields.options[key].options;
+                // If it's an array, traverse through the options and find the value
 
-                  if (Array.isArray(response?.data[key])) {
-                    acc[key] = response?.data[key].map(
-                      (value: any) =>
-                        filterOptions.find(
-                          (option: any) => String(option.id) === String(value)
-                        )?.id || value
-                    );
-                  } else {
-                    acc[key] =
-                      filterOptions.find(
-                        (option: any) =>
-                          String(option.id) === String(response?.data[key])
-                      )?.value || response?.data[key];
-                  }
-                  return acc;
+                if (key === "tags") {
+                  console.log(filterOptions);
                 }
 
-                acc[key] = response?.data[key];
+                if (Array.isArray(response?.data[key])) {
+                  acc[key] = response?.data[key].map(
+                    (value: any) =>
+                      filterOptions.find((option: any) => String(option.id) === String(value))
+                        ?.value || value
+                  );
+                } else {
+                  acc[key] =
+                    filterOptions.find(
+                      (option: any) => String(option.id) === String(response?.data[key])
+                    )?.value || response?.data[key];
+                }
                 return acc;
-              },
-              {}
-            ),
+              }
+
+              acc[key] = response?.data[key];
+              return acc;
+            }, {}),
           };
         } else {
           newItems.unshift(data);
         }
+
         return [...newItems];
       });
       onClose();

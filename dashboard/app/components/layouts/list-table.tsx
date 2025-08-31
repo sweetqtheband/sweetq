@@ -342,7 +342,7 @@ export default function ListTable({
     }
     if (id === "carbon.table.batch.item.selected") {
       if (breakpoint("mobile")) {
-        return `${totalSelected} ${translations.selectedShort.toLocaleLowerCase()}`;
+        return `${totalSelected} ${translations.selectedsShort.toLocaleLowerCase()}`;
       }
       return `${totalSelected} ${translations.selected.toLocaleLowerCase()}`;
     }
