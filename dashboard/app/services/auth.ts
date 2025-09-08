@@ -1,9 +1,9 @@
-import { Storage } from './storage';
-import axios from 'axios';
-import { HTTP_STATUS_CODES, STORAGE } from '../constants';
-import { unquote } from '../utils';
-import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies';
-import { GET } from './_api';
+import { Storage } from "./storage";
+import axios from "./_db";
+import { HTTP_STATUS_CODES, STORAGE } from "../constants";
+import { unquote } from "../utils";
+import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
+import { GET } from "./_api";
 
 const client = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URI}/auth`,
@@ -15,7 +15,7 @@ const client = axios.create({
 export const Auth = {
   _isAuth: false,
   user: null,
-  token: '',
+  token: "",
 
   /**
    * Returns headers
@@ -50,15 +50,15 @@ export const Auth = {
 
     if (!this._isAuth) {
       if (!serverSide || (serverSide && user && token)) {
-        this.user = user || Storage.getValue('user', STORAGE.COOKIES);
+        this.user = user || Storage.getValue("user", STORAGE.COOKIES);
 
         if (this.user) {
-          this.token = token || Storage.getValue('auth-token', STORAGE.COOKIES);
+          this.token = token || Storage.getValue("auth-token", STORAGE.COOKIES);
           if (serverSide) {
             this._isAuth = serverSide;
           } else {
             try {
-              const response = await GET(client, '', {}, this.headers.headers);
+              const response = await GET(client, "", {}, this.headers.headers);
               this._isAuth = response.status === HTTP_STATUS_CODES.OK;
             } catch (err: any) {
               if (err.response.status === HTTP_STATUS_CODES.UNAUTHORIZED) {
@@ -82,14 +82,11 @@ export const Auth = {
    * @param {String} params.password
    * @async
    */
-  async login({
-    username,
-    password,
-  }: Readonly<{ username: string; password: string }>) {
+  async login({ username, password }: Readonly<{ username: string; password: string }>) {
     // Handle logic here when using service
 
     try {
-      const response = await client.post('login', {
+      const response = await client.post("login", {
         username,
         password,
       });
@@ -99,8 +96,8 @@ export const Auth = {
         Auth.user = response.data.user;
         Auth.token = response.data.token;
 
-        Storage.setValue('user', Auth.user, STORAGE.COOKIES);
-        Storage.setValue('auth-token', Auth.token, STORAGE.COOKIES);
+        Storage.setValue("user", Auth.user, STORAGE.COOKIES);
+        Storage.setValue("auth-token", Auth.token, STORAGE.COOKIES);
       }
 
       return response;
@@ -117,8 +114,8 @@ export const Auth = {
   async logout() {
     Auth._isAuth = false;
     Auth.user = null;
-    Storage.remove('user', STORAGE.COOKIES);
-    Storage.remove('auth-token', STORAGE.COOKIES);
-    location.href = '/admin/login';
+    Storage.remove("user", STORAGE.COOKIES);
+    Storage.remove("auth-token", STORAGE.COOKIES);
+    location.href = "/admin/login";
   },
 };

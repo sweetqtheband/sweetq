@@ -649,6 +649,10 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   background-image: url("../imgs/gigs/20250802.jpg");
 }
 
+.sq-section.notice.info.gig.g20251011 .sq-image.image-cover:before {
+  background-image: url("../imgs/gigs/20251011.png");
+}
+
 .sq-section.notice.info.gig.g20250519 .sq-image.image-cover:before,
 .sq-section.notice.info.gig.g20250627 .sq-image.image-cover:before,
 .sq-section.notice.info.gig.g20250802 .sq-image.image-cover:before {

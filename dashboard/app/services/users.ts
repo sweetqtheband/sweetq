@@ -1,8 +1,8 @@
-import axios from 'axios';
-import { BaseList } from './_list';
-import { FIELD_TYPES } from '../constants';
-import { onDelete, onSave } from './_methods';
-import { UserProfiles } from './userProfiles';
+import axios from "./_db";
+import { BaseList } from "./_list";
+import { FIELD_TYPES } from "../constants";
+import { onDelete, onSave } from "./_methods";
+import { UserProfiles } from "./userProfiles";
 
 export const Types = {
   _id: FIELD_TYPES.HIDDEN,
@@ -17,26 +17,24 @@ export const Options = {};
 // Fields
 const fields = {
   titles: {
-    name: 'fields.name',
-    username: 'fields.username',
-    password: 'fields.password',
-    profile: 'fields.profile',
+    name: "fields.name",
+    username: "fields.username",
+    password: "fields.password",
+    profile: "fields.profile",
   },
   types: Types,
   options: Options,
 };
 
 // Get fields function
-const getFields = async ({
-  i18n,
-}: Readonly<{ searchParams: any; i18n: any }>) => {
+const getFields = async ({ i18n }: Readonly<{ searchParams: any; i18n: any }>) => {
   return {
     ...Users.fields,
     options: {
       ...Users.fields.options,
       profile: {
         ...(await UserProfiles.getOptions({ locale: i18n.locale })),
-        value: 'admin',
+        value: "admin",
       },
     },
   };
@@ -65,6 +63,6 @@ export const Users = {
   getFields,
   getMethods,
   async create(data: Record<string, any>) {
-    return privateClient.post('', data);
+    return privateClient.post("", data);
   },
 };

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "./_db";
 import { BaseList } from "./_list";
 import { FIELD_DEFAULTS, FIELD_TYPES, RENDER_TYPES, TREATMENTS } from "../constants";
 import { Countries } from "./countries";

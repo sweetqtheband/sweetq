@@ -1,13 +1,13 @@
-import axios from 'axios';
-import { BaseList } from './_list';
-import { FIELD_DEFAULTS, FIELD_TYPES } from '../constants';
-import { Gig } from '@/types/gig';
-import { dateFormat } from '../utils';
-import { Countries } from './countries';
-import { States } from './states';
-import { Cities } from './cities';
-import { Bands } from './bands';
-import { onDelete, onSave } from './_methods';
+import axios from "./_db";
+import { BaseList } from "./_list";
+import { FIELD_DEFAULTS, FIELD_TYPES } from "../constants";
+import { Gig } from "@/types/gig";
+import { dateFormat } from "../utils";
+import { Countries } from "./countries";
+import { States } from "./states";
+import { Cities } from "./cities";
+import { Bands } from "./bands";
+import { onDelete, onSave } from "./_methods";
 
 export const Types = {
   id: FIELD_TYPES.HIDDEN,
@@ -29,12 +29,12 @@ export const Options = {
   status: {
     options: [
       {
-        id: 'published',
-        value: 'status.published',
+        id: "published",
+        value: "status.published",
       },
       {
-        id: 'unpublished',
-        value: 'status.unpublished',
+        id: "unpublished",
+        value: "status.unpublished",
       },
     ],
   },
@@ -43,19 +43,19 @@ export const Options = {
 // Fields
 const fields = {
   titles: {
-    id: 'fields.id',
-    date: 'fields.date',
-    city: 'fields.city',
-    hour: 'fields.hour',
-    title: 'fields.title',
-    venue: 'fields.venue',
-    map: 'fields.map',
-    bands: 'fields.bands',
-    event: 'fields.event',
-    tickets: 'fields.tickets',
-    status: 'fields.status',
-    country: 'fields.country',
-    state: 'fields.state',
+    id: "fields.id",
+    date: "fields.date",
+    city: "fields.city",
+    hour: "fields.hour",
+    title: "fields.title",
+    venue: "fields.venue",
+    map: "fields.map",
+    bands: "fields.bands",
+    event: "fields.event",
+    tickets: "fields.tickets",
+    status: "fields.status",
+    country: "fields.country",
+    state: "fields.state",
   },
   types: Types,
   options: Options,
@@ -66,21 +66,16 @@ const parseAll = async (data: Gig[] = [], i18n: any) => {
   return data.map((item: any) => {
     return {
       ...item,
-      datehour: `${dateFormat(new Date(item.date), 'short.date', i18n)} ${
-        item.hour ?? ''
-      }`,
+      datehour: `${dateFormat(new Date(item.date), "short.date", i18n)} ${item.hour ?? ""}`,
     };
   });
 };
 
 // Get fields function
-const getFields = async ({
-  searchParams,
-  i18n,
-}: Readonly<{ searchParams: any; i18n: any }>) => {
+const getFields = async ({ searchParams, i18n }: Readonly<{ searchParams: any; i18n: any }>) => {
   try {
-    if (!searchParams?.['panel.country']) {
-      searchParams['panel.country'] = FIELD_DEFAULTS.COUNTRY;
+    if (!searchParams?.["panel.country"]) {
+      searchParams["panel.country"] = FIELD_DEFAULTS.COUNTRY;
     }
     return {
       ...Gigs.fields,
@@ -89,15 +84,13 @@ const getFields = async ({
         country: await Countries.getOptions({ locale: i18n.locale }),
         state: await States.getOptions({
           locale: i18n.locale,
-          query: searchParams?.['panel.country']
-            ? { country_id: searchParams['panel.country'] }
+          query: searchParams?.["panel.country"]
+            ? { country_id: searchParams["panel.country"] }
             : null,
         }),
         city: await Cities.getOptions({
           locale: i18n.locale,
-          query: searchParams?.['panel.state']
-            ? { state_id: searchParams['panel.state'] }
-            : null,
+          query: searchParams?.["panel.state"] ? { state_id: searchParams["panel.state"] } : null,
         }),
         bands: {
           ...(await Bands.getOptions()),
@@ -105,10 +98,10 @@ const getFields = async ({
       },
       search: {
         country: {
-          deletes: ['state', 'city'],
+          deletes: ["state", "city"],
         },
         state: {
-          deletes: ['city'],
+          deletes: ["city"],
         },
         city: {}, // No deletes
       },

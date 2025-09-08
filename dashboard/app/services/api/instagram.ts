@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "../_db";
 import { POST, GET, DELETE } from "../_api";
 import { BaseSvc } from "./_base";
 import { Collection, Document } from "mongodb";

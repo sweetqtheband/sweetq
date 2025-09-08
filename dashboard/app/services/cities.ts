@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { cacheHeaders, GET } from './_api';
+import axios from "./_db";
+import { cacheHeaders, GET } from "./_api";
 
 const client = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URI}/cities`,
@@ -7,7 +7,7 @@ const client = axios.create({
 
 export const Cities = {
   getAll: async (params: any = null) => {
-    const response = await GET(client, '', params, cacheHeaders);
+    const response = await GET(client, "", params, cacheHeaders);
 
     return response.data;
   },

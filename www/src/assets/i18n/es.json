@@ -52,16 +52,11 @@
     }
   },
   "gigs": {
-    "20250627": {
-      "date": "27 Junio",
-      "text": "Si estás por Valencia no te pierdas la oportunidad de vernos en directo en las finales del <span class='bold'>FIB Heineken Rising Stars</span>. Será en la sala <span class='bold'>Varadero</span> en <span class='bold'>Veles e Vents</span>, y la entrada es gratuita hasta completar aforo. ¡Nos vemos allí!",
-      "title": "Finales del FIB"
-    },
-    "20250802": {
+    "20251011": {
       "button": "Link a entradas",
-      "date": "2 Agosto",
-      "text": "Para todos los amantes de la naturaleza, estaremos tocando en el precioso pueblo de Berceo (La Rioja) dentro del cartel del Festival Sonoverso el día 2 de agosto. Buen vino, buena música y buena compañía, ¡no se puede pedir más! Bueno sí... ¡verte allí!",
-      "title": "Festival Sonoverso"
+      "date": "11 Octubre",
+      "text": "El 11 de octubre tienes una cita en <span class='bold'>Madrid</span>. La sala  <span class='bold'>El Perro de la Parte de Atrás del Coche</span> será testigo de una noche del mejor indie pop rock nacional. En esta ocasión, desde Valencia, <span class='bold'>Roble</span> nos acompañará en el escenario para vivir una noche única. ¡No te lo pierdas!",
+      "title": "Sweet Q + Roble en Madrid"
     },
     "label": "Conciertos",
     "next": "Próximos",

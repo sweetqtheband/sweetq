@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { GET } from './_api';
+import axios from "./_db";
+import { GET } from "./_api";
 const client = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URI}/user-profiles`,
 });
@@ -7,7 +7,7 @@ const client = axios.create({
 export const UserProfiles = {
   getAll: async (params: Record<string, any> | null = null) => {
     if (process.env.IS_BUILD !== "true") {
-      const response = await GET(client, '', params);
+      const response = await GET(client, "", params);
       return response.data;
     } else {
       return { items: [], total: 0, pages: 0 };
@@ -25,8 +25,8 @@ export const UserProfiles = {
   },
   getTranslations: (i18n: any) => {
     return {
-      admin: i18n.t('userProfiles.admin'),
-      user: i18n.t('userProfiles.user'),
+      admin: i18n.t("userProfiles.admin"),
+      user: i18n.t("userProfiles.user"),
     };
   },
 };

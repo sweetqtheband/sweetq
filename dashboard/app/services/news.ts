@@ -1,8 +1,8 @@
-import axios from 'axios';
-import { BaseList } from './_list';
-import type { New } from '@/types/new';
-import { FIELD_TYPES } from '../constants';
-import { s3File } from '../utils';
+import axios from "./_db";
+import { BaseList } from "./_list";
+import type { New } from "@/types/new";
+import { FIELD_TYPES } from "../constants";
+import { s3File } from "../utils";
 
 export const Types = {
   _id: FIELD_TYPES.HIDDEN,
@@ -18,36 +18,36 @@ export const Types = {
 };
 
 export const Options = {
-  image: { path: '/imgs/news' },
+  image: { path: "/imgs/news" },
   type: {
     options: [
       {
-        id: 'news',
-        value: 'news.types.news',
+        id: "news",
+        value: "news.types.news",
       },
       {
-        id: 'release',
-        value: 'news.types.release',
+        id: "release",
+        value: "news.types.release",
       },
       {
-        id: 'gig',
-        value: 'news.types.gig',
+        id: "gig",
+        value: "news.types.gig",
       },
     ],
   },
   linkType: {
     options: [
       {
-        id: 'link',
-        value: 'fields.link',
+        id: "link",
+        value: "fields.link",
       },
       {
-        id: 'youtube',
-        value: 'fields.social.youtube',
+        id: "youtube",
+        value: "fields.social.youtube",
       },
       {
-        id: 'spotify',
-        value: 'fields.social.spotify',
+        id: "spotify",
+        value: "fields.social.spotify",
       },
     ],
   },
@@ -56,15 +56,15 @@ export const Options = {
 // Fields
 const fields = {
   titles: {
-    title: 'fields.title',
-    subtitle: 'fields.subtitle',
-    type: 'fields.type',
-    text: 'fields.text',
-    image: 'fields.image',
-    button: 'fields.button',
-    buttonText: 'fields.buttonText',
-    href: 'fields.href',
-    linkType: 'fields.linkType',
+    title: "fields.title",
+    subtitle: "fields.subtitle",
+    type: "fields.type",
+    text: "fields.text",
+    image: "fields.image",
+    button: "fields.button",
+    buttonText: "fields.buttonText",
+    href: "fields.href",
+    linkType: "fields.linkType",
   },
   types: Types,
   options: Options,
@@ -75,9 +75,7 @@ const parseAll = (data: New[] = []) =>
   data.map((item: any) => {
     return {
       ...item,
-      thumbnail: item.image
-        ? s3File(`${News.fields.options.image.path}/${item.image}`)
-        : undefined,
+      thumbnail: item.image ? s3File(`${News.fields.options.image.path}/${item.image}`) : undefined,
     };
   });
 

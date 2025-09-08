@@ -52,16 +52,11 @@
     }
   },
   "gigs": {
-    "20250627": {
-      "date": "June 27th",
-      "text": "If you're in Valencia, don't miss the chance to see us live at the finals of the <span class='bold'>FIB Heineken Rising Stars</span>. It will be at <span class='bold'>Varadero</span> in <span class='bold'>Veles e Vents</span>, and entry is free until full capacity. See you there!",
-      "title": "FIB Heineken Rising Stars Finals"
-    },
-    "20250802": {
+    "20251011": {
       "button": "Buy tickets",
-      "date": "August 2nd",
-      "text": "For all nature lovers, we'll be playing in the beautiful village of Berceo (La Rioja) as part of the Sonoverso Festival lineup on August 2nd. Great wine, great music, and great company — what more could you ask for? Well, yes... to see you there!",
-      "title": "Sonoverso Festival"
+      "date": "October 11th",
+      "text": "On October 11th, you have a date in <span class='bold'>Madrid</span>. The venue <span class='bold'>El Perro de la Parte de Atrás del Coche</span> will witness a night of the best national indie pop rock. On this occasion, from Valencia, <span class='bold'>Roble</span> will join us on stage for a unique night. Don't miss it!",
+      "title": "Sweet Q + Roble in Madrid"
     },
     "label": "Gigs",
     "next": "Upcoming",

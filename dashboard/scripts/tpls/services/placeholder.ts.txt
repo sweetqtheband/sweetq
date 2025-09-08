@@ -1,7 +1,7 @@
-import axios from 'axios';
-import { BaseList } from './_list';
-import { FIELD_TYPES } from '../constants';
-import { onDelete, onSave } from './_methods';
+import axios from "./_db";
+import { BaseList } from "./_list";
+import { FIELD_TYPES } from "../constants";
+import { onDelete, onSave } from "./_methods";
 
 export const Types = {
   _id: FIELD_TYPES.HIDDEN,

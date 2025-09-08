@@ -1,10 +1,9 @@
 import { AxiosInstance, AxiosResponse } from "axios";
 import config from "@/app/config";
 import { HTTP_ENCTYPES, HTTP_STATUS_CODES } from "../constants";
+import dbClient from "./_db";
 
 const isBuild = process.env.NEXT_PHASE === "phase-production-build";
-
-const cache = new Map();
 
 const fetchWithCache = async (
   client: AxiosInstance,
@@ -12,14 +11,13 @@ const fetchWithCache = async (
   params: Record<string, any> | null,
   headers: Record<string, any>
 ) => {
-  const slug = btoa(client.defaults.baseURL + url + JSON.stringify(params));
+  const slug = client.defaults.baseURL + url + JSON.stringify(params);
 
-  if (cache.has(slug)) {
-    return cache.get(slug); // Devuelve la data desde el cache
+  if (dbClient.cache.has(slug)) {
+    return dbClient.cache.get(slug); // Devuelve la data desde el cache
   }
 
   const data = await client.get(url, { params, headers });
-  cache.set(slug, data); // Guarda la respuesta en cache
 
   return data;
 };

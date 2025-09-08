@@ -1,14 +1,14 @@
-import axios from 'axios';
-import { BaseList } from './_list';
-import { GET, POST } from './_api';
+import axios from "./_db";
+import { BaseList } from "./_list";
+import { GET, POST } from "./_api";
 
 const client = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URI}/instagram`,
 });
 
 const ENDPOINTS = {
-  CHAT: '/chat',
-  OAUTH: '/oauth',
+  CHAT: "/chat",
+  OAUTH: "/oauth",
 };
 
 // Messages service

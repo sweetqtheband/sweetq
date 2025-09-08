@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "./_db";
 import { BaseList } from "./_list";
 import { FIELD_TYPES, RENDER_TYPES } from "../constants";
 import { onDelete, onSave } from "./_methods";

@@ -426,7 +426,6 @@ const renderMultiSelect = ({
         disabled: true,
       });
       const response = await methods[field].onSave(internalState[field]?.value);
-
       const frmSt = formState[field] || [];
       onInputHandler(field, [...frmSt, response.data._id]);
       onInternalStateHandler(field, {
@@ -516,6 +515,7 @@ const renderMultiSelect = ({
             className="cds--button--add"
             hasIconOnly
             renderIcon={Add}
+            iconDescription={translations.add}
             size={SIZES.SM as Size.sm}
             onClick={(e: any) => {
               e.preventDefault();

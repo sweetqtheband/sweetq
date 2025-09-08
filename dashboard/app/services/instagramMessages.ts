@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { BaseList } from './_list';
+import axios from "./_db";
+import { BaseList } from "./_list";
 
 const client = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URI}/instagram/messages`,

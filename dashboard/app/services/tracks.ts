@@ -1,8 +1,8 @@
-import axios from 'axios';
-import { BaseList } from './_list';
-import type { Track } from '@/types/track';
-import { FIELD_TYPES } from '../constants';
-import { s3File } from '../utils';
+import axios from "./_db";
+import { BaseList } from "./_list";
+import type { Track } from "@/types/track";
+import { FIELD_TYPES } from "../constants";
+import { s3File } from "../utils";
 
 export const Types = {
   _id: FIELD_TYPES.HIDDEN,
@@ -14,21 +14,21 @@ export const Types = {
 };
 
 export const Options = {
-  cover: { path: '/imgs/cover' },
-  video: { path: '/video' },
+  cover: { path: "/imgs/cover" },
+  video: { path: "/video" },
   status: {
     options: [
       {
-        id: 'released',
-        value: 'tracks.status.released',
+        id: "released",
+        value: "tracks.status.released",
       },
       {
-        id: 'latest',
-        value: 'tracks.status.latest',
+        id: "latest",
+        value: "tracks.status.latest",
       },
       {
-        id: 'upcoming',
-        value: 'tracks.status.upcoming',
+        id: "upcoming",
+        value: "tracks.status.upcoming",
       },
     ],
   },
@@ -37,13 +37,13 @@ export const Options = {
 // Fields
 const fields = {
   titles: {
-    image: 'fields.cover',
-    reel: 'fields.reel',
-    title: 'fields.title',
-    date: 'fields.date',
-    cover: 'fields.cover',
-    video: 'fields.video',
-    status: 'fields.status',
+    image: "fields.cover",
+    reel: "fields.reel",
+    title: "fields.title",
+    date: "fields.date",
+    cover: "fields.cover",
+    video: "fields.video",
+    status: "fields.status",
   },
   types: Types,
   options: Options,
