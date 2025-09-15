@@ -1,5 +1,15 @@
 [
   {
+    "type": "info gig g20251011",
+    "title": "gigs.20251011.title",
+    "subtitle": "gigs.20251011.date",
+    "text": "gigs.20251011.text",
+    "button": "gigs.20251011.button",
+    "squared": true,
+    "icon": "icon-gigs",
+    "href": "https://entradium.com/events/sweet-q-roble"
+  },
+  {
     "type": "info cover nohabriasidoasi",
     "title": "info.title",
     "subtitle": "info.subtitle",
@@ -16,15 +26,5 @@
     "button": "video.fiesta.button",
     "icon": "icon-youtube",
     "youtubeHref": "https://www.youtube.com/watch?v=2FryW1MtBus"
-  },
-  {
-    "type": "info gig g20250802",
-    "title": "gigs.20250802.title",
-    "subtitle": "gigs.20250802.date",
-    "text": "gigs.20250802.text",
-    "button": "gigs.20250802.button",
-    "squared": true,
-    "icon": "icon-gigs",
-    "href": "https://sonoversofest.lariojaeventos.com/"
   }
 ]
