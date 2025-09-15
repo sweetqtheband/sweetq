@@ -18,7 +18,7 @@ export const Types = {
   is_verified: FIELD_TYPES.HIDDEN,
   profile_pic_url: FIELD_TYPES.IMAGE,
   requested_by_viewer: FIELD_TYPES.HIDDEN,
-  username: FIELD_TYPES.LABEL,
+  username: FIELD_TYPES.LINK,
   full_name: FIELD_TYPES.LABEL,
   short_name: FIELD_TYPES.TEXT,
   country: FIELD_TYPES.NONE,
@@ -87,6 +87,11 @@ const getFields = async ({ searchParams, i18n }: Readonly<{ searchParams: any; i
       },
       tags: {
         ...(await Tags.getOptions()),
+      },
+      username: {
+        link: {
+          pattern: "https://instagram.com/#value#",
+        },
       },
     },
     search: {

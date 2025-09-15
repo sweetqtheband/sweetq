@@ -16,7 +16,6 @@ const create = (...args: any[]) => {
     }
 
     if (["put", "post", "delete"].includes(response.config.method || "")) {
-      console.log("clear cache for", baseURL);
       for (const key of cache.keys()) {
         if (key.startsWith(baseURL)) {
           cache.delete(key);

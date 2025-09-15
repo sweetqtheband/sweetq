@@ -8,6 +8,7 @@ import { getFormData } from "@/app/utils";
 
 const CACHE_KEYS = {
   CONVERSATIONS: "ig_conversations",
+  CONVERSATION: "ig_conversation",
 };
 
 const api = axios.create({
@@ -125,13 +126,15 @@ const getConversations = async (
   instance: any,
   limit: number = MAX_LIMITS.CONVERSATIONS,
   after: string | null = null,
-  conversations: any[] = []
+  conversations: any[] = [],
+  maxDate: any = null
 ): Promise<any> => {
   try {
     if (!after) {
       const cachedConversations = await GET(cache, "", { type: CACHE_KEYS.CONVERSATIONS });
-      if (cachedConversations) {
+      if (cachedConversations.data) {
         conversations = JSON.parse(cachedConversations.data.data);
+        maxDate = conversations.length ? conversations[0].updated_time : null;
       }
     }
 
@@ -146,31 +149,25 @@ const getConversations = async (
 
     const { data, paging } = response?.data;
 
-    if (conversations.length) {
-      // Check max updated time from cache
-      const maxDate = conversations[0].updated_time;
-
+    if (conversations.length && maxDate) {
       const newConversations = data.filter(
-        (conversation: Record<string, any>) => conversation.updated_time > maxDate
+        (conversation: Record<string, any>) =>
+          new Date(conversation.updated_time) > new Date(maxDate)
+      );
+      const idsSet = new Set(
+        newConversations.map((conversation: Record<string, any>) => conversation.id)
+      );
+      const dedupedConversations = deduplicateByLatest(
+        conversations.filter((conversation: Record<string, any>) => !idsSet.has(conversation.id))
       );
 
       // We have new conversations, but only a few
       if (newConversations.length < data.length) {
-        // First of all, remove all existing conversations from newConversations
-        const idsSet = new Set(
-          newConversations.map((conversation: Record<string, any>) => conversation.id)
-        );
-        return [
-          ...newConversations,
-          ...deduplicateByLatest(
-            conversations.filter(
-              (conversation: Record<string, any>) => !idsSet.has(conversation.id)
-            )
-          ),
-        ];
+        return [...newConversations, ...dedupedConversations];
+      } else if (newConversations.length === data.length) {
+        // We fill conversations with all new ones
+        conversations = [...newConversations, ...dedupedConversations];
       }
-
-      return conversations;
     }
 
     if (
@@ -180,7 +177,7 @@ const getConversations = async (
     ) {
       return [
         ...data,
-        ...(await getConversations(instance, limit, paging.cursors.after, conversations)),
+        ...(await getConversations(instance, limit, paging.cursors.after, conversations, maxDate)),
       ];
     }
 
@@ -195,40 +192,118 @@ const cacheConversations = async (data: any) => {
   await POST(cache, getFormData(CacheModel({ type: CACHE_KEYS.CONVERSATIONS, data })));
 };
 
+const cacheConversation = async (conversationId: string, data: any) => {
+  await DELETE(cache, conversationId, CACHE_KEYS.CONVERSATION + "/");
+  await POST(
+    cache,
+    getFormData(CacheModel({ type: CACHE_KEYS.CONVERSATION, conversationId, data }))
+  );
+};
+
+const getNonCachedMessages = async (
+  instance: any,
+  conversationId: string,
+  limit: number = MAX_LIMITS.MESSAGES,
+  next: string | null = null,
+  conversationMessages: any[] = []
+): Promise<any[]> => {
+  return getMessages(instance, conversationId, limit, next, conversationMessages, null, true);
+};
+
 const getMessages = async (
   instance: any,
   conversationId: string,
   limit: number = MAX_LIMITS.MESSAGES,
-  next: string | null = null
+  next: string | null = null,
+  conversationMessages: any[] = [],
+  maxDate: any = null,
+  nonCached: boolean = false
 ): Promise<any[]> => {
   if (!accessToken) {
     await getHeaders(instance);
   }
-  const params: Record<string, any> = {
-    limit: 100,
-    fields: "messages",
-    access_token: accessToken,
-  };
 
-  const response = await GET(
-    graph,
-    next ? next.replace(process.env.GRAPH_INSTAGRAM || "", "") : `/${conversationId}`,
-    next ? {} : params,
-    {}
-  );
+  try {
+    if (!next) {
+      const cachedMessages = await GET(cache, "", {
+        type: CACHE_KEYS.CONVERSATION,
+        conversationId,
+      });
+      if (cachedMessages.data) {
+        conversationMessages = JSON.parse(cachedMessages.data.data);
+        maxDate = conversationMessages.length ? conversationMessages[0].created_time : null;
+      }
+    }
 
-  const { data = [], paging } = (next ? response?.data : response?.data?.messages) || {};
+    if (nonCached && conversationMessages.length > 0) {
+      return ["CACHED"];
+    }
 
-  const messages = await Promise.all(
-    data.map((message: Record<string, any>) => getMessage(instance, message.id))
-  );
+    const params: Record<string, any> = {
+      limit: 100,
+      fields: "messages",
+      access_token: accessToken,
+    };
 
-  if (paging?.cursors?.after && paging?.cursors?.next !== next) {
-    const nextMessages = await getMessages(instance, conversationId, limit, paging.next);
-    return [...messages, ...nextMessages];
+    if (next) {
+      params.next = next;
+    }
+
+    const response = await GET(
+      graph,
+      next ? next.replace(process.env.GRAPH_INSTAGRAM || "", "") : `/${conversationId}`,
+      next ? {} : params,
+      {}
+    );
+
+    const { data = [], paging } = (next ? response?.data : response?.data?.messages) || {};
+
+    const messages = await Promise.all(
+      data
+        .filter((item: Record<string, any>) => {
+          const createdTime = new Date(item.created_time);
+          return !maxDate || createdTime > new Date(maxDate);
+        })
+        .map((message: Record<string, any>) => getMessage(instance, message.id))
+    );
+
+    if (messages.length && maxDate) {
+      const newConversationMessages = messages;
+
+      const idsSet = new Set(
+        newConversationMessages.map((message: Record<string, any>) => message.id)
+      );
+      const dedupedMessages = deduplicateByLatest(
+        conversationMessages.filter((message: Record<string, any>) => !idsSet.has(message.id))
+      );
+
+      // We have new conversations, but only a few
+      if (newConversationMessages.length < data.length) {
+        return [...newConversationMessages, ...dedupedMessages];
+      } else if (newConversationMessages.length === data.length) {
+        // We fill conversations with all new ones
+        conversationMessages = [...newConversationMessages, ...dedupedMessages];
+      }
+    } else if (conversationMessages.length > 0) {
+      return conversationMessages;
+    }
+
+    if (paging?.cursors?.after && paging?.cursors?.next !== next) {
+      const nextMessages = await getMessages(
+        instance,
+        conversationId,
+        limit,
+        paging.next,
+        conversationMessages,
+        maxDate
+      );
+      return [...messages, ...nextMessages];
+    }
+
+    return messages || [];
+  } catch {
+    return [];
   }
-
-  return messages;
 };
 
 const getMessage = async (instance: any, messageId: string) => {
@@ -292,6 +367,8 @@ export const instagramSvc = (collection: Collection<Document>) => ({
   parseAuthToken,
   getConversations,
   cacheConversations,
+  cacheConversation,
+  getNonCachedMessages,
   getMessages,
   getMessage,
   sendMessage,

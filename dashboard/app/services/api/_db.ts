@@ -1,12 +1,12 @@
-import { Db, MongoClient } from 'mongodb';
-import type { NextRequest } from 'next/server';
-import { v4 as uuid } from 'uuid';
-import config from '@/app/config';
-import { uploadSvc } from '@/app/services/api/upload';
-import { ERRORS, FIELD_TYPES, HTTP_STATUS_CODES, SORT } from '@/app/constants';
-import { FactorySvc } from '@/app/services/api/factory';
-import { formDataToObject } from '@/app/utils';
-import qs from 'qs';
+import { Db, MongoClient } from "mongodb";
+import type { NextRequest } from "next/server";
+import { v4 as uuid } from "uuid";
+import config from "@/app/config";
+import { uploadSvc } from "@/app/services/api/upload";
+import { ERRORS, FIELD_TYPES, HTTP_STATUS_CODES, SORT } from "@/app/constants";
+import { FactorySvc } from "@/app/services/api/factory";
+import { formDataToObject } from "@/app/utils";
+import qs from "qs";
 
 let _db: Db | null = null;
 let _client: MongoClient | null = null;
@@ -14,10 +14,7 @@ let _connecting = false;
 
 const MONGODB_URI = process.env.MONGODB_URI as string;
 
-async function connectWithRetry(
-  retries = 5,
-  delayMs = 5000
-): Promise<MongoClient> {
+async function connectWithRetry(retries = 5, delayMs = 5000): Promise<MongoClient> {
   let lastError: any;
   for (let i = 0; i < retries; i++) {
     try {
@@ -32,10 +29,7 @@ async function connectWithRetry(
       return client;
     } catch (error: any) {
       lastError = error;
-      console.error(
-        `MongoDB conexión fallida. Intento ${i + 1} de ${retries}:`,
-        error.message
-      );
+      console.error(`MongoDB conexión fallida. Intento ${i + 1} de ${retries}:`, error.message);
       await new Promise((resolve) => setTimeout(resolve, delayMs));
     }
   }
@@ -96,7 +90,7 @@ export const toTimestamp = (date: Date) => Math.floor(date.getTime() / 1000);
 export const getList = async ({
   req,
   collection,
-  idx = 'name',
+  idx = "name",
   sort = SORT.ASC,
   queryObj = {},
   sortReplace = {},
@@ -112,22 +106,22 @@ export const getList = async ({
     const col = await getCollection(collection);
     const svc = FactorySvc(collection, col);
     const qp = req.nextUrl.searchParams;
-    let sortField = qp.get('sort') || idx;
-    const sortDir = Number(qp.get('sortDir')) || sort;
+    let sortField = qp.get("sort") || idx;
+    const sortDir = Number(qp.get("sortDir")) || sort;
 
     if (sortReplace?.[sortField]) {
       sortField = sortReplace[sortField];
     }
 
-    const limit = Number(qp.get('limit')) || config.table.limit;
-    const skip = Number(qp.get('cursor')) || 0;
+    const limit = Number(qp.get("limit")) || config.table.limit;
+    const skip = Number(qp.get("cursor")) || 0;
 
     if (!queryObj.$or) {
-      const query = qp.get('query');
+      const query = qp.get("query");
       if (query) {
         queryObj.$or = [
           {
-            [idx]: { $regex: query, $options: 'i' },
+            [idx]: { $regex: query, $options: "i" },
           },
         ];
       }
@@ -166,10 +160,10 @@ export const getList = async ({
 
     const total = await col.countDocuments(queryObj);
 
-    const pages = Math.floor(total / Number(qp.get('limit'))) + 1;
+    const pages = Math.floor(total / Number(qp.get("limit"))) + 1;
 
     const sorts: Record<string, any> =
-      sortField !== '_id'
+      sortField !== "_id"
         ? { [sortField]: sortDir === SORT.ASC ? 1 : -1, _id: 1 }
         : { _id: sortDir === SORT.ASC ? 1 : -1 };
 
@@ -178,12 +172,10 @@ export const getList = async ({
       .sort(sorts)
       .limit(limit)
       .skip(skip)
-      .collation({ locale: 'es', caseLevel: true })
+      .collation({ locale: "es", caseLevel: true })
       .toArray();
 
-    const parsedItems = await Promise.all(
-      items.map(async (item) => svc.parse(item))
-    );
+    const parsedItems = await Promise.all(items.map(async (item) => svc.parse(item)));
 
     const data = {
       timestamp: new Date().getTime(),
@@ -232,7 +224,7 @@ export const postItem = async ({
   Object.keys(types).forEach(async (key) => {
     const [value] = formData.getAll(key);
     if (value instanceof File) {
-      if ('path' in options[key]) {
+      if ("path" in options[key]) {
         await uploadSvc.uploadS3(value, options[key].path as string);
       }
     }
@@ -265,18 +257,13 @@ export const putItem = async ({
   Object.keys(types).forEach(async (key) => {
     const [value] = formData.getAll(key);
     if (value instanceof File) {
-      if ('path' in options[key]) {
+      if ("path" in options[key]) {
         await uploadSvc.uploadS3(value, options[key].path as string);
       }
     }
 
-    if (
-      !value &&
-      [FIELD_TYPES.IMAGE_UPLOADER, FIELD_TYPES.VIDEO_UPLOADER].includes(
-        types[key]
-      )
-    ) {
-      if ('path' in options[key]) {
+    if (!value && [FIELD_TYPES.IMAGE_UPLOADER, FIELD_TYPES.VIDEO_UPLOADER].includes(types[key])) {
+      if ("path" in options[key]) {
         await uploadSvc.deleteS3(item[key]);
       }
     }
@@ -308,12 +295,8 @@ export const deleteItem = async ({
   const item = await svc.getById(id);
 
   Object.keys(types).forEach(async (key) => {
-    if (
-      [FIELD_TYPES.IMAGE_UPLOADER, FIELD_TYPES.VIDEO_UPLOADER].includes(
-        types[key]
-      )
-    ) {
-      if ('path' in options[key]) {
+    if ([FIELD_TYPES.IMAGE_UPLOADER, FIELD_TYPES.VIDEO_UPLOADER].includes(types[key])) {
+      if ("path" in options[key]) {
         await uploadSvc.deleteS3(item[key]);
       }
     }
@@ -322,13 +305,13 @@ export const deleteItem = async ({
   return svc.remove(id);
 };
 
-const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [];
+const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(",") || [];
 
 export const corsOptions = (req: NextRequest): any => {
-  const origin = req.headers.get('origin') || 'null';
+  const origin = req.headers.get("origin") || "null";
 
-  if (!origin || (origin !== 'null' && !allowedOrigins.includes(origin))) {
-    console.log('CORS error', origin, req);
+  if (!origin || (origin !== "null" && !allowedOrigins.includes(origin))) {
+    console.log("CORS error", origin, req);
     return [{ error: ERRORS.CORS }, { status: HTTP_STATUS_CODES.FORBIDDEN }];
   }
 
@@ -337,25 +320,18 @@ export const corsOptions = (req: NextRequest): any => {
     {
       status: HTTP_STATUS_CODES.OK,
       headers: {
-        'Access-Control-Allow-Origin': origin === 'null' ? '*' : origin,
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        "Access-Control-Allow-Origin": origin === "null" ? "*" : origin,
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
       },
     },
   ];
 };
 
-export const getQueryFilter = (
-  req: NextRequest,
-  property: string,
-  asArray: boolean = false
-) => {
+export const getQueryFilter = (req: NextRequest, property: string, asArray: boolean = false) => {
   const searchParams = req.nextUrl.searchParams.toString();
   const params = qs.parse(searchParams, { ignoreQueryPrefix: true }) as any;
-  if (
-    params?.filters?.[property] instanceof Array &&
-    params?.filters?.[property].length
-  ) {
+  if (params?.filters?.[property] instanceof Array && params?.filters?.[property].length) {
     if (params.filters[property].length > 1 || asArray) {
       return params.filters[property];
     } else {
@@ -370,9 +346,7 @@ export const removeQueryFilter = (req: NextRequest, property: string) => {
   if (params?.filters?.[property]) {
     if (params.filters[property].length > 0) {
       params.filters[property].forEach((value: string, index: number) => {
-        req.nextUrl.searchParams.delete(
-          `filters[${property}][${String(index)}]`
-        );
+        req.nextUrl.searchParams.delete(`filters[${property}][${String(index)}]`);
       });
     }
   }

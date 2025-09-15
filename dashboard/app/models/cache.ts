@@ -1,6 +1,7 @@
 type Model = {
   _id: string;
   type: string;
+  conversationId?: string | null;
   data?: any;
   created?: Date | string;
 };
@@ -14,6 +15,10 @@ export const Model = (data: any): Model => {
   if (data.type) {
     obj.type = String(data.type);
   }
+  if (data.conversationId) {
+    obj.conversationId = String(data.conversationId);
+  }
+
   if (data.data) {
     obj.data = data.data;
   }

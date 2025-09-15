@@ -130,6 +130,7 @@ export const DELETE = async (client: AxiosInstance, ids: string | string[], url:
   const response = await (ids instanceof Array
     ? Promise.all(ids.map((id) => client.delete(url + id)))
     : client.delete(url + ids));
+
   return response;
 };
 

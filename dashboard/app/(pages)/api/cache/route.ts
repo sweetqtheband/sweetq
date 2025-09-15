@@ -27,9 +27,11 @@ export async function GET(req: NextRequest) {
   const qp = req.nextUrl.searchParams;
 
   const type = await qp.get("type");
+  const conversationId = await qp.get("conversationId");
 
   const query: Record<string, any> = {
     type,
+    conversationId,
   };
 
   const item = (await getItem({

@@ -82,6 +82,7 @@ export const FIELD_TYPES: Record<string, FieldTypesType> = {
   IMAGE_UPLOADER: "imageUploader",
   IMAGE: "image",
   LABEL: "label",
+  LINK: "link",
   MULTISELECT: "multiSelect",
   NONE: "none",
   PASSWORD: "password",

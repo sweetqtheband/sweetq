@@ -25,6 +25,7 @@ import { Size } from "@/types/size";
 import { renderItem } from "./renderItem";
 import { getClasses, s3File } from "./utils";
 import { ContentArea } from "./components";
+import Link from "next/link";
 
 interface Field {
   field: string;
@@ -86,6 +87,17 @@ const renderLabel = ({ field, value, translations }: Field) => {
       <p className="cds--label">{translations?.[field]}</p>
       <div>{value}</div>
     </FormItem>
+  );
+};
+
+// Link field
+const renderLink = ({ field, fields, value }: Field) => {
+  const linkValue = fields?.options?.[field].link?.pattern?.replace("#value#", value) || value;
+
+  return (
+    <Link href={linkValue} target="_blank" onClick={(e) => e.stopPropagation()}>
+      {value}
+    </Link>
   );
 };
 
@@ -945,6 +957,7 @@ const renderers = {
   [FIELD_TYPES.IMAGE_UPLOADER]: renderUploader,
   [FIELD_TYPES.IMAGE]: renderImage,
   [FIELD_TYPES.LABEL]: renderLabel,
+  [FIELD_TYPES.LINK]: renderLink,
   [FIELD_TYPES.MULTISELECT]: renderMultiSelect,
   [FIELD_TYPES.PASSWORD]: renderPassword,
   [FIELD_TYPES.SELECT]: renderSelect,

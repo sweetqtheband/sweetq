@@ -1,4 +1,4 @@
-@use '@scss/mixins' as *;
+@use "@scss/mixins" as *;
 
 .cell {
   @include breakpoint(mobile) {
@@ -20,5 +20,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  &-username {
+    font-size: var(--text-font-size);
   }
 }

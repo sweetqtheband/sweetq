@@ -14,8 +14,19 @@ export const BaseSvc = (model: Collection<Document>, Model: Function) => {
     findOne: async (query: Record<string, any>) => model.findOne(query),
     findAll: async (query: Record<string, any> = {}) => model.find(query).toArray(),
     getById: async (value: string) => model.findOne({ _id: new ObjectId(value) }),
-    getAllById: async (values: string[]) =>
-      model.find({ _id: { $in: values.map((value) => new ObjectId(value)) } }).toArray(),
+    getAllById: async (values: string[]) => {
+      try {
+        return model.find({ _id: { $in: values.map((value) => new ObjectId(value)) } }).toArray();
+      } catch (e) {
+        return values.map((value) => {
+          try {
+            return new ObjectId(value);
+          } catch (e) {
+            return `"Error: ${value}`;
+          }
+        });
+      }
+    },
     /**
      * Parse user before returning
      * @param {Object} user

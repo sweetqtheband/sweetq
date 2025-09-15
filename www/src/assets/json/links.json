@@ -1,5 +1,5 @@
 [
-  {    
+  {
     "type": "spotify",
     "icon": "icon-spotify",
     "text": "links.spotify",
@@ -21,17 +21,17 @@
     "link": "https://music.youtube.com/playlist?list=OLAK5uy_miCMPTokYkDQG3QhULinUfSCWDKocwVhE"
   },
   {
-    "type": "youtube",
-    "icon": "icon-youtube",
-    "text": "links.youtube.fiesta",
-    "button": "secondary",
-    "link": "https://www.youtube.com/watch?v=2FryW1MtBus"
-  },
-  {
     "type": "gig",
     "icon": "icon-gigs",
-    "text": "links.gigs.20250802",
+    "text": "links.gigs.20251011",
     "button": "secondary",
-    "link": "https://sonoversofest.lariojaeventos.com/"
+    "link": "https://entradium.com/events/sweet-q-roble"
+  },
+  {
+    "type": "whatsapp",
+    "icon": "icon-whatsapp",
+    "text": "links.whatsapp",
+    "button": "secondary",
+    "link": "https://chat.whatsapp.com/BCwoGNaxuPMEBVLVHG4d6t"
   }
 ]
