@@ -399,8 +399,8 @@ const renderMultiSelect = ({
     });
 
     ref.current.querySelector("input")?.addEventListener("blur", () => {
-      if (ref.current.dataset?.current) {
-        ref.current.dataset = false;
+      if (ref.current.dataset?.blurred) {
+        ref.current.dataset.blurred = false;
       } else {
         setTimeout(() => {
           ref.current.dataset.blurred = true;
