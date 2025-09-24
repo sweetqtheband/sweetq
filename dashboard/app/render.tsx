@@ -385,6 +385,31 @@ const renderMultiSelect = ({
   methods,
   className,
 }: Field) => {
+  if (ref?.current && !internalState?.[field]?.onBlur) {
+    onInternalStateHandler(field, {
+      ...internalState[field],
+      onBlur: true,
+    });
+
+    document.addEventListener("mousedown", (event) => {
+      setTimeout(() => {
+        const target = event?.target as HTMLElement;
+        target.focus();
+      }, 400);
+    });
+
+    ref.current.querySelector("input")?.addEventListener("blur", () => {
+      if (ref.current.dataset?.current) {
+        ref.current.dataset = false;
+      } else {
+        setTimeout(() => {
+          ref.current.dataset.blurred = true;
+          ref.current.querySelector("input")?.blur();
+        }, 300);
+      }
+    });
+  }
+
   const items = fields.options[field].options.map((option: any) => ({
     id: option.id,
     text: translations.options[field]?.[option.id] || option.value,
@@ -542,7 +567,7 @@ const renderMultiSelect = ({
           />
         ) : null}
       </div>
-      <Stack gap={4} orientation="horizontal">
+      <div className="cds--selected-tags cds--flex">
         {value.map((id: Record<string, any>, index: number) => {
           const item = items.find((item: Record<string, any>) => item.id === id);
           let type = TAG_TYPES[index];
@@ -561,7 +586,7 @@ const renderMultiSelect = ({
             />
           ) : null;
         })}
-      </Stack>
+      </div>
     </FormItem>
   );
 };

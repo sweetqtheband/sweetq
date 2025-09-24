@@ -1,4 +1,4 @@
-@use '@scss/mixins' as *;
+@use "@scss/mixins" as *;
 
 body {
   height: 100%;
@@ -60,12 +60,26 @@ body {
     gap: var(--padding);
     width: 100%;
     flex-wrap: wrap;
+
     .cds--tooltip-trigger__wrapper {
       padding-bottom: calc(var(--padding) / 2);
+    }
+    .cds--interactive--tag-children {
+      .cds--tooltip-trigger__wrapper {
+        padding-bottom: 0;
+      }
     }
 
     .cds--form-item {
       flex: 1;
+    }
+  }
+
+  .cds--selected-tags {
+    padding: var(--padding) 0;
+    gap: var(--padding);
+    .cds--tag--filter {
+      margin: 0;
     }
   }
 
