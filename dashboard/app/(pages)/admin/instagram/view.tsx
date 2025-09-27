@@ -1,22 +1,26 @@
-'use client';
+"use client";
 
-import { InstagramLogin } from '@/app/components';
-import ListLayout from '@/app/components/layouts/list-layout';
-import { Followers } from '@/app/services/followers';
-import { useRouter } from 'next/navigation';
-import MessagePanel from './message-panel';
-import InstagramChat from './instagram-chat';
-import { useState } from 'react';
+import { InstagramLogin } from "@/app/components";
+import ListLayout from "@/app/components/layouts/list-layout";
+import { ACTIONS, Followers } from "@/app/services/followers";
+import { useRouter } from "next/navigation";
+import MessagePanel from "./message-panel";
+import InstagramChat from "./instagram-chat";
+import { useEffect, useState } from "react";
+import { Modal } from "@carbon/react";
+import { Action } from "@/types/action";
 
 export default function InstagramView(params: Readonly<any>) {
   const [ids, setIds] = useState(null);
   const [item, setItem] = useState(null);
+  const [action, setAction] = useState<Action>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
   const methods = Followers.getMethods(router, params.translations);
   const renders = Followers.getRenders();
   const batchActions = Followers.getBatchActions(setIds, params.translations);
+  const itemActions = Followers.getItemActions(setAction, params.translations);
 
   const onActionClickHandler = async (data: any) => {
     methods.action.onClick(data, setItem);
@@ -25,6 +29,21 @@ export default function InstagramView(params: Readonly<any>) {
   const setIsLoadingHandler = (loading: boolean) => {
     setIsLoading(loading);
   };
+
+  const actionClear = () => {
+    setAction(null);
+  };
+
+  const actionHandler = async (data: any) => {
+    if (action?.method) {
+      setIsLoadingHandler(true);
+      await methods[action?.method](data);
+      setIsLoadingHandler(false);
+    }
+
+    actionClear();
+  };
+
   return (
     <>
       <InstagramLogin />
@@ -33,11 +52,13 @@ export default function InstagramView(params: Readonly<any>) {
         methods={methods}
         renders={renders}
         batchActions={batchActions}
+        itemActions={itemActions}
         onSave={methods.onSave}
         onDelete={methods.onDelete}
         loading={isLoading}
         setExternalLoading={setIsLoadingHandler}
         noAdd={true}
+        noDelete={true}
         actionLabel={methods.action.label}
         actionIcon={methods.action.icon}
         onAction={onActionClickHandler}
@@ -56,6 +77,17 @@ export default function InstagramView(params: Readonly<any>) {
         translations={params.translations}
         setItem={setItem}
         onSave={methods.onSendInstagramMessage}
+      />
+      <Modal
+        open={action?.type === ACTIONS.CANCEL_MESSAGE && action?.open}
+        onRequestClose={() => actionClear()}
+        onRequestSubmit={() => actionHandler(action?.item)}
+        danger
+        modalHeading={params.translations?.[action?.type as string]?.header || "Header"}
+        closeButtonLabel={params.translations.close}
+        primaryButtonText={params.translations.confirm}
+        secondaryButtonText={params.translations.cancel}
+        modalLabel={params.translations?.[action?.type as string]?.label || "Label"}
       />
     </>
   );

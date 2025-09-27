@@ -7,6 +7,7 @@ import { ERRORS, FIELD_TYPES, HTTP_STATUS_CODES, SORT } from "@/app/constants";
 import { FactorySvc } from "@/app/services/api/factory";
 import { formDataToObject } from "@/app/utils";
 import qs from "qs";
+import { Types } from "../bands";
 
 let _db: Db | null = null;
 let _client: MongoClient | null = null;
@@ -287,20 +288,22 @@ export const deleteItem = async ({
   id: string;
   req: NextRequest;
   collection: string;
-  types: Record<string, any>;
-  options: Record<string, any>;
+  types?: Record<string, any>;
+  options?: Record<string, any>;
 }>) => {
   const col = await getCollection(collection);
   const svc = FactorySvc(collection, col);
   const item = await svc.getById(id);
 
-  Object.keys(types).forEach(async (key) => {
-    if ([FIELD_TYPES.IMAGE_UPLOADER, FIELD_TYPES.VIDEO_UPLOADER].includes(types[key])) {
-      if ("path" in options[key]) {
-        await uploadSvc.deleteS3(item[key]);
+  if (types && options) {
+    Object.keys(types).forEach(async (key) => {
+      if ([FIELD_TYPES.IMAGE_UPLOADER, FIELD_TYPES.VIDEO_UPLOADER].includes(types[key])) {
+        if ("path" in options[key]) {
+          await uploadSvc.deleteS3(item[key]);
+        }
       }
-    }
-  });
+    });
+  }
 
   return svc.remove(id);
 };

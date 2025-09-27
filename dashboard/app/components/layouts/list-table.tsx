@@ -65,6 +65,7 @@ export default function ListTable({
   translations = {},
   actions = {},
   batchActions = {},
+  itemActions = {},
   fields = {},
   filters = {},
   renders = {},
@@ -90,6 +91,7 @@ export default function ListTable({
   fields?: Record<string, any>;
   actions?: Record<string, any>;
   batchActions: Record<string, any>;
+  itemActions?: Record<string, any>;
   filters?: Record<string, any>;
   renders?: Record<string, any>;
 }>) {
@@ -216,11 +218,11 @@ export default function ListTable({
           return render instanceof Array ? (
             <>
               {render.map((renderedItem, renderItemIndex) => (
-                <div key={`render-${renderItemIndex}`}>{renderItem(renderedItem)}</div>
+                <div key={`render-${renderItemIndex}`}>{renderItem(renderedItem, itemActions)}</div>
               ))}
             </>
           ) : (
-            renderItem(render)
+            renderItem(render, itemActions)
           );
         }
       }

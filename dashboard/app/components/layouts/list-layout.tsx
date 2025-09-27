@@ -28,6 +28,7 @@ export default function ListLayout({
   translations = {},
   actions = {},
   batchActions = {},
+  itemActions = {},
   fields = {},
   filters = {},
   methods = {},
@@ -54,6 +55,7 @@ export default function ListLayout({
   translations?: Record<string, string>;
   actions?: Record<string, any>;
   batchActions?: Record<string, any>;
+  itemActions?: Record<string, any>;
   fields?: Record<string, any>;
   filters?: Record<string, any>;
   methods?: Record<string, any>;
@@ -170,6 +172,7 @@ export default function ListLayout({
         renders={renders}
         actions={actions}
         batchActions={batchActions}
+        itemActions={itemActions}
       />
       <ListPanel
         id={id}

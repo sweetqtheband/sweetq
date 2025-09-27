@@ -4,7 +4,7 @@ import { FIELD_DEFAULTS, FIELD_TYPES, RENDER_TYPES, TREATMENTS } from "../consta
 import { Countries } from "./countries";
 import { States } from "./states";
 import { Cities } from "./cities";
-import { onSave } from "./_methods";
+import { onSave, onDelete } from "./_methods";
 import { Tags } from "./tags";
 import { SendAlt } from "@carbon/react/icons";
 import { InstagramMessages } from "./instagramMessages";
@@ -53,6 +53,10 @@ const fields = {
   },
   types: Types,
   options: Options,
+};
+
+export const ACTIONS = {
+  CANCEL_MESSAGE: "cancelMessage",
 };
 
 // Get fields function
@@ -262,6 +266,15 @@ const getMethods = (router?: any, translations?: any): Record<string, any> => ({
     }
     return onSave(InstagramMessages, router, data, []);
   },
+
+  onUserCancelSendMessage: async (data: any) => {
+    return Promise.all(
+      data.messages.map((messageId: any) => {
+        onDelete(InstagramMessages, router, messageId);
+      })
+    );
+  },
+
   onSendInstagramMessage: async (data: any) => {
     return instagram.sendMessage(data);
   },
@@ -287,6 +300,8 @@ const getRenders = (): Record<string, Function> => ({
     return {
       type: RENDER_TYPES.STATUS_MESSAGE,
       value: item,
+      item: base,
+      action: ACTIONS.CANCEL_MESSAGE,
     };
   },
 });
@@ -303,6 +318,19 @@ const getBatchActions = (setIds: Function, translations: any) => {
   };
 };
 
+const getItemActions = (setAction: Function, translations: any) => {
+  return {
+    [ACTIONS.CANCEL_MESSAGE]: (obj: Record<string, any>) => {
+      setAction({
+        type: ACTIONS.CANCEL_MESSAGE,
+        item: obj?.item,
+        open: true,
+        method: "onUserCancelSendMessage",
+      });
+    },
+  };
+};
+
 // Followers service
 export const Followers = {
   ...BaseList(
@@ -312,6 +340,7 @@ export const Followers = {
   ),
   fields,
   getBatchActions,
+  getItemActions,
   getRenders,
   getFilters,
   getFields,

@@ -153,6 +153,12 @@
       "title": "Conciertos"
     },
     "instagram": {
+      "actions": {
+        "cancelMessage": {
+          "header": "Cancelar envío de mensaje",
+          "label": "¿Estás seguro de que quieres cancelar el envío del mensaje?"
+        }
+      },
       "description": "{{total}} seguidores",
       "panel": {
         "collectiveMessage": "Mensaje a colectivos",

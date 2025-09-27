@@ -25,9 +25,22 @@ const renderLink = (obj: any) => (
   </Link>
 );
 
-const renderStatusMessage = (obj: any) => {
+const renderStatusMessage = (obj: any, actions: Record<string, any>) => {
+  const itemActionHandler = obj?.action ? actions?.[obj.action] : null;
+
+  const onActionClick = (e: MouseEvent, obj: Record<string, any>) => {
+    e.stopPropagation();
+    if (itemActionHandler && typeof itemActionHandler === "function") {
+      itemActionHandler(obj);
+    }
+  };
   return (
-    <Tooltip align="left" label={obj.value} autoAlign>
+    <Tooltip
+      align="left"
+      label={obj.value}
+      autoAlign
+      onClick={(e: MouseEvent) => onActionClick(e, obj)}
+    >
       <NotSentFilled size={ICON_SIZES.MD} />
     </Tooltip>
   );
@@ -46,7 +59,7 @@ const renderers = {
 };
 
 // Main renderer
-export const renderItem = (obj: any) => {
+export const renderItem = (obj: any, actions: Record<string, any>) => {
   const { type } = obj;
-  return typeof renderers[type] === "function" && renderers[type](obj);
+  return typeof renderers[type] === "function" && renderers[type](obj, actions);
 };

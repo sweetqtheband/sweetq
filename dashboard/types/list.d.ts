@@ -7,6 +7,7 @@ export type BaseListItem = {
   delete(id: string | string[]): Promise<any>;
   getActions(params?: any): Record<string, any>;
   getBatchActions(params?: any): Record<string, any>;
+  getItemActions(params?: any): Record<string, any>;
   getTranslations(i18n: any, instance): Record<string, any>;
   getFields(params?: any): Promise<Record<string, any>>;
   getFilters(params?: any): Promise<Record<string, any>>;

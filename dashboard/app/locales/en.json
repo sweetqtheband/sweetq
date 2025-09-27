@@ -153,6 +153,12 @@
       "title": "Gigs"
     },
     "instagram": {
+      "actions": {
+        "cancelMessage": {
+          "header": "Cancel message sending",
+          "label": "Are you sure you want to cancel the message sending?"
+        }
+      },
       "description": "{{total}} followers",
       "panel": {
         "collectiveMessage": "Collective message",
