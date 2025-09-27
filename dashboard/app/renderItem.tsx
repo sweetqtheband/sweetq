@@ -59,7 +59,7 @@ const renderers = {
 };
 
 // Main renderer
-export const renderItem = (obj: any, actions: Record<string, any>) => {
+export const renderItem = (obj: any, actions?: any) => {
   const { type } = obj;
   return typeof renderers[type] === "function" && renderers[type](obj, actions);
 };
