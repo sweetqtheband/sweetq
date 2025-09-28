@@ -18,6 +18,7 @@ export default function ListLayout({
   loading = false,
   setExternalLoading = () => true,
   onSave = async () => true,
+  onCopy = async () => true,
   onDelete = async () => true,
   actionIcon = null,
   actionLabel = "",
@@ -45,6 +46,7 @@ export default function ListLayout({
   loading?: boolean;
   setExternalLoading?: Function;
   onSave?: (data: any, files: any) => Promise<any>;
+  onCopy?: (ids: string[]) => Promise<boolean>;
   onDelete?: (ids: string[]) => Promise<boolean>;
   actionIcon?: string | null;
   actionLabel?: string;
@@ -154,6 +156,7 @@ export default function ListLayout({
         items={parsedItems}
         onItemClick={onItemClickHandler}
         onDelete={onDelete}
+        onCopy={onCopy}
         imageSize={imageSize}
         headers={headers}
         total={total}

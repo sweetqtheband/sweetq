@@ -36,7 +36,7 @@ import {
   TableToolbarContent,
   TableToolbarSearch,
 } from "@carbon/react";
-import { Add, Close, Filter, TrashCan } from "@carbon/react/icons";
+import { Add, Close, Filter, TrashCan, Copy } from "@carbon/react/icons";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
@@ -59,8 +59,10 @@ export default function ListTable({
   setIsWaiting = (value = false) => {},
   onItemClick = () => {},
   onDelete = async () => true,
+  onCopy = async () => true,
   noAdd = false,
   noDelete = false,
+  noCopy = false,
   noBatchActions = false,
   translations = {},
   actions = {},
@@ -84,8 +86,10 @@ export default function ListTable({
   setIsWaiting?: (value: boolean) => void;
   onItemClick?: (item: any) => void;
   onDelete?: (ids: string[]) => Promise<boolean>;
+  onCopy?: (ids: string[]) => Promise<boolean>;
   noAdd?: boolean;
   noDelete?: boolean;
+  noCopy?: boolean;
   noBatchActions?: boolean;
   translations?: Record<string, any>;
   fields?: Record<string, any>;
@@ -285,6 +289,12 @@ export default function ListTable({
 
   const tableAddNewHandler = () => {
     onItemClick(ACTIONS.ADD);
+  };
+
+  const tableCopyHandler = (selectedRows: any[]) => {
+    selectedRows.forEach((row) => {
+      onCopy(items.find((item) => item._id === row.id));
+    });
   };
 
   const tableDeleteHandler = (selectedRows: any[]) => {
@@ -674,6 +684,15 @@ export default function ListTable({
                         onClick={() => tableDeleteHandler(selectedRows)}
                       >
                         {translations.delete}
+                      </TableBatchAction>
+                    ) : null}
+                    {!noDelete ? (
+                      <TableBatchAction
+                        tabIndex={batchActionProps.shouldShowBatchActions ? 0 : -1}
+                        renderIcon={Copy}
+                        onClick={() => tableCopyHandler(selectedRows)}
+                      >
+                        {translations.copy}
                       </TableBatchAction>
                     ) : null}
                   </TableBatchActions>

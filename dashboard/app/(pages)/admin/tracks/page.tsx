@@ -1,8 +1,8 @@
-import { Tracks } from '@/app/services/tracks';
-import type { Track } from '@/types/track';
-import i18n from '@/app/services/translate';
-import TracksView from './view';
-import { getTranslation } from '@/app/services/_list';
+import { Tracks } from "@/app/services/tracks";
+import type { Track } from "@/types/track";
+import i18n from "@/app/services/translate";
+import TracksView from "./view";
+import { getTranslation } from "@/app/services/_list";
 
 export default async function TracksPage({
   searchParams,
@@ -13,15 +13,15 @@ export default async function TracksPage({
   const items: Track[] = await Tracks.parseAll(data.items);
 
   const headers = [
-    { key: 'image', header: i18n.t('fields.cover') },
-    { key: 'title', header: i18n.t('fields.title') },
-    { key: 'date', header: i18n.t('fields.date') },
-    { key: 'status', header: i18n.t('fields.status') },
+    { key: "image", header: i18n.t("fields.cover") },
+    { key: "title", header: i18n.t("fields.title"), default: true },
+    { key: "date", header: i18n.t("fields.date") },
+    { key: "status", header: i18n.t("fields.status") },
   ];
 
   const translations = {
     ...Tracks.getTranslations(i18n, Tracks),
-    ...getTranslation(i18n, 'actions'),
+    ...getTranslation(i18n, "actions"),
   };
 
   return (

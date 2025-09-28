@@ -77,13 +77,6 @@ const getOptions = async (params: any = {}) => {
   };
 };
 
-// Get methods
-const getMethods = (router?: any) => ({
-  onListSave: async (value: string) => onSave(Config, router, { name: value }, {}),
-  onSave: async (data: any, files: any) => onSave(Config, router, data, files),
-  onDelete: async (ids: string[]) => onDelete(Config, router, ids),
-});
-
 const getMetadata = async (i18n: any) => {
   const metadata = await Config.getAll({ limit: 1, sort: "from" });
   return parseMetadata(
@@ -154,6 +147,5 @@ export const Config = {
   fields,
   faviconMetadata,
   getOptions,
-  getMethods,
   getMetadata,
 };

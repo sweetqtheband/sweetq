@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useRouter } from 'next/router';
-import ListLayout from '../components/layouts/list-layout';
-import { BaseListItem } from '@/types/list';
+import { useRouter } from "next/router";
+import ListLayout from "../components/layouts/list-layout";
+import { BaseListItem } from "@/types/list";
 
 export const ListView = (Service: BaseListItem) =>
   function View({
@@ -34,6 +34,7 @@ export const ListView = (Service: BaseListItem) =>
         methods={methods}
         onSave={methods.onSave}
         onDelete={methods.onDelete}
+        onCopy={methods.onCopy}
       />
     );
   };

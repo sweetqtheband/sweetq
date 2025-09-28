@@ -10,6 +10,9 @@
     "confirm": "Confirmar",
     "confirmDelete": "¿Estás seguro de que quieres eliminar este elemento?",
     "confirmDeleteSelected": "¿Estás seguro de que quieres eliminar los elementos seleccionados?",
+    "copy": "Duplicar",
+    "confirmCopy": "¿Estás seguro de que quieres duplicar este elemento?",
+    "confirmCopySelected": "¿Estás seguro de que quieres duplicar los elementos seleccionados?",
     "delete": "Eliminar",
     "edit": "Editar",
     "email": "Email",
@@ -106,6 +109,7 @@
     "profile": "Tipo de usuario",
     "robots": "Robots",
     "shortName": "Nombre corto",
+    "slug": "Slug",
     "social": {
       "facebook": "Facebook",
       "instagram": "Instagram",

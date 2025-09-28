@@ -1,7 +1,7 @@
 import axios from "./_db";
 import { BaseList } from "./_list";
 import { FIELD_TYPES } from "../constants";
-import { onDelete, onSave } from "./_methods";
+import { onDelete, onSave, onCopy } from "./_methods";
 
 export const Types = {
   _id: FIELD_TYPES.HIDDEN,
@@ -39,13 +39,6 @@ const getOptions = async (params: any = {}) => {
   };
 };
 
-// Get methods
-const getMethods = (router?: any) => ({
-  onListSave: async (value: string) => onSave(Bands, router, { name: value }, {}),
-  onSave: async (data: any, files: any) => onSave(Bands, router, data, files),
-  onDelete: async (ids: string[]) => onDelete(Bands, router, ids),
-});
-
 const client = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URI}/bands`,
 });
@@ -54,5 +47,4 @@ export const Bands = {
   ...BaseList(client),
   fields,
   getOptions,
-  getMethods,
 };

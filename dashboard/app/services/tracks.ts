@@ -7,6 +7,7 @@ import { s3File } from "../utils";
 export const Types = {
   _id: FIELD_TYPES.HIDDEN,
   title: FIELD_TYPES.TEXT,
+  slug: FIELD_TYPES.TEXT,
   date: FIELD_TYPES.DATE,
   cover: FIELD_TYPES.IMAGE_UPLOADER,
   video: FIELD_TYPES.VIDEO_UPLOADER,
@@ -37,6 +38,7 @@ export const Options = {
 // Fields
 const fields = {
   titles: {
+    slug: "fields.slug",
     image: "fields.cover",
     reel: "fields.reel",
     title: "fields.title",

@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import ListLayout from '@/app/components/layouts/list-layout';
-import { Layouts } from '@/app/services/layouts';
-import { useRouter } from 'next/navigation';
+import ListLayout from "@/app/components/layouts/list-layout";
+import { Layouts } from "@/app/services/layouts";
+import { useRouter } from "next/navigation";
 
 export default function LayoutsView(params: Readonly<any>) {
   const router = useRouter();
@@ -15,6 +15,7 @@ export default function LayoutsView(params: Readonly<any>) {
       renders={renders}
       onSave={methods.onSave}
       onDelete={methods.onDelete}
+      onCopy={methods.onCopy}
     />
   );
 }

@@ -59,13 +59,6 @@ const getOptions = async (params: any = {}) => {
   };
 };
 
-// Get methods
-const getMethods = (router?: any) => ({
-  onListSave: async (value: string) => onSave(Tags, router, { name: value }, {}),
-  onSave: async (data: any, files: any) => onSave(Tags, router, data, files),
-  onDelete: async (ids: string[]) => onDelete(Tags, router, ids),
-});
-
 // Get item render
 const itemRender = (field: string, id: any, base: any) => {
   let value = id;
@@ -120,5 +113,4 @@ export const Tags = {
   fields,
   getRenders,
   getOptions,
-  getMethods,
 };

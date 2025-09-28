@@ -41,13 +41,6 @@ const getOptions = async (params: any = {}) => {
   };
 };
 
-// Get methods
-const getMethods = (router?: any) => ({
-  onListSave: async (value: string) => onSave(Layouts, router, { name: value }, {}),
-  onSave: async (data: any, files: any) => onSave(Layouts, router, data, files),
-  onDelete: async (ids: string[]) => onDelete(Layouts, router, ids),
-});
-
 // Parse all method
 const parseAll = (data: any[] = []) =>
   data.map((item: any) => {
@@ -66,6 +59,5 @@ export const Layouts = {
   ),
   fields,
   getOptions,
-  getMethods,
   parseAll,
 };

@@ -55,6 +55,7 @@ export default function InstagramView(params: Readonly<any>) {
         itemActions={itemActions}
         onSave={methods.onSave}
         onDelete={methods.onDelete}
+        onCopy={methods.onCopy}
         loading={isLoading}
         setExternalLoading={setIsLoadingHandler}
         noAdd={true}

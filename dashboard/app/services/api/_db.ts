@@ -209,13 +209,13 @@ export const getItem = async ({
 export const postItem = async ({
   req,
   collection,
-  types,
-  options,
+  types = {},
+  options = {},
 }: Readonly<{
   req: NextRequest;
   collection: string;
-  types: Record<string, any>;
-  options: Record<string, any>;
+  types?: Record<string, any>;
+  options?: Record<string, any>;
 }>) => {
   const col = await getCollection(collection);
   const svc = FactorySvc(collection, col);
@@ -238,15 +238,15 @@ export const putItem = async ({
   id,
   req,
   collection,
-  types,
-  options,
+  types = {},
+  options = {},
   avoidUnset = false,
 }: Readonly<{
   id: string;
   req: NextRequest;
   collection: string;
-  types: Record<string, any>;
-  options: Record<string, any>;
+  types?: Record<string, any>;
+  options?: Record<string, any>;
   avoidUnset?: boolean;
 }>) => {
   const col = await getCollection(collection);
@@ -282,8 +282,8 @@ export const deleteItem = async ({
   id,
   req,
   collection,
-  types,
-  options,
+  types = {},
+  options = {},
 }: Readonly<{
   id: string;
   req: NextRequest;

@@ -1,8 +1,8 @@
-import { ObjectId } from 'mongodb';
+import { ObjectId } from "mongodb";
 
 export type Track = {
   _id: ObjectId;
-  id: string;
+  slug: string;
   title: string;
   date?: string;
   cover?: string;

@@ -1,6 +1,6 @@
 type Model = {
   _id: string;
-  id: string;
+  slug: string;
   title: string;
   date: string;
   cover: string;
@@ -9,7 +9,7 @@ type Model = {
 };
 export const Model = (data: any): Model => {
   const obj = {
-    id: String(data.id),
+    slug: String(data.slug),
     title: String(data.title),
     date: String(data.date),
     cover: String(data.cover),
@@ -20,6 +20,8 @@ export const Model = (data: any): Model => {
   if (data._id) {
     obj._id = String(data._id);
   }
+
+  console.log(data);
 
   return obj;
 };

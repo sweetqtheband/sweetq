@@ -9,6 +9,10 @@ import { Cities } from "./cities";
 import { Bands } from "./bands";
 import { onDelete, onSave } from "./_methods";
 
+const client = axios.create({
+  baseURL: `${process.env.NEXT_PUBLIC_API_URI}/gigs`,
+});
+
 export const Types = {
   id: FIELD_TYPES.HIDDEN,
   date: FIELD_TYPES.DATE,
@@ -117,9 +121,9 @@ const getMethods = (router?: any): Record<string, any> => ({
     if (!data.country) {
       data.country = FIELD_DEFAULTS.COUNTRY;
     }
-    return onSave(Gigs, router, data, files);
+    return onSave(client, router, data, files);
   },
-  onDelete: async (ids: string | string[]) => onDelete(Gigs, router, ids),
+  onDelete: async (ids: string | string[]) => onDelete(client, router, ids),
   bands: {
     onSave: Bands.getMethods(router).onListSave,
   },
@@ -127,11 +131,7 @@ const getMethods = (router?: any): Record<string, any> => ({
 
 // Gigs service
 export const Gigs = {
-  ...BaseList(
-    axios.create({
-      baseURL: `${process.env.NEXT_PUBLIC_API_URI}/gigs`,
-    })
-  ),
+  ...BaseList(client),
   fields,
   parseAll,
   getFields,

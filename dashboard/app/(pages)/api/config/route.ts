@@ -1,9 +1,10 @@
-import { NextRequest } from 'next/server';
-import { corsOptions, getList } from '@/app/services/api/_db';
-import { ERRORS } from '@/app/constants';
+import { NextRequest } from "next/server";
+import { corsOptions, getList, postItem } from "@/app/services/api/_db";
+import { ERRORS, HTTP_STATUS_CODES } from "@/app/constants";
+import { revalidatePath } from "next/cache";
 
-const collection = 'config';
-const idx = 'name';
+const collection = "config";
+const idx = "name";
 
 export async function GET(req: NextRequest) {
   const [message, corsParams] = corsOptions(req);
@@ -20,4 +21,15 @@ export async function GET(req: NextRequest) {
     }),
     corsParams
   );
+}
+
+export async function POST(req: NextRequest) {
+  try {
+    const item = await postItem({ req, collection });
+    revalidatePath(`/admin/${collection}`);
+
+    return Response.json({ data: item }, { status: HTTP_STATUS_CODES.OK });
+  } catch (err: Error | any) {
+    return Response.json({ err: err?.message }, { status: HTTP_STATUS_CODES.ERROR });
+  }
 }

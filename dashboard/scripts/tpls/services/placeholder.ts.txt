@@ -37,13 +37,6 @@ const getOptions = async (params: any = {}) => {
   };
 };
 
-// Get methods
-const getMethods = (router?: any) => ({
-  onListSave: async (value: string) =>
-    onSave({{entity}}, router, { name: value }, {}),
-  onSave: async (data: any, files: any) => onSave({{entity}}, router, data, files),
-  onDelete: async (ids: string[]) => onDelete({{entity}}, router, ids),
-});
 
 export const {{entity}} = {
   ...BaseList(
@@ -53,5 +46,4 @@ export const {{entity}} = {
   ),
   fields,
   getOptions,
-  getMethods,
 };

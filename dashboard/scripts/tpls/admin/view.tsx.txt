@@ -16,6 +16,7 @@ export default function {{entity}}View(params: Readonly<any>) {
       renders={renders}
       onSave={methods.onSave}
       onDelete={methods.onDelete}
+onCopy={methods.onCopy}
     />
   );
 }

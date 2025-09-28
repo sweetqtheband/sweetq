@@ -48,12 +48,6 @@ const privateClient = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URI}/user`,
 });
 
-// Get methods
-const getMethods = (router?: any) => ({
-  onSave: async (data: any, files: any) => onSave(Users, router, data, files),
-  onDelete: async (ids: string[]) => onDelete(Users, router, ids),
-});
-
 /**
  * Users service
  */
@@ -61,7 +55,6 @@ export const Users = {
   ...BaseList(publicClient),
   fields,
   getFields,
-  getMethods,
   async create(data: Record<string, any>) {
     return privateClient.post("", data);
   },

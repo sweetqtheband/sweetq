@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import ListLayout from '@/app/components/layouts/list-layout';
-import { Gigs } from '@/app/services/gigs';
-import { useRouter } from 'next/navigation';
+import ListLayout from "@/app/components/layouts/list-layout";
+import { Gigs } from "@/app/services/gigs";
+import { useRouter } from "next/navigation";
 
 export default function GigsView(params: Readonly<any>) {
   const router = useRouter();
@@ -14,6 +14,7 @@ export default function GigsView(params: Readonly<any>) {
       methods={methods}
       onSave={methods.onSave}
       onDelete={methods.onDelete}
+      onCopy={methods.onCopy}
     />
   );
 }

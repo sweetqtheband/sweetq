@@ -7,8 +7,12 @@ import { Cities } from "./cities";
 import { onSave, onDelete } from "./_methods";
 import { Tags } from "./tags";
 import { SendAlt } from "@carbon/react/icons";
-import { InstagramMessages } from "./instagramMessages";
+import { InstagramMessages, client as InstagramMessagesClient } from "./instagramMessages";
 import { instagram } from "./instagram";
+
+export const client = axios.create({
+  baseURL: `${process.env.NEXT_PUBLIC_API_URI}/followers`,
+});
 
 export const Types = {
   id: FIELD_TYPES.HIDDEN,
@@ -255,7 +259,7 @@ const getMethods = (router?: any, translations?: any): Record<string, any> => ({
     if (data.tags && data.tags instanceof Array && data.tags.length === 0) {
       data.tags = [];
     }
-    return onSave(Followers, router, data, files);
+    return onSave(client, router, data, files);
   },
   tags: {
     onSave: Tags.getMethods(router).onListSave,
@@ -264,13 +268,13 @@ const getMethods = (router?: any, translations?: any): Record<string, any> => ({
     if (!data.layoutId) {
       delete data.layoutId;
     }
-    return onSave(InstagramMessages, router, data, []);
+    return onSave(InstagramMessagesClient, router, data, []);
   },
 
   onUserCancelSendMessage: async (data: any) => {
     return Promise.all(
       data.messages.map((messageId: any) => {
-        onDelete(InstagramMessages, router, messageId);
+        onDelete(InstagramMessagesClient, router, messageId);
       })
     );
   },
@@ -333,11 +337,7 @@ const getItemActions = (setAction: Function, translations: any) => {
 
 // Followers service
 export const Followers = {
-  ...BaseList(
-    axios.create({
-      baseURL: `${process.env.NEXT_PUBLIC_API_URI}/followers`,
-    })
-  ),
+  ...BaseList(client),
   fields,
   getBatchActions,
   getItemActions,

@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import ListLayout from '@/app/components/layouts/list-layout';
-import { Users } from '@/app/services/users';
-import { useRouter } from 'next/navigation';
+import ListLayout from "@/app/components/layouts/list-layout";
+import { Users } from "@/app/services/users";
+import { useRouter } from "next/navigation";
 
 export default function UsersView(params: Readonly<any>) {
   const router = useRouter();
@@ -16,6 +16,7 @@ export default function UsersView(params: Readonly<any>) {
       renders={renders}
       onSave={methods.onSave}
       onDelete={methods.onDelete}
+      onCopy={methods.onCopy}
     />
   );
 }
