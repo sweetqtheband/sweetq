@@ -579,6 +579,23 @@ export default function ListTable({
                 }
 
                 replace(newPath);
+
+                const currentState = {
+                  ...formState,
+                };
+
+                delete currentState[field];
+
+                if (value) {
+                  setFormState((prevState) => ({
+                    ...prevState,
+                    [field]: value,
+                  }));
+                } else {
+                  setFormState((prevState) => ({
+                    ...currentState,
+                  }));
+                }
               };
 
               const handleFilterInternalState = (field: string, value: any) => {
