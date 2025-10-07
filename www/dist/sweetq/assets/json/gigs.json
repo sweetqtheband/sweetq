@@ -158,11 +158,11 @@
     "date": "2025-10-11 21:00",
     "city": "Madrid",
     "hour": "21:00",
-    "venue": "Sweet Q + Roble",
-    "address": "El Perro de la Parte de Atrás del Coche",
-    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.3947121181004!2d-3.706448922301062!3d40.422257971438725!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42287d45b7e65f%3A0xee76b4babb779be0!2sEl%20Perro%20de%20la%20Parte%20de%20Atr%C3%A1s%20del%20Coche!5e0!3m2!1ses!2ses!4v1711014732662!5m2!1ses!2ses",
-    "bands": [28],
+    "venue": "Sweet Q + Lorreine",
+    "address": "Vesta",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4073.54559307776!2d-3.6956384!3d40.4229791!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42297c0e03ba33%3A0x28f0b82774563387!2sSALA%20VESTA!5e1!3m2!1ses!2ses!4v1759834021705!5m2!1ses!2ses",
+    "bands": [40],
     "event": null,
-    "tickets": "https://entradium.com/events/sweet-q-roble"
+    "tickets": "https://entradium.com/events/sweet-q-y-lorreine-en-vesta"
   }
 ]

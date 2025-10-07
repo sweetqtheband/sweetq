@@ -52,11 +52,11 @@
     }
   },
   "gigs": {
-    "20251011": {
+    "20251025": {
       "button": "Buy tickets",
-      "date": "October 11th",
-      "text": "On October 11th, you have a date in <span class='bold'>Madrid</span>. The venue <span class='bold'>El Perro de la Parte de Atrás del Coche</span> will witness a night of the best national indie pop rock. On this occasion, from Valencia, <span class='bold'>Roble</span> will join us on stage for a unique night. Don't miss it!",
-      "title": "Sweet Q + Roble in Madrid"
+      "date": "October 25th",
+      "text": "On October 25th, you have a date in <span class='bold'>Madrid</span>. The venue <span class='bold'>Vesta</span> will witness a night of the best national indie pop rock. On this occasion, from Bilbao, <span class='bold'>Lorreine</span> will join us on stage for a unique night. Don't miss it!",
+      "title": "Sweet Q + Lorreine in Madrid"
     },
     "label": "Gigs",
     "next": "Upcoming",
@@ -78,7 +78,7 @@
       "lesarts": "Vote for us to play at Festival de les Arts!"
     },
     "gigs": {
-      "20251011": "Tickets for Sweet Q + Roble in Madrid"
+      "20251025": "Tickets for Sweet Q + Lorreine in Madrid"
     },
     "presave": {
       "nohabriasidoasi": "'No habría sido así' presave"
