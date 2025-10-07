@@ -39,7 +39,7 @@ import {
 import { Add, Close, Filter, TrashCan, Copy } from "@carbon/react/icons";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 
 let timeout: NodeJS.Timeout;
 let imageTimeout: NodeJS.Timeout;
@@ -102,6 +102,7 @@ export default function ListTable({
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
+  const [clearField, setClearField] = useState<string | null>(null);
 
   const tableId = uuid();
   const tableRef = useRef<HTMLDivElement>(null);
@@ -149,22 +150,34 @@ export default function ListTable({
     }
   }
 
-  const onInternalStateHandler = (fields: string | string[], value: any) => {
+  const onInternalStateHandler = (stateFields: string | string[], value: any) => {
     setInternalState((prevState) => {
       const filterInternalState = { ...prevState };
-      if (fields instanceof Array) {
-        fields.forEach((field, index) => {
+      if (stateFields instanceof Array) {
+        stateFields.forEach((field, index) => {
           delete filterInternalState[field];
+
+          if (fields?.search?.[field]?.deletes?.length > 0) {
+            fields.search[field].deletes.forEach((deleteField: string) => {
+              delete filterInternalState[deleteField];
+            });
+          }
 
           if (value) {
             filterInternalState[field] = value[index];
           }
         });
       } else {
-        delete filterInternalState[fields];
+        delete filterInternalState[stateFields];
+
+        if (fields?.search?.[stateFields]?.deletes?.length > 0) {
+          fields.search[stateFields].deletes.forEach((deleteField: string) => {
+            delete filterInternalState[deleteField];
+          });
+        }
 
         if (value) {
-          filterInternalState[fields] = value;
+          filterInternalState[stateFields] = value;
         }
       }
       return filterInternalState;
@@ -514,42 +527,58 @@ export default function ListTable({
                 <Close size={32} className="close" onClick={onCloseHandler} />
               </div>
             ) : null}
-            {filterFields.map((field: string, index: number) => {
-              const handleFilter = (field: string, value: any) => {
+            {filterFields.map((filterField: string, index: number) => {
+              const handleFilterRemove = (field: any, value: any) => {
+                setClearField(field);
+                return handleFilter(field, null);
+              };
+              const handleFilter = (field: any, value: any) => {
+                const useField = field instanceof Array ? field[0] : field;
+
+                if (clearField && useField !== clearField) {
+                  return;
+                }
+
                 setIsLoading(true);
                 setIsWaiting(true);
                 const params = new URLSearchParams(searchParams);
+
                 params.delete("page");
+
+                let isClear = false;
+
                 if (value instanceof Array) {
                   if (value.length > 0) {
-                    params.set(`filters[${field}]`, value.join(","));
+                    params.set(`filters[${useField}]`, value.join(","));
                   } else {
-                    params.delete(`filters[${field}]`);
+                    params.delete(`filters[${useField}]`);
+                    if (fields?.search?.[useField]?.deletes?.length > 0) {
+                      fields.search[useField].deletes.forEach((deleteField: string) => {
+                        params.delete(`filters[${deleteField}]`);
+                      });
+                    }
                   }
+                  isClear = true;
                 } else if (value) {
-                  params.set(`filters[${field}]`, value);
+                  params.set(`filters[${useField}]`, value);
                 } else {
-                  params.delete(`filters[${field}]`);
+                  params.delete(`filters[${useField}]`);
+
+                  if (fields?.search?.[useField]?.deletes?.length > 0) {
+                    fields.search[useField].deletes.forEach((deleteField: string) => {
+                      params.delete(`filters[${deleteField}]`);
+                    });
+                  }
+                  isClear = true;
                 }
 
-                replace(`${pathname}?${params.toString()}`);
+                let newPath = pathname;
 
-                const currentState = {
-                  ...formState,
-                };
-
-                delete currentState[field];
-
-                if (value) {
-                  setFormState((prevState) => ({
-                    ...prevState,
-                    [field]: value,
-                  }));
-                } else {
-                  setFormState((prevState) => ({
-                    ...currentState,
-                  }));
+                if (params.size > 0) {
+                  newPath += `?${params.toString()}`;
                 }
+
+                replace(newPath);
               };
 
               const handleFilterInternalState = (field: string, value: any) => {
@@ -566,22 +595,30 @@ export default function ListTable({
                     filterFormState[field] = value;
                   } else {
                     filterFormState[field] = null;
+
+                    if (fields?.search?.[field]?.deletes?.length > 0) {
+                      fields.search[field].deletes.forEach((deleteField: string) => {
+                        filterFormState[deleteField] = null;
+                      });
+                    }
                   }
+
                   return filterFormState;
                 });
               };
 
               return renderField({
-                ...filters[field],
+                ...filters[filterField],
                 key: "filter-" + index,
                 ready: !isLoading,
                 translations,
-                field,
+                field: filterField,
                 formState,
                 internalState,
                 onFormStateHandler: handleFilterFormState,
                 onInternalStateHandler: handleFilterInternalState,
                 onInputHandler: handleFilter,
+                onRemoveHandler: handleFilterRemove,
               });
             })}
           </PopoverContent>

@@ -122,7 +122,9 @@ export default function ListPanel({
   // Search params effect
   useEffect(() => {
     const searchFields = Object.keys(searchState).filter((field) => searchState[field]);
-
+    params.forEach((value, key) => {
+      params.delete(key);
+    });
     if (searchFields.length) {
       searchFields.forEach((field) => {
         params.set(`panel.${field}`, formState[field]);
@@ -236,11 +238,19 @@ export default function ListPanel({
     });
   };
 
-  const onInternalStateHandler = (field: string, value: any) => {
-    setInternalState({
+  const onInternalStateHandler = (field: any, value: any) => {
+    const newInternalState: Record<string, any> = {
       ...internalState,
-      [field]: value,
-    });
+    };
+
+    if (field instanceof Array) {
+      field.forEach((f: string) => {
+        newInternalState[f] = value[f];
+      });
+    } else {
+      newInternalState[field] = value;
+    }
+    setInternalState(newInternalState);
   };
 
   const ref = Object.keys(fields.types).reduce((acc: Record<string, any>, field: string) => {

@@ -11,6 +11,7 @@ import {
   FilterableMultiSelect,
   FormItem,
   IconButton,
+  Loading,
   PasswordInput,
   Stack,
   TextArea,
@@ -49,7 +50,9 @@ interface Field {
   onInputHandler: Function;
   onFormStateHandler: Function;
   onInternalStateHandler: Function;
+  onRemoveHandler: Function;
   className: string | undefined;
+  loading?: boolean;
   ready?: boolean;
 }
 
@@ -233,12 +236,14 @@ const renderSelect = ({
   translations,
   removable = false,
   disabled = false,
+  loading = false,
   fields,
   formState,
   internalState = {},
   onFormStateHandler = () => {},
   onInputHandler = () => {},
   onInternalStateHandler = () => {},
+  onRemoveHandler = () => {},
   className,
   renders,
   ready = true,
@@ -261,7 +266,7 @@ const renderSelect = ({
   if (ready && selectedItem && !internalState?.[field] && !internalState?.[`removed[${field}]`]) {
     setTimeout(() => {
       onInternalStateHandler(field, selectedItem, formState);
-      // onInputHandler(field, selectedItem?.id);
+      //onInputHandler(field, selectedItem?.id);
     }, 0);
   }
 
@@ -269,6 +274,7 @@ const renderSelect = ({
     onInternalStateHandler([field, `removed[${field}]`], [null, true]);
     onInputHandler(field, undefined);
     onFormStateHandler(field, null);
+    onRemoveHandler(field, null);
   };
 
   const itemToString = renders?.[field]?.itemToString
@@ -279,10 +285,34 @@ const renderSelect = ({
 
   const currentValue = internalState?.[field] || null;
 
+  const onChangeHandler = ({ selectedItem }: { selectedItem: any }) => {
+    if (fields?.search?.[field]?.deletes?.length > 0) {
+      const deleteFields = [field];
+      const deleteValues = [selectedItem];
+
+      fields.search[field].deletes.forEach((deleteField: string) => {
+        deleteFields.push(deleteField);
+        deleteValues.push(null);
+      });
+
+      onInternalStateHandler(deleteFields, deleteValues);
+    } else {
+      onInternalStateHandler(field, selectedItem);
+    }
+    onInputHandler(field, selectedItem?.id);
+  };
+
   return (
     <FormItem key={field}>
       <div className="cds--flex">
         <Dropdown
+          decorator={
+            loading ? (
+              <div className="cds--flex flex-end">
+                <Loading small={true} withOverlay={false}></Loading>
+              </div>
+            ) : null
+          }
           autoAlign={true}
           className={className}
           disabled={disabled}
@@ -294,10 +324,7 @@ const renderSelect = ({
           selectedItem={currentValue}
           itemToString={itemToString}
           itemToElement={itemToElement}
-          onChange={({ selectedItem }) => {
-            onInternalStateHandler(field, selectedItem);
-            onInputHandler(field, selectedItem?.id);
-          }}
+          onChange={onChangeHandler}
         />
         {removable && currentValue ? (
           <IconButton
@@ -735,6 +762,7 @@ const stateDropdown = ({
   value,
   fields,
   disabled,
+  loading,
   translations,
   formState,
   internalState,
@@ -749,6 +777,7 @@ const stateDropdown = ({
     value,
     fields,
     disabled,
+    loading,
     translations,
     formState,
     internalState,
@@ -763,6 +792,7 @@ const cityDropdown = ({
   value,
   fields,
   disabled,
+  loading,
   translations,
   formState,
   internalState,
@@ -777,6 +807,7 @@ const cityDropdown = ({
     value,
     fields,
     disabled,
+    loading,
     translations,
     formState,
     internalState,
@@ -819,6 +850,10 @@ const renderStateFilter = ({
   onInternalStateHandler,
   onInputHandler,
 }: Field) => {
+  const isLoading =
+    (!fields.search.params["filters[country]"] && Boolean(internalState?.country?.id)) ||
+    fields.search.params["filters[country]"] !== internalState?.country?.id;
+
   return stateDropdown({
     className: "cds--text-input__field-outer-wrapper",
     value: String(formState?.state) || null,
@@ -826,7 +861,8 @@ const renderStateFilter = ({
     translations,
     formState,
     internalState,
-    disabled: internalState?.country ? false : true,
+    disabled: internalState?.country ? isLoading : true,
+    loading: isLoading,
     onFormStateHandler,
     onInternalStateHandler,
     onInputHandler,
@@ -843,6 +879,9 @@ const renderCityFilter = ({
   onInternalStateHandler,
   onInputHandler,
 }: Field) => {
+  const isLoading =
+    (!fields.search.params["filters[state]"] && Boolean(internalState?.state?.id)) ||
+    fields.search.params["filters[state]"] !== internalState?.state?.id;
   return cityDropdown({
     className: "cds--text-input__field-outer-wrapper",
     value: String(formState?.city) || null,
@@ -850,7 +889,8 @@ const renderCityFilter = ({
     translations,
     formState,
     internalState,
-    disabled: internalState?.state ? false : true,
+    disabled: internalState?.state ? isLoading : true,
+    loading: isLoading,
     onFormStateHandler,
     onInternalStateHandler,
     onInputHandler,
@@ -868,6 +908,15 @@ const renderCity = ({
   onInternalStateHandler,
   onInputHandler,
 }: Field) => {
+  const isStateLoading =
+    (!fields.search.params["panel.country"] && Boolean(internalState?.country?.id)) ||
+    (Boolean(internalState?.country?.id) &&
+      fields.search.params["panel.country"] !== internalState?.country?.id);
+
+  const isCityLoading =
+    (!fields.search.params["panel.state"] && Boolean(internalState?.state?.id)) ||
+    (Boolean(internalState?.state?.id) &&
+      fields.search.params["panel.state"] !== internalState?.state?.id);
   return (
     <div className="cds--flex">
       {countryDropdown({
@@ -887,6 +936,10 @@ const renderCity = ({
         translations,
         internalState,
         formState,
+        loading: isStateLoading,
+        disabled: internalState?.country
+          ? isStateLoading || (!isStateLoading && fields?.options?.state?.options.length === 0)
+          : true,
         onInternalStateHandler,
         onInputHandler,
       } as Field)}
@@ -897,7 +950,10 @@ const renderCity = ({
         translations,
         internalState,
         formState,
-        disabled: !internalState?.state?.id,
+        loading: isCityLoading,
+        disabled: internalState?.state
+          ? isCityLoading || (!isCityLoading && fields?.options?.city?.options.length === 0)
+          : true,
         onInternalStateHandler,
         onInputHandler,
       } as Field)}

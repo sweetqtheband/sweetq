@@ -6,7 +6,7 @@ import { ACTIONS, Followers } from "@/app/services/followers";
 import { useRouter } from "next/navigation";
 import MessagePanel from "./message-panel";
 import InstagramChat from "./instagram-chat";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Modal } from "@carbon/react";
 import { Action } from "@/types/action";
 

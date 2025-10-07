@@ -121,6 +121,7 @@ export default function ListLayout({
                       (option: any) => String(option.id) === String(response?.data[key])
                     )?.value || response?.data[key];
                 }
+
                 return acc;
               }
 

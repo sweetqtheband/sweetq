@@ -7,7 +7,7 @@ import { getCollection } from "@/app/services/api/_db";
 import { createLogger } from "./shared/logger.js";
 import { FactorySvc } from "@/app/services/api/factory.js";
 
-const { logProcess } = createLogger("instagram.log");
+const { logProcess } = createLogger("test.log");
 
 const instagramSvc = FactorySvc("instagram", await getCollection("instagram"));
 const tagsSvc = FactorySvc("tags", await getCollection("tags"));
@@ -20,33 +20,32 @@ const getConversationMessageParticipants = async (
   retrying: boolean = false
 ): Promise<Record<string, any>> => {
   try {
-    logProcess(
-      `${retrying ? "Retrying fetching" : "Fetching"} messages from conversation ${conversation.id}`
+    const messages = await instagramSvc.getCachedMessages(instagramSvc, conversation.id);
+
+    return messages.reduce(
+      (acc: Record<string, any>, message: Record<string, any>) => {
+        if (!acc.from) acc.from = {};
+        if (!acc.to) acc.to = {};
+        if (message.from.username) {
+          acc.from[message.from.username] = message.from.id;
+        }
+        if (message.to.data.length > 0) {
+          message.to.data.forEach((to: Record<string, any>) => {
+            acc.to[to.username] = to.id;
+          });
+        }
+
+        if (!acc.messages) {
+          acc.messages = [];
+        }
+
+        if (message.from.username !== "sweetqtheband" && message.message.trim() !== "") {
+          acc.messages.push(message.message);
+        }
+        return acc;
+      },
+      { conversationId: conversation.id }
     );
-    const messages = await instagramSvc.getNonCachedMessages(instagramSvc, conversation.id);
-
-    if (messages[0] !== "CACHED") {
-      await instagramSvc.cacheConversation(conversation.id, JSON.stringify(messages));
-
-      return messages.reduce(
-        (acc: Record<string, any>, message: Record<string, any>) => {
-          if (!acc.from) acc.from = {};
-          if (!acc.to) acc.to = {};
-          if (message.from.username) {
-            acc.from[message.from.username] = message.from.id;
-          }
-          if (message.to.data.length > 0) {
-            message.to.data.forEach((to: Record<string, any>) => {
-              acc.to[to.username] = to.id;
-            });
-          }
-          return acc;
-        },
-        { conversationId: conversation.id }
-      );
-    } else {
-      return { cached: true };
-    }
   } catch (error) {
     logProcess(`Error fetching messages from conversation ${conversation.id}, retrying`);
     if (!retrying) {
@@ -62,8 +61,8 @@ const getConversationMessageParticipants = async (
 
 const fetchMessages = async (data: Record<string, any>) => {
   logProcess("Fetching conversations");
-  const conversations = await instagramSvc.getConversations(instagramSvc);
-  await instagramSvc.cacheConversations(conversations);
+  const conversations = await instagramSvc.getCachedConversations(instagramSvc);
+
   logProcess(`Fetched ${conversations.length} conversations`);
   for (const conversation of conversations) {
     try {
@@ -93,52 +92,16 @@ const fetchMessages = async (data: Record<string, any>) => {
 };
 
 const processMessage = async (message: Record<string, any>) => {
-  const tags: string[] = [];
-  if (Object.keys(message.from).length > 1) {
-    useTags.map((tag: Record<string, any>) => {
-      tags.push(tag._id.toString());
-    });
-  } else if (Object.keys(message.from).length === 1) {
-    useTags.find((tag: Record<string, any>) => {
-      if (tag.name === "Contactado") {
-        tags.push(tag._id.toString());
-      }
-    });
+  if (message.messages && message.messages.length > 0) {
+    const text = message.messages.join("\n").toLowerCase();
+
+    let from = Object.keys(message.from)[0];
+    if (from === "sweetqtheband") {
+      from = Object.keys(message.to)[0];
+    }
+
+    logProcess(`[${from}]: \n${text}`);
   }
-  await Promise.all(
-    [...new Set([...Object.keys(message.from), ...Object.keys(message.to)])].map(
-      async (username: string) => {
-        if (username === "sweetqtheband") return;
-        const follower = await followersSvc.findOne({ username });
-        if (follower) {
-          logProcess(`Updating follower ${follower.username}`);
-
-          if (!follower?.tags) {
-            follower.tags = [];
-          }
-          tags.map((tag: string) => {
-            if (!follower.tags.includes(tag)) {
-              follower.tags.push(tag);
-            }
-          });
-
-          const obj = {
-            _id: follower._id,
-            tags: follower.tags,
-            instagram_conversation_id: message.conversationId,
-            instagram_id: message.from[username] || message.to[username],
-          };
-
-          await followersSvc.update(obj, true);
-          logProcess(
-            `Updated follower ${follower.username} with tags ${follower.tags}, conversationId: ${message.conversationId} and instagramId ${obj.instagram_id}`
-          );
-        } else {
-          logProcess(`Follower ${username} not found`);
-        }
-      }
-    )
-  );
 };
 
 const end = async () => {

@@ -122,12 +122,21 @@ const deduplicateByLatest = (arr: any[]) => {
   return Array.from(map.values());
 };
 
-const getConversations = async (
+const getCachedConversations = async (
   instance: any,
   limit: number = MAX_LIMITS.CONVERSATIONS,
   after: string | null = null,
   conversations: any[] = [],
   maxDate: any = null
+): Promise<any> => getConversations(instance, limit, after, conversations, maxDate, true);
+
+const getConversations = async (
+  instance: any,
+  limit: number = MAX_LIMITS.CONVERSATIONS,
+  after: string | null = null,
+  conversations: any[] = [],
+  maxDate: any = null,
+  onlyCache: boolean = false
 ): Promise<any> => {
   try {
     if (!after) {
@@ -136,6 +145,10 @@ const getConversations = async (
         conversations = JSON.parse(cachedConversations.data.data);
         maxDate = conversations.length ? conversations[0].updated_time : null;
       }
+    }
+
+    if (onlyCache && conversations.length > 0) {
+      return conversations;
     }
 
     const params: Record<string, any> = {
@@ -210,6 +223,25 @@ const getNonCachedMessages = async (
   return getMessages(instance, conversationId, limit, next, conversationMessages, null, true);
 };
 
+const getCachedMessages = async (
+  instance: any,
+  conversationId: string,
+  limit: number = MAX_LIMITS.MESSAGES,
+  next: string | null = null,
+  conversationMessages: any[] = []
+): Promise<any[]> => {
+  return getMessages(
+    instance,
+    conversationId,
+    limit,
+    next,
+    conversationMessages,
+    null,
+    false,
+    true
+  );
+};
+
 const getMessages = async (
   instance: any,
   conversationId: string,
@@ -217,7 +249,8 @@ const getMessages = async (
   next: string | null = null,
   conversationMessages: any[] = [],
   maxDate: any = null,
-  nonCached: boolean = false
+  nonCached: boolean = false,
+  onlyCache: boolean = false
 ): Promise<any[]> => {
   if (!accessToken) {
     await getHeaders(instance);
@@ -237,6 +270,10 @@ const getMessages = async (
 
     if (nonCached && conversationMessages.length > 0) {
       return ["CACHED"];
+    }
+
+    if (onlyCache && conversationMessages.length > 0) {
+      return conversationMessages;
     }
 
     const params: Record<string, any> = {
@@ -366,8 +403,10 @@ export const instagramSvc = (collection: Collection<Document>) => ({
   getAccessToken,
   parseAuthToken,
   getConversations,
+  getCachedConversations,
   cacheConversations,
   cacheConversation,
+  getCachedMessages,
   getNonCachedMessages,
   getMessages,
   getMessage,

@@ -110,6 +110,7 @@ const getFields = async ({ searchParams, i18n }: Readonly<{ searchParams: any; i
         deletes: ["city"],
       },
       city: {}, // No deletes
+      params: searchParams,
     },
   };
 };
@@ -151,6 +152,9 @@ const getFilters = async ({ searchParams, i18n }: Readonly<{ searchParams: any; 
         options: {
           country: await Countries.getOptions({ locale: i18n.locale }),
         },
+        search: {
+          params: searchParams,
+        },
       },
       type: FIELD_TYPES.FILTER_COUNTRY,
     },
@@ -169,6 +173,9 @@ const getFilters = async ({ searchParams, i18n }: Readonly<{ searchParams: any; 
               : null,
           }),
         },
+        search: {
+          params: searchParams,
+        },
       },
       type: FIELD_TYPES.FILTER_STATE,
     },
@@ -186,6 +193,9 @@ const getFilters = async ({ searchParams, i18n }: Readonly<{ searchParams: any; 
               ? { state_id: searchParams["filters[state]"] }
               : null,
           }),
+        },
+        search: {
+          params: searchParams,
         },
       },
       type: FIELD_TYPES.FILTER_CITY,
