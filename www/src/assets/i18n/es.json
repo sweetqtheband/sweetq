@@ -52,11 +52,11 @@
     }
   },
   "gigs": {
-    "20251011": {
+    "20251025": {
       "button": "Link a entradas",
-      "date": "11 Octubre",
-      "text": "El 11 de octubre tienes una cita en <span class='bold'>Madrid</span>. La sala  <span class='bold'>El Perro de la Parte de Atrás del Coche</span> será testigo de una noche del mejor indie pop rock nacional. En esta ocasión, desde Valencia, <span class='bold'>Roble</span> nos acompañará en el escenario para vivir una noche única. ¡No te lo pierdas!",
-      "title": "Sweet Q + Roble en Madrid"
+      "date": "25 Octubre",
+      "text": "El 25 de octubre tienes una cita en <span class='bold'>Madrid</span>. La sala  <span class='bold'>Vesta</span> será testigo de una noche del mejor indie pop rock nacional. En esta ocasión, desde Bilbao, <span class='bold'>Lorreine</span> nos acompañará en el escenario para vivir una noche única. ¡No te lo pierdas!",
+      "title": "Sweet Q + Lorreine en Madrid"
     },
     "label": "Conciertos",
     "next": "Próximos",
@@ -80,7 +80,7 @@
       "lesarts": "¡Vótanos para tocar en el Festival de les Arts!"
     },
     "gigs": {
-      "20251011": "Entradas Sweet Q + Roble en Madrid"
+      "20251025": "Entradas Sweet Q + Lorreine en Madrid"
     },
     "presave": {
       "nohabriasidoasi": "Pre-save 'No habría sido así'"

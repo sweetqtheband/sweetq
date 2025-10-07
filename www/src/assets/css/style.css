@@ -634,23 +634,8 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   width: 100%;
 }
 
-.sq-section.notice.info.contest.lesarts .sq-image.image-cover:before {
-  background-image: url("../imgs/contest/lesarts.jpg");
-}
-
-.sq-section.notice.info.gig.g20250519 .sq-image.image-cover:before {
-  background-image: url("../imgs/gigs/20250519.jpg");
-}
-.sq-section.notice.info.gig.g20250627 .sq-image.image-cover:before {
-  background-image: url("../imgs/gigs/20250627.jpg");
-  background-position: 1px -1px;
-}
-.sq-section.notice.info.gig.g20250802 .sq-image.image-cover:before {
-  background-image: url("../imgs/gigs/20250802.jpg");
-}
-
-.sq-section.notice.info.gig.g20251011 .sq-image.image-cover:before {
-  background-image: url("../imgs/gigs/20251011.png");
+.sq-section.notice.info.gig.g20251025 .sq-image.image-cover:before {
+  background-image: url("../imgs/gigs/20251025.jpg");
 }
 
 .sq-section.notice.info.gig.g20250519 .sq-image.image-cover:before,
