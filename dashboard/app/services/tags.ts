@@ -63,7 +63,7 @@ const getOptions = async (params: any = {}) => {
 const itemRender = (field: string, id: any, base: any) => {
   let value = id;
   let color = null;
-  if (base?.relations[field]) {
+  if (base?.relations?.[field]) {
     const item = base.relations[field].find((item: Record<string, any>) => item._id === id);
     if (item) {
       value = item.name;

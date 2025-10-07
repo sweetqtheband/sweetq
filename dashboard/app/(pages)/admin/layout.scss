@@ -78,6 +78,7 @@ body {
   .cds--selected-tags {
     padding: var(--padding) 0;
     gap: var(--padding);
+    justify-content: flex-start;
     .cds--tag--filter {
       margin: 0;
     }
