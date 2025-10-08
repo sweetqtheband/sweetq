@@ -426,12 +426,14 @@ const renderMultiSelect = ({
     });
 
     ref.current.querySelector("input")?.addEventListener("blur", () => {
-      if (ref.current.dataset?.blurred) {
+      if (ref.current?.dataset?.blurred) {
         ref.current.dataset.blurred = false;
       } else {
         setTimeout(() => {
-          ref.current.dataset.blurred = true;
-          ref.current.querySelector("input")?.blur();
+          if (ref.current?.dataset?.blurred) {
+            ref.current.dataset.blurred = true;
+            ref.current.querySelector("input")?.blur();
+          }
         }, 300);
       }
     });
@@ -911,11 +913,14 @@ const renderCity = ({
   const isStateLoading =
     (!fields.search.params["panel.country"] && Boolean(internalState?.country?.id)) ||
     (Boolean(internalState?.country?.id) &&
+      fields.search.params["panel.country"] &&
       fields.search.params["panel.country"] !== internalState?.country?.id);
 
   const isCityLoading =
-    (!fields.search.params["panel.state"] && Boolean(internalState?.state?.id)) ||
-    (Boolean(internalState?.state?.id) &&
+    isStateLoading ||
+    (!isStateLoading &&
+      Boolean(internalState?.state?.id) &&
+      !Boolean(internalState?.city?.id) &&
       fields.search.params["panel.state"] !== internalState?.state?.id);
   return (
     <div className="cds--flex">

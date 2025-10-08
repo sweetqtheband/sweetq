@@ -39,7 +39,7 @@ import {
 import { Add, Close, Filter, TrashCan, Copy } from "@carbon/react/icons";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { use, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 let timeout: NodeJS.Timeout;
 let imageTimeout: NodeJS.Timeout;
@@ -584,12 +584,12 @@ export default function ListTable({
                   ...formState,
                 };
 
-                delete currentState[field];
+                delete currentState[useField];
 
                 if (value) {
                   setFormState((prevState) => ({
                     ...prevState,
-                    [field]: value,
+                    [useField]: value,
                   }));
                 } else {
                   setFormState((prevState) => ({
