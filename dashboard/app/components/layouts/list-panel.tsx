@@ -123,7 +123,9 @@ export default function ListPanel({
   useEffect(() => {
     const searchFields = Object.keys(searchState).filter((field) => searchState[field]);
     params.forEach((value, key) => {
-      params.delete(key);
+      if (key.startsWith("panel.") && !searchFields.includes(key.replace("panel.", ""))) {
+        params.delete(key);
+      }
     });
     if (searchFields.length) {
       searchFields.forEach((field) => {
