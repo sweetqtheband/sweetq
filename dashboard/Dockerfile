@@ -10,6 +10,7 @@ FROM node:20-alpine
 WORKDIR /app
 
 ENV NODE_ENV=production
+ENV NEXT_PRIVATE_TARGET=server
 
 # Solo copiamos lo necesario para producción
 COPY package*.json ./
