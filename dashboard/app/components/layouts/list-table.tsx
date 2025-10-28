@@ -39,7 +39,7 @@ import {
 import { Add, Close, Filter, TrashCan, Copy } from "@carbon/react/icons";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { MouseEvent, SyntheticEvent, useEffect, useRef, useState } from "react";
 
 let timeout: NodeJS.Timeout;
 let imageTimeout: NodeJS.Timeout;
@@ -426,11 +426,13 @@ export default function ListTable({
           selectRow(row.id);
         }
       });
+      setLastSelectedIndex(rows.length - 1);
       setAllSelected(true);
     } else {
       rows.forEach((row) => {
         selectRow(row.id);
       });
+      setLastSelectedIndex(null);
       setAllSelected(false);
     }
   };
@@ -487,6 +489,7 @@ export default function ListTable({
     text: item,
   }));
 
+  const [lastSelectedIndex, setLastSelectedIndex] = useState<number | null>(null);
   const [selectedLimit, setSelectedLimit] = useState(limitItems.find((item) => item.id === limit));
 
   const defaultCell = headers.find((header) => header.default);
@@ -793,6 +796,22 @@ export default function ListTable({
                         <TableSelectRow
                           {...getSelectionProps({
                             row,
+                            checked: selectedRows.find((selectedRow) => selectedRow.id === row.id),
+                            onClick: (event: MouseEvent) => {
+                              const isSelected = !row.isSelected;
+
+                              if (event.shiftKey && lastSelectedIndex !== null) {
+                                const start = Math.min(lastSelectedIndex, rowIndex);
+                                const end = Math.max(lastSelectedIndex, rowIndex);
+
+                                for (let i = start; i <= end; i++) {
+                                  if (rows[i].isSelected !== isSelected && rows[i].id !== row.id) {
+                                    selectRow(rows[i].id);
+                                  }
+                                }
+                              }
+                              setLastSelectedIndex(rowIndex);
+                            },
                           })}
                         />
                       ) : null}

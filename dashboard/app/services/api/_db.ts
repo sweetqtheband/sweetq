@@ -13,19 +13,26 @@ let _db: Db | null = null;
 let _client: MongoClient | null = null;
 let _connecting = false;
 
-const MONGODB_URI = process.env.MONGODB_URI as string;
+const MONGODB_URI =
+  process.env.NODE_ENV === "development"
+    ? (process.env.MONGODB_URI_DEV as string)
+    : (process.env.MONGODB_URI as string);
 
 async function connectWithRetry(retries = 5, delayMs = 5000): Promise<MongoClient> {
   let lastError: any;
   for (let i = 0; i < retries; i++) {
     try {
-      const client = new MongoClient(MONGODB_URI, {
-        auth: {
-          username: process.env.MONGODB_USER,
-          password: process.env.MONGODB_PASSWORD,
-        },
-        authSource: process.env.MONGODB_AUTH_SOURCE,
-      });
+      const authClient =
+        process.env.NODE_ENV === "development"
+          ? undefined
+          : {
+              auth: {
+                username: process.env.MONGODB_USER,
+                password: process.env.MONGODB_PASSWORD,
+              },
+              authSource: process.env.MONGODB_AUTH_SOURCE,
+            };
+      const client = new MongoClient(MONGODB_URI, authClient);
       await client.connect();
       return client;
     } catch (error: any) {
