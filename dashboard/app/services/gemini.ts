@@ -1,4 +1,4 @@
-import { GoogleGenAI } from '@google/genai';
+import { GoogleGenAI } from "@google/genai";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
@@ -45,9 +45,32 @@ const QUESTIONS = {
  * Gemini service
  */
 export const geminiSvc: any = {
+  models: [
+    "gemini-2.0-flash",
+    "gemini-2.5-flash",
+    "gemini-2.5-flash-lite",
+    "gemini-2.5-flash-lite",
+  ],
+
+  currentModel: null,
+
+  setCurrentModel: () => {
+    if (!geminiSvc.currentModel) {
+      const index = Math.floor(Math.random() * geminiSvc.models.length);
+      geminiSvc.currentModel = geminiSvc.models[index];
+    } else {
+      const currentIndex = geminiSvc.models.indexOf(geminiSvc.currentModel);
+      const nextIndex = (currentIndex + 1) % geminiSvc.models.length;
+      geminiSvc.currentModel = geminiSvc.models[nextIndex];
+    }
+  },
+
   ask: async (question: string) => {
+    if (!geminiSvc.currentModel) {
+      geminiSvc.setCurrentModel();
+    }
     const response = await ai.models.generateContent({
-      model: process.env.GEMINI_MODEL || 'gemini-1.5-turbo',
+      model: geminiSvc.currentModel,
       contents: question,
     });
     return response.candidates?.[0]?.content;
@@ -60,23 +83,19 @@ export const geminiSvc: any = {
         JSON.parse(
           response.parts?.[0]?.text
             .trim()
-            .replace(/```json/, '')
-            .replace(/```/, '')
+            .replace(/```json/, "")
+            .replace(/```/, "")
             .trim()
         ) ?? {}
       );
     } catch (error) {
-      console.error('Error en getUserInfo:', response);
+      console.error("Error en getUserInfo:", response);
       return {};
     }
   },
 
   getUserData: async (data: string) => {
     const response = await geminiSvc.ask(`${QUESTIONS.USER} ${data}`);
-    return (
-      JSON.parse(
-        response.parts?.[0]?.text.replace(/```json/, '').replace(/```/, '')
-      ) ?? {}
-    );
+    return JSON.parse(response.parts?.[0]?.text.replace(/```json/, "").replace(/```/, "")) ?? {};
   },
 };

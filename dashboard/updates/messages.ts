@@ -8,7 +8,7 @@ import { createLogger } from "./shared/logger.js";
 
 const { logProcess } = createLogger("messages.log");
 
-const MESSAGE_LIMIT = 500;
+const MESSAGE_LIMIT = 1000;
 let processedCount = 0;
 
 const elements = {
