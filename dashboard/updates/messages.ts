@@ -8,12 +8,13 @@ import { createLogger } from "./shared/logger.js";
 
 const { logProcess } = createLogger("messages.log");
 
-const MESSAGE_LIMIT = 1000;
+const MESSAGE_LIMIT = 100;
 let processedCount = 0;
 
 const elements = {
   buttonMenuSendMessage: 'main section:nth-child(2) > div > div > div:nth-child(2) [role="button"]',
   buttonUserMenu: "main section:nth-child(2) > div > div > div:nth-child(3) > div",
+  buttonDirectSendMessage: "main section:nth-child(3) [role=button]",
   buttonUserMenuSendMessage: "div button:nth-child(6)",
   inputMessage: 'div[aria-label="Mensaje"][contenteditable="true"]',
   buttonSendMessage: '[role="navigation"] + div [role="button"]',
@@ -40,6 +41,67 @@ const instagramSvc = FactorySvc("instagram", await getCollection("instagram"));
 
 const sendMessage = async ({ obj }: Message) => instagramSvc.sendMessage(instagramSvc, obj);
 
+const sendMessageFromMenu = async (page: Page) => {
+  try {
+    const buttonMenuSendMessage = await page.waitForSelector(elements.buttonMenuSendMessage);
+    await buttonMenuSendMessage?.click();
+
+    const buttonSendMessage = await page.waitForSelector(elements.buttonUserMenuSendMessage);
+    await buttonSendMessage?.click();
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+const sendMessageFromMenuOld = async (page: Page) => {
+  try {
+    const buttonUserMenu = await page.waitForSelector(elements.buttonUserMenu);
+    await buttonUserMenu?.click();
+
+    const buttonSendMessage = await page.waitForSelector(elements.buttonUserMenuSendMessage);
+    await buttonSendMessage?.click();
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+const sendMessageDirectFromMenu = async (page: Page) => {
+  try {
+    const directFromMenu = await page.evaluate(
+      (handler: any) =>
+        (document.querySelector(handler) as HTMLElement)?.innerText === "Send Message" ||
+        (document.querySelector(handler) as HTMLElement)?.innerText === "Enviar mensaje",
+      elements.buttonDirectSendMessage
+    );
+
+    if (directFromMenu) {
+      const buttonMenuSendMessage = await page.waitForSelector(elements.buttonDirectSendMessage);
+      await buttonMenuSendMessage?.click();
+      return true;
+    }
+
+    return false;
+  } catch {
+    return false;
+  }
+};
+
+const sendMessageFlow = async (page: Page) => {
+  if (await sendMessageDirectFromMenu(page)) {
+    return true;
+  }
+
+  if (await sendMessageFromMenu(page)) {
+    return true;
+  }
+
+  if (await sendMessageFromMenuOld(page)) {
+    return true;
+  }
+};
+
 const sendInstagramMessage = async ({ obj, browser, page }: InstagramMessage) => {
   try {
     await page.setUserAgent(
@@ -51,21 +113,7 @@ const sendInstagramMessage = async ({ obj, browser, page }: InstagramMessage) =>
 
     // Check if send message button exists in menu
 
-    const directFromMenu = await page.evaluate(
-      (handler) => (document.querySelector(handler) as HTMLElement)?.innerText === "Enviar mensaje",
-      elements.buttonMenuSendMessage
-    );
-
-    if (directFromMenu) {
-      const buttonMenuSendMessage = await page.waitForSelector(elements.buttonMenuSendMessage);
-      await buttonMenuSendMessage?.click();
-    } else {
-      const buttonUserMenu = await page.waitForSelector(elements.buttonUserMenu);
-      await buttonUserMenu?.click();
-
-      const buttonSendMessage = await page.waitForSelector(elements.buttonUserMenuSendMessage);
-      await buttonSendMessage?.click();
-    }
+    await sendMessageFlow(page);
 
     await page.waitForSelector(elements.inputMessage);
 
@@ -105,6 +153,14 @@ const sendInstagramMessage = async ({ obj, browser, page }: InstagramMessage) =>
     console.log("Error sending Instagram message:", error);
     throw error;
   }
+};
+
+const wait = async (seconds: number, log: boolean = false) => {
+  if (log) {
+    logProcess(`Esperando ${seconds} segundos...`);
+  }
+  const randomTime = seconds * 1000;
+  return new Promise((r) => setTimeout(r, randomTime));
 };
 
 const randomWait = async (seconds: number, log: boolean = false) => {

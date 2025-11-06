@@ -1,20 +1,13 @@
-import * as dataEn from '@emoji-mart/data';
-import dataEs from './data-es.json';
-import Picker from '@emoji-mart/react';
-import {
-  ReactElement,
-  RefObject,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import ContentEditable, { ContentEditableEvent } from 'react-contenteditable';
-import './content-area.scss';
-import { FaceAdd, Parameter, Send } from '@carbon/react/icons';
-import { ICON_SIZES, VARIABLES } from '@/app/constants';
-import { Dropdown } from '@carbon/react';
-import { getClasses, isMobile, uuid } from '@/app/utils';
+import * as dataEn from "@emoji-mart/data";
+import dataEs from "./data-es.json";
+import Picker from "@emoji-mart/react";
+import { ReactElement, RefObject, useCallback, useEffect, useRef, useState } from "react";
+import ContentEditable, { ContentEditableEvent } from "react-contenteditable";
+import "./content-area.scss";
+import { FaceAdd, Parameter, Send } from "@carbon/react/icons";
+import { ICON_SIZES, VARIABLES } from "@/app/constants";
+import { Dropdown } from "@carbon/react";
+import { getClasses, isMobile, uuid } from "@/app/utils";
 
 const pickerLocale: Record<string, any> = {
   en: dataEn,
@@ -23,13 +16,13 @@ const pickerLocale: Record<string, any> = {
 
 export default function ContentArea({
   id = uuid(),
-  locale = 'es',
-  value = '',
+  locale = "es",
+  value = "",
   translations = {},
   invalid = false,
   onChange = () => {},
   onSend = null,
-  variant = 'default',
+  variant = "default",
   hasParameter = false,
 }: Readonly<{
   id?: string;
@@ -49,7 +42,7 @@ export default function ContentArea({
   const [defaultVarValue, setDefaultVarValue] = useState<string>();
   const [defaultValue, setDefaultValue] = useState<string>(value);
 
-  const onChangeHandler = useCallback(() => {    
+  const onChangeHandler = useCallback(() => {
     const text = contentEditableRef.current?.innerText;
     if (text) {
       onChange(text);
@@ -58,11 +51,11 @@ export default function ContentArea({
 
   useEffect(() => {
     if (value !== contentEditableRef.current?.innerText) {
-      setDefaultValue(value.replace(/\n/g, '<br>'));
+      setDefaultValue(value.replace(/\n/g, "<br>"));
     }
   }, [value]);
 
-  const handleChange = (e: ContentEditableEvent) => {    
+  const handleChange = (e: ContentEditableEvent) => {
     setDefaultValue(e.target.value);
   };
   const [showPicker, setShowPicker] = useState<boolean>(false);
@@ -86,7 +79,7 @@ export default function ContentArea({
   useEffect(() => {
     if (defaultVarValue) {
       setDefaultValue(defaultValue + defaultVarValue);
-      setDefaultVarValue('');
+      setDefaultVarValue("");
       setShowParameter(false);
     }
   }, [defaultValue, defaultVarValue]);
@@ -94,8 +87,8 @@ export default function ContentArea({
   useEffect(() => {
     const pos = emojiWrapperRef.current?.getBoundingClientRect();
     if (pos?.bottom || 0 > window.innerHeight) {
-      emojiWrapperRef.current?.style.setProperty('top', 'auto');
-      emojiWrapperRef.current?.style.setProperty('bottom', '0');
+      emojiWrapperRef.current?.style.setProperty("top", "auto");
+      emojiWrapperRef.current?.style.setProperty("bottom", "0");
     }
   }, [showPicker, emojiWrapperRef]);
 
@@ -129,12 +122,12 @@ export default function ContentArea({
     onChangeHandler();
     if (onSend) {
       onSend(contentEditableRef.current?.innerText);
-      setDefaultValue('');
+      setDefaultValue("");
     }
   };
 
   const onKeyDownHandler = (e: any) => {
-    if (onSend && e.key === 'Enter' && !e.shiftKey) {
+    if (onSend && e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     }
@@ -144,7 +137,7 @@ export default function ContentArea({
       <div
         data-variant={variant}
         className={getClasses({
-          'contenteditable--wrapper': true,
+          "contenteditable--wrapper": true,
           error: invalid,
         })}
       >
@@ -160,15 +153,9 @@ export default function ContentArea({
           />
         </div>
         <div className="contenteditable--actions">
-          {hasParameter ? (
-            <Parameter size={ICON_SIZES.MD} onClick={handleShowVars} />
-          ) : null}
-          {!isMobile() ? (
-            <FaceAdd size={ICON_SIZES.MD} onClick={handleShowEmoji} />
-          ) : null}
-          {typeof onSend === 'function' ? (
-            <Send size={ICON_SIZES.MD} onClick={handleSend} />
-          ) : null}
+          {hasParameter ? <Parameter size={ICON_SIZES.MD} onClick={handleShowVars} /> : null}
+          {!isMobile() ? <FaceAdd size={ICON_SIZES.MD} onClick={handleShowEmoji} /> : null}
+          {typeof onSend === "function" ? <Send size={ICON_SIZES.MD} onClick={handleSend} /> : null}
         </div>
       </div>
       {showParameter && (
@@ -176,7 +163,7 @@ export default function ContentArea({
           autoAlign={true}
           id={id}
           label={translations.fields.vars}
-          titleText={''}
+          titleText={""}
           items={VARIABLES.map((item) => ({
             ...item,
             text: translations.vars[item.id] || item.text,

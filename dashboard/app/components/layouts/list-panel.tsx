@@ -115,6 +115,13 @@ export default function ListPanel({
       );
 
       if (Object.keys(formData).length) {
+        setSearchState((prev) => ({
+          ...prev,
+          ...Object.keys(searchState).reduce((acc: Record<string, any>, field: string) => {
+            acc[field] = formData[field] !== undefined ? true : prev[field];
+            return acc;
+          }, {}),
+        }));
         setFormState((prev: any) => ({ ...prev, ...formData, _id: data._id }));
       }
     }
@@ -122,7 +129,7 @@ export default function ListPanel({
   // Search params effect
   useEffect(() => {
     const searchFields = Object.keys(searchState).filter((field) => searchState[field]);
-    params.forEach((value, key) => {
+    params.forEach((_, key) => {
       if (key.startsWith("panel.") && !searchFields.includes(key.replace("panel.", ""))) {
         params.delete(key);
       }

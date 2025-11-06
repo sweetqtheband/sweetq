@@ -21,7 +21,5 @@ export const Model = (data: any): Model => {
     obj._id = String(data._id);
   }
 
-  console.log(data);
-
   return obj;
 };

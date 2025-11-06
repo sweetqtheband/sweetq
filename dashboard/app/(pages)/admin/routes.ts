@@ -1,41 +1,50 @@
-import { Route } from '@/types/route';
+import { Route } from "@/types/route";
 
 export const routes: Route[] = [
   {
-    text: 'instagram',
-    path: '/admin/instagram',
+    text: "instagram",
+    children: [
+      {
+        text: "followers",
+        path: "/admin/instagram/followers",
+      },
+      {
+        text: "following",
+        path: "/admin/instagram/followings",
+      },
+    ],
   },
   {
-    text: 'tracks',
-    path: '/admin/tracks',
+    text: "tracks",
+    path: "/admin/tracks",
   },
   {
-    text: 'gigs',
-    path: '/admin/gigs',
+    text: "gigs",
+    path: "/admin/gigs",
   },
 
   {
-    text: 'bands',
-    path: '/admin/bands',
+    text: "bands",
+    path: "/admin/bands",
   },
   {
-    text: 'config',
+    text: "config",
     children: [
       {
-        text: 'users',
-        path: '/admin/users',
+        text: "users",
+        path: "/admin/users",
       },
       {
-    text: 'layouts',
-    path: '/admin/layouts'
-  },
-  {
-    text: 'config',
-    path: '/admin/config'
-  },
-  {
-        text: 'tags',
-        path: '/admin/tags',
+        text: "layouts",
+        path: "/admin/layouts",
+      },
+      {
+        text: "config",
+        path: "/admin/config",
+      },
+      {
+        text: "tags",
+        path: "/admin/tags",
       },
     ],
   },

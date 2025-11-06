@@ -33,7 +33,7 @@ const scrapPage = async (browser: any, page: any, params: any) => {
   return params;
 };
 
-const updateUser = async (scrappedUsers: any[], users: any[], col: any) => {
+const updateUser = async (scrappedUsers: any[], users: any[], col: any, match?: any[] = []) => {
   return Promise.allSettled(
     scrappedUsers.map(async (user: any) =>
       limit(async () => {
@@ -69,12 +69,21 @@ const updateUser = async (scrappedUsers: any[], users: any[], col: any) => {
           }
         }
 
+        if (match.length) {
+          const matched = match.find((m: any) => m.username === user.username);
+          if (matched) {
+            user.followed_back = true;
+          }
+        }
+
         return col.updateOne(
           { id: user.id },
           {
             $set: Object.keys(user).reduce((acc: Record<string, any>, key) => {
               acc[key] = user[key];
-              acc.unfollow = false;
+              if (!match.length) {
+                acc.unfollow = false;
+              }
               return acc;
             }, {}),
           },
@@ -85,7 +94,6 @@ const updateUser = async (scrappedUsers: any[], users: any[], col: any) => {
   );
 };
 const update = async (params: any) => {
-  console.log("UPDATING DB");
   const followersCol = await getCollection("followers");
   const followingsCol = await getCollection("followings");
 
@@ -94,10 +102,10 @@ const update = async (params: any) => {
 
   const updateDate = new Date();
 
-  // First of all, update all followers and followings with an unollow status
+  // First of all, update all followers and followings with an unfollow status
   await followersCol.updateMany({}, { $set: { unfollow: true, updateDate } });
   logProcess("FOLLOWERS UNFOLLOWED");
-  await followingsCol.updateMany({}, { $set: { unfollow: true, updateDate } });
+  await followingsCol.updateMany({}, { $set: { followed_back: false, updateDate } });
   logProcess("FOLLOWINGS UNFOLLOWED");
 
   console.log(scrappedFollowers, scrappedFollowings);

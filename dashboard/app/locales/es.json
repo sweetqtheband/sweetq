@@ -93,6 +93,7 @@
     "description": "Descripción",
     "email": "Email",
     "event": "URL de evento / noticia relacionada",
+    "followedBack": "Siguiéndonos",
     "from": "Desde",
     "fullName": "Nombre completo",
     "hour": "Hora",
@@ -163,7 +164,6 @@
           "label": "¿Estás seguro de que quieres cancelar el envío del mensaje?"
         }
       },
-      "description": "{{total}} seguidores",
       "panel": {
         "collectiveMessage": "Mensaje a colectivos",
         "modes": {
@@ -179,7 +179,14 @@
         },
         "vars": "Variables"
       },
-      "title": "Instagram"
+      "followers": {
+        "description": "{{total}} seguidores",
+        "title": "Seguidores de Instagram"
+      },
+      "following": {
+        "description": "{{total}} seguidos",
+        "title": "Seguidos de Instagram"
+      }
     }
   },
   "robots": {
@@ -195,6 +202,8 @@
     "gigs": "Conciertos",
     "gmail": "Gmail",
     "instagram": "Instagram",
+    "followers": "Seguidores",
+    "following": "Seguidos",
     "layouts": "Plantillas",
     "news": "Noticias",
     "tags": "Etiquetas",

@@ -14,7 +14,7 @@ let _client: MongoClient | null = null;
 let _connecting = false;
 
 const MONGODB_URI =
-  process.env.NODE_ENV === "development"
+  process.env.NODE_ENV === "development" && !process.env.DB_PROD
     ? (process.env.MONGODB_URI_DEV as string)
     : (process.env.MONGODB_URI as string);
 
@@ -23,7 +23,7 @@ async function connectWithRetry(retries = 5, delayMs = 5000): Promise<MongoClien
   for (let i = 0; i < retries; i++) {
     try {
       const authClient =
-        process.env.NODE_ENV === "development"
+        process.env.NODE_ENV === "development" && !process.env.DB_PROD
           ? undefined
           : {
               auth: {

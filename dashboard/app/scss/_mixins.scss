@@ -1,4 +1,4 @@
-@use '@scss/vars' as vars;
+@use "@scss/vars" as vars;
 
 @mixin breakpoint($breakpoint) {
   $query: map-get(vars.$breakpoints, $breakpoint);
@@ -15,6 +15,16 @@
 
   @if $query {
     @media screen and (#{$query}) {
+      @content;
+    }
+  }
+}
+
+@mixin heightBreakpoint($height) {
+  $query: map-get(vars.$heights, $height);
+
+  @if $query {
+    @media (#{$query}) {
       @content;
     }
   }

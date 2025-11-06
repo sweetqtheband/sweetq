@@ -61,6 +61,18 @@ interface Field {
 // Hidden field
 const renderHidden = ({ field, value }: Field) => <input type="hidden" key={field} value={value} />;
 
+const renderBoolean = ({ field, value, translations }: Field) => {
+  return (
+    <FormItem key={field}>
+      <Checkbox
+        labelText={translations.fields[field]}
+        id={field}
+        checked={value === true || value === "true"}
+      />
+    </FormItem>
+  );
+};
+
 // Image field
 const renderImage = ({ field, value }: Field) => {
   let defaultValue = value;
@@ -1030,6 +1042,7 @@ const renderContentArea = ({ field, value, translations, formState, onInputHandl
 };
 
 const renderers = {
+  [FIELD_TYPES.BOOLEAN]: () => renderBoolean,
   [FIELD_TYPES.CHECKBOX]: renderCheckbox,
   [FIELD_TYPES.CONTENTAREA]: renderContentArea,
   [FIELD_TYPES.CITY]: renderCity,

@@ -1,3 +1,5 @@
+@use "@scss/mixins" as *;
+
 :root {
   --contenteditable-toolbar-height: 32px;
 }
@@ -48,7 +50,7 @@
   }
 }
 
-.contenteditable--wrapper[data-variant='input'] {
+.contenteditable--wrapper[data-variant="input"] {
   max-height: 50px;
   position: absolute;
   width: calc(100% - calc(var(--padding) * 2));
@@ -81,4 +83,10 @@
 }
 .invisible {
   display: none;
+}
+
+@include heightBreakpoint(small) {
+  .emoji-picker {
+    zoom: 0.8;
+  }
 }

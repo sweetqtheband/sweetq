@@ -69,6 +69,7 @@ export const SORT: Record<string, number> = {
 };
 
 export const FIELD_TYPES: Record<string, FieldTypesType> = {
+  BOOLEAN: "boolean",
   CHECKBOX: "checkbox",
   CITY: "city",
   CONTENTAREA: "contentArea",
@@ -100,6 +101,7 @@ export const IG = {
   EXPIRES: "instagram:expires",
 };
 export const RENDER_TYPES: Record<string, string> = {
+  BOOLEAN: "boolean",
   TAG: "tag",
   LINK: "link",
   COLOR: "color",

@@ -5,6 +5,7 @@ import { bandsSvc } from "./bands";
 import { cacheSvc } from "./cache";
 import { newsSvc } from "./news";
 import { followersSvc } from "./followers";
+import { followingsSvc } from "./followings";
 import { citiesSvc } from "./cities";
 import { statesSvc } from "./states";
 import { tagsSvc } from "./tags";
@@ -26,6 +27,7 @@ let factory: FactoryType = {
   bands: bandsSvc,
   news: newsSvc,
   followers: followersSvc,
+  followings: followingsSvc,
   cache: cacheSvc,
   countries: countriesSvc,
   states: statesSvc,

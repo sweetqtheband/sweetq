@@ -1,20 +1,26 @@
 $breakpoints: (
-  mobile: 'max-width: 639px',
-  tablet: 'min-width: 640px) and (max-width: 1023px',
-  laptop: 'min-width: 1024px) and (max-width: 1279px',
-  desktop: 'min-width: 1280px) and (max-width: 1920px',
-  widescreen: 'min-width: 1920px',
+  mobile: "max-width: 639px",
+  tablet: "min-width: 640px) and (max-width: 1023px",
+  laptop: "min-width: 1024px) and (max-width: 1279px",
+  desktop: "min-width: 1280px) and (max-width: 1920px",
+  widescreen: "min-width: 1920px",
 );
 
 $from: (
-  mobile: 'min-width: 0px',
-  tablet: 'min-width: 640px',
-  laptop: 'min-width: 1024px',
-  desktop: 'min-width: 1280px',
-  widescreen: 'min-width: 1920px',
+  mobile: "min-width: 0px",
+  tablet: "min-width: 640px",
+  laptop: "min-width: 1024px",
+  desktop: "min-width: 1280px",
+  widescreen: "min-width: 1920px",
+);
+
+$heights: (
+  small: "max-height: 500px",
+  medium: "min-height: 501px) and (max-height: 768px",
+  large: "min-height: 768px",
 );
 
 $themes: (
-  light: 'prefers-color-scheme: light',
-  dark: 'prefers-color-scheme: dark',
+  light: "prefers-color-scheme: light",
+  dark: "prefers-color-scheme: dark",
 );

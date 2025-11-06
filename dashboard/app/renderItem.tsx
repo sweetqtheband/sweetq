@@ -4,6 +4,18 @@ import { Tag, Tooltip } from "@carbon/react";
 import Link from "next/link";
 import { LogoWechat, NotSentFilled } from "@carbon/react/icons";
 
+const renderBoolean = (obj: any) => {
+  console.log(obj);
+  return (
+    <>
+      {obj.value ? (
+        <span className="boolean-true">✔</span>
+      ) : (
+        <span className="boolean-false">✘</span>
+      )}
+    </>
+  );
+};
 const renderColor = (obj: any) => (
   <>
     <span className={`color-block ${obj.color}`}>T</span>
@@ -51,6 +63,7 @@ const renderInstagramMessage = (obj: any) => {
 };
 
 const renderers = {
+  [RENDER_TYPES.BOOLEAN]: renderBoolean,
   [RENDER_TYPES.COLOR]: renderColor,
   [RENDER_TYPES.TAG]: renderTag,
   [RENDER_TYPES.LINK]: renderLink,

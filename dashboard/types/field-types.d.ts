@@ -1,4 +1,5 @@
 export enum FieldTypes {
+  boolean = "boolean",
   checkbox = "checkbox",
   city = "city",
   contentArea = "contentArea",

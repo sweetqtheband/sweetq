@@ -93,6 +93,7 @@
     "description": "Description",
     "email": "Email",
     "event": "Event / news URL",
+    "followedBack": "Following us back",
     "from": "From",
     "fullName": "Full name",
     "hour": "Hour",
@@ -179,6 +180,14 @@
         },
         "vars": "Variables"
       },
+      "followers": {
+        "description": "{{total}} followers",
+        "title": "Instagram followers"
+      },
+      "following": {
+        "description": "{{total}} following",
+        "title": "Instagram following"
+      },
       "title": "Instagram"
     }
   },
@@ -192,6 +201,8 @@
     "bands": "Bands",
     "config": "Configuration",
     "contact": "Contact",
+    "followers": "Followers",
+    "following": "Following",
     "gigs": "Gigs",
     "gmail": "Gmail",
     "instagram": "Instagram",

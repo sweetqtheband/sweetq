@@ -108,6 +108,7 @@ const getFields = async ({ searchParams, i18n }: Readonly<{ searchParams: any; i
           deletes: ["city"],
         },
         city: {}, // No deletes
+        params: searchParams,
       },
     };
   } catch (error) {
