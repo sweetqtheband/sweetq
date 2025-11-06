@@ -1,13 +1,12 @@
 [
   {
-    "type": "info gig g20251025",
-    "title": "gigs.20251025.title",
-    "subtitle": "gigs.20251025.date",
-    "text": "gigs.20251025.text",
-    "button": "gigs.20251025.button",
-    "squared": true,
-    "icon": "icon-gigs",
-    "href": "https://entradium.com/events/sweet-q-y-lorreine-en-vesta"
+    "type": "info video nohabriasidoasi",
+    "title": "video.nohabriasidoasi.title",
+    "subtitle": "video.nohabriasidoasi.subtitle",
+    "text": "video.nohabriasidoasi.text",
+    "button": "video.nohabriasidoasi.button",
+    "icon": "icon-youtube",
+    "youtubeHref": "https://www.youtube.com/watch?v=GNCZnM4A8Us"
   },
   {
     "type": "info cover nohabriasidoasi",
@@ -17,14 +16,5 @@
     "button": "info.button",
     "icon": "icon-spotify",
     "spotifyHref": "https://open.spotify.com/intl-es/album/0jYNYEI1QI8LtDYpbCr1Vt"
-  },
-  {
-    "type": "info video fiesta",
-    "title": "video.fiesta.title",
-    "subtitle": "video.fiesta.subtitle",
-    "text": "video.fiesta.text",
-    "button": "video.fiesta.button",
-    "icon": "icon-youtube",
-    "youtubeHref": "https://www.youtube.com/watch?v=2FryW1MtBus"
   }
 ]
