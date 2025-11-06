@@ -530,117 +530,119 @@ export default function ListTable({
                 <Close size={32} className="close" onClick={onCloseHandler} />
               </div>
             ) : null}
-            {filterFields.map((filterField: string, index: number) => {
-              const handleFilterRemove = (field: any, value: any) => {
-                setClearField(field);
-                return handleFilter(field, null);
-              };
-              const handleFilter = (field: any, value: any) => {
-                const useField = field instanceof Array ? field[0] : field;
+            <>
+              {filterFields.map((filterField: string, index: number) => {
+                const handleFilterRemove = (field: any, value: any) => {
+                  setClearField(field);
+                  return handleFilter(field, null);
+                };
+                const handleFilter = (field: any, value: any) => {
+                  const useField = field instanceof Array ? field[0] : field;
 
-                if (clearField && useField !== clearField) {
-                  return;
-                }
+                  if (clearField && useField !== clearField) {
+                    return;
+                  }
 
-                setIsLoading(true);
-                setIsWaiting(true);
-                const params = new URLSearchParams(searchParams);
+                  setIsLoading(true);
+                  setIsWaiting(true);
+                  const params = new URLSearchParams(searchParams);
 
-                params.delete("page");
+                  params.delete("page");
 
-                let isClear = false;
+                  let isClear = false;
 
-                if (value instanceof Array) {
-                  if (value.length > 0) {
-                    params.set(`filters[${useField}]`, value.join(","));
+                  if (value instanceof Array) {
+                    if (value.length > 0) {
+                      params.set(`filters[${useField}]`, value.join(","));
+                    } else {
+                      params.delete(`filters[${useField}]`);
+                      if (fields?.search?.[useField]?.deletes?.length > 0) {
+                        fields.search[useField].deletes.forEach((deleteField: string) => {
+                          params.delete(`filters[${deleteField}]`);
+                        });
+                      }
+                    }
+                    isClear = true;
+                  } else if (value) {
+                    params.set(`filters[${useField}]`, value);
                   } else {
                     params.delete(`filters[${useField}]`);
+
                     if (fields?.search?.[useField]?.deletes?.length > 0) {
                       fields.search[useField].deletes.forEach((deleteField: string) => {
                         params.delete(`filters[${deleteField}]`);
                       });
                     }
+                    isClear = true;
                   }
-                  isClear = true;
-                } else if (value) {
-                  params.set(`filters[${useField}]`, value);
-                } else {
-                  params.delete(`filters[${useField}]`);
 
-                  if (fields?.search?.[useField]?.deletes?.length > 0) {
-                    fields.search[useField].deletes.forEach((deleteField: string) => {
-                      params.delete(`filters[${deleteField}]`);
-                    });
+                  let newPath = pathname;
+
+                  if (params.size > 0) {
+                    newPath += `?${params.toString()}`;
                   }
-                  isClear = true;
-                }
 
-                let newPath = pathname;
+                  replace(newPath);
 
-                if (params.size > 0) {
-                  newPath += `?${params.toString()}`;
-                }
+                  const currentState = {
+                    ...formState,
+                  };
 
-                replace(newPath);
-
-                const currentState = {
-                  ...formState,
-                };
-
-                delete currentState[useField];
-
-                if (value) {
-                  setFormState((prevState) => ({
-                    ...prevState,
-                    [useField]: value,
-                  }));
-                } else {
-                  setFormState((prevState) => ({
-                    ...currentState,
-                  }));
-                }
-              };
-
-              const handleFilterInternalState = (field: string, value: any) => {
-                onInternalStateHandler(field, value);
-                handleFilter(field, null);
-              };
-
-              const handleFilterFormState = (field: string, value: any) => {
-                setFormState((prevState) => {
-                  const filterFormState = { ...prevState };
-                  delete filterFormState[field];
+                  delete currentState[useField];
 
                   if (value) {
-                    filterFormState[field] = value;
+                    setFormState((prevState) => ({
+                      ...prevState,
+                      [useField]: value,
+                    }));
                   } else {
-                    filterFormState[field] = null;
-
-                    if (fields?.search?.[field]?.deletes?.length > 0) {
-                      fields.search[field].deletes.forEach((deleteField: string) => {
-                        filterFormState[deleteField] = null;
-                      });
-                    }
+                    setFormState((prevState) => ({
+                      ...currentState,
+                    }));
                   }
+                };
 
-                  return filterFormState;
+                const handleFilterInternalState = (field: string, value: any) => {
+                  onInternalStateHandler(field, value);
+                  handleFilter(field, null);
+                };
+
+                const handleFilterFormState = (field: string, value: any) => {
+                  setFormState((prevState) => {
+                    const filterFormState = { ...prevState };
+                    delete filterFormState[field];
+
+                    if (value) {
+                      filterFormState[field] = value;
+                    } else {
+                      filterFormState[field] = null;
+
+                      if (fields?.search?.[field]?.deletes?.length > 0) {
+                        fields.search[field].deletes.forEach((deleteField: string) => {
+                          filterFormState[deleteField] = null;
+                        });
+                      }
+                    }
+
+                    return filterFormState;
+                  });
+                };
+
+                return renderField({
+                  ...filters[filterField],
+                  key: "filter-" + index,
+                  ready: !isLoading,
+                  translations,
+                  field: filterField,
+                  formState,
+                  internalState,
+                  onFormStateHandler: handleFilterFormState,
+                  onInternalStateHandler: handleFilterInternalState,
+                  onInputHandler: handleFilter,
+                  onRemoveHandler: handleFilterRemove,
                 });
-              };
-
-              return renderField({
-                ...filters[filterField],
-                key: "filter-" + index,
-                ready: !isLoading,
-                translations,
-                field: filterField,
-                formState,
-                internalState,
-                onFormStateHandler: handleFilterFormState,
-                onInternalStateHandler: handleFilterInternalState,
-                onInputHandler: handleFilter,
-                onRemoveHandler: handleFilterRemove,
-              });
-            })}
+              })}
+            </>
           </PopoverContent>
         </Popover>
       );

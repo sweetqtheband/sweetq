@@ -1080,7 +1080,7 @@ export const renderField = (obj: any) => {
       renderObj
     ) : (
       <div className={className} key={obj.key}>
-        {renderObj}
+        <>{renderObj}</>
       </div>
     );
   }

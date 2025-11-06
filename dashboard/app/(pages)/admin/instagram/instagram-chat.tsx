@@ -1,13 +1,13 @@
-import { ContentArea, Panel } from '@/app/components';
-import { SkeletonPlaceholder, SkeletonText } from '@carbon/react';
-import { useEffect, useRef, useState } from 'react';
+import { ContentArea, Panel } from "@/app/components";
+import { SkeletonPlaceholder, SkeletonText } from "@carbon/react";
+import { useEffect, useRef, useState } from "react";
 
-import './instagram-chat.scss';
-import { instagram } from '@/app/services/instagram';
-import { dateFormat, getClasses } from '@/app/utils';
-import { renderField } from '@/app/render';
-import { FIELD_TYPES } from '@/app/constants';
-import { useEventBus } from '@/app/hooks/event';
+import "./instagram-chat.scss";
+import { instagram } from "@/app/services/instagram";
+import { dateFormat, getClasses } from "@/app/utils";
+import { renderField } from "@/app/render";
+import { FIELD_TYPES } from "@/app/constants";
+import { useEventBus } from "@/app/hooks/event";
 
 export default function InstagramChat({
   item,
@@ -29,8 +29,7 @@ export default function InstagramChat({
     username: null,
   };
 
-  const { on: onInstagramMessage, off: offInstragramMessage } =
-    useEventBus('chat');
+  const { on: onInstagramMessage, off: offInstragramMessage } = useEventBus("chat");
   const [isInitialized, setIsInitialized] = useState<boolean>(false);
 
   const today = new Date();
@@ -79,9 +78,7 @@ export default function InstagramChat({
   useEffect(() => {
     if (item && !isInitialized) {
       const initialize = async () => {
-        const response = await instagram.getMessages(
-          item.instagram_conversation_id
-        );
+        const response = await instagram.getMessages(item.instagram_conversation_id);
         setMessages([...response.data.reverse()]);
         setIsInitialized(true);
       };
@@ -141,9 +138,9 @@ export default function InstagramChat({
   };
 
   const parseDate = (date: Date) => {
-    let formatStr = 'chat.date';
+    let formatStr = "chat.date";
     if (today.getFullYear() !== date.getFullYear()) {
-      formatStr = 'chat.dateYear';
+      formatStr = "chat.dateYear";
     }
 
     const yesterday = new Date();
@@ -154,7 +151,7 @@ export default function InstagramChat({
       yesterday.getMonth() === date.getMonth() &&
       yesterday.getDate() === date.getDate()
     ) {
-      formatStr = 'chat.dateYesterday';
+      formatStr = "chat.dateYesterday";
     }
 
     if (
@@ -162,7 +159,7 @@ export default function InstagramChat({
       today.getMonth() === date.getMonth() &&
       today.getDate() === date.getDate()
     ) {
-      formatStr = 'chat.dateToday';
+      formatStr = "chat.dateToday";
     }
 
     return dateFormat(date, formatStr, null, translations);
@@ -174,28 +171,29 @@ export default function InstagramChat({
     next: Record<string, any> | null,
     index: number
   ) => {
-    const isMe =
-      process.env.NEXT_PUBLIC_INSTAGRAM_USERNAME === msg.from.username;
+    const isMe = process.env.NEXT_PUBLIC_INSTAGRAM_USERNAME === msg.from.username;
 
     let hideAvatar = false;
 
     const classesObj: any = {
       message: true,
-      'message-personal': isMe,
-      'message-first': false,
-      'message-last': false,
+      "message-personal": isMe,
+      "message-first": false,
+      "message-last": false,
     };
 
-    const img = !isMe
-      ? renderField({
+    const img = !isMe ? (
+      <>
+        {renderField({
           type: FIELD_TYPES.IMAGE,
           field: msg.from.username,
           value: item?.profile_pic_url,
-        })
-      : null;
+        })}
+      </>
+    ) : null;
 
     const createdTime = new Date(msg.created_time);
-    const date = dateFormat(createdTime, 'timestamp', null, translations);
+    const date = dateFormat(createdTime, "timestamp", null, translations);
 
     let updateDate = false;
     if (date !== data.date) {
@@ -203,30 +201,20 @@ export default function InstagramChat({
       updateDate = true;
     }
 
-    if (
-      updateDate ||
-      !previous ||
-      previous.from.username !== msg.from.username
-    ) {
-      classesObj['message-first'] = true;
+    if (updateDate || !previous || previous.from.username !== msg.from.username) {
+      classesObj["message-first"] = true;
     } else {
       if (
         (next &&
           next.from.username !== msg.from.username &&
           previous?.from.username === msg.from.username) ||
         (next?.created_time &&
-          date !==
-            dateFormat(
-              new Date(next.created_time),
-              'timestamp',
-              null,
-              translations
-            ) &&
+          date !== dateFormat(new Date(next.created_time), "timestamp", null, translations) &&
           next.from.username === msg.from.username &&
           previous?.from.username === msg.from.username) ||
         !next
       ) {
-        classesObj['message-last'] = true;
+        classesObj["message-last"] = true;
       }
     }
 
@@ -234,8 +222,7 @@ export default function InstagramChat({
       !isMe &&
       next?.from.username === msg.from.username &&
       next?.created_time &&
-      date ===
-        dateFormat(new Date(next.created_time), 'timestamp', null, translations)
+      date === dateFormat(new Date(next.created_time), "timestamp", null, translations)
     ) {
       hideAvatar = true;
     }
@@ -250,9 +237,7 @@ export default function InstagramChat({
           </div>
         ) : null}
         <div className={classes} key={`message-${index}`}>
-          {!isMe && !hideAvatar ? (
-            <figure className="avatar">{img}</figure>
-          ) : null}
+          {!isMe && !hideAvatar ? <figure className="avatar">{img}</figure> : null}
           <LinkifyText text={msg.message} />
         </div>
       </div>
@@ -264,12 +249,7 @@ export default function InstagramChat({
       <p>
         {text.split(/(https?:\/\/\S+)/g).map((part, index) =>
           part.match(/https?:\/\/\S+/) ? (
-            <a
-              key={index}
-              href={part}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a key={index} href={part} target="_blank" rel="noopener noreferrer">
               {part}
             </a>
           ) : (
@@ -287,8 +267,8 @@ export default function InstagramChat({
         message: true,
         skeleton: true,
         spaced: true,
-        'message-personal': i % 2 !== 0,
-        'message-first': true,
+        "message-personal": i % 2 !== 0,
+        "message-first": true,
       });
 
       skeletons.push(
@@ -314,11 +294,13 @@ export default function InstagramChat({
           <div className="title">{item.full_name}</div>
           <div className="subtitle">{item.username}</div>
           <figure className="avatar">
-            {renderField({
-              type: FIELD_TYPES.IMAGE,
-              field: item.username,
-              value: item?.profile_pic_url,
-            })}
+            <>
+              {renderField({
+                type: FIELD_TYPES.IMAGE,
+                field: item.username,
+                value: item?.profile_pic_url,
+              })}
+            </>
           </figure>
         </div>
         <div className="chat--area" ref={scrollRef}>
