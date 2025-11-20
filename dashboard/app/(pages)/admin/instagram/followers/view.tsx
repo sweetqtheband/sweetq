@@ -15,11 +15,12 @@ export default function InstagramView(params: Readonly<any>) {
   const [item, setItem] = useState(null);
   const [action, setAction] = useState<Action>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState("");
 
   const router = useRouter();
-  const methods = Followers.getMethods(router, params.translations);
+  const methods = Followers.getMethods(router, params.translations, open === ACTIONS.BATCH_EDIT);
   const renders = Followers.getRenders();
-  const batchActions = Followers.getBatchActions(setIds, params.translations);
+  const batchActions = Followers.getBatchActions(setIds, params.translations, setOpen);
   const itemActions = Followers.getItemActions(setAction, params.translations);
 
   const onActionClickHandler = async (data: any) => {
@@ -49,6 +50,7 @@ export default function InstagramView(params: Readonly<any>) {
       <InstagramLogin />
       <ListLayout
         {...params}
+        ids={ids}
         methods={methods}
         renders={renders}
         batchActions={batchActions}
@@ -63,6 +65,9 @@ export default function InstagramView(params: Readonly<any>) {
         actionLabel={methods.action.label}
         actionIcon={methods.action.icon}
         onAction={onActionClickHandler}
+        open={open}
+        setOpen={setOpen}
+        CONSTANTS={{ ACTIONS }}
       />
       <MessagePanel
         ids={ids}
@@ -72,6 +77,9 @@ export default function InstagramView(params: Readonly<any>) {
         layouts={params.layouts}
         onSave={methods.onMessageSave}
         setIsLoading={setIsLoadingHandler}
+        open={open}
+        setOpen={setOpen}
+        CONSTANTS={{ ACTIONS }}
       />
       <InstagramChat
         item={item}

@@ -15,11 +15,14 @@ export default function ListLayout({
   limit = 0,
   pages = 0,
   id = "",
+  ids = [],
   loading = false,
   setExternalLoading = () => true,
   onSave = async () => true,
   onCopy = async () => true,
   onDelete = async () => true,
+  open = "",
+  setOpen = () => true,
   actionIcon = null,
   actionLabel = "",
   onAction = async () => true,
@@ -31,10 +34,12 @@ export default function ListLayout({
   batchActions = {},
   itemActions = {},
   fields = {},
+  multiFields = {},
   filters = {},
   methods = {},
   renders = {},
   onItemSelect = () => true,
+  CONSTANTS = {},
 }: Readonly<{
   items?: any[];
   headers?: any[];
@@ -43,11 +48,14 @@ export default function ListLayout({
   limit?: number;
   pages?: number;
   id?: string;
+  ids?: string[] | null;
   loading?: boolean;
   setExternalLoading?: Function;
-  onSave?: (data: any, files: any) => Promise<any>;
+  onSave?: (data: any, files: any, ids: string[] | null) => Promise<any>;
   onCopy?: (ids: string[]) => Promise<boolean>;
   onDelete?: (ids: string[]) => Promise<boolean>;
+  open?: string | null;
+  setOpen?: Function;
   actionIcon?: string | null;
   actionLabel?: string;
   onAction?: Function;
@@ -59,10 +67,12 @@ export default function ListLayout({
   batchActions?: Record<string, any>;
   itemActions?: Record<string, any>;
   fields?: Record<string, any>;
+  multiFields?: Record<string, any>;
   filters?: Record<string, any>;
   methods?: Record<string, any>;
   renders?: Record<string, any>;
   onItemSelect?: Function;
+  CONSTANTS?: any;
 }>) {
   const [item, setItem] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -93,9 +103,9 @@ export default function ListLayout({
     onItemSelect(null);
   };
 
-  const onSaveHandler = async (data: any, files: any) => {
+  const onSaveHandler = async (data: any, files: any, ids: string[] | null) => {
     setIsLoadingHandler(true);
-    const response = await onSave(data, files);
+    const response = await onSave(data, files, ids);
 
     if (response) {
       setParsedItems((prevItems) => {
@@ -180,6 +190,8 @@ export default function ListLayout({
       />
       <ListPanel
         id={id}
+        ids={ids}
+        items={parsedItems}
         data={item}
         onClose={onClose}
         onSave={onSaveHandler}
@@ -189,8 +201,12 @@ export default function ListLayout({
         translations={translations}
         checkAction={methods?.action?.check ?? null}
         fields={fields}
+        multiFields={multiFields}
         methods={methods}
         renders={renders}
+        open={open}
+        setOpen={setOpen}
+        CONSTANTS={CONSTANTS}
       />
     </>
   );

@@ -1,12 +1,12 @@
-import { ERRORS, FIELD_TYPES, HTTP_STATUS_CODES } from '@/app/constants';
-import { NextRequest } from 'next/server';
-import { corsOptions, getCollection, postItem } from '@/app/services/api/_db';
-import { FactorySvc } from '@/app/services/api/factory';
-import { formDataToObject } from '@/app/utils';
-import { revalidatePath } from 'next/cache';
-import { ObjectId } from 'mongodb';
+import { ERRORS, FIELD_TYPES, HTTP_STATUS_CODES } from "@/app/constants";
+import { NextRequest } from "next/server";
+import { corsOptions, getCollection } from "@/app/services/api/_db";
+import { FactorySvc } from "@/app/services/api/factory";
+import { formDataToObject } from "@/app/utils";
+import { revalidatePath } from "next/cache";
+import { ObjectId } from "mongodb";
 
-const collection = 'messages';
+const collection = "messages";
 
 export async function OPTIONS(req: NextRequest) {
   const [message, params] = corsOptions(req);
@@ -24,13 +24,12 @@ export async function POST(req: NextRequest) {
 
   const formData = await req.formData();
   const dataObj = formDataToObject(formData, { ids: FIELD_TYPES.MULTISELECT });
-  const layoutSvc = FactorySvc('layouts', await getCollection('layouts'));
-  const followersSvc = FactorySvc(
-    'followers',
-    await getCollection('followers')
-  );
+  const layoutSvc = FactorySvc("layouts", await getCollection("layouts"));
+  const followersSvc = FactorySvc("followers", await getCollection("followers"));
 
-  const isUpdate = (dataObj.layoutId  && dataObj.layoutId !== 'undefined') || (dataObj._id && dataObj._id !== 'undefined');
+  const isUpdate =
+    (dataObj.layoutId && dataObj.layoutId !== "undefined") ||
+    (dataObj._id && dataObj._id !== "undefined");
   const layoutId = dataObj.layoutId || dataObj._id;
 
   if (isUpdate) {
@@ -51,7 +50,7 @@ export async function POST(req: NextRequest) {
       ? await layoutSvc.getById(layoutId)
       : await layoutSvc.create({
           name: dataObj.layout,
-          type: 'instagram',
+          type: "instagram",
           tpl: {
             personalMessage: dataObj.personalMessage,
             collectiveMessage: dataObj.collectiveMessage,
@@ -67,7 +66,7 @@ export async function POST(req: NextRequest) {
         const messageExist = await svc.findOne({
           _followerId: new ObjectId(follower._id),
           _layoutId: new ObjectId(layout._id),
-          status: 'scheduled',
+          status: "scheduled",
         });
 
         if (messageExist) {
@@ -77,7 +76,7 @@ export async function POST(req: NextRequest) {
           _followerId: new ObjectId(follower._id),
           _layoutId: new ObjectId(layout._id),
           type: layout.type,
-          status: 'scheduled',
+          status: "scheduled",
           created: createDate,
         };
         return svc.create(obj);
@@ -85,14 +84,8 @@ export async function POST(req: NextRequest) {
     );
     revalidatePath(`/admin/instagram`);
 
-    return Response.json(
-      { data: [items] },
-      { ...corsParams, status: HTTP_STATUS_CODES.OK }
-    );
+    return Response.json({ data: [items] }, { ...corsParams, status: HTTP_STATUS_CODES.OK });
   } catch (err: Error | any) {
-    return Response.json(
-      { err: err?.message },
-      { ...corsParams, status: HTTP_STATUS_CODES.ERROR }
-    );
+    return Response.json({ err: err?.message }, { ...corsParams, status: HTTP_STATUS_CODES.ERROR });
   }
 }

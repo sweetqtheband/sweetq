@@ -33,7 +33,7 @@ const scrapPage = async (browser: any, page: any, params: any) => {
   return params;
 };
 
-const updateUser = async (scrappedUsers: any[], users: any[], col: any, match?: any[] = []) => {
+const updateUser = async (scrappedUsers: any[], users: any[], col: any, match: any[] = []) => {
   return Promise.allSettled(
     scrappedUsers.map(async (user: any) =>
       limit(async () => {
@@ -70,7 +70,7 @@ const updateUser = async (scrappedUsers: any[], users: any[], col: any, match?: 
         }
 
         if (match.length) {
-          const matched = match.find((m: any) => m.username === user.username);
+          const matched = match.includes(user.username);
           if (matched) {
             user.followed_back = true;
           }
@@ -81,9 +81,7 @@ const updateUser = async (scrappedUsers: any[], users: any[], col: any, match?: 
           {
             $set: Object.keys(user).reduce((acc: Record<string, any>, key) => {
               acc[key] = user[key];
-              if (!match.length) {
-                acc.unfollow = false;
-              }
+              acc.unfollow = false;
               return acc;
             }, {}),
           },
@@ -105,10 +103,11 @@ const update = async (params: any) => {
   // First of all, update all followers and followings with an unfollow status
   await followersCol.updateMany({}, { $set: { unfollow: true, updateDate } });
   logProcess("FOLLOWERS UNFOLLOWED");
-  await followingsCol.updateMany({}, { $set: { followed_back: false, updateDate } });
+  await followingsCol.updateMany(
+    {},
+    { $set: { unfollow: true, followed_back: false, updateDate } }
+  );
   logProcess("FOLLOWINGS UNFOLLOWED");
-
-  console.log(scrappedFollowers, scrappedFollowings);
 
   // Update followers
   const updatedFollowers = await Promise.all(
@@ -119,7 +118,12 @@ const update = async (params: any) => {
 
   // Update followings
   const updatedFollowings = await Promise.all(
-    await updateUser(scrappedFollowings, followings, followingsCol)
+    await updateUser(
+      scrappedFollowings,
+      followings,
+      followingsCol,
+      followers.map((f: Record<string, any>) => f.username)
+    )
   );
 
   logProcess("FOLLOWINGS UPDATED");
@@ -140,6 +144,17 @@ const update = async (params: any) => {
     followings: updatedFollowings.length,
   };
 
+  console.log("DONE");
+
+  return params;
+};
+
+const remove = async (params: any) => {
+  const followingsCol = await getCollection("followings");
+
+  console.log("DELETING UNFOLLOWED USERS...");
+  const deleteResult = await followingsCol.deleteMany({ unfollow: true });
+  console.log(`DELETED USERS: ${deleteResult.deletedCount}`);
   console.log("DONE");
 
   return params;
@@ -171,5 +186,5 @@ const end = async (params: any = null) => {
 
   logProcess("Followers: " + data.followers.length);
   logProcess("Followings: " + data.followings.length);
-  await pipe(browse, update, end)(data);
+  await pipe(browse, update, remove, end)(data);
 })();

@@ -4,6 +4,7 @@
     "actions": "Acciones",
     "add": "Añadir",
     "back": "Volver",
+    "batchEdit": "Edición masiva",
     "cancel": "Cancelar",
     "clear": "Limpiar",
     "close": "Cerrar",
@@ -164,7 +165,13 @@
           "label": "¿Estás seguro de que quieres cancelar el envío del mensaje?"
         }
       },
-      "panel": {
+      "listPanel": {
+        "batchEdit": {
+          "title": "Edición masiva",
+          "subtitle": "Editando a"
+        }
+      },
+      "messagePanel": {
         "collectiveMessage": "Mensaje a colectivos",
         "modes": {
           "createNew": "Crear nuevo",

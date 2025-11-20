@@ -5,7 +5,6 @@ import Link from "next/link";
 import { LogoWechat, NotSentFilled } from "@carbon/react/icons";
 
 const renderBoolean = (obj: any) => {
-  console.log(obj);
   return (
     <>
       {obj.value ? (

@@ -2,14 +2,17 @@
 
 import { Panel } from "@/app/components";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Button, Form, Stack } from "@carbon/react";
+import { Button, Form, Heading, Section, Stack } from "@carbon/react";
 import { renderField } from "@/app/render";
-import { ACTIONS, FIELD_TYPES } from "@/app/constants";
+import { FIELD_TYPES } from "@/app/constants";
 import { s3File, uuid } from "@/app/utils";
+import { t } from "@/app/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function ListPanel({
   id = "",
+  ids = [],
+  items = [],
   data = null,
   onSave = async () => true,
   onClose = async (item: any) => {},
@@ -19,12 +22,18 @@ export default function ListPanel({
   checkAction = null,
   translations = {},
   fields = {},
+  multiFields = {},
   methods = {},
   renders = {},
+  open = "",
+  setOpen = () => true,
+  CONSTANTS = {},
 }: Readonly<{
   id: string;
+  ids?: string[] | null;
+  items?: any[];
   data: any;
-  onSave?: (data: any, files: any) => Promise<boolean>;
+  onSave?: (data: any, files: any, ids: string[] | null) => Promise<boolean>;
   onClose?: (item: any) => Promise<void>;
   onAction?: Function;
   actionLabel?: string;
@@ -32,9 +41,14 @@ export default function ListPanel({
   checkAction?: Function | null;
   translations?: Record<string, any>;
   fields?: Record<string, any>;
+  multiFields?: Record<string, any>;
   methods?: Record<string, any>;
   renders?: Record<string, any>;
+  open?: string | null;
+  setOpen?: Function;
+  CONSTANTS?: any;
 }>) {
+  const { ACTIONS } = CONSTANTS;
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -146,6 +160,7 @@ export default function ListPanel({
     setFormState({});
     setInternalState({});
     setAction(null);
+    setOpen("");
     setFiles({ ...defaultSetFiles });
     setIsInitialized({ ...defaultIsInitialized });
     const searchFields = Object.keys(searchState).filter((field) => searchState[field]);
@@ -182,7 +197,7 @@ export default function ListPanel({
 
   const onSaveHandler = async () => {
     try {
-      const saved = await onSave(formState, files);
+      const saved = await onSave(formState, files, ids);
       if (saved) {
         setForceClose(true);
         resetPanel();
@@ -272,44 +287,61 @@ export default function ListPanel({
     ref[field] = useRef(null);
   });
 
-  const getContent = (data: any) => (
-    <>
-      <section className="fields">
-        <Form>
-          <Stack gap={4}>
-            {Object.keys(fields.types).map((field: string, index: number) => (
-              <>
-                {renderField({
-                  field,
-                  key: "field-" + index,
-                  type: fields.types[field],
-                  value: data[field] || fields.options[field]?.value,
-                  translations,
-                  files,
-                  fields,
-                  formState,
-                  internalState,
-                  methods,
-                  params,
-                  pathname,
-                  renders,
-                  replace,
-                  ref: ref[field],
-                  onAddFileHandler,
-                  onInputHandler,
-                  onRemoveFileHandler,
-                  onInternalStateHandler,
-                })}
-              </>
-            ))}
-          </Stack>
-        </Form>
-      </section>
-      <footer>
-        <Button onClick={onSaveHandler}>{translations.save}</Button>
-      </footer>
-    </>
-  );
+  const getContent = (data: any = null) => {
+    const useFields = open === "batchEdit" ? multiFields : fields;
+
+    return (
+      <>
+        <Section className="fields" level={4}>
+          <Form>
+            <Stack gap={4}>
+              {open === ACTIONS.BATCH_EDIT && ids?.length ? (
+                <>
+                  <Heading>{translations.listPanel.batchEdit.title}</Heading>
+                  <p>
+                    {translations.listPanel.batchEdit.subtitle}{" "}
+                    {ids && ids.length > 1
+                      ? t(translations.listPanel.batchEdit.description, {
+                          total: ids.length,
+                        })
+                      : items.find((item) => item.id === ids?.at(0)).full_name}
+                  </p>
+                </>
+              ) : null}
+              {Object.keys(useFields.types).map((field: string, index: number) => (
+                <>
+                  {renderField({
+                    field,
+                    key: "field-" + index,
+                    type: useFields.types[field],
+                    value: data?.[field] || useFields.options[field]?.value,
+                    translations,
+                    files,
+                    fields: useFields,
+                    formState,
+                    internalState,
+                    methods,
+                    params,
+                    pathname,
+                    renders,
+                    replace,
+                    ref: ref[field],
+                    onAddFileHandler,
+                    onInputHandler,
+                    onRemoveFileHandler,
+                    onInternalStateHandler,
+                  })}
+                </>
+              ))}
+            </Stack>
+          </Form>
+        </Section>
+        <footer>
+          <Button onClick={onSaveHandler}>{translations.save}</Button>
+        </footer>
+      </>
+    );
+  };
 
   useEffect(() => {
     if (!action && actionIcon) {
@@ -319,7 +351,7 @@ export default function ListPanel({
     }
   }, [action, data, actionIcon, checkAction]);
 
-  const content = data ? getContent(data) : null;
+  const content = data || (ids?.length && open === ACTIONS.BATCH_EDIT) ? getContent(data) : null;
   return (
     <>
       <Panel

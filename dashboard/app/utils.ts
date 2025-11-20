@@ -69,6 +69,8 @@ export const formDataToObject = (
     } else if (options?.[key]?.language) {
       obj[key] = JSON.parse(value as string);
       return;
+    } else if ([FIELD_TYPES.SELECT, FIELD_TYPES.NONE].includes(types[key])) {
+      obj[key] = value !== "undefined" ? Number(value) : null;
     } else {
       obj[key] = value !== "undefined" ? value : null;
     }

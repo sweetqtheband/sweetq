@@ -4,6 +4,7 @@
     "actions": "Actions",
     "add": "Add",
     "back": "Back",
+    "batchEdit": "Batch edit",
     "cancel": "Cancel",
     "clear": "Clear",
     "close": "Close",
@@ -165,7 +166,18 @@
         }
       },
       "description": "{{total}} followers",
-      "panel": {
+      "listPanel": {
+        "batchEdit": {
+          "title": "Batch edit",
+          "followers": {
+            "subtitle": "Edit tags, country and state for the selected followers"
+          },
+          "followings": {
+            "subtitle": "Edit tags, country and state for the selected followings"
+          }
+        }
+      },
+      "messagePanel": {
         "collectiveMessage": "Collective message",
         "modes": {
           "createNew": "Create new",

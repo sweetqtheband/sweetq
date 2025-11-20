@@ -315,6 +315,62 @@ export const deleteItem = async ({
   return svc.remove(id);
 };
 
+export const batchPutItems = async ({
+  req,
+  collection,
+  types = {},
+  options = {},
+  avoidUnset = false,
+}: Readonly<{
+  req: NextRequest;
+  collection: string;
+  types?: Record<string, any>;
+  options?: Record<string, any>;
+  avoidUnset?: boolean;
+}>) => {
+  const col = await getCollection(collection);
+  const svc = FactorySvc(collection, col);
+
+  const formData = await req.formData();
+
+  const dataObj = formDataToObject(formData, { ...types, ids: FIELD_TYPES.MULTISELECT }, options);
+
+  const ids = dataObj.ids.length > 0 ? dataObj.ids : [];
+
+  const items = await Promise.all(
+    ids.map(async (id: string) => {
+      const el = await svc.findOne({ id });
+
+      const updateFields = Object.keys(dataObj).reduce((acc: Record<string, any>, key: string) => {
+        if (key in types) {
+          if (el[key] instanceof Array) {
+            const dataObjValues = dataObj[key].filter((value: any) => value) || [];
+            if (dataObjValues.length === 0) return acc;
+            acc[key] = [...new Set([...(el[key] || []), ...dataObjValues])];
+          } else if (dataObj[key] !== el[key]) {
+            acc[key] = dataObj[key];
+          }
+        }
+        return acc;
+      }, {});
+
+      if (Object.keys(updateFields).length === 0) {
+        return el;
+      }
+
+      return svc.update(
+        {
+          ...el,
+          ...updateFields,
+        },
+        avoidUnset
+      );
+    })
+  );
+
+  return items;
+};
+
 const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(",") || [];
 
 export const corsOptions = (req: NextRequest): any => {

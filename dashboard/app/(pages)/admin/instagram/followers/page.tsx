@@ -35,21 +35,33 @@ export default async function InstagramPage({ searchParams }: Readonly<{ searchP
     translations.fields.withoutTags = i18n.t("filters.withoutTags");
   };
 
-  const getPanelTranslations = (i18n: any, translations: any) => {
+  const getMessagePanelTranslations = (i18n: any, translations: any) => {
     translations.fields.layout = i18n.t("fields.layout");
-    translations.fields.vars = i18n.t("pages.instagram.panel.vars");
-    translations.fields.personalMessage = i18n.t("pages.instagram.panel.personalMessage");
-    translations.fields.collectiveMessage = i18n.t("pages.instagram.panel.collectiveMessage");
-    translations.vars = i18n.t("pages.instagram.panel.variables", {
+    translations.fields.vars = i18n.t("pages.instagram.messagePanel.vars");
+    translations.fields.personalMessage = i18n.t("pages.instagram.messagePanel.personalMessage");
+    translations.fields.collectiveMessage = i18n.t(
+      "pages.instagram.messagePanel.collectiveMessage"
+    );
+    translations.vars = i18n.t("pages.instagram.messagePanel.variables", {
       returnObjects: true,
     });
     translations.messagePanel = {
-      title: i18n.t("pages.instagram.panel.title"),
-      subtitle: i18n.t("pages.instagram.panel.subtitle"),
-      description: i18n.t("pages.instagram.description"),
+      title: i18n.t("pages.instagram.messagePanel.title"),
+      subtitle: i18n.t("pages.instagram.messagePanel.subtitle"),
+      description: i18n.t("pages.instagram.followers.description"),
       modes: {
-        new: i18n.t("pages.instagram.panel.modes.createNew"),
-        layout: i18n.t("pages.instagram.panel.modes.loadLayout"),
+        new: i18n.t("pages.instagram.messagePanel.modes.createNew"),
+        layout: i18n.t("pages.instagram.messagePanel.modes.loadLayout"),
+      },
+    };
+  };
+
+  const getListPanelTranslations = (i18n: any, translations: any) => {
+    translations.listPanel = {
+      batchEdit: {
+        title: i18n.t("pages.instagram.listPanel.batchEdit.title"),
+        subtitle: i18n.t("pages.instagram.listPanel.batchEdit.subtitle"),
+        description: i18n.t("pages.instagram.followers.description"),
       },
     };
   };
@@ -73,11 +85,13 @@ export default async function InstagramPage({ searchParams }: Readonly<{ searchP
   };
 
   getFiltersTranslations(i18n, translations);
-  getPanelTranslations(i18n, translations);
+  getMessagePanelTranslations(i18n, translations);
+  getListPanelTranslations(i18n, translations);
   getChatTranslations(i18n, translations);
   getActionTranslations(i18n, translations);
 
   const fields = await Followers.getFields({ searchParams, i18n });
+  const multiFields = await Followers.getMultiFields({ searchParams, i18n });
   const filters = await Followers.getFilters({ searchParams, i18n });
 
   const layouts = (
@@ -101,6 +115,7 @@ export default async function InstagramPage({ searchParams }: Readonly<{ searchP
       pages={data.pages}
       filters={filters}
       fields={fields}
+      multiFields={multiFields}
       layouts={layouts}
     />
   );

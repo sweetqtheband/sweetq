@@ -6,6 +6,7 @@ import { getMethods } from "./_methods";
 
 export const BaseList = (client: AxiosInstance): BaseListItem => ({
   fields: {},
+  multiFields: {},
   getTranslations,
   getAll: (searchParams: any, cache: boolean = false) => getAll(client, searchParams, cache),
   parseAll: (data: any[] = []) => data,

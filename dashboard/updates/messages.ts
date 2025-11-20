@@ -14,7 +14,7 @@ let processedCount = 0;
 const elements = {
   buttonMenuSendMessage: 'main section:nth-child(2) > div > div > div:nth-child(2) [role="button"]',
   buttonUserMenu: "main section:nth-child(2) > div > div > div:nth-child(3) > div",
-  buttonDirectSendMessage: "main section:nth-child(3) [role=button]",
+  buttonDirectSendMessage: "main header > section:nth-of-type(2) [role=button]",
   buttonUserMenuSendMessage: "div button:nth-child(6)",
   inputMessage: 'div[aria-label="Mensaje"][contenteditable="true"]',
   buttonSendMessage: '[role="navigation"] + div [role="button"]',
@@ -69,12 +69,13 @@ const sendMessageFromMenuOld = async (page: Page) => {
 
 const sendMessageDirectFromMenu = async (page: Page) => {
   try {
-    const directFromMenu = await page.evaluate(
-      (handler: any) =>
+    const directFromMenu = await page.evaluate((handler: any) => {
+      console.log((document.querySelector(handler) as HTMLElement)?.innerText);
+      return (
         (document.querySelector(handler) as HTMLElement)?.innerText === "Send Message" ||
-        (document.querySelector(handler) as HTMLElement)?.innerText === "Enviar mensaje",
-      elements.buttonDirectSendMessage
-    );
+        (document.querySelector(handler) as HTMLElement)?.innerText === "Enviar mensaje"
+      );
+    }, elements.buttonDirectSendMessage);
 
     if (directFromMenu) {
       const buttonMenuSendMessage = await page.waitForSelector(elements.buttonDirectSendMessage);
@@ -89,6 +90,8 @@ const sendMessageDirectFromMenu = async (page: Page) => {
 };
 
 const sendMessageFlow = async (page: Page) => {
+  await wait(3);
+
   if (await sendMessageDirectFromMenu(page)) {
     return true;
   }

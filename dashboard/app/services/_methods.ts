@@ -3,10 +3,18 @@ import { HTTP_STATUS_CODES } from "../constants";
 import { getFormData } from "../utils";
 import { DELETE, POST, PUT } from "./_api";
 import { AxiosInstance } from "axios";
-export const onSave = async (instance: AxiosInstance, router: any, data: any, files: any) => {
+export const onSave = async (
+  instance: AxiosInstance,
+  router: any,
+  data: any,
+  files: any,
+  batch: boolean = false
+) => {
   const formData = getFormData(data, files);
 
-  const response = await (data._id ? PUT(instance, data._id, formData) : POST(instance, formData));
+  const response = await (data._id
+    ? PUT(instance, data._id, formData)
+    : POST(instance, formData, batch ? "/batch" : ""));
 
   router.refresh();
 

@@ -6,9 +6,10 @@ import { States } from "./states";
 import { Cities } from "./cities";
 import { onSave, onDelete } from "./_methods";
 import { Tags } from "./tags";
-import { SendAlt } from "@carbon/react/icons";
-import { InstagramMessages, client as InstagramMessagesClient } from "./instagramMessages";
+import { Edit, SendAlt } from "@carbon/react/icons";
+import { client as InstagramMessagesClient } from "./instagramMessages";
 import { instagram } from "./instagram";
+import { get } from "http";
 
 export const client = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URI}/followings`,
@@ -60,8 +61,93 @@ const fields = {
   options: Options,
 };
 
+const multiFields = {
+  titles: {
+    country: "fields.country",
+    state: "fields.state",
+    city: "fields.city",
+    treatment: "fields.treatment",
+    tags: "fields.tags",
+  },
+  types: {
+    country: FIELD_TYPES.NONE,
+    state: FIELD_TYPES.NONE,
+    city: FIELD_TYPES.CITY,
+    treatment: FIELD_TYPES.SELECT,
+    tags: FIELD_TYPES.MULTISELECT,
+  },
+  options: Options,
+};
+
 export const ACTIONS = {
+  BATCH_EDIT: "batchEdit",
   CANCEL_MESSAGE: "cancelMessage",
+  MESSAGE: "message",
+};
+
+// Get shared fields function
+const getSharedOptionsFields = async ({
+  searchParams,
+  i18n,
+}: Readonly<{ searchParams: any; i18n: any }>) => {
+  return {
+    country: {
+      ...(await Countries.getOptions({ locale: i18n.locale })),
+      value: FIELD_DEFAULTS.COUNTRY,
+    },
+    state: await States.getOptions({
+      locale: i18n.locale,
+      query: searchParams?.["panel.country"] ? { country_id: searchParams["panel.country"] } : null,
+    }),
+    city: await Cities.getOptions({
+      locale: i18n.locale,
+      query: searchParams?.["panel.state"] ? { state_id: searchParams["panel.state"] } : null,
+    }),
+    treatment: {
+      options: Followings.fields.options.treatment.options.map((option) => ({
+        ...option,
+        value: i18n.t(option.value),
+      })),
+    },
+    tags: {
+      ...(await Tags.getOptions()),
+    },
+  };
+};
+
+const getSharedSearchFields = ({
+  searchParams,
+  i18n,
+}: Readonly<{ searchParams: any; i18n: any }>) => {
+  return {
+    search: {
+      country: {
+        deletes: ["state", "city"],
+      },
+      state: {
+        deletes: ["city"],
+      },
+      city: {}, // No deletes
+      params: searchParams,
+    },
+  };
+};
+
+const getMultiFields = async ({
+  searchParams,
+  i18n,
+}: Readonly<{ searchParams: any; i18n: any }>) => {
+  if (!searchParams?.["panel.country"]) {
+    searchParams["panel.country"] = FIELD_DEFAULTS.COUNTRY;
+  }
+
+  return {
+    ...Followings.multiFields,
+    options: {
+      ...(await getSharedOptionsFields({ searchParams, i18n })),
+    },
+    ...getSharedSearchFields({ searchParams, i18n }),
+  };
 };
 
 // Get fields function
@@ -74,45 +160,14 @@ const getFields = async ({ searchParams, i18n }: Readonly<{ searchParams: any; i
     ...Followings.fields,
     options: {
       ...Followings.fields.options,
-      country: {
-        ...(await Countries.getOptions({ locale: i18n.locale })),
-        value: FIELD_DEFAULTS.COUNTRY,
-      },
-      state: await States.getOptions({
-        locale: i18n.locale,
-        query: searchParams?.["panel.country"]
-          ? { country_id: searchParams["panel.country"] }
-          : null,
-      }),
-      city: await Cities.getOptions({
-        locale: i18n.locale,
-        query: searchParams?.["panel.state"] ? { state_id: searchParams["panel.state"] } : null,
-      }),
-      treatment: {
-        options: Followings.fields.options.treatment.options.map((option) => ({
-          ...option,
-          value: i18n.t(option.value),
-        })),
-      },
-      tags: {
-        ...(await Tags.getOptions()),
-      },
+      ...(await getSharedOptionsFields({ searchParams, i18n })),
       username: {
         link: {
           pattern: "https://instagram.com/#value#",
         },
       },
     },
-    search: {
-      country: {
-        deletes: ["state", "city"],
-      },
-      state: {
-        deletes: ["city"],
-      },
-      city: {}, // No deletes
-      params: searchParams,
-    },
+    ...getSharedSearchFields({ searchParams, i18n }),
   };
 };
 
@@ -261,8 +316,12 @@ const getFilters = async ({ searchParams, i18n }: Readonly<{ searchParams: any; 
 };
 
 // Get methods function
-const getMethods = (router?: any, translations?: any): Record<string, any> => ({
-  onSave: async (data: any, files: any) => {
+const getMethods = (
+  router?: any,
+  translations?: any,
+  batchEdit: boolean = false
+): Record<string, any> => ({
+  onSave: async (data: any, files: any, ids: string[]) => {
     if (!data.country) {
       data.country = FIELD_DEFAULTS.COUNTRY;
     }
@@ -270,7 +329,11 @@ const getMethods = (router?: any, translations?: any): Record<string, any> => ({
     if (data.tags && data.tags instanceof Array && data.tags.length === 0) {
       data.tags = [];
     }
-    return onSave(client, router, data, files);
+    if (ids?.length && batchEdit) {
+      data.ids = ids;
+    }
+
+    return onSave(client, router, data, files, batchEdit);
   },
   tags: {
     onSave: Tags.getMethods(router).onListSave,
@@ -327,14 +390,21 @@ const getRenders = (): Record<string, Function> => ({
   },
 });
 
-const getBatchActions = (setIds: Function, translations: any) => {
+const getBatchActions = (setIds: Function, translations: any, setOpen: Function) => {
   return {
+    edit: {
+      translations: {
+        title: translations[ACTIONS.BATCH_EDIT],
+      },
+      icon: Edit,
+      onClick: (selectedRows: string[]) => openBatchEditPanel(selectedRows, setIds, setOpen),
+    },
     message: {
       translations: {
         title: translations.sendMessage,
       },
       icon: SendAlt,
-      onClick: (selectedRows: string[]) => openMessagePanel(selectedRows, setIds),
+      onClick: (selectedRows: string[]) => openMessagePanel(selectedRows, setIds, setOpen),
     },
   };
 };
@@ -356,16 +426,24 @@ const getItemActions = (setAction: Function, translations: any) => {
 export const Followings = {
   ...BaseList(client),
   fields,
+  multiFields,
   getBatchActions,
   getItemActions,
   getRenders,
   getFilters,
   getFields,
+  getMultiFields,
   getMethods,
 };
 
 // ACTIONS
 
-const openMessagePanel = async (selectedRows: string[], setIds: Function) => {
+const openMessagePanel = async (selectedRows: string[], setIds: Function, setOpen: Function) => {
   setIds(selectedRows);
+  setOpen(ACTIONS.MESSAGE);
+};
+
+const openBatchEditPanel = async (selectedRows: string[], setIds: Function, setOpen: Function) => {
+  setIds(selectedRows);
+  setOpen(ACTIONS.BATCH_EDIT);
 };
