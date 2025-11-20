@@ -76,7 +76,7 @@ export default function ListPanel({
     {}
   );
 
-  const [formState, setFormState] = useState(data !== ACTIONS.ADD ? { ...data } : {});
+  const [formState, setFormState] = useState(data !== ACTIONS?.ADD ? { ...data } : {});
 
   const [internalState, setInternalState] = useState({});
 
@@ -295,7 +295,7 @@ export default function ListPanel({
         <Section className="fields" level={4}>
           <Form>
             <Stack gap={4}>
-              {open === ACTIONS.BATCH_EDIT && ids?.length ? (
+              {open === ACTIONS?.BATCH_EDIT && ids?.length ? (
                 <>
                   <Heading>{translations.listPanel.batchEdit.title}</Heading>
                   <p>
@@ -351,7 +351,7 @@ export default function ListPanel({
     }
   }, [action, data, actionIcon, checkAction]);
 
-  const content = data || (ids?.length && open === ACTIONS.BATCH_EDIT) ? getContent(data) : null;
+  const content = data || (ids?.length && open === ACTIONS?.BATCH_EDIT) ? getContent(data) : null;
   return (
     <>
       <Panel

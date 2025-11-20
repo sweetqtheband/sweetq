@@ -18,7 +18,7 @@ export default function InstagramView(params: Readonly<any>) {
   const [open, setOpen] = useState("");
 
   const router = useRouter();
-  const methods = Followings.getMethods(router, params.translations, open === ACTIONS.BATCH_EDIT);
+  const methods = Followings.getMethods(router, params.translations, open === ACTIONS?.BATCH_EDIT);
   const renders = Followings.getRenders();
   const batchActions = Followings.getBatchActions(setIds, params.translations, setOpen);
   const itemActions = Followings.getItemActions(setAction, params.translations);
@@ -88,7 +88,7 @@ export default function InstagramView(params: Readonly<any>) {
         onSave={methods.onSendInstagramMessage}
       />
       <Modal
-        open={action?.type === ACTIONS.CANCEL_MESSAGE && action?.open}
+        open={action?.type === ACTIONS?.CANCEL_MESSAGE && action?.open}
         onRequestClose={() => actionClear()}
         onRequestSubmit={() => actionHandler(action?.item)}
         danger

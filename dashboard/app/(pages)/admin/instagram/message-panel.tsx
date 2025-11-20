@@ -244,7 +244,7 @@ export default function MessagePanel({
       </footer>
     </>
   );
-  const content = ids && open === ACTIONS.MESSAGE ? getContent(ids) : null;
+  const content = ids && open === ACTIONS?.MESSAGE ? getContent(ids) : null;
   return (
     <Panel onClose={onCloseHandler} forceClose={forceClose}>
       {content}
