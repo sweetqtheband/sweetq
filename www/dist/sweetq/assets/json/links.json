@@ -21,11 +21,18 @@
     "link": "https://music.youtube.com/playlist?list=OLAK5uy_miCMPTokYkDQG3QhULinUfSCWDKocwVhE"
   },
   {
+    "type": "spotify",
+    "icon": "icon-spotify",
+    "text": "links.presave.sacameabailar",
+    "button": "primary",
+    "link": "https://ffm.to/sweet-q-sacame-a-bailar"
+  },
+  {
     "type": "gig",
     "icon": "icon-gigs",
-    "text": "links.gigs.20251025",
+    "text": "links.gigs.20260313",
     "button": "secondary",
-    "link": "https://entradium.com/events/sweet-q-y-lorreine-en-vesta"
+    "link": "https://ticketandroll.com/evento/sweet-q-vortice-cero-en-sala-hangar-48"
   },
   {
     "type": "whatsapp",
