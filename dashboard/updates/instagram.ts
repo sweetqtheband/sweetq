@@ -9,6 +9,8 @@ import { FactorySvc } from "@/app/services/api/factory.js";
 
 const { logProcess } = createLogger("instagram.log");
 
+const skipLimit = 30;
+
 const instagramSvc = FactorySvc("instagram", await getCollection("instagram"));
 const tagsSvc = FactorySvc("tags", await getCollection("tags"));
 const followersSvc = FactorySvc("followers", await getCollection("followers"));
@@ -62,6 +64,11 @@ const fetchMessages = async (data: Record<string, any>) => {
   await instagramSvc.cacheConversations(conversations);
   logProcess(`Fetched ${conversations.length} conversations`);
   for (const conversation of conversations) {
+    if (data.consecutiveSkipped >= skipLimit) {
+      logProcess("Consecutive skipped limit reached, exiting");
+      return data;
+    }
+
     const follower = await followersSvc.findOne({
       instagram_conversation_id: conversation.id,
     });
@@ -76,15 +83,17 @@ const fetchMessages = async (data: Record<string, any>) => {
         if (conversationMessage.from.length === 0 && conversationMessage.to.length === 0) {
           data.failed += 1;
           if (data.failed >= 2) {
-            logProcess("Last 2 conversations failed, stopping the process");
+            logProcess("Last 2 conversations failed, exiting");
             return data;
           }
         }
         await processMessage(conversationMessage);
+        data.consecutiveSkipped = 0;
       } catch (error) {
         data.failed += 1;
       }
     } else {
+      data.consecutiveSkipped += 1;
       data.skipped += 1;
       logProcess(`Follower ${follower.username} already setted. Skipping.`);
     }
@@ -147,6 +156,6 @@ const end = async () => {
 };
 
 (async () => {
-  const data = { processed: 0, failed: 0, skipped: 0 };
+  const data = { processed: 0, failed: 0, skipped: 0, consecutiveSkipped: 0 };
   await pipe(fetchMessages, end)(data);
 })();

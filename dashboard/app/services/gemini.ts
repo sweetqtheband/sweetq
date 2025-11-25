@@ -21,7 +21,10 @@ const QUESTIONS = {
   Y sobre todo, si la conclusión a la que llegas cuando devuelvas los datos es que state y city son Unknown o null, nunca jamás typeUser podrá ser ni fan ni superfan. MUY IMPORTANTE.  Siempre a la hora de determinar la procedencia (country o city), a no ser que sea de forma explícita primará el state. Si infieres que la persona es de Madrid en el campo state, el campo country nunca podrá ser Qatar, ni la ciudad Doha. El country será España y la ciudad Madrid.
   Cualquier campo Unknown lo conviertes a null en la respuesta.
 
-	Y ahora devuelveme tu el objeto que te pedí en base a estos datos:
+  Te voy a pasar las provincias más comunes de España para que las tengas en cuenta a la hora de inferir los datos, porque a veces serán pueblos de estas provincias:
+  "A Coruña", "Alicante","Álava","Albacete","Almería","Asturias","Ávila","Badajoz","Balears","Barcelona","Burgos","Cáceres","Cádiz","Cantabria","Castellón","Ceuta","Ciudad Real","Córdoba","Cuenca","Gipuzkoa","Girona","Granada","Guadalajara","Huelva","Huesca","Jaén","La Rioja","Las Palmas","León","Lleida","Lugo","Madrid","Málaga","Melilla","Murcia","Navarra","Ourense","Palencia","Pontevedra","Salamanca","Santa Cruz de Tenerife","Segovia","Sevilla","Soria","Tarragona","Teruel","Toledo","Valencia","Valladolid","Vizcaya","Zamora","Zaragoza"  
+
+	Y ahora devuelveme tu el objeto que te pedí en base a estos datos:  
 	`,
   USER: `En base a estos dos campos que te voy a pasar, y teniendo en cuenta estos ejemplos que te envío, devuelve el nombre de pila más posible para el usuario. 
 	Quiero que devuelvas dos campos, el nombre de pila (short_name) y el tipo de usuario (treatment): (si crees que es una persona, treament = 1 y si crees que es un colectivo o indeterminado, treatment: 2. Devuelve únicamente en una línea lo que consideres, en formato json: {username:, full_name:, short_name:, treament:}. A continuación te envío unos ejemplos, y luego infiere tú el nombre:
