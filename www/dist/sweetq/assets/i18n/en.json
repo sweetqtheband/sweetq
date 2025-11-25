@@ -81,7 +81,7 @@
       "20251025": "Tickets for Sweet Q + Lorreine in Madrid"
     },
     "presave": {
-      "nohabriasidoasi": "'No habría sido así' presave"
+      "sacameabailar": "'Sácame a bailar' presave"
     },
     "spotify": "Spotify",
     "spotifyAvailable": "Spotify link (available {{date}})",
@@ -118,9 +118,9 @@
       "spotify": "Pre-save done successfully!"
     },
     "spotify": "Pre-save on Spotify",
-    "subtitle": "Available on May 23rd",
-    "text": "Don't miss our upcoming single <span class='bold'>'Fiesta'</span>, one of our most powerful tracks that will make you give it your all on the dance floor. Pre-save now!",
-    "title": "Fiesta"
+    "subtitle": "Available on December 5th",
+    "text": "Don't miss our upcoming single <span class='bold'>'Sácame a bailar'</span>, one of our most powerful tracks that will make you give it your all on the dance floor. Pre-save now!",
+    "title": "Sácame a bailar"
   },
   "pressKit": {
     "button": "Download <span class='peso'>(4.2MB)</span>",
@@ -136,7 +136,7 @@
     "title": "Listen '{{title}}' in your favorite platform",
     "youtubeMusic": "Youtube Music"
   },
-  "stayTuned": "At this time we haven't any gig scheduled soon. Stay tuned!",
+  "stayTuned": "Very soon we will announce the dates of our 2026 tour. Stay tuned!",
   "tickets": "Tickets",
   "time": {
     "short": {
@@ -149,16 +149,10 @@
     "lyrics": "Lyrics"
   },
   "video": {
-    "fiestasArganzuela": {
-      "button": "Watch on Youtube",
-      "subtitle": "Full show on Youtube",
-      "text": "You can already watch our latest full live show at Fiestas de La Melonera in Arganzuela in our Youtube channel. If you want to hear our new forthcoming releases in a live format... Don't miss it out!",
-      "title": "Fiestas de Arganzuela 2024"
-    },
-    "fiesta": {
+    "nohabriasidoasi": {
       "button": "Watch on YouTube",
-      "subtitle": "Fiesta",
-      "text": "We've just released the music video of our latest single <span class='bold'>'Fiesta'</span>, recorded at Radical Sonora and with the collaboration of Escuela de Baile Pilar Rivas. We hope you like it!",
+      "subtitle": "No habría sido así",
+      "text": "Don't miss the music video of our latest single <span class='bold'>'No habría sido así'</span>, where a barbecue night, party, and friends turn into an unexpected unrequited love story.",
       "title": "New music video"
     }
   },
@@ -169,6 +163,7 @@
     "golpedesuerte": "Video - Golpe de suerte",
     "ley": "Video - Ley de la atracción",
     "losiento": "Video - Lo siento, pero no",
+    "nohabriasidoasi": "Video - No habría sido así",
     "quevamosahacer": "Video - ¿Qué vamos a hacer?"
   },
   "videos": "Videos"

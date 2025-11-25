@@ -83,7 +83,7 @@
       "20251025": "Entradas Sweet Q + Lorreine en Madrid"
     },
     "presave": {
-      "nohabriasidoasi": "Pre-save 'No habría sido así'"
+      "sacameabailar": "Pre-save 'Sácame a bailar'"
     },
     "spotify": "Spotify",
     "spotifyAvailable": "Link Spotify (disponible {{date}})",
@@ -120,9 +120,9 @@
       "spotify": "¡Pre-save realizado correctamente!"
     },
     "spotify": "Pre-save en Spotify",
-    "subtitle": "Estreno 25 de julio",
-    "text": "No te pierdas nuestro próximo single <span class='bold'>'No habría sido así'</span>. Errores, silencios y sentimientos que se quedaron a medio camino. Una noche de fiesta, una revelación inesperada y todo lo que nunca se dijo. ¡Haz presave!",
-    "title": "No habría sido así"
+    "subtitle": "Estreno 05 de diciembre",
+    "text": "Escucha antes que nadie nuestro próximo single <span class='bold'>'Sácame a bailar'</span>, un tema que te invitará a olvidarte de los problemas mientras te dejas llevar con la corriente sin mirar atrás. ¡Haz presave!",
+    "title": "Sácame a bailar"
   },
   "pressKit": {
     "button": "Descargar <span class='peso'>(4.2MB)</span>",
@@ -138,7 +138,7 @@
     "title": "Escucha '{{title}}' en tu plataforma favorita",
     "youtubeMusic": "Youtube Music"
   },
-  "stayTuned": "Por el momento no tenemos conciertos a la vista. ¡Permanece atento!",
+  "stayTuned": "Muy pronto anunciaremos las fechas de nuestra gira en 2026. ¡Permanece atento!",
   "tickets": "Entradas",
   "time": {
     "short": {
@@ -151,16 +151,10 @@
     "lyrics": "Letra"
   },
   "video": {
-    "fiestasArganzuela": {
+    "nohabriasidoasi": {
       "button": "Ver en Youtube",
-      "subtitle": "Concierto completo en Youtube",
-      "text": "Ya podéis ver nuestro concierto completo en las Fiestas de La Melonera de Arganzuela en nuestro canal de Youtube. Si queréis escuchar nuestros próximos temas en formato directo... ¡No os lo perdáis!",
-      "title": "Fiestas de Arganzuela 2024"
-    },
-    "fiesta": {
-      "button": "Ver en Youtube",
-      "subtitle": "Fiesta",
-      "text": "Acabamos de lanzar el videoclip de nuestro último single 'Fiesta', grabado en Radical Sonora con la colaboración de la Escuela de Baile Pilar Rivas. ¡Esperemos que te guste!",
+      "subtitle": "No habría sido así",
+      "text": "No te pierdas el videoclip de nuestro último single 'No habría sido así', en donde una noche de barbacoa, fiesta y amigos se convierte en una inesperada historia de amor no correspondido.",
       "title": "Nuevo videoclip"
     }
   },
@@ -171,6 +165,7 @@
     "golpedesuerte": "Vídeo - Golpe de suerte",
     "ley": "Vídeo - Ley de la atracción",
     "losiento": "Vídeo - Lo siento, pero no",
+    "nohabriasidoasi": "Vídeo - No habría sido así",
     "quevamosahacer": "Vídeo - ¿Qué vamos a hacer?"
   },
   "videos": "Vídeos"
