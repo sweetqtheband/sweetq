@@ -83,7 +83,7 @@
       "20251025": "Entradas Sweet Q + Lorreine en Madrid"
     },
     "presave": {
-      "nohabriasidoasi": "Pre-save 'No habría sido así'"
+      "sacameabailar": "Pre-save 'Sácame a bailar'"
     },
     "spotify": "Spotify",
     "spotifyAvailable": "Link Spotify (disponible {{date}})",
@@ -120,9 +120,9 @@
       "spotify": "¡Pre-save realizado correctamente!"
     },
     "spotify": "Pre-save en Spotify",
-    "subtitle": "Estreno 25 de julio",
-    "text": "No te pierdas nuestro próximo single <span class='bold'>'No habría sido así'</span>. Errores, silencios y sentimientos que se quedaron a medio camino. Una noche de fiesta, una revelación inesperada y todo lo que nunca se dijo. ¡Haz presave!",
-    "title": "No habría sido así"
+    "subtitle": "Estreno 05 de diciembre",
+    "text": "Escucha antes que nadie nuestro próximo single <span class='bold'>'Sácame a bailar'</span>, un tema que te invitará a olvidarte de los problemas mientras te dejas llevar con la corriente sin mirar atrás. ¡Haz presave!",
+    "title": "Sácame a bailar"
   },
   "pressKit": {
     "button": "Descargar <span class='peso'>(4.2MB)</span>",

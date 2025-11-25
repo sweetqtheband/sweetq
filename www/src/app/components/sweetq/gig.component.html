@@ -5,7 +5,7 @@
 </div>
 <div class="sq-item-data">
   <div class="sq-title">
-    <div class="sq-item-title">{{ gig.venue }}</div>
+    <div class="sq-item-title" [innerHTML]="gig.venue"></div>
   </div>
   <div class="sq-gig-info">
     <div class="sq-line">
@@ -33,6 +33,7 @@
       <div class="sq-text" *ngFor="let band of gig.bands; first as isFirst">
         <div class="sq-line-space" *ngIf="!isFirst">/</div>
         <a
+          *ngIf="band.facebook || band.instagram"
           class="sq-link"
           [href]="band.link"
           target="_blank"
@@ -46,6 +47,9 @@
           }}"
           >{{ band.name }}</a
         >
+        <span class="sq-disabled" *ngIf="!band.facebook && !band.instagram">{{
+          band.name
+        }}</span>
       </div>
     </div>
   </div>

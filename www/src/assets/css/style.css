@@ -588,7 +588,10 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
 .sq-section.notice.info.nohabriasidoasi .sq-image.image-cover:after {
   background-image: url("../imgs/cover/nohabriasidoasi.jpg");
 }
-
+.sq-section.notice.info.sacameabailar .sq-image.image-cover:before,
+.sq-section.notice.info.sacameabailar .sq-image.image-cover:after {
+  background-image: url("../imgs/cover/sacameabailar.jpg");
+}
 .sq-section.notice.info .sq-image.image-cover {
   position: relative;
   background-position: center top;
@@ -741,6 +744,12 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
 .gigs .sq-item .sq-item-data .sq-participants .sq-line {
   color: #24aeb8;
 }
+.gigs .sq-item .sq-item-data .sq-participants .sq-line .sq-disabled {
+  color: #6d7179;
+  cursor: default;
+  text-decoration: none;
+}
+
 .gigs .sq-item .sq-item-data .sq-item-title {
   font-size: 18.5px;
   line-height: 28px;
@@ -751,6 +760,7 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
 .gigs .sq-item .sq-item-data .sq-gig-info .sq-line,
 .gigs .sq-item .sq-item-data .sq-participants .sq-line {
   width: 100%;
@@ -912,6 +922,15 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   .sq-logo .sq-logo-image {
     width: 400px;
     height: 60px;
+  }
+
+  .gigs .sq-item .sq-item-data .sq-item-title {
+    position: relative;
+    overflow: unset;
+    white-space: normal;
+  }
+  .gigs .sq-item .sq-item-data .sq-item-title span {
+    display: block;
   }
 }
 

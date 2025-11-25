@@ -1,5 +1,13 @@
 [
   {
+    "type": "info cover sacameabailar",
+    "title": "presave.title",
+    "subtitle": "presave.subtitle",
+    "text": "presave.text",
+    "button": "presave.spotify",
+    "spotifyHref": "https://ffm.to/sweet-q-sacame-a-bailar"
+  },
+  {
     "type": "info video nohabriasidoasi",
     "title": "video.nohabriasidoasi.title",
     "subtitle": "video.nohabriasidoasi.subtitle",
@@ -7,14 +15,5 @@
     "button": "video.nohabriasidoasi.button",
     "icon": "icon-youtube",
     "youtubeHref": "https://www.youtube.com/watch?v=GNCZnM4A8Us"
-  },
-  {
-    "type": "info cover nohabriasidoasi",
-    "title": "info.title",
-    "subtitle": "info.subtitle",
-    "text": "info.text",
-    "button": "info.button",
-    "icon": "icon-spotify",
-    "spotifyHref": "https://open.spotify.com/intl-es/album/0jYNYEI1QI8LtDYpbCr1Vt"
   }
 ]

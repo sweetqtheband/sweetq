@@ -81,7 +81,7 @@
       "20251025": "Tickets for Sweet Q + Lorreine in Madrid"
     },
     "presave": {
-      "nohabriasidoasi": "'No habría sido así' presave"
+      "sacameabailar": "'Sácame a bailar' presave"
     },
     "spotify": "Spotify",
     "spotifyAvailable": "Spotify link (available {{date}})",
@@ -118,9 +118,9 @@
       "spotify": "Pre-save done successfully!"
     },
     "spotify": "Pre-save on Spotify",
-    "subtitle": "Available on May 23rd",
-    "text": "Don't miss our upcoming single <span class='bold'>'Fiesta'</span>, one of our most powerful tracks that will make you give it your all on the dance floor. Pre-save now!",
-    "title": "Fiesta"
+    "subtitle": "Available on December 5th",
+    "text": "Don't miss our upcoming single <span class='bold'>'Sácame a bailar'</span>, one of our most powerful tracks that will make you give it your all on the dance floor. Pre-save now!",
+    "title": "Sácame a bailar"
   },
   "pressKit": {
     "button": "Download <span class='peso'>(4.2MB)</span>",

@@ -164,5 +164,41 @@
     "bands": [40],
     "event": null,
     "tickets": "https://entradium.com/events/sweet-q-y-lorreine-en-vesta"
+  },
+  {
+    "id": 15,
+    "date": "2026-03-13 20:30",
+    "city": "Madrid",
+    "hour": "20:30",
+    "venue": "<span>Concierto presentación </span><span>'Que solo nos quede ganar'</span>",
+    "address": "Hangar 48",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3271.2639418863473!2d-3.7166152238955417!3d40.4114033559634!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4227d815ce0229%3A0x4c666f48af6ec5ac!2sHangar%2048%20-%20Sala%20de%20conciertos%20y%20clubbing%20en%20Madrid!5e1!3m2!1ses!2ses!4v1764101170050!5m2!1ses!2ses",
+    "bands": [41],
+    "event": null,
+    "tickets": "https://ticketandroll.com/evento/sweet-q-vortice-cero-en-sala-hangar-48"
+  },
+  {
+    "id": 16,
+    "date": "2026-04-25 21:00",
+    "city": "Murcia",
+    "hour": "21:00",
+    "venue": "<span>Gira 'Que solo nos quede ganar': </span><span>Murcia</span>",
+    "address": "La Yesería",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3386.1813421828556!2d-1.1276800239961258!3d37.98637659994256!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd6382107d3f261f%3A0x768dd71b0413c518!2sLa%20Yeser%C3%ADa!5e1!3m2!1ses!2ses!4v1764104975476!5m2!1ses!2ses",
+    "bands": [42],
+    "event": null,
+    "tickets": null
+  },
+  {
+    "id": 17,
+    "date": "2026-05-23 21:00",
+    "city": "Zaragoza",
+    "hour": "21:00",
+    "venue": "<span>Gira 'Que solo nos quede ganar': </span><span>Zaragoza</span>",
+    "address": "La Ley Seca",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1659678.044870192!2d-3.6107853574064834!3d41.018719452389846!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd5914dfef515c11%3A0xb38d1cbb2a3e5706!2sLa%20Ley%20Seca%20-%20Sala%20de%20conciertos!5e1!3m2!1ses!2ses!4v1764105049073!5m2!1ses!2ses",
+    "bands": [42],
+    "event": null,
+    "tickets": null
   }
 ]
