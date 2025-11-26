@@ -159,7 +159,7 @@ export const getList = async ({
 
       Object.keys(filters).forEach((key) => {
         if (Array.isArray(filters[key])) {
-          queryObj.$and.push({ [key]: { $in: filters[key] } });
+          queryObj.$and.push({ [key]: { $all: filters[key] } });
         } else {
           queryObj.$and.push({ [key]: filters[key] });
         }

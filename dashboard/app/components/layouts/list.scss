@@ -81,7 +81,7 @@
     }
     .cds--flex {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-start;
       &.flex-end {
         justify-content: flex-end;
       }
