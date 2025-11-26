@@ -70,7 +70,11 @@ export const formDataToObject = (
       obj[key] = JSON.parse(value as string);
       return;
     } else if ([FIELD_TYPES.SELECT, FIELD_TYPES.NONE].includes(types[key])) {
-      obj[key] = value !== "undefined" ? Number(value) : null;
+      obj[key] =
+        value !== "undefined" && value !== "" && !isNaN(value as any) ? Number(value) : value;
+      if (obj[key] === "undefined" || obj[key] === "") {
+        obj[key] = null;
+      }
     } else {
       obj[key] = value !== "undefined" ? value : null;
     }

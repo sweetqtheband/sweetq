@@ -282,6 +282,8 @@ export const putItem = async ({
     _id: id,
   };
 
+  console.log("Update Object:", updateObject);
+
   return svc.update(updateObject, avoidUnset);
 };
 
