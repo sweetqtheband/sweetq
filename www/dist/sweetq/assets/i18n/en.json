@@ -61,15 +61,17 @@
     "label": "Gigs",
     "next": "Upcoming",
     "past": "Past",
-    "viewInGoogleMap": "View in Google Maps"
+    "viewInGoogleMap": "View in Google Maps",
+    "show": "Show",
+    "hide": "Hide"
   },
   "goToItsFacebook": "Go to its Facebook page",
   "goToItsInstagram": "Go to its Instagram page",
   "info": {
     "button": "Listen in Spotify",
     "subtitle": "Already available",
-    "text": "Errors, silences, and feelings that were left halfway. A night of partying, an unexpected revelation, and everything that was never said. You can now listen to <span class='bold'>'No habría sido así'</span> on all platforms!",
-    "title": "No habría sido así"
+    "text": "Don't miss <span class='bold'>'Sácame a bailar'</span>, a track that invites you to forget your problems and will make you let go of your insecurities. You can now listen to it on all platforms. Let yourself go and embrace the thrill of the new!",
+    "title": "Sácame a bailar"
   },
   "links": {
     "appleAvailable": "Apple Music link (available {{date}})",

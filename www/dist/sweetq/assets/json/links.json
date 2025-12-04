@@ -4,28 +4,21 @@
     "icon": "icon-spotify",
     "text": "links.spotify",
     "button": "primary",
-    "link": "https://open.spotify.com/album/0jYNYEI1QI8LtDYpbCr1Vt"
+    "link": "https://open.spotify.com/album/2Nh3GTdEKu4nrKRkVkrXYC"
   },
   {
     "type": "appleMusic",
     "icon": "icon-apple-music",
     "text": "links.appleMusic",
     "button": "primary",
-    "link": "https://music.apple.com/es/album/no-habría-sido-así-single/1825155245"
+    "link": "https://music.apple.com/ae/album/sácame-a-bailar-single/1854719033"
   },
   {
     "type": "youtubeMusic",
     "icon": "icon-youtube-music",
     "text": "links.youtubeMusic",
     "button": "primary",
-    "link": "https://music.youtube.com/playlist?list=OLAK5uy_miCMPTokYkDQG3QhULinUfSCWDKocwVhE"
-  },
-  {
-    "type": "spotify",
-    "icon": "icon-spotify",
-    "text": "links.presave.sacameabailar",
-    "button": "primary",
-    "link": "https://ffm.to/sweet-q-sacame-a-bailar"
+    "link": "https://music.youtube.com/playlist?list=OLAK5uy_kbZO9Ekb8gI-jwwCHZjiVKLzRDkCAax3E"
   },
   {
     "type": "gig",
