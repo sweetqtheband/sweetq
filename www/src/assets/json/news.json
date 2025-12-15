@@ -1,11 +1,11 @@
 [
   {
     "type": "info cover sacameabailar",
-    "title": "presave.title",
-    "subtitle": "presave.subtitle",
-    "text": "presave.text",
-    "button": "presave.spotify",
-    "spotifyHref": "https://ffm.to/sweet-q-sacame-a-bailar"
+    "title": "info.title",
+    "subtitle": "info.subtitle",
+    "text": "info.text",
+    "button": "info.button",
+    "spotifyHref": "https://open.spotify.com/intl-es/album/2Nh3GTdEKu4nrKRkVkrXYC"
   },
   {
     "type": "info video nohabriasidoasi",

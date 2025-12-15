@@ -70,8 +70,8 @@
   "info": {
     "button": "Escuchar en Spotify",
     "subtitle": "Ya disponible",
-    "text": "Errores, silencios y sentimientos que se quedaron a medio camino. Una noche de fiesta, una revelación inesperada y todo lo que nunca se dijo. ¡Ya podéis escuchar <span class='bold'>'No habría sido así'</span> en todas las plataformas!",
-    "title": "No habría sido así"
+    "text": "No te pierdas <span class='bold'>'Sácame a bailar'</span>, un tema que invita a olvidarse de los problemas y te hará dejar atrás las inseguridades. Ya puedes escucharlo en todas las plataformas. ¡Déjate llevar y entrégate sin miedo al vértigo de lo nuevo!",
+    "title": "Sácame a bailar"
   },
   "links": {
     "appleAvailable": "Link Apple Music (disponible {{date}})",
@@ -87,7 +87,7 @@
     },
     "spotify": "Spotify",
     "spotifyAvailable": "Link Spotify (disponible {{date}})",
-    "subtitle": "'No habría sido así' nuevo single",
+    "subtitle": "'Sácame a bailar' nuevo single",
     "title": "Sweet Q",
     "whatsapp": "Únete al canal de WhatsApp",
     "youtube": {

@@ -159,7 +159,7 @@ export const getList = async ({
 
       Object.keys(filters).forEach((key) => {
         if (Array.isArray(filters[key])) {
-          queryObj.$and.push({ [key]: { $in: filters[key] } });
+          queryObj.$and.push({ [key]: { $all: filters[key] } });
         } else {
           queryObj.$and.push({ [key]: filters[key] });
         }
@@ -281,6 +281,8 @@ export const putItem = async ({
     ...formDataToObject(formData, types, options),
     _id: id,
   };
+
+  console.log("Update Object:", updateObject);
 
   return svc.update(updateObject, avoidUnset);
 };

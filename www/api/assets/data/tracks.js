@@ -92,7 +92,17 @@ export default [
     date: "2025",
     cover: "sacameabailar.jpg",
     video: "default.mp4",
-    status: "upcoming",
+    status: "released",
+    links: {
+      spotify: "album/2Nh3GTdEKu4nrKRkVkrXYC",
+      apple: "album/sácame-a-bailar-single/1854719033",
+      amazon: "albums/B0F8BSDFVB",
+      youtubeMusic: "playlist?list=OLAK5uy_kbZO9Ekb8gI-jwwCHZjiVKLzRDkCAax3E",
+    },
+    description:
+      "'Sácame a bailar' es un tema que te invitará a olvidarte de los problemas y te hará dejar atrás las inseguridades. ¡Déjate llevar y entrégate sin miedo al vértigo de lo nuevo!",
+    lyrics:
+      "No sé muy bien cómo decir esto\nsin ser hortera\n\nQue me siento fenomenal\ncuando te tengo cerca\n\nA veces tengo la impresión\nde que vacilo en los momentos\nde ponerme serio\n\nY la verdad es que soy así,\nun poco tímido e infantil.\nNo tiene más misterio.\n\nYa no me pienso preocupar,\nno tengo miedo de fallar.\nTodos somos humanos.\n\nSólo pretendo disfrutar.\nHoy se acabó el procrastinar.\nTómame de la mano y\n\nSácame a bailar\nhasta que ya no queden lágrimas\nDéjate llevar, \nfluye con la corriente.\n\nVámonos al mar,\npongamos este nuevo barco a andar.\nNaveguemos hasta perder el control\nsin rumbo ni dirección.\n\nDéjame sentir tu marea sobre mi piel\ny alcanzar el clímax cuando estalle el temporal\n\nSácame a bailar\nhasta que ya no queden lágrimas\nDéjate llevar, \nfluye con la corriente.\n\nVámonos al mar,\npongamos este nuevo barco a andar.\nNaveguemos hasta perder el control\nsin rumbo ni dirección.\n\nSácame a bailar.\n\nDéjate llevar, \nfluye con la corriente.\n\nVámonos al mar,\npongamos este nuevo barco a andar.\nNaveguemos hasta perder el control\nsin rumbo ni dirección.\n\nNaveguemos hasta perder el control\nsin rumbo ni dirección.\n",
   },
   {
     id: "golpedesuerte",
