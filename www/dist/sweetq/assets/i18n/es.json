@@ -58,12 +58,12 @@
       "text": "El 25 de octubre tienes una cita en <span class='bold'>Madrid</span>. La sala  <span class='bold'>Vesta</span> será testigo de una noche del mejor indie pop rock nacional. En esta ocasión, desde Bilbao, <span class='bold'>Lorreine</span> nos acompañará en el escenario para vivir una noche única. ¡No te lo pierdas!",
       "title": "Sweet Q + Lorreine en Madrid"
     },
+    "hide": "Ocultar",
     "label": "Conciertos",
     "next": "Próximos",
     "past": "Pasados",
-    "viewInGoogleMap": "Ver en Google Maps",
     "show": "Ver todos",
-    "hide": "Ocultar"
+    "viewInGoogleMap": "Ver en Google Maps"
   },
   "goToItsFacebook": "Ir a su página de Facebook",
   "goToItsInstagram": "Ir a su página de Instagram",
@@ -83,6 +83,7 @@
       "20260313": "Concierto presentación LP Hangar 48 (Madrid) 13/03/26"
     },
     "presave": {
+      "quesolonosquedeganar": "Pre-save 'Que solo nos quede ganar'",
       "sacameabailar": "Pre-save 'Sácame a bailar'"
     },
     "spotify": "Spotify",
@@ -120,9 +121,9 @@
       "spotify": "¡Pre-save realizado correctamente!"
     },
     "spotify": "Pre-save en Spotify",
-    "subtitle": "Estreno 05 de diciembre",
-    "text": "Escucha antes que nadie nuestro próximo single <span class='bold'>'Sácame a bailar'</span>, un tema que te invitará a olvidarte de los problemas mientras te dejas llevar con la corriente sin mirar atrás. ¡Haz presave!",
-    "title": "Sácame a bailar"
+    "subtitle": "30 de enero",
+    "text": "La cuenta atrás está a punto de terminar. Nuestro primer LP 'Que solo nos quede ganar' verá la luz dentro de muy poco. Un álbum con 10 temas que alternan entre la euforia y la inseguridad, las noches largas y la resaca emocional, las ganas de lanzarse y el miedo a no encajar. ¡Haz presave!",
+    "title": "Que solo nos quede ganar"
   },
   "pressKit": {
     "button": "Descargar <span class='peso'>(4.3MB)</span>",
@@ -151,11 +152,11 @@
     "lyrics": "Letra"
   },
   "video": {
-    "nohabriasidoasi": {
+    "sacameabailar": {
       "button": "Ver en Youtube",
-      "subtitle": "No habría sido así",
-      "text": "No te pierdas el videoclip de nuestro último single 'No habría sido así', en donde una noche de barbacoa, fiesta y amigos se convierte en una inesperada historia de amor no correspondido.",
-      "title": "Nuevo videoclip"
+      "subtitle": "Sácame a bailar",
+      "text": "No te pierdas el lyric video de nuestro último single 'Sácame a bailar'. Lánzate sin miedo hacia lo desconocido, coge tus cascos, cierra los ojos y dejate llevar..",
+      "title": "Nuevo lyric video"
     }
   },
   "videoLabel": {
@@ -166,7 +167,8 @@
     "ley": "Vídeo - Ley de la atracción",
     "losiento": "Vídeo - Lo siento, pero no",
     "nohabriasidoasi": "Vídeo - No habría sido así",
-    "quevamosahacer": "Vídeo - ¿Qué vamos a hacer?"
+    "quevamosahacer": "Vídeo - ¿Qué vamos a hacer?",
+    "sacameabailar": "Lyric video - Sácame a bailar"
   },
   "videos": "Vídeos"
 }
