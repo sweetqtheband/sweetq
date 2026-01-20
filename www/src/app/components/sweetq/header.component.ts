@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
+import { SpotifyService } from '@services/spotify.service';
 import { SystemService } from '@services/system.service';
 
 @Component({
@@ -9,6 +10,7 @@ export class SweetQHeaderComponent implements OnInit {
   public release = true;
   public target = '_blank';
   public playAlbum = false;
+  public embedUrl: string = '';
 
   @Output() playAlbumEvent = new EventEmitter<boolean>();
 
@@ -27,8 +29,9 @@ export class SweetQHeaderComponent implements OnInit {
     youtubeMusic:
       'https://music.youtube.com/channel/UC_O66d_uvnaMYUh-kDwY-EA',
   };
-  constructor(private system: SystemService) {
+  constructor(private system: SystemService, spotify: SpotifyService) {
     this.system = system;
+    this.embedUrl = spotify.getEmbedUrl();
   }
   ngOnInit() {
     if (!this.release) {

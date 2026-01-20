@@ -21,7 +21,8 @@ export class SpotifyService {
   private eps = {
     base: {
       accounts: "https://accounts.spotify.com",
-      api: "https://api.spotify.com"
+      api: "https://api.spotify.com",
+      open: "https://open.spotify.com"
     },
     authorize: "/authorize",
     api: "/api",
@@ -44,6 +45,10 @@ export class SpotifyService {
     });
     
     this.table = this.db.table('codes');
+  }
+
+  getEmbedUrl() {
+    return `${this.eps.base.open}/embed/${config.spotify.releaseType}/${config.spotify.release}?utm_source=generator&theme=0`;
   }
 
   async getCode() {

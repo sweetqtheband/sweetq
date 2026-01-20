@@ -58,12 +58,12 @@
       "text": "On October 25th, you have a date in <span class='bold'>Madrid</span>. The venue <span class='bold'>Vesta</span> will witness a night of the best national indie pop rock. On this occasion, from Bilbao, <span class='bold'>Lorreine</span> will join us on stage for a unique night. Don't miss it!",
       "title": "Sweet Q + Lorreine in Madrid"
     },
+    "hide": "Hide",
     "label": "Gigs",
     "next": "Upcoming",
     "past": "Past",
-    "viewInGoogleMap": "View in Google Maps",
     "show": "Show",
-    "hide": "Hide"
+    "viewInGoogleMap": "View in Google Maps"
   },
   "goToItsFacebook": "Go to its Facebook page",
   "goToItsInstagram": "Go to its Instagram page",
@@ -80,7 +80,7 @@
       "lesarts": "Vote for us to play at Festival de les Arts!"
     },
     "gigs": {
-      "20251025": "Tickets for Sweet Q + Lorreine in Madrid"
+      "20260313": "LP presentation concert at Hangar 48 (Madrid) 03/13/26"
     },
     "presave": {
       "sacameabailar": "'Sácame a bailar' presave"
@@ -151,11 +151,11 @@
     "lyrics": "Lyrics"
   },
   "video": {
-    "nohabriasidoasi": {
+    "sacameabailar": {
       "button": "Watch on YouTube",
-      "subtitle": "No habría sido así",
-      "text": "Don't miss the music video of our latest single <span class='bold'>'No habría sido así'</span>, where a barbecue night, party, and friends turn into an unexpected unrequited love story.",
-      "title": "New music video"
+      "subtitle": "Sácame a bailar",
+      "text": "Don't miss the lyric video of our latest single 'Sácame a bailar'. Throw yourself fearlessly into the unknown, grab your headphones, close your eyes, and let yourself go..",
+      "title": "New lyric video"
     }
   },
   "videoLabel": {
@@ -166,7 +166,8 @@
     "ley": "Video - Ley de la atracción",
     "losiento": "Video - Lo siento, pero no",
     "nohabriasidoasi": "Video - No habría sido así",
-    "quevamosahacer": "Video - ¿Qué vamos a hacer?"
+    "quevamosahacer": "Video - ¿Qué vamos a hacer?",
+    "sacameabailar": "Lyric video - Sácame a bailar"
   },
   "videos": "Videos"
 }

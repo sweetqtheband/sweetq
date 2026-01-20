@@ -1,19 +1,19 @@
 [
   {
-    "type": "info cover sacameabailar",
-    "title": "info.title",
-    "subtitle": "info.subtitle",
-    "text": "info.text",
-    "button": "info.button",
-    "spotifyHref": "https://open.spotify.com/intl-es/album/2Nh3GTdEKu4nrKRkVkrXYC"
+    "button": "presave.spotify",
+    "spotifyHref": "https://open.spotify.com/intl-es/album/0xxOGrabwMn47FfAPEWV1j",
+    "subtitle": "presave.subtitle",
+    "text": "presave.text",
+    "title": "presave.title",
+    "type": "info cover quesolonosquedeganar"
   },
   {
-    "type": "info video nohabriasidoasi",
-    "title": "video.nohabriasidoasi.title",
-    "subtitle": "video.nohabriasidoasi.subtitle",
-    "text": "video.nohabriasidoasi.text",
-    "button": "video.nohabriasidoasi.button",
+    "button": "video.sacameabailar.button",
     "icon": "icon-youtube",
-    "youtubeHref": "https://www.youtube.com/watch?v=GNCZnM4A8Us"
+    "subtitle": "video.sacameabailar.subtitle",
+    "text": "video.sacameabailar.text",
+    "title": "video.sacameabailar.title",
+    "type": "info video sacameabailar",
+    "youtubeHref": "https://www.youtube.com/watch?v=z0qzpXxHj8k"
   }
 ]

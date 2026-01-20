@@ -127,6 +127,9 @@ export default [
     cover: "quieromas.jpg",
     video: "default.mp4",
     status: "upcoming",
+    links: {
+      spotify: "album/0xxOGrabwMn47FfAPEWV1j",
+    },
   },
   {
     id: "nohabriasidoasi",
@@ -134,7 +137,7 @@ export default [
     date: "2025-07-25",
     cover: "nohabriasidoasi.jpg",
     video: "nohabriasidooasi.mp4",
-    status: "latest",
+    status: "released",
     links: {
       spotify: "album/0jYNYEI1QI8LtDYpbCr1Vt",
       apple: "album/no-habría-sido-así-single/1825155245",

@@ -21,6 +21,8 @@ export default {
     clientId: 'MDExNzEzNDkwZDY4NGYyNmFmOWRhYjRiNzc4OWI1YzU=',
     clientSecret: 'OTc5YTM2NTZiNWJmNGY0OGIzNzA2ZDA2OGM2OTY3NTU=',
     nextRelease: null,
+    releaseType: 'album',
+    release: '2Nh3GTdEKu4nrKRkVkrXYC'
   },
   appleMusic: {
     nextRealease: null,

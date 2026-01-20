@@ -74,7 +74,7 @@ sweetq-gigs {
   min-height: 500px;
   color: #fff;
   background-image: url("../imgs/img-sweetq.webp");
-  background-position: center;
+  background-position: center 10%;
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
@@ -101,6 +101,7 @@ sweetq-gigs {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
+  object-position: center 30%;
 }
 .sq-bg:after {
   content: "";
@@ -549,48 +550,9 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   bottom: 0;
 }
 
-.sq-section.notice.info.losiento .sq-image.image-cover:before,
-.sq-section.notice.info.losiento .sq-image.image-cover:after {
-  background-image: url("../imgs/cover/losiento.jpg");
-}
-
-.sq-section.notice.info.atrapado .sq-image.image-cover:before,
-.sq-section.notice.info.atrapado .sq-image.image-cover:after {
-  background-image: url("../imgs/cover/atrapado.jpg");
-}
-
-.sq-section.notice.info.quevamosahacer .sq-image.image-cover:before,
-.sq-section.notice.info.quevamosahacer .sq-image.image-cover:after {
-  background-image: url("../imgs/cover/quevamos.jpg");
-}
-
-.sq-section.notice.info.ley .sq-image.image-cover:before,
-.sq-section.notice.info.ley .sq-image.image-cover:after {
-  background-image: url("../imgs/cover/ley.jpg");
-}
-
-.sq-section.notice.info.fiesta .sq-image.image-cover:before,
-.sq-section.notice.info.fiesta .sq-image.image-cover:after {
-  background-image: url("../imgs/cover/fiesta.jpg");
-}
-
-.sq-section.notice.info.yaesnavidad .sq-image.image-cover:before,
-.sq-section.notice.info.yaesnavidad .sq-image.image-cover:after {
-  background-image: url("../imgs/cover/yaesnavidad.jpg");
-}
-
-.sq-section.notice.info.golpedesuerte .sq-image.image-cover:before,
-.sq-section.notice.info.golpedesuerte .sq-image.image-cover:after {
-  background-image: url("../imgs/cover/golpedesuerte.jpg");
-}
-
-.sq-section.notice.info.nohabriasidoasi .sq-image.image-cover:before,
-.sq-section.notice.info.nohabriasidoasi .sq-image.image-cover:after {
-  background-image: url("../imgs/cover/nohabriasidoasi.jpg");
-}
-.sq-section.notice.info.sacameabailar .sq-image.image-cover:before,
-.sq-section.notice.info.sacameabailar .sq-image.image-cover:after {
-  background-image: url("../imgs/cover/sacameabailar.jpg");
+.sq-section.notice.info.quesolonosquedeganar .sq-image.image-cover:before,
+.sq-section.notice.info.quesolonosquedeganar .sq-image.image-cover:after {
+  background-image: url("../imgs/cover/quesolonosquedeganar.jpg");
 }
 .sq-section.notice.info .sq-image.image-cover {
   position: relative;
@@ -605,8 +567,8 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   background-image: url("../imgs/youtube/live/fiestasarganzuela.jpg");
 }
 
-.sq-section.notice.video.nohabriasidoasi .sq-image.image-cover {
-  background-image: url("../imgs/youtube/videoclips/nohabriasidoasi.webp");
+.sq-section.notice.video.sacameabailar .sq-image.image-cover {
+  background-image: url("../imgs/youtube/videoclips/sacameabailar.webp");
 }
 
 .sq-section.notice.video.fiestas-arganzuela .column-left {

@@ -47,10 +47,10 @@
       </div>
     </h1>
     <div class="sq-ep sq-hero" *ngIf="!release"></div>
-    <div class="sq-platforms">
+    <div class="sq-platforms">  
       <iframe
         style="border-radius: 12px"
-        src="https://open.spotify.com/embed/album/2Nh3GTdEKu4nrKRkVkrXYC?utm_source=generator&theme=0"
+        [src]="embedUrl | safe"
         width="100%"
         frameBorder="0"
         allowfullscreen=""
