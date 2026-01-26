@@ -12,15 +12,15 @@ export default function StateFilter({
   removable = false,
   isFilter = false,
   onChange = () => true,
-  onSelect = () => true
+  onSelect = () => true,
 }: Readonly<{
-  selected?: string | number,
-  selectedCountry?: string | number | null,
-  disabled?: boolean,
-  removable?: boolean,
-  isFilter?: boolean,
-  onChange?: Function,
-  onSelect?: Function
+  selected?: string | number;
+  selectedCountry?: string | number | null;
+  disabled?: boolean;
+  removable?: boolean;
+  isFilter?: boolean;
+  onChange?: Function;
+  onSelect?: Function;
 }>) {
   const [items, setItems] = useState([]);
   const [selectedValue, setSelectedValue] = useState(selected);
@@ -28,8 +28,7 @@ export default function StateFilter({
   const [selectItems, setSelectItems]: [Option[], Function] = useState([]);
 
   useEffect(() => {
-    const query =
-      selectedCountry !== -1 ? { country_id: selectedCountry } : null;
+    const query = selectedCountry !== -1 ? { country_id: selectedCountry } : null;
     const getItems = async () => {
       const queryItems = query ? (await States.getAll(query)).items : [];
       setItems(queryItems);

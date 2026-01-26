@@ -1,9 +1,9 @@
-import { NextRequest } from 'next/server';
-import { corsOptions, getList } from '@/app/services/api/_db';
-import { ERRORS } from '@/app/constants';
+import { NextRequest } from "next/server";
+import { corsOptions, getList } from "@/app/services/api/_db";
+import { ERRORS } from "@/app/constants";
 
-const collection = 'user_profiles';
-const idx = 'type';
+const collection = "user_profiles";
+const idx = "type";
 
 export async function GET(req: NextRequest) {
   const [message, corsParams] = corsOptions(req);

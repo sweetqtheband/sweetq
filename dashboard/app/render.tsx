@@ -13,10 +13,13 @@ import {
   IconButton,
   Loading,
   PasswordInput,
+  SelectItem,
   Stack,
   TextArea,
   TextInput,
   Tile,
+  TimePicker,
+  TimePickerSelect,
 } from "@carbon/react";
 import { FIELD_DEFAULTS, FIELD_TYPES, IMAGE_SIZES, SIZES, TAG_TYPES } from "./constants";
 import Image from "next/image";
@@ -27,34 +30,7 @@ import { renderItem } from "./renderItem";
 import { getClasses, s3File } from "./utils";
 import { ContentArea } from "./components";
 import Link from "next/link";
-
-interface Field {
-  field: string;
-  type: string;
-  value: any;
-  disabled: boolean;
-  removable: boolean;
-  translations: Record<string, any>;
-  fields: Record<string, any>;
-  files: Record<string, any>;
-  methods: Record<string, any>;
-  formState: Record<string, any>;
-  internalState: Record<string, any>;
-  renders: Record<string, any>;
-  ref: any;
-  params: any;
-  pathname: string;
-  replace: Function;
-  onAddFileHandler: Function;
-  onRemoveFileHandler: Function;
-  onInputHandler: Function;
-  onFormStateHandler: Function;
-  onInternalStateHandler: Function;
-  onRemoveHandler: Function;
-  className: string | undefined;
-  loading?: boolean;
-  ready?: boolean;
-}
+import { Field } from "@/types/field";
 
 // Renderers
 
@@ -98,10 +74,10 @@ const renderImage = ({ field, value }: Field) => {
 // Hidden field
 const renderLabel = ({ field, value, translations }: Field) => {
   return (
-    <FormItem key={field}>
+    <div key={field}>
       <p className="cds--label">{translations?.[field]}</p>
-      <div>{value}</div>
-    </FormItem>
+      {value}
+    </div>
   );
 };
 
@@ -117,17 +93,77 @@ const renderLink = ({ field, fields, value }: Field) => {
 };
 
 // Text input field
-const renderTextInput = ({ field, value, translations, formState, onInputHandler }: Field) => {
-  const inputValue = formState?.[field];
+const renderTextInput = ({
+  field,
+  value,
+  fields,
+  translations,
+  formState,
+  internalState,
+  onInputHandler,
+  onInternalStateHandler,
+}: Field) => {
+  const inputValue = formState?.[field] || value;
+  const language = fields?.options[field]?.language;
+
+  const onChangeHandler = (field: string, value: string) => {
+    if (language) {
+      const newInternalState = {
+        ...internalState[field],
+        [internalState[field]?.locale]: value,
+      };
+
+      onInternalStateHandler(field, newInternalState);
+
+      const newFormState = JSON.parse(JSON.stringify(newInternalState));
+      delete newFormState.locale;
+
+      onInputHandler(field, newFormState);
+    } else {
+      onInternalStateHandler(field, value);
+      onInputHandler(field, value);
+    }
+  };
+
+  if (!internalState[field]) {
+    const newInternalState = {
+      ...translations.availableLanguages.reduce(
+        (acc: Record<string, string>, locale: string) => ({
+          ...acc,
+          [locale]: inputValue?.[locale] || "",
+        }),
+        {}
+      ),
+      locale: translations.locale,
+    };
+    onInternalStateHandler(field, newInternalState);
+  }
+
+  const onLanguageChangeHandler: Function = (field: string, locale: string) => {
+    onInternalStateHandler(field, {
+      ...internalState[field],
+      locale,
+    });
+  };
 
   return (
-    <TextInput
-      key={field}
-      id={field}
-      labelText={translations.fields[field]}
-      value={inputValue || ""}
-      onChange={(e: ChangeEvent<HTMLInputElement>) => onInputHandler(field, e.target.value)}
-    />
+    <div className="cds--text-input__field-outer-wrapper">
+      <TextInput
+        key={field}
+        id={field}
+        labelText={translations.fields[field]}
+        value={(language ? inputValue?.[internalState?.[field]?.locale] : inputValue) || ""}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => onChangeHandler(field, e.target.value)}
+      ></TextInput>
+      {language
+        ? renderLanguageSelector({
+            field,
+            translations,
+            value: internalState?.[field]?.locale,
+            onInputHandler: onLanguageChangeHandler,
+          } as Field)
+        : null}
+    </div>
   );
 };
 
@@ -978,15 +1014,30 @@ const renderCity = ({
   );
 };
 
-const renderDatePickerLabel = ({ field, value, translations, formState }: Field) =>
-  renderLabel({
-    field,
-    translations,
-    value: renderDatePicker({ field, value, translations, formState } as Field),
-  } as Field);
+const renderDatePickerLabel = (params: Field) => {
+  return renderDatePicker(params);
+};
+const renderDateHourPickerLabel = (params: Field) => {
+  return renderDatePicker(params, true);
+};
 
-const renderDatePicker = ({ field, value, translations, formState }: Field) => {
+const renderDatePicker = (params: Field, withHour: Boolean = false) => {
+  const { field, value, translations, formState, onInputHandler } = params;
+
   const defaultValue = formState[field] || value;
+  const onChangeHandler = (dateArray: Date[]) => {
+    if (dateArray.length > 0) {
+      const date = dateArray[0].toISOString();
+      onInputHandler(field, date);
+    }
+  };
+
+  const onDateHourInputHandler = (field: string, dateHourValue: string) => {
+    const date = new Date(formState[field]);
+    const dateHour = new Date(dateHourValue);
+    date.setHours(dateHour.getHours(), dateHour.getMinutes(), 0, 0);
+    onInputHandler(field, date.toISOString());
+  };
   return (
     <DatePicker
       key={field}
@@ -994,6 +1045,7 @@ const renderDatePicker = ({ field, value, translations, formState }: Field) => {
       dateFormat="d/m/Y"
       locale={translations.locale}
       value={defaultValue ? new Date(defaultValue) : undefined}
+      onChange={onChangeHandler}
     >
       <DatePickerInput
         placeholder="dd/mm/yyyy"
@@ -1001,9 +1053,87 @@ const renderDatePicker = ({ field, value, translations, formState }: Field) => {
         id="date-picker-single"
         size="md"
       />
+      {withHour
+        ? renderDateHourPicker({ ...params, onInputHandler: onDateHourInputHandler })
+        : null}
     </DatePicker>
   );
 };
+
+const renderDateHourPicker = ({
+  field,
+  value,
+  translations,
+  formState,
+  internalState,
+  onInternalStateHandler = () => {},
+  onInputHandler = () => {},
+}: Field) => {
+  const defaultDate = formState[field] || value;
+  const initialDate = defaultDate ? new Date(defaultDate) : null;
+
+  if (!internalState?.[field] || !internalState?.[field]?.hour || !internalState?.[field]?.minute) {
+    onInternalStateHandler(field, {
+      ...internalState[field],
+      hour: initialDate ? String(initialDate.getHours()).padStart(2, "0") : "00",
+      minute: initialDate ? String(initialDate.getMinutes()).padStart(2, "0") : "00",
+    });
+  }
+
+  const setHour = (hour: string) => {
+    onInternalStateHandler(field, {
+      ...internalState[field],
+      hour,
+    });
+  };
+  const setMinute = (minute: string) => {
+    onInternalStateHandler(field, {
+      ...internalState[field],
+      minute,
+    });
+  };
+  const hours = Array.from({ length: 24 }, (_, i) => String(i).padStart(2, "0"));
+
+  const minutes = Array.from({ length: 12 }, (_, i) => String(i * 5).padStart(2, "0"));
+
+  const updateDate = (h: string, m: string) => {
+    const date = new Date();
+
+    date.setHours(Number(h), Number(m), 0, 0);
+    onInputHandler(field, date.toISOString());
+  };
+
+  return (
+    <TimePicker id={`${field}-time-picker`} labelText={translations.time} type="hidden">
+      <TimePickerSelect
+        id={`${field}-hours`}
+        value={internalState?.[field]?.hour || "00"}
+        onChange={(e) => {
+          setHour(e.target.value);
+          updateDate(e.target.value, internalState?.[field]?.minute || 0);
+        }}
+      >
+        {hours.map((h) => (
+          <SelectItem key={h} value={h} text={h} />
+        ))}
+      </TimePickerSelect>
+
+      <TimePickerSelect
+        id={`${field}-minutes`}
+        value={internalState?.[field]?.minute || "00"}
+        onChange={(e) => {
+          setMinute(e.target.value);
+          updateDate(internalState?.[field]?.hour || 0, e.target.value);
+        }}
+      >
+        {minutes.map((m) => (
+          <SelectItem key={m} value={m} text={m} />
+        ))}
+      </TimePickerSelect>
+    </TimePicker>
+  );
+};
+
 const renderPassword = ({ field, translations, onInputHandler }: Field) => {
   return (
     <PasswordInput
@@ -1048,10 +1178,14 @@ const renderers = {
   [FIELD_TYPES.CITY]: renderCity,
   [FIELD_TYPES.DATE_LABEL]: renderDatePickerLabel,
   [FIELD_TYPES.DATE]: renderDatePicker,
+  [FIELD_TYPES.DATE_HOUR_LABEL]: renderDateHourPickerLabel,
+  [FIELD_TYPES.DATE_HOUR]: renderDateHourPicker,
   [FIELD_TYPES.FILTER_CITY]: renderCityFilter,
   [FIELD_TYPES.FILTER_COUNTRY]: renderCountryFilter,
   [FIELD_TYPES.FILTER_STATE]: renderStateFilter,
   [FIELD_TYPES.HIDDEN]: renderHidden,
+  [FIELD_TYPES.HIDDEN_BOOLEAN]: renderHidden,
+  [FIELD_TYPES.HIDDEN_DATE]: renderHidden,
   [FIELD_TYPES.HOUR]: renderHour,
   [FIELD_TYPES.IMAGE_UPLOADER]: renderUploader,
   [FIELD_TYPES.IMAGE]: renderImage,

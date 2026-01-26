@@ -1,14 +1,9 @@
-import { NextRequest } from 'next/server';
-import {
-  getList,
-  corsOptions,
-  getQueryFilter,
-  removeQueryFilter,
-} from '@/app/services/api/_db';
-import { ERRORS, SORT } from '@/app/constants';
+import { NextRequest } from "next/server";
+import { getList, corsOptions, getQueryFilter, removeQueryFilter } from "@/app/services/api/_db";
+import { ERRORS, SORT } from "@/app/constants";
 
-const collection = 'followers';
-const idx = 'created';
+const collection = "followers";
+const idx = "created";
 
 export async function OPTIONS(req: NextRequest) {
   const [message, params] = corsOptions(req);
@@ -27,22 +22,22 @@ export async function GET(req: NextRequest) {
 
   const filters = [];
 
-  const query = qp.get('query');
-  const filterShow = getQueryFilter(req, 'show');
-  if (filterShow !== '2') {
+  const query = qp.get("query");
+  const filterShow = getQueryFilter(req, "show");
+  if (filterShow !== "2") {
     filters.push({
-      unfollow: filterShow === '1',
+      unfollow: filterShow === "1",
     });
   }
-  removeQueryFilter(req, 'show');
+  removeQueryFilter(req, "show");
 
-  const filterWithoutTags = getQueryFilter(req, 'withoutTags', true);
+  const filterWithoutTags = getQueryFilter(req, "withoutTags", true);
   if (filterWithoutTags) {
     filters.push({
       tags: { $nin: filterWithoutTags },
     });
   }
-  removeQueryFilter(req, 'withoutTags');
+  removeQueryFilter(req, "withoutTags");
 
   if (filters.length > 0) {
     queryObj.$and = filters;
@@ -51,10 +46,10 @@ export async function GET(req: NextRequest) {
   if (query) {
     queryObj.$or = [
       {
-        full_name: { $regex: query, $options: 'i' },
+        full_name: { $regex: query, $options: "i" },
       },
       {
-        username: { $regex: query, $options: 'i' },
+        username: { $regex: query, $options: "i" },
       },
     ];
   }

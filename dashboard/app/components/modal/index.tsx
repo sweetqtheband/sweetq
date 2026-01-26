@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { getClasses } from '@/app/utils';
-import './modal.scss';
-import { useContext, useEffect, useRef, useState } from 'react';
-import { WindowContext } from '@/app/context';
-import { Close } from '@carbon/react/icons';
+import { getClasses } from "@/app/utils";
+import "./modal.scss";
+import { useContext, useEffect, useRef, useState } from "react";
+import { WindowContext } from "@/app/context";
+import { Close } from "@carbon/react/icons";
 
 export default function ModalComponent({
   children,
@@ -31,12 +31,12 @@ export default function ModalComponent({
       const handleAnimationEnd = () => {
         onClose();
         if (element) {
-          element.removeEventListener('transitionend', handleAnimationEnd);
+          element.removeEventListener("transitionend", handleAnimationEnd);
         }
       };
 
       if (element) {
-        element.addEventListener('transitionend', handleAnimationEnd);
+        element.addEventListener("transitionend", handleAnimationEnd);
       }
       setIsOpen(false);
     }
@@ -58,12 +58,12 @@ export default function ModalComponent({
     const handleAnimationEnd = () => {
       onClose();
       if (element) {
-        element.removeEventListener('transitionend', handleAnimationEnd);
+        element.removeEventListener("transitionend", handleAnimationEnd);
       }
     };
 
     if (element) {
-      element.addEventListener('transitionend', handleAnimationEnd);
+      element.addEventListener("transitionend", handleAnimationEnd);
     }
     setIsOpen(false);
   };

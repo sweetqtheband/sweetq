@@ -1,8 +1,6 @@
-
-
 import { Metadata } from "next";
 
-import './layout.scss';
+import "./layout.scss";
 
 export const metadata: Metadata = {
   title: "Sweet Q",
@@ -14,6 +12,5 @@ export default async function ViewportLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return children;
 }

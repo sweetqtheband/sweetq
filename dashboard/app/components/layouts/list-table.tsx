@@ -118,6 +118,8 @@ export default function ListTable({
   const [internalState, setInternalState] = useState<Record<string, any>>({});
   const [formState, setFormState] = useState<Record<string, any>>({});
   const [filtering, setFiltering] = useState<boolean>(false);
+  const [canDelete, setCanDelete] = useState<boolean>(!noDelete);
+  const [canCopy, setCanCopy] = useState<boolean>(!noCopy);
 
   const params = new URLSearchParams(searchParams);
 
@@ -218,12 +220,16 @@ export default function ListTable({
     if (field.value) {
       const fieldName = field.id.split(":")[1];
 
+      const fieldValue = fields?.options?.[fieldName]?.language
+        ? field.value[translations.locale]
+        : field.value;
+
       const isImage = String(field.value).match(/\.(png|gif|jpg|jpeg|webp|svg)/i);
 
-      const defaultValue = item?.relations?.[fieldName]?.[translations.locale] || field.value;
+      const defaultValue = item?.relations?.[fieldName]?.[translations.locale] || fieldValue;
 
       let value = translations.options?.[fieldName]
-        ? translations.options?.[fieldName][field.value]
+        ? translations.options?.[fieldName][fieldValue]
         : defaultValue;
 
       if (renders[fieldName]) {
@@ -311,11 +317,14 @@ export default function ListTable({
   };
 
   const tableDeleteHandler = (selectedRows: any[]) => {
+    const deleteRows = selectedRows.filter(
+      (row) => tableRows.find((item) => item._id === row.id)?.default !== true
+    );
     if (!deleteOpen) {
       setDeleteOpen(true);
-      setDeleteRows(selectedRows);
+      setDeleteRows(deleteRows);
     } else {
-      onDelete(selectedRows.map((row) => row.id));
+      onDelete(deleteRows.map((row) => row.id));
       setDeleteOpen(false);
     }
   };
@@ -336,7 +345,6 @@ export default function ListTable({
 
     params.set("sort", headers[index].key);
     params.set("sortDir", String(SORT[dir[index]]));
-
     replace(`${pathname}?${params.toString()}`);
   };
 
@@ -736,7 +744,7 @@ export default function ListTable({
                     translateWithId={tableBatchActionsTranslate}
                   >
                     {renderBatchActions(batchActionProps, selectedRows)}
-                    {!noDelete ? (
+                    {canDelete ? (
                       <TableBatchAction
                         tabIndex={batchActionProps.shouldShowBatchActions ? 0 : -1}
                         renderIcon={TrashCan}
@@ -745,7 +753,7 @@ export default function ListTable({
                         {translations.delete}
                       </TableBatchAction>
                     ) : null}
-                    {!noDelete ? (
+                    {canCopy ? (
                       <TableBatchAction
                         tabIndex={batchActionProps.shouldShowBatchActions ? 0 : -1}
                         renderIcon={Copy}
@@ -798,6 +806,23 @@ export default function ListTable({
                         <TableSelectRow
                           {...getSelectionProps({
                             row,
+                            onChange: (evt: SyntheticEvent<HTMLInputElement>) => {
+                              const currentSelectedRows = selectedRows.find(
+                                (selectedRow) => selectedRow.id === row.id
+                              )
+                                ? selectedRows.filter((selectedRow) => selectedRow.id !== row.id)
+                                : [...selectedRows, row];
+
+                              if (
+                                currentSelectedRows.length === 1 &&
+                                tableRows.find((item) => item._id === currentSelectedRows[0].id)
+                                  ?.default
+                              ) {
+                                setCanDelete(false);
+                              } else {
+                                setCanDelete(!noDelete);
+                              }
+                            },
                             checked: selectedRows.find((selectedRow) => selectedRow.id === row.id),
                             onClick: (event: MouseEvent) => {
                               const isSelected = !row.isSelected;

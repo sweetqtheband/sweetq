@@ -9,11 +9,11 @@
     "clear": "Clear",
     "close": "Close",
     "confirm": "Confirm",
+    "confirmCopy": "Are you sure you want to copy this item?",
+    "confirmCopySelected": "Are you sure you want to copy the selected items?",
     "confirmDelete": "Are you sure you want to delete this item?",
     "confirmDeleteSelected": "Are you sure you want to delete the selected items?",
     "copy": "Copy",
-    "confirmCopy": "Are you sure you want to copy this item?",
-    "confirmCopySelected": "Are you sure you want to copy the selected items?",
     "delete": "Delete",
     "edit": "Edit",
     "email": "Email",
@@ -34,6 +34,27 @@
     "unselectAll": "Unselect all",
     "unselectAllShort": "Unsel.",
     "upload": "Upload"
+  },
+  "charts": {
+    "answering": "Answering",
+    "answeringFollowers": "Answering followers",
+    "answeringFollowersLost": "Answering followers lost",
+    "censed": "Censed",
+    "censedFollowers": "Censed followers",
+    "censedLost": "Censed lost",
+    "censedTotal": "Censed total",
+    "contactedFollowers": "Contacted followers",
+    "contactedFollowersLost": "Contacted followers lost",
+    "fanFollowers": "Fans",
+    "fanFollowersLost": "Fans lost",
+    "followerTypes": "Follower types",
+    "followers": "Followers",
+    "followersLost": "Lost followers",
+    "responseRate": "Response rate",
+    "superfanFollowers": "Superfans",
+    "superfanFollowersLost": "Superfans lost",
+    "totalFollowers": "Total followers",
+    "totalFollowersLost": "Total followers lost"
   },
   "colors": {
     "blue": "Blue",
@@ -91,12 +112,17 @@
     "country": "Country",
     "cover": "Cover",
     "date": "Date",
+    "default": "Default",
     "description": "Description",
     "email": "Email",
     "event": "Event / news URL",
     "followedBack": "Following us back",
     "from": "From",
     "fullName": "Full name",
+    "headerImage": "Header image",
+    "headerImageMobile": "Header mobile image",
+    "headerVideo": "Header video",
+    "headerVideoMobile": "Header mobile video",
     "hour": "Hour",
     "image": "Image",
     "keywords": "Keywords",
@@ -107,6 +133,7 @@
     "map": "Google Maps embed URL",
     "name": "Name",
     "password": "Password",
+    "path": "Path",
     "pendingMessages": "Pending messages",
     "profile": "Profile",
     "robots": "Robots",
@@ -120,6 +147,7 @@
       "x": "X",
       "youtube": "YouTube"
     },
+    "spotifyId": "Spotify ID",
     "state": "State",
     "status": "Status",
     "subtitle": "Subtitle",
@@ -143,6 +171,10 @@
     },
     "withoutTags": "Without tags"
   },
+  "groups": {
+    "header": "Header",
+    "metadata": "Metadata"
+  },
   "languages": {
     "en": "English",
     "es": "Spanish"
@@ -165,16 +197,18 @@
           "label": "Are you sure you want to cancel the message sending?"
         }
       },
-      "description": "{{total}} followers",
+      "followers": {
+        "description": "{{total}} followers",
+        "title": "Instagram followers"
+      },
+      "following": {
+        "description": "{{total}} following",
+        "title": "Instagram following"
+      },
       "listPanel": {
         "batchEdit": {
-          "title": "Batch edit",
-          "followers": {
-            "subtitle": "Edit tags, country and state for the selected followers"
-          },
-          "followings": {
-            "subtitle": "Edit tags, country and state for the selected followings"
-          }
+          "subtitle": "Editing",
+          "title": "Batch edit"
         }
       },
       "messagePanel": {
@@ -192,16 +226,11 @@
         },
         "vars": "Variables"
       },
-      "followers": {
-        "description": "{{total}} followers",
-        "title": "Instagram followers"
-      },
-      "following": {
-        "description": "{{total}} following",
-        "title": "Instagram following"
-      },
       "title": "Instagram"
     }
+  },
+  "panels": {
+    "config": "Configuration"
   },
   "robots": {
     "indexFollow": "Index",
@@ -220,6 +249,7 @@
     "instagram": "Instagram",
     "layouts": "Layouts",
     "news": "News",
+    "routes": "Routes",
     "tags": "Tags",
     "tracks": "Tracks",
     "users": "Users",
@@ -244,26 +274,5 @@
   "userProfiles": {
     "admin": "Administrator",
     "user": "User"
-  },
-  "charts": {
-    "answering": "Answering",
-    "responseRate": "Response rate",
-    "followers": "Followers",
-    "followersLost": "Lost followers",
-    "censedFollowers": "Censed followers",
-    "totalFollowers": "Total followers",
-    "totalFollowersLost": "Total followers lost",
-    "contactedFollowers": "Contacted followers",
-    "answeringFollowers": "Answering followers",
-    "superfanFollowers": "Superfans",
-    "fanFollowers": "Fans",
-    "contactedFollowersLost": "Contacted followers lost",
-    "answeringFollowersLost": "Answering followers lost",
-    "superfanFollowersLost": "Superfans lost",
-    "fanFollowersLost": "Fans lost",
-    "censed": "Censed",
-    "censedTotal": "Censed total",
-    "censedLost": "Censed lost",
-    "followerTypes": "Follower types"
   }
 }

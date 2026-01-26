@@ -1,6 +1,6 @@
-import { Model } from '@/app/models/tracks';
-import { BaseSvc } from './_base';
-import { Collection, Document } from 'mongodb';
+import { Model } from "@/app/models/tracks";
+import { BaseSvc } from "./_base";
+import { Collection, Document } from "mongodb";
 
 /**
  * Tracks service

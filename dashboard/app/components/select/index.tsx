@@ -5,25 +5,24 @@ import "./select.scss";
 import { Option } from "@/types/option";
 import { WindowContext, FilterContext } from "@/app/context";
 
-import { useSearchParams, usePathname, useRouter } from 'next/navigation';
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { getClasses, setClasses } from "@/app/utils";
 
+const isVisible = (el: HTMLElement, container: HTMLElement) => {
+  const elTop = el.offsetTop;
+  const elBottom = elTop + el.clientHeight;
 
-const isVisible = (el:HTMLElement, container:HTMLElement) => {
-    const elTop = el.offsetTop;
-    const elBottom = elTop + el.clientHeight;
+  const containerTop = Math.round(container.scrollTop + el.clientHeight);
+  const containerBottom = Math.round(containerTop + container.clientHeight - el.clientHeight);
 
-    const containerTop = Math.round(container.scrollTop + el.clientHeight);
-    const containerBottom = Math.round(containerTop + container.clientHeight - el.clientHeight) ;
+  // The element is fully visible in the container
 
-    // The element is fully visible in the container    
-    
-    return (
-        (elTop >= containerTop && elBottom <= containerBottom) ||
-        // Some part of the elment is visible in the container
-        (elTop < containerTop && containerTop < elBottom) ||
-        (elTop < containerBottom && containerBottom < elBottom)
-    );
+  return (
+    (elTop >= containerTop && elBottom <= containerBottom) ||
+    // Some part of the elment is visible in the container
+    (elTop < containerTop && containerTop < elBottom) ||
+    (elTop < containerBottom && containerBottom < elBottom)
+  );
 };
 
 export default function SelectComponent({
@@ -84,9 +83,7 @@ export default function SelectComponent({
     }
 
     if (e.target?.dataset?.id) {
-      setSelectedOption(
-        items.find((item) => item.value === e.target.dataset.id) as Option
-      );
+      setSelectedOption(items.find((item) => item.value === e.target.dataset.id) as Option);
       setShow(false);
     }
 
@@ -170,9 +167,7 @@ export default function SelectComponent({
 
   useEffect(() => {
     if (search) {
-      setFocused(
-        items.findIndex((item) => item?.name?.toLowerCase().includes(search))
-      );
+      setFocused(items.findIndex((item) => item?.name?.toLowerCase().includes(search)));
     }
   }, [search, items]);
 
@@ -216,9 +211,7 @@ export default function SelectComponent({
   // After change
   useEffect(() => {
     if (isFilter) {
-      const params = new URLSearchParams([
-        ...Array.from(searchParams.entries()),
-      ]);
+      const params = new URLSearchParams([...Array.from(searchParams.entries())]);
 
       if (selectedOption) {
         params.set(field, String(selectedOption.value));
@@ -228,15 +221,7 @@ export default function SelectComponent({
     } else {
       onSelect(selectedOption);
     }
-  }, [
-    selectedOption,
-    searchParams,
-    pathname,
-    replace,
-    field,
-    isFilter,
-    onSelect,
-  ]);
+  }, [selectedOption, searchParams, pathname, replace, field, isFilter, onSelect]);
 
   const text = (
     <>
@@ -257,7 +242,7 @@ export default function SelectComponent({
     [name]: true,
     disabled,
     removable,
-    [`${setClasses(className)}`]: true
+    [`${setClasses(className)}`]: true,
   });
   return (
     <div
@@ -269,9 +254,7 @@ export default function SelectComponent({
       onMouseOver={onMouseOverHandler}
       tabIndex={0}
     >
-      <div className="select--selected">
-        {selectedOption ? text : placeholderText}
-      </div>
+      <div className="select--selected">{selectedOption ? text : placeholderText}</div>
       <ul className={`select--list ${show ? "open" : ""}`} ref={ulRef}>
         {items.map((item, index) => (
           <li

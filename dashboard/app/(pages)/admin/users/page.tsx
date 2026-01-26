@@ -1,9 +1,9 @@
-import { Users } from '@/app/services/users';
-import type { User } from '@/types/user';
-import i18n from '@/app/services/translate';
-import UsersView from './view';
-import { getTranslation } from '@/app/services/_list';
-import { UserProfiles } from '@/app/services/userProfiles';
+import { Users } from "@/app/services/users";
+import type { User } from "@/types/user";
+import i18n from "@/app/services/translate";
+import UsersView from "./view";
+import { getTranslation } from "@/app/services/_list";
+import { UserProfiles } from "@/app/services/userProfiles";
 
 export default async function UsersPage({
   searchParams,
@@ -14,13 +14,13 @@ export default async function UsersPage({
   const items: User[] = await Users.parseAll(data.items);
 
   const headers = [
-    { key: 'name', header: i18n.t('fields.name'), default: true },
-    { key: 'username', header: i18n.t('fields.username') },
+    { key: "name", header: i18n.t("fields.name"), default: true },
+    { key: "username", header: i18n.t("fields.username") },
   ];
 
   const translations = {
     ...Users.getTranslations(i18n, Users),
-    ...getTranslation(i18n, 'actions'),
+    ...getTranslation(i18n, "actions"),
   } as Record<string, any>;
   translations.options.profile = UserProfiles.getTranslations(i18n);
 

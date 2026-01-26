@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { Loading } from '@carbon/react';
+import { Loading } from "@carbon/react";
 
 export default function Loader() {
   return <Loading withOverlay={true} />;

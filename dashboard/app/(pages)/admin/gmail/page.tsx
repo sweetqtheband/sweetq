@@ -1,7 +1,3 @@
 export default function GmailPage() {
-  return (
-    <>
-      Gmail page
-    </>
-  )
+  return <>Gmail page</>;
 }

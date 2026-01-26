@@ -1,10 +1,10 @@
-import { Options as options, Types as types } from '@/app/services/gigs';
-import { NextRequest } from 'next/server';
-import { corsOptions, deleteItem, putItem } from '@/app/services/api/_db';
-import { ERRORS, HTTP_STATUS_CODES } from '@/app/constants';
-import { revalidatePath } from 'next/cache';
+import { Options as options, Types as types } from "@/app/services/gigs";
+import { NextRequest } from "next/server";
+import { corsOptions, deleteItem, putItem } from "@/app/services/api/_db";
+import { ERRORS, HTTP_STATUS_CODES } from "@/app/constants";
+import { revalidatePath } from "next/cache";
 
-const collection = 'gigs';
+const collection = "gigs";
 
 interface Params {
   params: {
@@ -28,15 +28,9 @@ export async function PUT(req: NextRequest, { params }: Params) {
   try {
     const item = await putItem({ id, req, collection, types, options });
 
-    return Response.json(
-      { data: item },
-      { ...corsParams, status: HTTP_STATUS_CODES.OK }
-    );
+    return Response.json({ data: item }, { ...corsParams, status: HTTP_STATUS_CODES.OK });
   } catch (err: any) {
-    return Response.json(
-      { err: err?.message },
-      { ...corsParams, status: HTTP_STATUS_CODES.ERROR }
-    );
+    return Response.json({ err: err?.message }, { ...corsParams, status: HTTP_STATUS_CODES.ERROR });
   }
 }
 
@@ -52,14 +46,8 @@ export async function DELETE(req: NextRequest, { params }: Params) {
     const item = await deleteItem({ id, req, collection, types, options });
     revalidatePath(`/admin/${collection}`);
 
-    return Response.json(
-      { data: item },
-      { ...corsParams, status: HTTP_STATUS_CODES.OK }
-    );
+    return Response.json({ data: item }, { ...corsParams, status: HTTP_STATUS_CODES.OK });
   } catch (err: any) {
-    return Response.json(
-      { err: err?.message },
-      { ...corsParams, status: HTTP_STATUS_CODES.ERROR }
-    );
+    return Response.json({ err: err?.message }, { ...corsParams, status: HTTP_STATUS_CODES.ERROR });
   }
 }

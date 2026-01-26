@@ -1,9 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
 
-const useTableRenderComplete = (
-  tableId: string,
-  onRenderComplete: Function
-) => {
+const useTableRenderComplete = (tableId: string, onRenderComplete: Function) => {
   const observerRef = useRef<MutationObserver | null>(null);
   const timeoutRef = useRef<any>(null);
   useEffect(() => {

@@ -21,7 +21,7 @@ export default function RadioComponent({
 }>) {
   const [isChecked, setIsChecked] = useState(!!checked);
   const classes = getClasses({
-    'checked': checked,
+    checked: checked,
     [`${setClasses(className)}`]: true,
   });
 

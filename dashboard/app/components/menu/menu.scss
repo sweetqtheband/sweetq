@@ -25,10 +25,10 @@
   img {
     padding: var(--padding);
     box-sizing: content-box;
-    cursor:pointer;
+    cursor: pointer;
   }
 
   .button {
-    height: calc(calc(var(--controls-height) / 4) * 3)
+    height: calc(calc(var(--controls-height) / 4) * 3);
   }
-}  
+}

@@ -62,7 +62,7 @@
       transform: translateY(-50%);
       right: var(--padding);
       cursor: pointer;
-      z-index: 2;
+      z-index: 3;
     }
 
     footer {
@@ -109,11 +109,57 @@
       max-height: calc(var(--full-height) * 0.8);
       .fields {
         overflow-y: auto;
-        padding: 0px calc(var(--padding) * 2) calc(var(--padding) * 7);
+        padding: 0px calc(var(--padding) * 2);
         max-height: calc(var(--full-height) * 0.8);
+
+        .cds--stack-vertical {
+          gap: 0;
+        }
+
+        .cds--accordion {
+          &__content {
+            padding-inline-end: 0;
+            -webkit-padding-end: 0;
+            padding-inline-start: 0;
+            -webkit-padding-start: 0;
+            display: flex;
+            flex-flow: column;
+            gap: var(--padding);
+          }
+          &__heading {
+            padding-inline-end: 0;
+            -webkit-padding-end: 0;
+          }
+          &__title {
+            padding-inline-start: 0;
+            -webkit-padding-start: 0;
+          }
+          &__heading {
+            position: sticky;
+            top: 45px;
+            z-index: 1;
+            background-color: var(--light-bg-color);
+          }
+          &__item:first-child {
+            border-block-start: none;
+            margin-top: 0;
+          }
+        }
+
+        h4 {
+          position: sticky;
+          top: 0;
+          z-index: 2;
+          background-color: var(--light-bg-color);
+          padding-bottom: calc(var(--padding) * 2);
+          border-bottom: 1px solid var(--cds-border-subtle);
+        }
 
         @include breakpoint(mobile) {
           max-height: calc(var(--full-height) * 0.8 - 25px);
+        }
+        @include heightBreakpoint(extralarge) {
+          max-height: calc(var(--full-height) * 0.9 - 25px);
         }
       }
     }

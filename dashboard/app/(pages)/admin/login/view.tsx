@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { ChangeEvent, KeyboardEventHandler, useRef, useState } from 'react';
-import './page.scss';
-import { Auth } from '@/app/services/auth';
-import Image from 'next/image';
-import { ERRORS, HTTP_STATUS_CODES } from '@/app/constants';
-import { TextInput, Button, PasswordInput } from '@carbon/react';
-import { translationIds } from '@carbon/react/lib/components/NumberInput/NumberInput';
+import { ChangeEvent, KeyboardEventHandler, useRef, useState } from "react";
+import "./page.scss";
+import { Auth } from "@/app/services/auth";
+import Image from "next/image";
+import { ERRORS, HTTP_STATUS_CODES } from "@/app/constants";
+import { TextInput, Button, PasswordInput } from "@carbon/react";
+import { translationIds } from "@carbon/react/lib/components/NumberInput/NumberInput";
 
 export default function LoginView({
   translations = {},
@@ -15,7 +15,7 @@ export default function LoginView({
 }>) {
   const passwordRef = useRef(null);
 
-  const [formState, setFormState] = useState({ username: '', password: '' });
+  const [formState, setFormState] = useState({ username: "", password: "" });
 
   const [invalidCredentials, setInvalidCredentials] = useState(false);
 
@@ -33,7 +33,7 @@ export default function LoginView({
 
     try {
       await Auth.login(formState);
-      location.href = '/admin/dashboard';
+      location.href = "/admin/dashboard";
     } catch (err: any) {
       if (err.response.status === HTTP_STATUS_CODES.ERROR) {
         setInvalidCredentials(err.response.data === ERRORS.INVALID_CREDENTIALS);
@@ -41,10 +41,8 @@ export default function LoginView({
     }
   };
 
-  const onUsernameKeyUpHandler: KeyboardEventHandler<HTMLInputElement> = (
-    e
-  ) => {
-    if (e.key === 'Enter') {
+  const onUsernameKeyUpHandler: KeyboardEventHandler<HTMLInputElement> = (e) => {
+    if (e.key === "Enter") {
       if (passwordRef.current) {
         const input = passwordRef.current as HTMLInputElement;
         input.focus();
@@ -54,10 +52,8 @@ export default function LoginView({
     }
   };
 
-  const onPasswordKeyUpHandler: KeyboardEventHandler<HTMLInputElement> = (
-    e
-  ) => {
-    if (e.key === 'Enter') {
+  const onPasswordKeyUpHandler: KeyboardEventHandler<HTMLInputElement> = (e) => {
+    if (e.key === "Enter") {
       onSaveHandler();
       if (passwordRef.current) {
         const input = passwordRef.current as HTMLInputElement;
@@ -72,13 +68,7 @@ export default function LoginView({
     <div className="login-wrapper">
       <div className="login">
         <header>
-          <Image
-            alt={'Logo'}
-            className="image"
-            width={200}
-            height={80}
-            src={'/logo.svg'}
-          ></Image>
+          <Image alt={"Logo"} className="image" width={200} height={80} src={"/logo.svg"}></Image>
         </header>
         <section>
           <TextInput
@@ -90,7 +80,7 @@ export default function LoginView({
             invalid={invalidCredentials}
             size="md"
             onChange={(event: ChangeEvent<HTMLInputElement>) =>
-              onInputHandler('username', event.target?.value)
+              onInputHandler("username", event.target?.value)
             }
             onKeyUp={onUsernameKeyUpHandler}
             placeholder={translations.email}
@@ -107,7 +97,7 @@ export default function LoginView({
             showPasswordLabel={translations.showPassword}
             hidePasswordLabel={translations.hidePassword}
             onChange={(event: ChangeEvent<HTMLInputElement>) =>
-              onInputHandler('password', event.target?.value)
+              onInputHandler("password", event.target?.value)
             }
             onKeyUp={onPasswordKeyUpHandler}
             placeholder={translations.password}

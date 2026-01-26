@@ -1,8 +1,8 @@
 "use client";
 
 import { Panel } from "@/app/components";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Button, Form, Heading, Section, Stack } from "@carbon/react";
+import { useEffect, useMemo, useRef, useState, Fragment } from "react";
+import { Accordion, AccordionItem, Button, Form, Heading, Section, Stack } from "@carbon/react";
 import { renderField } from "@/app/render";
 import { FIELD_TYPES } from "@/app/constants";
 import { s3File, uuid } from "@/app/utils";
@@ -287,9 +287,67 @@ export default function ListPanel({
     ref[field] = useRef(null);
   });
 
+  const renderFields = (useFields: Record<string, any>) =>
+    Object.keys(useFields.types).map((field: string, index: number) => {
+      const fieldProps = {
+        field,
+        key: "field-" + index,
+        type: useFields.types[field],
+        value: data?.[field] || useFields.options[field]?.value,
+        translations,
+        files,
+        fields: useFields,
+        formState,
+        internalState,
+        methods,
+        params,
+        pathname,
+        renders,
+        replace,
+        ref: ref[field],
+        onAddFileHandler,
+        onInputHandler,
+        onRemoveFileHandler,
+        onInternalStateHandler,
+        onFormStateHandler: setFormState,
+        onRemoveHandler: onRemoveFileHandler,
+      };
+      const renderedField = renderField(fieldProps);
+      return (
+        <Fragment key={"fragment-" + index}>
+          {typeof renderedField === "function" ? renderedField(fieldProps) : renderedField}
+        </Fragment>
+      );
+    });
+
+  const renderGroups = (useFields: Record<string, any>) => (
+    <Section level={5}>
+      <Accordion>
+        {Object.keys(useFields.groups).map((groupKey: string, groupIndex: number) => {
+          const label = translations?.groups?.[groupKey] || `group.${groupKey}`;
+          const groupFields = {
+            ...useFields,
+            types: useFields.groups[groupKey].reduce((acc: Record<string, any>, field: string) => {
+              acc[field] = useFields.types[field];
+              return acc;
+            }, {}),
+          };
+          return (
+            <AccordionItem
+              key={`group-${groupKey}`}
+              title={<Heading>{label}</Heading>}
+              open={groupIndex === 0}
+            >
+              {renderFields(groupFields)}
+            </AccordionItem>
+          );
+        })}
+      </Accordion>
+    </Section>
+  );
+
   const getContent = (data: any = null) => {
     const useFields = open === "batchEdit" ? multiFields : fields;
-
     return (
       <>
         <Section className="fields" level={4}>
@@ -307,32 +365,10 @@ export default function ListPanel({
                       : items.find((item) => item.id === ids?.at(0)).full_name}
                   </p>
                 </>
+              ) : translations?.panels?.title ? (
+                <Heading>{translations?.panels?.title}</Heading>
               ) : null}
-              {Object.keys(useFields.types).map((field: string, index: number) => (
-                <>
-                  {renderField({
-                    field,
-                    key: "field-" + index,
-                    type: useFields.types[field],
-                    value: data?.[field] || useFields.options[field]?.value,
-                    translations,
-                    files,
-                    fields: useFields,
-                    formState,
-                    internalState,
-                    methods,
-                    params,
-                    pathname,
-                    renders,
-                    replace,
-                    ref: ref[field],
-                    onAddFileHandler,
-                    onInputHandler,
-                    onRemoveFileHandler,
-                    onInternalStateHandler,
-                  })}
-                </>
-              ))}
+              {useFields?.groups ? renderGroups(useFields) : renderFields(useFields)}
             </Stack>
           </Form>
         </Section>

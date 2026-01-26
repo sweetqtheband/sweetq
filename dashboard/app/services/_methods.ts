@@ -1,4 +1,3 @@
-import { BaseListItem } from "@/types/list";
 import { HTTP_STATUS_CODES } from "../constants";
 import { getFormData } from "../utils";
 import { DELETE, POST, PUT } from "./_api";
@@ -32,6 +31,7 @@ export const onCopy = async (instance: AxiosInstance, router: any, data: any) =>
     data.name = `Copia de ${data.name}`;
   }
   delete data._id;
+
   const formData = getFormData(data);
 
   const response = await POST(instance, formData);

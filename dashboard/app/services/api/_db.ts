@@ -229,6 +229,8 @@ export const postItem = async ({
 
   const formData = await req.formData();
 
+  const newObject = { ...formDataToObject(formData, types, options) };
+
   Object.keys(types).forEach(async (key) => {
     const [value] = formData.getAll(key);
     if (value instanceof File) {
@@ -238,7 +240,7 @@ export const postItem = async ({
     }
   });
 
-  return svc.create({ ...formDataToObject(formData, types, options) });
+  return svc.create(newObject);
 };
 
 export const putItem = async ({
@@ -281,8 +283,6 @@ export const putItem = async ({
     ...formDataToObject(formData, types, options),
     _id: id,
   };
-
-  console.log("Update Object:", updateObject);
 
   return svc.update(updateObject, avoidUnset);
 };

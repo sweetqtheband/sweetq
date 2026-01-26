@@ -18,7 +18,7 @@
 
 @mixin ball {
   @include center;
-  content: '';
+  content: "";
   display: block;
   width: 3px;
   height: 3px;
@@ -38,8 +38,7 @@
 
     padding: 0px 4px;
     height: calc(
-      var(--full-height) - var(--header-height) - var(--footer-height) -
-        var(--header-height)
+      var(--full-height) - var(--header-height) - var(--footer-height) - var(--header-height)
     );
 
     a {
@@ -246,7 +245,7 @@
 }
 
 footer {
-  .contenteditable--wrapper[data-variant='input'] {
+  .contenteditable--wrapper[data-variant="input"] {
     left: calc(var(--padding) * 1.5);
   }
   height: var(--footer-height);

@@ -1,8 +1,8 @@
-import { Tags } from '@/app/services/tags';
-import type { Tag } from '@/types/tag';
-import i18n from '@/app/services/translate';
-import TagsView from './view';
-import { getTranslation } from '@/app/services/_list';
+import { Tags } from "@/app/services/tags";
+import type { Tag } from "@/types/tag";
+import i18n from "@/app/services/translate";
+import TagsView from "./view";
+import { getTranslation } from "@/app/services/_list";
 
 export default async function TagsPage({
   searchParams,
@@ -13,13 +13,13 @@ export default async function TagsPage({
   const items: Tag[] = await Tags.parseAll(data.items);
 
   const headers = [
-    { key: 'color', header: i18n.t('fields.color') },
-    { key: 'name', header: i18n.t('fields.name'), default: true },
+    { key: "color", header: i18n.t("fields.color") },
+    { key: "name", header: i18n.t("fields.name"), default: true },
   ];
 
   const translations = {
     ...Tags.getTranslations(i18n, Tags),
-    ...getTranslation(i18n, 'actions'),
+    ...getTranslation(i18n, "actions"),
   };
 
   return (

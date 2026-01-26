@@ -1,3 +1,4 @@
+import { Options as options, Types as types } from "@/app/services/config";
 import { NextRequest } from "next/server";
 import { corsOptions, getList, postItem } from "@/app/services/api/_db";
 import { ERRORS, HTTP_STATUS_CODES } from "@/app/constants";
@@ -25,7 +26,7 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const item = await postItem({ req, collection });
+    const item = await postItem({ req, collection, types, options });
     revalidatePath(`/admin/${collection}`);
 
     return Response.json({ data: item }, { status: HTTP_STATUS_CODES.OK });

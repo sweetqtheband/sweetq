@@ -7,6 +7,11 @@ type Model = {
   created: Date;
   from?: Date;
   default?: boolean;
+  headerImage?: string;
+  headerImageMobile?: string;
+  headerVideo?: string;
+  headerVideoMobile?: string;
+  spotifyId?: string;
 };
 export const Model = (data: any): Model => {
   const obj = {} as Model;
@@ -42,7 +47,27 @@ export const Model = (data: any): Model => {
   }
 
   if (data.default) {
-    obj.default = true;
+    obj.default = Boolean(data.default);
+  }
+
+  if (data.headerImage) {
+    obj.headerImage = String(data.headerImage);
+  }
+
+  if (data.headerImageMobile) {
+    obj.headerImageMobile = String(data.headerImageMobile);
+  }
+
+  if (data.headerVideo) {
+    obj.headerVideo = String(data.headerVideo);
+  }
+
+  if (data.headerVideoMobile) {
+    obj.headerVideoMobile = String(data.headerVideoMobile);
+  }
+
+  if (data.spotifyId) {
+    obj.spotifyId = String(data.spotifyId);
   }
 
   return obj;

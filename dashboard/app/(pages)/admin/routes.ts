@@ -43,6 +43,10 @@ export const routes: Route[] = [
         path: "/admin/config",
       },
       {
+        text: "routes",
+        path: "/admin/routes",
+      },
+      {
         text: "tags",
         path: "/admin/tags",
       },

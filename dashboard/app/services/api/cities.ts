@@ -1,6 +1,6 @@
-import { Model } from '@/app/models/cities';
-import { BaseSvc } from './_base';
-import { Collection, Document } from 'mongodb';
+import { Model } from "@/app/models/cities";
+import { BaseSvc } from "./_base";
+import { Collection, Document } from "mongodb";
 
 /**
  * Cities service

@@ -1,0 +1,37 @@
+[
+  {
+    "button": "primary",
+    "icon": "icon-spotify",
+    "link": "https://open.spotify.com/album/0xxOGrabwMn47FfAPEWV1j",
+    "text": "links.spotify",
+    "type": "spotify"
+  },
+  {
+    "button": "primary",
+    "icon": "icon-apple-music",
+    "link": "https://music.apple.com/ae/album/sácame-a-bailar-single/1854719033",
+    "text": "links.appleMusic",
+    "type": "appleMusic"
+  },
+  {
+    "button": "primary",
+    "icon": "icon-youtube-music",
+    "link": "https://music.youtube.com/playlist?list=OLAK5uy_kbZO9Ekb8gI-jwwCHZjiVKLzRDkCAax3E",
+    "text": "links.youtubeMusic",
+    "type": "youtubeMusic"
+  },
+  {
+    "button": "secondary",
+    "icon": "icon-gigs",
+    "link": "https://ticketandroll.com/evento/sweet-q-vortice-cero-en-sala-hangar-48",
+    "text": "links.gigs.20260313",
+    "type": "gig"
+  },
+  {
+    "button": "secondary",
+    "icon": "icon-whatsapp",
+    "link": "https://chat.whatsapp.com/BCwoGNaxuPMEBVLVHG4d6t",
+    "text": "links.whatsapp",
+    "type": "whatsapp"
+  }
+]

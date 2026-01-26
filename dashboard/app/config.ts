@@ -1,4 +1,4 @@
-import { STORAGE } from './constants';
+import { STORAGE } from "./constants";
 
 const config = {
   table: {

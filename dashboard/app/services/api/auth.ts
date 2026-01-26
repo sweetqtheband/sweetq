@@ -1,8 +1,8 @@
-import { ERRORS, TOKENS, USER_PROFILES } from '@/app/constants';
-import { accessTokenSvc, adminTokenSvc } from './token';
-import { userSvc } from './user';
-import { toTimestamp } from '@/app/services/api/_db';
-import { NextRequest } from 'next/server';
+import { ERRORS, TOKENS, USER_PROFILES } from "@/app/constants";
+import { accessTokenSvc, adminTokenSvc } from "./token";
+import { userSvc } from "./user";
+import { toTimestamp } from "@/app/services/api/_db";
+import { NextRequest } from "next/server";
 
 export const authSvc = {
   /**
@@ -30,14 +30,10 @@ export const authSvc = {
    * @returns {Object}
    */
   async getTokenByAuth(req: NextRequest, tokenType = TOKENS.ACCESS) {
-    const tokenSvc =
-      tokenType === TOKENS.ACCESS ? accessTokenSvc : adminTokenSvc;
+    const tokenSvc = tokenType === TOKENS.ACCESS ? accessTokenSvc : adminTokenSvc;
 
-    if (req.headers?.has('authorization')) {
-      const authToken = req.headers
-        .get('authorization')
-        ?.replace('Bearer ', '')
-        .trim() as string;
+    if (req.headers?.has("authorization")) {
+      const authToken = req.headers.get("authorization")?.replace("Bearer ", "").trim() as string;
       return tokenSvc.getByToken(authToken);
     }
   },
@@ -50,8 +46,7 @@ export const authSvc = {
   async isAuth(req: NextRequest, tokenType: string) {
     const token = await this.getTokenByAuth(req, tokenType);
 
-    const validToken =
-      token && (!token.expires || token.expires >= toTimestamp(new Date()));
+    const validToken = token && (!token.expires || token.expires >= toTimestamp(new Date()));
 
     // Remove token
     if (token && !validToken) {
@@ -66,8 +61,7 @@ export const authSvc = {
    * @param {String} tokenType Token type
    */
   async removeToken(tokenId: string, tokenType: string) {
-    const tokenSvc =
-      tokenType === TOKENS.ADMIN ? adminTokenSvc : accessTokenSvc;
+    const tokenSvc = tokenType === TOKENS.ADMIN ? adminTokenSvc : accessTokenSvc;
 
     await tokenSvc.remove(tokenId);
   },
@@ -82,8 +76,7 @@ export const authSvc = {
     tokenType = TOKENS.ADMIN
   ) {
     let token = null;
-    const tokenSvc =
-      tokenType === TOKENS.ADMIN ? adminTokenSvc : accessTokenSvc;
+    const tokenSvc = tokenType === TOKENS.ADMIN ? adminTokenSvc : accessTokenSvc;
 
     // Retrieve token or create if granted
     const userToken = await tokenSvc.getByUserId(user._id);
@@ -116,10 +109,7 @@ export const authSvc = {
 
       let canCreateToken = true;
 
-      if (
-        tokenType === TOKENS.ADMIN &&
-        parsedUser.profile !== USER_PROFILES.ADMIN
-      ) {
+      if (tokenType === TOKENS.ADMIN && parsedUser.profile !== USER_PROFILES.ADMIN) {
         canCreateToken = false;
       }
 

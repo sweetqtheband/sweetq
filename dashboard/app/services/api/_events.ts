@@ -1,7 +1,7 @@
-import { getCollection } from '@/app/services/api/_db';
-import { ObjectId } from 'mongodb';
+import { getCollection } from "@/app/services/api/_db";
+import { ObjectId } from "mongodb";
 
-const col = getCollection('app_events');
+const col = getCollection("app_events");
 
 const find = async (query: any) => (await col).findOne(query);
 

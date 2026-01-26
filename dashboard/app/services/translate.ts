@@ -1,8 +1,8 @@
-import i18next, { Resource } from 'i18next';
-import { I18n } from 'next-i18next';
-import { uuid } from '../utils';
-import es from '../locales/es.json';
-import en from '../locales/en.json';
+import i18next, { Resource } from "i18next";
+import { I18n } from "next-i18next";
+import { uuid } from "../utils";
+import es from "../locales/es.json";
+import en from "../locales/en.json";
 
 const resources: Resource = {
   en: { translation: en },
@@ -14,7 +14,7 @@ class TranslateClass {
 
   public id: string = uuid();
   public i18n: I18n | null = null;
-  public locale: string = 'es';
+  public locale: string = "es";
 
   public static getInstance() {
     if (!TranslateClass.instance) {
@@ -23,12 +23,12 @@ class TranslateClass {
     return TranslateClass.instance;
   }
 
-  async init(locale: string = 'es'): Promise<void> {
+  async init(locale: string = "es"): Promise<void> {
     this.locale = locale;
     if (!this.i18n) {
       await i18next.init({
         lng: locale,
-        fallbackLng: 'en',
+        fallbackLng: "en",
         resources,
       });
 

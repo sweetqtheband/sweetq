@@ -5,6 +5,7 @@ body {
   width: 100%;
   --cds-popover-background-color: #fff;
 }
+
 .viewport {
   height: 100%;
   width: 100%;
@@ -30,8 +31,10 @@ body {
   .cds--data-table-container {
     z-index: 1;
   }
+
   .cds--list-box {
     min-width: 120px;
+
     &__menu-item__option {
       overflow: unset;
     }
@@ -39,6 +42,7 @@ body {
 
   .cds--multiselect {
     position: relative;
+
     .cds--popover-container {
       position: absolute;
       top: 4px;
@@ -51,9 +55,11 @@ body {
     z-index: 2;
     box-shadow: 0 0 1px 1px var(--cds-layer);
   }
+
   .cds--popover-content {
     padding: 1rem;
   }
+
   .cds--flex {
     display: flex;
     align-items: flex-end;
@@ -64,6 +70,7 @@ body {
     .cds--tooltip-trigger__wrapper {
       padding-bottom: calc(var(--padding) / 2);
     }
+
     .cds--interactive--tag-children {
       .cds--tooltip-trigger__wrapper {
         padding-bottom: 0;
@@ -79,6 +86,7 @@ body {
     padding: var(--padding) 0;
     gap: var(--padding);
     justify-content: flex-start;
+
     .cds--tag--filter {
       margin: 0;
     }
@@ -88,6 +96,7 @@ body {
     white-space: pre-line;
     text-align: left;
   }
+
   @include breakpoint(mobile) {
     .cds--stack-horizontal {
       grid-auto-flow: row;
@@ -99,13 +108,61 @@ body {
     padding-top: var(--padding);
     gap: calc(var(--padding) / 2);
     justify-content: flex-end;
+    align-self: flex-end;
 
     img {
       padding: 0px calc(var(--padding) / 2);
       box-sizing: content-box;
     }
+
     .selected {
       box-shadow: 0 0 0 1px var(--selected-border-color);
     }
+  }
+
+  .cds--date-picker {
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: flex-end;
+
+    &-container {
+      padding-right: calc(var(--padding) / 4);
+    }
+
+    .cds--form-item {
+      width: auto;
+    }
+
+    &.cds--date-picker--single {
+      .cds--date-picker {
+        &__input {
+          inline-size: auto;
+        }
+      }
+    }
+  }
+
+  .cds--time-picker {
+    padding-top: var(--padding);
+
+    .cds--time-picker__input + .cds--time-picker__select {
+      margin-inline-start: 0;
+      --webkit-margin-start: 0;
+    }
+  }
+
+  .cds--text-input {
+    &__field-outer-wrapper {
+      display: flex;
+    }
+  }
+
+  .cds--file--label {
+    font-size: var(--cds-label-01-font-size, 0.75rem);
+    font-weight: var(--cds-label-01-font-weight, 400);
+    line-height: var(--cds-label-01-line-height, 1.33333);
+    letter-spacing: var(--cds-label-01-letter-spacing, 0.32px);
+    display: inline-block;
+    color: var(--cds-text-secondary, #525252);
   }
 }

@@ -59,14 +59,15 @@ export const formDataToObject = (
   const obj: Record<string, any> = {};
 
   formData.forEach((value, key) => {
-    if (key in obj) {
+    console.log(types[key], obj[key]);
+    if ([FIELD_TYPES.IMAGE_UPLOADER, FIELD_TYPES.VIDEO_UPLOADER].includes(types[key])) {
       obj[key] = Array.isArray(obj[key]) && obj[key] instanceof File ? [...obj[key], value] : value;
     } else if (types[key] === FIELD_TYPES.MULTISELECT) {
       obj[key] =
         value !== "undefined"
           ? String(value).replace("[", "").replace("]", "").replaceAll('"', "").split(",")
           : [];
-    } else if (options?.[key]?.language) {
+    } else if (options?.[key]?.language && value !== "undefined") {
       obj[key] = JSON.parse(value as string);
       return;
     } else if ([FIELD_TYPES.SELECT, FIELD_TYPES.NONE].includes(types[key])) {
@@ -75,6 +76,21 @@ export const formDataToObject = (
       if (obj[key] === "undefined" || obj[key] === "") {
         obj[key] = null;
       }
+    } else if ([FIELD_TYPES.BOOLEAN, FIELD_TYPES.HIDDEN_BOOLEAN].includes(types[key])) {
+      obj[key] = String(value) === "true";
+    } else if (types[key] === FIELD_TYPES.NUMBER) {
+      const numberValue = Number(value);
+      obj[key] = !isNaN(numberValue) ? numberValue : null;
+    } else if (
+      [
+        FIELD_TYPES.HIDDEN_DATE,
+        FIELD_TYPES.DATE_LABEL,
+        FIELD_TYPES.DATE,
+        FIELD_TYPES.DATE_HOUR_LABEL,
+        FIELD_TYPES.DATE_HOUR,
+      ].includes(types[key])
+    ) {
+      obj[key] = value !== "undefined" && value !== "" ? new Date(value as string) : null;
     } else {
       obj[key] = value !== "undefined" ? value : null;
     }

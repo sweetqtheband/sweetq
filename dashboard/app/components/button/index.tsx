@@ -4,37 +4,38 @@ import "./button.scss";
 type Button = "button" | "submit" | "reset" | undefined;
 
 export default function ButtonComponent({
-  type = "button",  
-  className = null,      
+  type = "button",
+  className = null,
   disabled = false,
   variant = "primary",
   children,
-  onClick = () => true,  
+  onClick = () => true,
 }: Readonly<{
-  type?: Button,
-  className?: string | Record<string, boolean> | Array<string> | null,  
-  disabled?: boolean,
-  variant?: string,
-  children: React.ReactNode,
-  onClick?: Function,  
-}>) {  
+  type?: Button;
+  className?: string | Record<string, boolean> | Array<string> | null;
+  disabled?: boolean;
+  variant?: string;
+  children: React.ReactNode;
+  onClick?: Function;
+}>) {
   const classes = getClasses({
     button: true,
-    [`${setClasses(className)}`]: true
+    [`${setClasses(className)}`]: true,
   });
 
-  const onClickHandler = (e:any) => {
+  const onClickHandler = (e: any) => {
     onClick(e);
   };
 
-
   return (
     <button
-      type={type}      
+      type={type}
       data-variant={variant}
-      className={classes}      
+      className={classes}
       disabled={disabled}
-      onClick={onClickHandler}      
-  >{children}</button>
+      onClick={onClickHandler}
+    >
+      {children}
+    </button>
   );
 }

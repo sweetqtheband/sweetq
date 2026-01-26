@@ -1,9 +1,9 @@
-import { ERRORS, TOKENS } from '@/app/constants';
-import { authSvc } from '@/app/services/api/auth';
-import { NextRequest, NextResponse } from 'next/server';
-import { corsOptions, getCollection } from '@/app/services/api/_db';
+import { ERRORS, TOKENS } from "@/app/constants";
+import { authSvc } from "@/app/services/api/auth";
+import { NextRequest, NextResponse } from "next/server";
+import { corsOptions, getCollection } from "@/app/services/api/_db";
 
-const collection = 'update';
+const collection = "update";
 
 export async function OPTIONS(req: NextRequest) {
   const [message, params] = corsOptions(req);

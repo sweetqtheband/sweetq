@@ -9,11 +9,11 @@
     "clear": "Limpiar",
     "close": "Cerrar",
     "confirm": "Confirmar",
+    "confirmCopy": "¿Estás seguro de que quieres duplicar este elemento?",
+    "confirmCopySelected": "¿Estás seguro de que quieres duplicar los elementos seleccionados?",
     "confirmDelete": "¿Estás seguro de que quieres eliminar este elemento?",
     "confirmDeleteSelected": "¿Estás seguro de que quieres eliminar los elementos seleccionados?",
     "copy": "Duplicar",
-    "confirmCopy": "¿Estás seguro de que quieres duplicar este elemento?",
-    "confirmCopySelected": "¿Estás seguro de que quieres duplicar los elementos seleccionados?",
     "delete": "Eliminar",
     "edit": "Editar",
     "email": "Email",
@@ -34,6 +34,27 @@
     "unselectAll": "Deseleccionar todo",
     "unselectAllShort": "Desel.",
     "upload": "Subir"
+  },
+  "charts": {
+    "answering": "Responden",
+    "answeringFollowers": "Seguidores que responden",
+    "answeringFollowersLost": "Seguidores perdidos que responden",
+    "censed": "Censados",
+    "censedFollowers": "Seguidores censados",
+    "censedLost": "Censados perdidos",
+    "censedTotal": "Total de censados",
+    "contactedFollowers": "Seguidores contactados",
+    "contactedFollowersLost": "Seguidores perdidos contactados",
+    "fanFollowers": "Fans",
+    "fanFollowersLost": "Fans perdidos",
+    "followerTypes": "Tipos de seguidores",
+    "followers": "Seguidores",
+    "followersLost": "Seguidores perdidos",
+    "responseRate": "Tasa de respuesta",
+    "superfanFollowers": "Superfans",
+    "superfanFollowersLost": "Superfans perdidos",
+    "totalFollowers": "Total de seguidores",
+    "totalFollowersLost": "Total de seguidores perdidos"
   },
   "colors": {
     "blue": "Azul",
@@ -91,12 +112,17 @@
     "country": "País",
     "cover": "Portada",
     "date": "Fecha",
+    "default": "Predeterminado",
     "description": "Descripción",
     "email": "Email",
     "event": "URL de evento / noticia relacionada",
     "followedBack": "Siguiéndonos",
     "from": "Desde",
     "fullName": "Nombre completo",
+    "headerImage": "Imagen de cabecera",
+    "headerImageMobile": "Imagen de cabecera móvil",
+    "headerVideo": "Vídeo de cabecera",
+    "headerVideoMobile": "Vídeo de cabecera móvil",
     "hour": "Hora",
     "image": "Imagen",
     "keywords": "Palabras clave",
@@ -107,6 +133,7 @@
     "map": "URL embed de Google Maps",
     "name": "Nombre",
     "password": "Contraseña",
+    "path": "Ruta",
     "pendingMessages": "Mensajes pendientes",
     "profile": "Tipo de usuario",
     "robots": "Robots",
@@ -120,6 +147,7 @@
       "x": "X",
       "youtube": "YouTube"
     },
+    "spotifyId": "ID de Spotify",
     "state": "Provincia",
     "status": "Estado",
     "subtitle": "Subtítulo",
@@ -143,6 +171,10 @@
     },
     "withoutTags": "Sin etiquetas"
   },
+  "groups": {
+    "header": "Cabecera",
+    "metadata": "Metadatos"
+  },
   "languages": {
     "en": "Inglés",
     "es": "Español"
@@ -165,10 +197,18 @@
           "label": "¿Estás seguro de que quieres cancelar el envío del mensaje?"
         }
       },
+      "followers": {
+        "description": "{{total}} seguidores",
+        "title": "Seguidores de Instagram"
+      },
+      "following": {
+        "description": "{{total}} seguidos",
+        "title": "Seguidos de Instagram"
+      },
       "listPanel": {
         "batchEdit": {
-          "title": "Edición masiva",
-          "subtitle": "Editando a"
+          "subtitle": "Editando a",
+          "title": "Edición masiva"
         }
       },
       "messagePanel": {
@@ -185,16 +225,11 @@
           "alias": "Nombre corto"
         },
         "vars": "Variables"
-      },
-      "followers": {
-        "description": "{{total}} seguidores",
-        "title": "Seguidores de Instagram"
-      },
-      "following": {
-        "description": "{{total}} seguidos",
-        "title": "Seguidos de Instagram"
       }
     }
+  },
+  "panels": {
+    "config": "Configuración"
   },
   "robots": {
     "indexFollow": "Index",
@@ -206,13 +241,14 @@
     "bands": "Bandas",
     "config": "Configuración",
     "contact": "Contacto",
+    "followers": "Seguidores",
+    "following": "Seguidos",
     "gigs": "Conciertos",
     "gmail": "Gmail",
     "instagram": "Instagram",
-    "followers": "Seguidores",
-    "following": "Seguidos",
     "layouts": "Plantillas",
     "news": "Noticias",
+    "routes": "Rutas",
     "tags": "Etiquetas",
     "tracks": "Pistas",
     "users": "Usuarios",
@@ -237,26 +273,5 @@
   "userProfiles": {
     "admin": "Administrador",
     "user": "Usuario"
-  },
-  "charts": {
-    "answering": "Responden",
-    "responseRate": "Tasa de respuesta",
-    "followers": "Seguidores",
-    "followersLost": "Seguidores perdidos",
-    "censedFollowers": "Seguidores censados",
-    "totalFollowers": "Total de seguidores",
-    "totalFollowersLost": "Total de seguidores perdidos",
-    "contactedFollowers": "Seguidores contactados",
-    "answeringFollowers": "Seguidores que responden",
-    "superfanFollowers": "Superfans",
-    "fanFollowers": "Fans",
-    "contactedFollowersLost": "Seguidores perdidos contactados",
-    "answeringFollowersLost": "Seguidores perdidos que responden",
-    "superfanFollowersLost": "Superfans perdidos",
-    "fanFollowersLost": "Fans perdidos",
-    "censed": "Censados",
-    "censedTotal": "Total de censados",
-    "censedLost": "Censados perdidos",
-    "followerTypes": "Tipos de seguidores"
   }
 }

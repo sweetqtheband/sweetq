@@ -1,11 +1,11 @@
-import { Options as options, Types as types } from '@/app/services/bands';
-import { NextRequest } from 'next/server';
-import { corsOptions, getList, postItem } from '@/app/services/api/_db';
-import { revalidatePath } from 'next/cache';
-import { ERRORS, HTTP_STATUS_CODES } from '@/app/constants';
+import { Options as options, Types as types } from "@/app/services/bands";
+import { NextRequest } from "next/server";
+import { corsOptions, getList, postItem } from "@/app/services/api/_db";
+import { revalidatePath } from "next/cache";
+import { ERRORS, HTTP_STATUS_CODES } from "@/app/constants";
 
-const collection = 'bands';
-const idx = 'name';
+const collection = "bands";
+const idx = "name";
 
 export async function OPTIONS(req: NextRequest) {
   const [message, params] = corsOptions(req);
@@ -34,9 +34,6 @@ export async function POST(req: NextRequest) {
 
     return Response.json({ data: item }, { status: HTTP_STATUS_CODES.OK });
   } catch (err: Error | any) {
-    return Response.json(
-      { err: err?.message },
-      { status: HTTP_STATUS_CODES.ERROR }
-    );
+    return Response.json({ err: err?.message }, { status: HTTP_STATUS_CODES.ERROR });
   }
 }

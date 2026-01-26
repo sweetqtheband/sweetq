@@ -1,8 +1,8 @@
-import { Bands } from '@/app/services/bands';
-import type { Band } from '@/types/band';
-import i18n from '@/app/services/translate';
-import BandsView from './view';
-import { getTranslation } from '@/app/services/_list';
+import { Bands } from "@/app/services/bands";
+import type { Band } from "@/types/band";
+import i18n from "@/app/services/translate";
+import BandsView from "./view";
+import { getTranslation } from "@/app/services/_list";
 
 export default async function BandsPage({
   searchParams,
@@ -13,14 +13,14 @@ export default async function BandsPage({
   const items: Band[] = await Bands.parseAll(data.items);
 
   const headers = [
-    { key: 'name', header: i18n.t('fields.name'), default: true },
-    { key: 'facebook', header: i18n.t('fields.social.facebook') },
-    { key: 'instagram', header: i18n.t('fields.social.instagram') },
+    { key: "name", header: i18n.t("fields.name"), default: true },
+    { key: "facebook", header: i18n.t("fields.social.facebook") },
+    { key: "instagram", header: i18n.t("fields.social.instagram") },
   ];
 
   const translations = {
     ...Bands.getTranslations(i18n, Bands),
-    ...getTranslation(i18n, 'actions'),
+    ...getTranslation(i18n, "actions"),
   };
 
   return (

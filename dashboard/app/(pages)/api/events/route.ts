@@ -1,10 +1,10 @@
 // app/api/events/route.ts
-import { EA } from '@/app/services/api/_events';
-import { NextRequest, NextResponse } from 'next/server';
-import { corsOptions } from '@/app/services/api/_db'; // Added corsOptions import
-import { ERRORS } from '@/app/constants';
+import { EA } from "@/app/services/api/_events";
+import { NextRequest, NextResponse } from "next/server";
+import { corsOptions } from "@/app/services/api/_db"; // Added corsOptions import
+import { ERRORS } from "@/app/constants";
 
-const channels = ['chat', 'instagram'];
+const channels = ["chat", "instagram"];
 
 export async function OPTIONS(req: NextRequest) {
   const [message, params] = corsOptions(req);
@@ -15,9 +15,7 @@ const check = async (controller: any) => {
   const event = await EA.find({ eventType: { $in: channels } });
   if (event) {
     controller.enqueue(
-      'data: ' +
-        JSON.stringify({ eventType: event.eventType, data: event.data }) +
-        '\n\n'
+      "data: " + JSON.stringify({ eventType: event.eventType, data: event.data }) + "\n\n"
     );
 
     await EA.remove(event._id);
@@ -43,14 +41,13 @@ export function GET(req: NextRequest) {
 
       // Mantén viva la conexión con un ping cada 15s
       keepAliveTimer = setInterval(() => {
-        controller.enqueue(encoder.encode(':\n\n')); // Comentario SSE para mantener conexión
+        controller.enqueue(encoder.encode(":\n\n")); // Comentario SSE para mantener conexión
       }, 15000);
 
       // Emitir eventos reales
       eventTimer = setInterval(async () => {
         try {
-          const events =
-            (await EA.find({ eventType: { $in: channels } })) || [];
+          const events = (await EA.find({ eventType: { $in: channels } })) || [];
           if (events?.length) {
             for (const event of Array.isArray(events) ? events : [events]) {
               const payload = JSON.stringify({
@@ -62,7 +59,7 @@ export function GET(req: NextRequest) {
             }
           }
         } catch (err) {
-          console.error('Error enviando SSE:', err);
+          console.error("Error enviando SSE:", err);
         }
       }, 1000);
     },
@@ -76,9 +73,9 @@ export function GET(req: NextRequest) {
     ...corsParams,
     headers: {
       ...corsParams.headers,
-      'Content-Type': 'text/event-stream',
-      'Cache-Control': 'no-cache',
-      Connection: 'keep-alive',
+      "Content-Type": "text/event-stream",
+      "Cache-Control": "no-cache",
+      Connection: "keep-alive",
     },
   });
 }

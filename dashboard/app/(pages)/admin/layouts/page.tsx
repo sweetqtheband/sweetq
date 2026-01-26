@@ -1,8 +1,8 @@
-import { Layouts } from '@/app/services/layouts';
-import type { Layout } from '@/types/layout';
-import i18n from '@/app/services/translate';
-import LayoutsView from './view';
-import { getTranslation } from '@/app/services/_list';
+import { Layouts } from "@/app/services/layouts";
+import type { Layout } from "@/types/layout";
+import i18n from "@/app/services/translate";
+import LayoutsView from "./view";
+import { getTranslation } from "@/app/services/_list";
 
 export default async function LayoutsPage({
   searchParams,
@@ -12,16 +12,14 @@ export default async function LayoutsPage({
   const data = await Layouts.getAll(searchParams);
   const items: Layout[] = await Layouts.parseAll(data.items);
 
-  const headers = [
-    { key: 'name', header: i18n.t('fields.name'), default: true },
-  ];
+  const headers = [{ key: "name", header: i18n.t("fields.name"), default: true }];
 
   const translations = {
     ...Layouts.getTranslations(i18n, Layouts),
-    ...getTranslation(i18n, 'actions'),
+    ...getTranslation(i18n, "actions"),
   };
 
-  translations.vars = i18n.t('pages.instagram.panel.variables', {
+  translations.vars = i18n.t("pages.instagram.panel.variables", {
     returnObjects: true,
   });
 

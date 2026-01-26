@@ -1,11 +1,11 @@
-import { Options as options, Types as types } from '@/app/services/tags';
-import { NextRequest } from 'next/server';
-import { corsOptions, getList, postItem } from '@/app/services/api/_db';
-import { revalidatePath } from 'next/cache';
-import { ERRORS, HTTP_STATUS_CODES } from '@/app/constants';
+import { Options as options, Types as types } from "@/app/services/tags";
+import { NextRequest } from "next/server";
+import { corsOptions, getList, postItem } from "@/app/services/api/_db";
+import { revalidatePath } from "next/cache";
+import { ERRORS, HTTP_STATUS_CODES } from "@/app/constants";
 
-const collection = 'tags';
-const idx = 'name';
+const collection = "tags";
+const idx = "name";
 
 export async function OPTIONS(req: NextRequest) {
   const [message, params] = corsOptions(req);
@@ -38,14 +38,8 @@ export async function POST(req: NextRequest) {
     const item = await postItem({ req, collection, types, options });
     revalidatePath(`/admin/${collection}`);
 
-    return Response.json(
-      { data: item },
-      { ...corsParams, status: HTTP_STATUS_CODES.OK }
-    );
+    return Response.json({ data: item }, { ...corsParams, status: HTTP_STATUS_CODES.OK });
   } catch (err: Error | any) {
-    return Response.json(
-      { err: err?.message },
-      { ...corsParams, status: HTTP_STATUS_CODES.ERROR }
-    );
+    return Response.json({ err: err?.message }, { ...corsParams, status: HTTP_STATUS_CODES.ERROR });
   }
 }

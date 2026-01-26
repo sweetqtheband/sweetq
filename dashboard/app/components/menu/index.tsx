@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
+import Link from "next/link";
 
-import './menu.scss';
-import { Auth } from '@/app/services/auth';
-import { useEffect, useState } from 'react';
-import { ACTIONS, STORAGE } from '@/app/constants';
-import { Storage } from '@/app/services/storage';
-import { Update } from '@/app/services/update';
+import "./menu.scss";
+import { Auth } from "@/app/services/auth";
+import { useEffect, useState } from "react";
+import { ACTIONS, STORAGE } from "@/app/constants";
+import { Storage } from "@/app/services/storage";
+import { Update } from "@/app/services/update";
 import {
   Header,
   HeaderContainer,
@@ -22,10 +22,10 @@ import {
   SideNav,
   SideNavItems,
   Theme,
-} from '@carbon/react';
-import Image from 'next/image';
-import { Power, UpdateNow } from '@carbon/react/icons';
-import { routes } from '@/app/(pages)/admin/routes';
+} from "@carbon/react";
+import Image from "next/image";
+import { Power, UpdateNow } from "@carbon/react/icons";
+import { routes } from "@/app/(pages)/admin/routes";
 
 export default function MenuComponent({
   translations,
@@ -78,18 +78,18 @@ export default function MenuComponent({
           onClickSideNavExpand: any;
         }>) => (
           <Header aria-label="Sweet Q Dashboard">
-            <HeaderName prefix='' href='/admin/dashboard' as={Link}>
+            <HeaderName prefix="" href="/admin/dashboard" as={Link}>
               <Image
-                alt={'Logo'}
+                alt={"Logo"}
                 className="image"
                 width={100}
                 height={40}
                 priority={true}
-                src={'/logo-alt.svg'}
+                src={"/logo-alt.svg"}
               ></Image>
             </HeaderName>
             <HeaderMenuButton
-              aria-label={isSideNavExpanded ? 'Close menu' : 'Open menu'}
+              aria-label={isSideNavExpanded ? "Close menu" : "Open menu"}
               onClick={onClickSideNavExpand}
               isActive={isSideNavExpanded}
               aria-expanded={isSideNavExpanded}
@@ -118,9 +118,7 @@ export default function MenuComponent({
               <SideNavItems>
                 <HeaderSideNavItems>
                   {routes.map((route) =>
-                    route?.children
-                      ? renderSubmenu(route)
-                      : renderMenuItem(route)
+                    route?.children ? renderSubmenu(route) : renderMenuItem(route)
                   )}
                 </HeaderSideNavItems>
               </SideNavItems>

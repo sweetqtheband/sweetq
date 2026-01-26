@@ -1,17 +1,16 @@
-import { v4 as uuid } from 'uuid';
+import { v4 as uuid } from "uuid";
 
-import { getCollection } from '@/app/services/api/_db';
-import { encSvc } from './encryption';
-import { FactorySvc } from './factory';
-import { ObjectId } from 'mongodb';
+import { getCollection } from "@/app/services/api/_db";
+import { encSvc } from "./encryption";
+import { FactorySvc } from "./factory";
+import { ObjectId } from "mongodb";
 
 /**
  * User service
  */
 export const userSvc = {
-  model: getCollection('users'),
-  userProfileSvc: async () =>
-    FactorySvc('userProfiles', await getCollection('user_profiles')),
+  model: getCollection("users"),
+  userProfileSvc: async () => FactorySvc("userProfiles", await getCollection("user_profiles")),
   /**
    * Parse user before returning
    * @param {Object} user
@@ -22,9 +21,7 @@ export const userSvc = {
       ...user,
     };
 
-    const profile = await (
-      await userSvc.userProfileSvc()
-    ).getById(user._profileId);
+    const profile = await (await userSvc.userProfileSvc()).getById(user._profileId);
     obj.id = user._id.toHexString();
     obj.profile = profile?.type;
 
@@ -41,16 +38,14 @@ export const userSvc = {
    * @param {Object} query
    * @returns {User}
    */
-  findOne: async (query: Record<string, any>) =>
-    (await userSvc.model).findOne(query),
+  findOne: async (query: Record<string, any>) => (await userSvc.model).findOne(query),
 
   /**
    * Get by id
    * @param {*} value
    * @returns
    */
-  getById: async (value: string) =>
-    userSvc.findOne({ _id: new ObjectId(value) }),
+  getById: async (value: string) => userSvc.findOne({ _id: new ObjectId(value) }),
   /**
    * Get by username
    * @param {string} value Retrieve user by username
@@ -79,7 +74,7 @@ export const userSvc = {
    * @returns {string}
    */
   _getPassword(password: string, uuid: string) {
-    const salt = uuid.split('-').at(-1);
+    const salt = uuid.split("-").at(-1);
 
     return encSvc.encrypt(`${password}:${salt}`);
   },
@@ -94,9 +89,7 @@ export const userSvc = {
       ? await userSvc.getByUser(fields.username)
       : await userSvc.getByEmail(fields.email);
 
-    return user && userSvc._getPassword(password, user._uuid) === user.password
-      ? user
-      : false;
+    return user && userSvc._getPassword(password, user._uuid) === user.password ? user : false;
   },
   /**
    * Create method

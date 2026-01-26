@@ -57,4 +57,5 @@ jobs:
             docker system prune -af --volumes
             docker-compose down --remove-orphans
             docker-compose build
+            export NODE_OPTIONS="--max-old-space-size=512"
             docker-compose up -d

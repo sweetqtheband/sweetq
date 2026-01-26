@@ -1,12 +1,12 @@
-import fs from 'fs-extra';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { PATHS } from './constants.js';
+import fs from "fs-extra";
+import path from "path";
+import { fileURLToPath } from "url";
+import { PATHS } from "./constants.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const root = path.resolve(__dirname, '..');
+const root = path.resolve(__dirname, "..");
 
 const getEntity = (name) => {
   const plural = name.toLowerCase();
@@ -23,13 +23,10 @@ const getEntity = (name) => {
 };
 
 const createMenu = (entity) => {
-  console.log('Creando entrada en el menu');
+  console.log("Creando entrada en el menu");
   const route = entity.plural;
 
-  const menu = fs.readFileSync(
-    path.resolve(root, PATHS.ADMIN, 'routes.ts'),
-    'utf8'
-  );
+  const menu = fs.readFileSync(path.resolve(root, PATHS.ADMIN, "routes.ts"), "utf8");
 
   const paths = menu.match(/\{[^}]*\}/g);
 
@@ -50,17 +47,14 @@ const createMenu = (entity) => {
   },
   ` +
       menu.slice(lastPathIndex);
-    fs.writeFileSync(path.resolve(root, PATHS.ADMIN, 'routes.ts'), newMenu);
+    fs.writeFileSync(path.resolve(root, PATHS.ADMIN, "routes.ts"), newMenu);
   }
 };
 
 const createFactory = (entity) => {
-  console.log('Creando entrada en el archivo factory');
+  console.log("Creando entrada en el archivo factory");
 
-  const factory = fs.readFileSync(
-    path.resolve(root, PATHS.API_SERVICES, 'factory.ts'),
-    'utf8'
-  );
+  const factory = fs.readFileSync(path.resolve(root, PATHS.API_SERVICES, "factory.ts"), "utf8");
 
   const imports = factory.match(/import [^;]*;/g);
 
@@ -85,17 +79,14 @@ const createFactory = (entity) => {
 `
     );
 
-    fs.writeFileSync(
-      path.resolve(root, PATHS.API_SERVICES, 'factory.ts'),
-      newFactory
-    );
+    fs.writeFileSync(path.resolve(root, PATHS.API_SERVICES, "factory.ts"), newFactory);
   }
 };
 
 const createFile = ({ entity, tpl, folder, fileName }) => {
   const file = path.join(folder, fileName);
 
-  const tplContent = fs.readFileSync(tpl, 'utf8');
+  const tplContent = fs.readFileSync(tpl, "utf8");
 
   const fileContent = Object.keys(entity).reduce(
     (content, key) => content.replaceAll(`{{${key}}}`, entity[key]),
@@ -116,10 +107,10 @@ const createFiles = (entity, folder) => {
     if (fs.lstatSync(file).isDirectory()) {
       createFiles(entity, file);
     } else {
-      const folderPathname = folder.split('/').at(-1).toUpperCase();
+      const folderPathname = folder.split("/").at(-1).toUpperCase();
       let fileFolder = PATHS[folderPathname] || PATHS.API;
 
-      if (folderPathname === 'API' && folder.split('/').at(-2) === 'services') {
+      if (folderPathname === "API" && folder.split("/").at(-2) === "services") {
         fileFolder = PATHS.API_SERVICES;
       }
 
@@ -130,15 +121,13 @@ const createFiles = (entity, folder) => {
           folder: path.resolve(
             root,
             fileFolder,
-            folderPathname === '[ID]'
-              ? entity.plural + '/' + folder.split('/').at(-1)
-              : '',
-            [PATHS.ADMIN, PATHS.API].includes(fileFolder) ? entity.plural : ''
+            folderPathname === "[ID]" ? entity.plural + "/" + folder.split("/").at(-1) : "",
+            [PATHS.ADMIN, PATHS.API].includes(fileFolder) ? entity.plural : ""
           ),
           fileName: fileName
-            .replace('.txt', '')
-            .replace('placeholder', entity.plural)
-            .replace('type', entity.singular),
+            .replace(".txt", "")
+            .replace("placeholder", entity.plural)
+            .replace("type", entity.singular),
         });
       }
     }

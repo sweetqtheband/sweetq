@@ -1,5 +1,3 @@
-"use server"
-
-export default async function Home() {
-  return <>Home page</>
+export default async function App() {
+  return <>Home page</>;
 }

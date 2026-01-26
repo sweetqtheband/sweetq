@@ -30,11 +30,11 @@ const getTotalFollowers = (response: Record<string, any>, lost = false) => {
       { label: i18n.t(`charts.totalFollowers${suffix}`), value: total || 0 },
       {
         label: i18n.t(`charts.contactedFollowers${suffix}`),
-        value: byTag.find((tag: Record<string, any>) => tag.id === TAGS.CONTACTED).count || 0,
+        value: byTag.find((tag: Record<string, any>) => tag.id === TAGS.CONTACTED)?.count || 0,
       },
       {
         label: i18n.t(`charts.answeringFollowers${suffix}`),
-        value: byTag.find((tag: Record<string, any>) => tag.id === TAGS.ANSWERING).count || 0,
+        value: byTag.find((tag: Record<string, any>) => tag.id === TAGS.ANSWERING)?.count || 0,
       },
       {
         label: i18n.t(`charts.censed${suffix}`),
@@ -42,11 +42,11 @@ const getTotalFollowers = (response: Record<string, any>, lost = false) => {
       },
       {
         label: i18n.t(`charts.superfanFollowers${suffix}`),
-        value: byTag.find((tag: Record<string, any>) => tag.id === TAGS.SUPERFAN).count || 0,
+        value: byTag.find((tag: Record<string, any>) => tag.id === TAGS.SUPERFAN)?.count || 0,
       },
       {
         label: i18n.t(`charts.fanFollowers${suffix}`),
-        value: byTag.find((tag: Record<string, any>) => tag.id === TAGS.FAN).count || 0,
+        value: byTag.find((tag: Record<string, any>) => tag.id === TAGS.FAN)?.count || 0,
       },
     ],
   };
@@ -54,9 +54,9 @@ const getTotalFollowers = (response: Record<string, any>, lost = false) => {
 
 const getResponseRate = (response: Record<string, any>) => {
   const total =
-    response.byTag.find((tag: Record<string, any>) => tag.id === TAGS.CONTACTED).count || 0;
+    response.byTag.find((tag: Record<string, any>) => tag.id === TAGS.CONTACTED)?.count || 0;
   const answered =
-    response.byTag.find((tag: Record<string, any>) => tag.id === TAGS.ANSWERING).count || 0;
+    response.byTag.find((tag: Record<string, any>) => tag.id === TAGS.ANSWERING)?.count || 0;
 
   return {
     type: CHART_TYPES.SIMPLE_BAR,
@@ -82,7 +82,7 @@ const getResponseRate = (response: Record<string, any>) => {
 
 const getTotalCensedRate = (response: Record<string, any>) => {
   const total =
-    response.byTag.find((tag: Record<string, any>) => tag.id === TAGS.ANSWERING).count || 0;
+    response.byTag.find((tag: Record<string, any>) => tag.id === TAGS.ANSWERING)?.count || 0;
   const censed = response.censed || 0;
 
   return {
@@ -114,10 +114,10 @@ const getTotalCensedRate = (response: Record<string, any>) => {
 
 const getFollowerTypes = (response: Record<string, any>) => {
   const total =
-    response.byTag.find((tag: Record<string, any>) => tag.id === TAGS.ANSWERING).count || 0;
-  const fans = response.byTag.find((tag: Record<string, any>) => tag.id === TAGS.FAN).count || 0;
+    response.byTag.find((tag: Record<string, any>) => tag.id === TAGS.ANSWERING)?.count || 0;
+  const fans = response.byTag.find((tag: Record<string, any>) => tag.id === TAGS.FAN)?.count || 0;
   const superfans =
-    response.byTag.find((tag: Record<string, any>) => tag.id === TAGS.SUPERFAN).count || 0;
+    response.byTag.find((tag: Record<string, any>) => tag.id === TAGS.SUPERFAN)?.count || 0;
 
   return {
     type: CHART_TYPES.MULTI_BAR,

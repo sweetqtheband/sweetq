@@ -29,8 +29,7 @@
 
   .modal-wrapper {
     width: 60vw;
-    padding: calc(var(--padding) * 4) calc(var(--padding) * 2)
-      calc(var(--padding) * 2);
+    padding: calc(var(--padding) * 4) calc(var(--padding) * 2) calc(var(--padding) * 2);
   }
 
   &.open {

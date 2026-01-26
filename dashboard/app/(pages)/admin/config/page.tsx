@@ -1,8 +1,8 @@
-import { Config } from '@/app/services/config';
-import type { ConfigType } from '@/types/config';
-import i18n from '@/app/services/translate';
-import ConfigView from './view';
-import { getTranslation } from '@/app/services/_list';
+import { Config } from "@/app/services/config";
+import type { ConfigType } from "@/types/config";
+import i18n from "@/app/services/translate";
+import ConfigView from "./view";
+import { getTranslation } from "@/app/services/_list";
 
 export default async function ConfigPage({
   searchParams,
@@ -13,14 +13,14 @@ export default async function ConfigPage({
   const items: ConfigType[] = await Config.parseAll(data.items);
 
   const headers = [
-    { key: 'name', header: i18n.t('fields.name'), default: true },
+    { key: "name", header: i18n.t("fields.name"), default: true },
+    { key: "default", header: i18n.t("fields.default"), default: false },
   ];
 
   const translations = {
     ...Config.getTranslations(i18n, Config),
-    ...getTranslation(i18n, 'actions'),
+    ...getTranslation(i18n, "actions"),
   };
-
   return (
     <ConfigView
       items={items}

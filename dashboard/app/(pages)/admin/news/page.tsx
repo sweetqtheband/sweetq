@@ -1,8 +1,8 @@
-import { News } from '@/app/services/news';
-import type { New } from '@/types/new';
-import i18n from '@/app/services/translate';
-import NewsView from './view';
-import { getTranslation } from '@/app/services/_list';
+import { News } from "@/app/services/news";
+import type { New } from "@/types/new";
+import i18n from "@/app/services/translate";
+import NewsView from "./view";
+import { getTranslation } from "@/app/services/_list";
 
 export default async function NewsPage({
   searchParams,
@@ -13,13 +13,13 @@ export default async function NewsPage({
   const items: New[] = await News.parseAll(data.items);
 
   const headers = [
-    { key: 'image', header: i18n.t('fields.cover') },
-    { key: 'title', header: i18n.t('fields.title') },
+    { key: "image", header: i18n.t("fields.cover") },
+    { key: "title", header: i18n.t("fields.title") },
   ];
 
   const translations = {
     ...News.getTranslations(i18n, News),
-    ...getTranslation(i18n, 'actions'),
+    ...getTranslation(i18n, "actions"),
   };
 
   return (

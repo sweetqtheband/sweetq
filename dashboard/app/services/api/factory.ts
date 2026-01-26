@@ -16,6 +16,7 @@ import { countriesSvc } from "./countries";
 import { layoutsSvc } from "./layouts";
 import { messagesSvc } from "./messages";
 import { configSvc } from "./config";
+import { routesSvc } from "./routes";
 import { camelCase } from "@/app/utils";
 type FactoryType = {
   [key: string]: (collection: Collection<Document>) => any;
@@ -39,6 +40,7 @@ let factory: FactoryType = {
   layouts: layoutsSvc,
   messages: messagesSvc,
   config: configSvc,
+  routes: routesSvc,
 };
 
 export const FactorySvc = (collectionName: string, collection: Collection<Document>) =>

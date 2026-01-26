@@ -1,10 +1,10 @@
-import { NextRequest } from 'next/server';
-import { corsOptions, getCollection } from '@/app/services/api/_db';
-import { ERRORS, HTTP_STATUS_CODES } from '@/app/constants';
-import { FactorySvc } from '@/app/services/api/factory';
-import { formDataToObject } from '@/app/utils';
+import { NextRequest } from "next/server";
+import { corsOptions, getCollection } from "@/app/services/api/_db";
+import { ERRORS, HTTP_STATUS_CODES } from "@/app/constants";
+import { FactorySvc } from "@/app/services/api/factory";
+import { formDataToObject } from "@/app/utils";
 
-const collection = 'instagram';
+const collection = "instagram";
 
 export async function OPTIONS(req: NextRequest) {
   const [message, params] = corsOptions(req);
@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
   const svc = FactorySvc(collection, await getCollection(collection));
 
   const qp = req.nextUrl.searchParams;
-  const conversationId = qp.get('cid');
+  const conversationId = qp.get("cid");
 
   const messages = await svc.getMessages(svc, conversationId);
 
@@ -42,9 +42,6 @@ export async function POST(req: NextRequest) {
 
     return Response.json({ data: response }, { status: HTTP_STATUS_CODES.OK });
   } catch (err: Error | any) {
-    return Response.json(
-      { err: err?.message },
-      { status: HTTP_STATUS_CODES.ERROR }
-    );
+    return Response.json({ err: err?.message }, { status: HTTP_STATUS_CODES.ERROR });
   }
 }

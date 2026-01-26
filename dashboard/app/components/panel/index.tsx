@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import { getClasses } from '@/app/utils';
-import './panel.scss';
-import { useContext, useEffect, useRef, useState } from 'react';
-import { WindowContext } from '@/app/context';
-import { Close } from '@carbon/react/icons';
-import { renderItem } from '@/app/renderItem';
-import { Tooltip } from '@carbon/react';
+import { getClasses } from "@/app/utils";
+import "./panel.scss";
+import { useContext, useEffect, useRef, useState } from "react";
+import { WindowContext } from "@/app/context";
+import { Close } from "@carbon/react/icons";
+import { renderItem } from "@/app/renderItem";
+import { Tooltip } from "@carbon/react";
 
 export default function PanelComponent({
   children,
   forceClose = false,
   onClose = () => true,
-  className = '',
-  from = 'right',
+  className = "",
+  from = "right",
   overlay = true,
-  actionLabel = '',
+  actionLabel = "",
   actionIcon = null,
   translations = {},
   onAction = () => true,
@@ -48,12 +48,12 @@ export default function PanelComponent({
       const handleAnimationEnd = () => {
         onClose();
         if (element) {
-          element.removeEventListener('transitionend', handleAnimationEnd);
+          element.removeEventListener("transitionend", handleAnimationEnd);
         }
       };
 
       if (element) {
-        element.addEventListener('transitionend', handleAnimationEnd);
+        element.addEventListener("transitionend", handleAnimationEnd);
       }
       setIsOpen(false);
     }
@@ -65,12 +65,12 @@ export default function PanelComponent({
 
   const classes =
     className +
-    ' ' +
+    " " +
     getClasses({
       panel: true,
       open: isOpen,
       [from]: true,
-      'no-overlay': !overlay,
+      "no-overlay": !overlay,
       resizing: isResizing,
     });
 
@@ -84,25 +84,24 @@ export default function PanelComponent({
     const handleAnimationEnd = () => {
       onClose();
       if (element) {
-        element.removeEventListener('transitionend', handleAnimationEnd);
+        element.removeEventListener("transitionend", handleAnimationEnd);
       }
     };
 
     if (element) {
-      element.addEventListener('transitionend', handleAnimationEnd);
+      element.addEventListener("transitionend", handleAnimationEnd);
     }
     setIsOpen(false);
   };
 
   useEffect(() => {
-    const i =
-      typeof actionIcon === 'string' ? renderItem({ type: actionIcon }) : null;
+    const i = typeof actionIcon === "string" ? renderItem({ type: actionIcon }) : null;
     setIcon(i);
   }, [actionIcon]);
   return (
     <div className={classes} ref={animatedRef}>
       {overlay && actionLabel ? <div className="panel-overlay"></div> : null}
-      <div className="panel-wrapper" style={{ overscrollBehavior: 'contain' }}>
+      <div className="panel-wrapper" style={{ overscrollBehavior: "contain" }}>
         {icon && (
           <div className="action" onClick={onActionHandler}>
             <Tooltip label={actionLabel} align="bottom" autoAlign>

@@ -1,7 +1,7 @@
-import { ERRORS, HTTP_STATUS_CODES, TOKENS } from '@/app/constants';
-import { corsOptions } from '@/app/services/api/_db';
-import { authSvc } from '@/app/services/api/auth';
-import { NextRequest, NextResponse } from 'next/server';
+import { ERRORS, HTTP_STATUS_CODES, TOKENS } from "@/app/constants";
+import { corsOptions } from "@/app/services/api/_db";
+import { authSvc } from "@/app/services/api/auth";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function OPTIONS(req: NextRequest) {
   const [message, params] = corsOptions(req);
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     // Add a new header
     // And produce a response with the new headers
     const response = NextResponse.json({ ...data }, params);
-    response.headers.set('auth-token', data.token);
+    response.headers.set("auth-token", data.token);
 
     return response;
   } catch (err: any) {

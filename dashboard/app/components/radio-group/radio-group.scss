@@ -11,10 +11,10 @@
     label {
       padding: var(--padding);
       cursor: pointer;
-      
+
       .radio {
         position: absolute;
-        opacity: 0; 
+        opacity: 0;
       }
       &.checked {
         background-color: var(--light-bg-color);

@@ -2,9 +2,9 @@ type Model = {
   _id: string;
   _followerId: string;
   _layoutId: string;
-  type: 'instagram';
+  type: "instagram";
   created: string;
-  status?: 'scheduled' | 'sent' | 'error';
+  status?: "scheduled" | "sent" | "error";
   updated?: string;
 };
 export const Model = (data: any): Model => {
@@ -30,7 +30,7 @@ export const Model = (data: any): Model => {
     obj.type = data.type;
   }
 
-  obj.status = data.status ? data.status : 'scheduled';
+  obj.status = data.status ? data.status : "scheduled";
   if (data.created) {
     obj.created = data.created;
   }

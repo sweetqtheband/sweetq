@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { Menu } from '@/app/components';
-import { usePathname } from 'next/navigation';
-import { Suspense, useEffect, useState } from 'react';
-import { Auth } from '@/app/services/auth';
-import { Layout } from '@/app/services/layout';
-import Loader from './loading';
-import './main.scss';
+import { Menu } from "@/app/components";
+import { usePathname } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
+import { Auth } from "@/app/services/auth";
+import { Layout } from "@/app/services/layout";
+import Loader from "./loading";
+import "./main.scss";
 
 export default function Main({
   translations,
@@ -34,12 +34,10 @@ export default function Main({
     }
   }, [showMenu, pathname]);
 
-  const viewportClass = showMenu ? 'viewport with-menu' : 'viewport';
+  const viewportClass = showMenu ? "viewport with-menu" : "viewport";
   return (
     <>
-      {showMenu && showViewport ? (
-        <Menu translations={translations}></Menu>
-      ) : null}
+      {showMenu && showViewport ? <Menu translations={translations}></Menu> : null}
       {showViewport ? (
         <Suspense fallback={<Loader />}>
           <div className={viewportClass}>{children}</div>

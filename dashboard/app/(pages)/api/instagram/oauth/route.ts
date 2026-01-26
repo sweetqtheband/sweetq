@@ -1,10 +1,10 @@
-import { ERRORS, HTTP_STATUS_CODES } from '@/app/constants';
-import { NextRequest } from 'next/server';
-import { corsOptions, getCollection } from '@/app/services/api/_db';
-import { instagramSvc } from '@/app/services/api/instagram';
-import { EA } from '@/app/services/api/_events';
+import { ERRORS, HTTP_STATUS_CODES } from "@/app/constants";
+import { NextRequest } from "next/server";
+import { corsOptions, getCollection } from "@/app/services/api/_db";
+import { instagramSvc } from "@/app/services/api/instagram";
+import { EA } from "@/app/services/api/_events";
 
-const collection = 'instagram';
+const collection = "instagram";
 
 export async function OPTIONS(req: NextRequest) {
   const [message, params] = corsOptions(req);
@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
 
   const qp = req.nextUrl.searchParams;
   const svc = instagramSvc(col);
-  const code = qp.get('code');
+  const code = qp.get("code");
   const stored = await svc.getAccessToken(svc);
 
   try {
@@ -35,10 +35,7 @@ export async function GET(req: NextRequest) {
             shortLiveTokenResponse.access_token
           );
 
-          EA.add(
-            'instagram',
-            await svc.storeLongLiveAccessToken(svc, longLiveTokenResponse)
-          );
+          EA.add("instagram", await svc.storeLongLiveAccessToken(svc, longLiveTokenResponse));
         }
       }
     } else {
@@ -47,21 +44,18 @@ export async function GET(req: NextRequest) {
           stored.short_live_access_token
         );
 
-        EA.add(
-          'instagram',
-          await svc.storeLongLiveAccessToken(svc, longLiveTokenResponse)
-        );
+        EA.add("instagram", await svc.storeLongLiveAccessToken(svc, longLiveTokenResponse));
       } else {
-        EA.add('instagram', svc.parseAuthToken(stored));
+        EA.add("instagram", svc.parseAuthToken(stored));
       }
     }
   } catch (error) {
-    return Response.json('Error', {
+    return Response.json("Error", {
       ...corsParams,
       status: HTTP_STATUS_CODES.ERROR,
     });
   } finally {
-    return Response.json(stored ? 'OK' : 'Error', {
+    return Response.json(stored ? "OK" : "Error", {
       ...corsParams,
       status: HTTP_STATUS_CODES.OK,
     });
@@ -77,7 +71,7 @@ export async function POST(req: NextRequest) {
   const qp = req.nextUrl.searchParams;
 
   const formData = await req.formData();
-  return Response.json('', {
+  return Response.json("", {
     ...corsParams,
     status: HTTP_STATUS_CODES.OK,
   });

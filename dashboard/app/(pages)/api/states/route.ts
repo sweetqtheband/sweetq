@@ -1,9 +1,9 @@
-import { type NextRequest } from 'next/server';
-import { corsOptions, getCollection } from '@/app/services/api/_db';
-import config from '@/app/config';
-import { ERRORS } from '@/app/constants';
+import { type NextRequest } from "next/server";
+import { corsOptions, getCollection } from "@/app/services/api/_db";
+import config from "@/app/config";
+import { ERRORS } from "@/app/constants";
 
-const collection = 'states';
+const collection = "states";
 
 export async function OPTIONS(req: NextRequest) {
   const [message, params] = corsOptions(req);
@@ -20,17 +20,17 @@ export async function GET(req: NextRequest) {
   const qp = req.nextUrl.searchParams;
   const queryObj: any = {};
 
-  const query = qp.get('query');
+  const query = qp.get("query");
 
   if (query) {
     queryObj.$or = [
       {
-        name: { $regex: query, $options: 'i' },
+        name: { $regex: query, $options: "i" },
       },
     ];
   }
 
-  const country_id = qp.get('country_id');
+  const country_id = qp.get("country_id");
   if (country_id) {
     queryObj.$and = [{ country_id }];
   }
@@ -40,7 +40,7 @@ export async function GET(req: NextRequest) {
   const items = await col
     .find(queryObj)
     .sort({ name: 1 })
-    .collation({ locale: 'es', caseLevel: true })
+    .collation({ locale: "es", caseLevel: true })
     .toArray();
 
   const data = {

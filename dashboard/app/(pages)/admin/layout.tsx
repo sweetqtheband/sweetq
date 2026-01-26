@@ -1,15 +1,15 @@
-import { Metadata } from 'next';
-import Main from './main';
-import '@carbon/styles/css/styles.css';
-import './layout.scss';
-import i18n from '@/app/services/translate';
-import { routes } from './routes';
-import { Route } from '@/types/route';
-import { Config } from '@/app/services/config';
+import { Metadata } from "next";
+import Main from "./main";
+import "@carbon/styles/css/styles.css";
+import "./layout.scss";
+import i18n from "@/app/services/translate";
+import { routes } from "./routes";
+import { Route } from "@/types/route";
+import { Config } from "@/app/services/config";
 
 export const metadata: Metadata = Object.assign(Config.faviconMetadata, {
-  title: 'Sweet Q Dashboard',
-  description: 'Sweet Q Dashboard',
+  title: "Sweet Q Dashboard",
+  description: "Sweet Q Dashboard",
 });
 
 export default async function ViewportLayout({

@@ -1,6 +1,6 @@
-import jwt from 'jsonwebtoken';
-import { getCollection, toTimestamp } from '@/app/services/api/_db';
-import config from '@/app/config';
+import jwt from "jsonwebtoken";
+import { getCollection, toTimestamp } from "@/app/services/api/_db";
+import config from "@/app/config";
 
 /**
  * Token service
@@ -13,10 +13,7 @@ const tokenSvc = {
    * @returns {AccessToken}
    */
   async findOne(query: Record<string, any>) {
-    return await (await this.tokenModel)
-      .find(query)
-      .limit(1)
-      .sort({ $natural: -1 })[0];
+    return await (await this.tokenModel).find(query).limit(1).sort({ $natural: -1 })[0];
   },
   /**
    * Get by user id
@@ -57,23 +54,21 @@ const tokenSvc = {
     );
 
     const expires =
-      !mustExpire || mustExpire === 'false'
+      !mustExpire || mustExpire === "false"
         ? 0
         : toTimestamp(new Date()) + config.tokens.expireDays * 86400;
 
-    await (
-      await accessTokenSvc.tokenModel
-    ).insertOne({ _uid: user._id, token, expires });
+    await (await accessTokenSvc.tokenModel).insertOne({ _uid: user._id, token, expires });
     return token;
   },
 };
 
 export const accessTokenSvc = {
   ...tokenSvc,
-  tokenModel: getCollection('access_tokens'),
+  tokenModel: getCollection("access_tokens"),
 };
 
 export const adminTokenSvc = {
   ...tokenSvc,
-  tokenModel: getCollection('admin_tokens'),
+  tokenModel: getCollection("admin_tokens"),
 };

@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { IG, STORAGE } from '@/app/constants';
-import { useEventBus } from '@/app/hooks/event';
-import { instagram } from '@/app/services/instagram';
-import { Storage } from '@/app/services/storage';
-import Script from 'next/script';
-import { useCallback, useEffect, useRef } from 'react';
+import { IG, STORAGE } from "@/app/constants";
+import { useEventBus } from "@/app/hooks/event";
+import { instagram } from "@/app/services/instagram";
+import { Storage } from "@/app/services/storage";
+import Script from "next/script";
+import { useCallback, useEffect, useRef } from "react";
 
 declare global {
   interface Window {
@@ -37,11 +37,11 @@ const storeResponse = (response: Record<string, string | number>) => {
 
 const doInstagramLogin = () => {
   const win = window.open(
-    'https://www.instagram.com/oauth/authorize?enable_fb_login=0&force_authentication=1&client_id=1116438159688778&redirect_uri=' +
+    "https://www.instagram.com/oauth/authorize?enable_fb_login=0&force_authentication=1&client_id=1116438159688778&redirect_uri=" +
       process.env.NEXT_PUBLIC_INSTAGRAM_REDIRECT_URI +
-      '&response_type=code&scope=instagram_business_basic%2Cinstagram_business_manage_messages%2Cinstagram_business_manage_comments%2Cinstagram_business_content_publish',
-    '_blank',
-    'width=600,height=600'
+      "&response_type=code&scope=instagram_business_basic%2Cinstagram_business_manage_messages%2Cinstagram_business_manage_comments%2Cinstagram_business_content_publish",
+    "_blank",
+    "width=600,height=600"
   );
   return win;
 };
@@ -58,7 +58,7 @@ const checkToken = async () => {
 };
 
 export default function InstagramLogin() {
-  const { on, off } = useEventBus('instagram');
+  const { on, off } = useEventBus("instagram");
   const initializedRef = useRef(false);
 
   const runInstagramLogin = useCallback(() => {
@@ -80,7 +80,7 @@ export default function InstagramLogin() {
       try {
         const tokenCheck = (await checkToken()) as Record<string, any>;
 
-        const invalidToken = tokenCheck?.data === 'Error';
+        const invalidToken = tokenCheck?.data === "Error";
 
         if (!skip && tokenCheck && !invalidToken) {
           on((data) => {
@@ -104,11 +104,6 @@ export default function InstagramLogin() {
   }, [off, on, runInstagramLogin]);
 
   return (
-    <Script
-      async
-      defer
-      crossOrigin="anonymous"
-      src="https://connect.facebook.net/en_US/sdk.js"
-    />
+    <Script async defer crossOrigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js" />
   );
 }

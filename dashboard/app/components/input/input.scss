@@ -1,5 +1,5 @@
 .input-text,
-.input-password {  
+.input-password {
   position: relative;
   max-width: 300px;
   min-width: 100px;
@@ -15,11 +15,11 @@
     .select--selected {
       user-select: none;
       cursor: default;
-      opacity: .5;
+      opacity: 0.5;
     }
   }
   &::placeholder,
   &--placeholder {
-    color: var(--light-text-placeholder)
+    color: var(--light-text-placeholder);
   }
 }

@@ -1,6 +1,6 @@
-import { Model } from '@/app/models/userProfile';
-import { BaseSvc } from './_base';
-import { Collection, Document } from 'mongodb';
+import { Model } from "@/app/models/userProfile";
+import { BaseSvc } from "./_base";
+import { Collection, Document } from "mongodb";
 /**
  * User profiles service
  */
@@ -14,8 +14,7 @@ export const userProfilesSvc = (collection: Collection<Document>) => {
      * @param {Object} query
      * @returns {User}
      */
-    findOne: async (query: Record<string, any>) =>
-      (await baseSvc.model).findOne(query),
+    findOne: async (query: Record<string, any>) => (await baseSvc.model).findOne(query),
 
     /**
      * Get by id
