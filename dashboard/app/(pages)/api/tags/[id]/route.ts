@@ -3,6 +3,7 @@ import { NextRequest } from "next/server";
 import { corsOptions, deleteItem, putItem } from "@/app/services/api/_db";
 import { ERRORS, HTTP_STATUS_CODES } from "@/app/constants";
 import { revalidatePath } from "next/cache";
+import { clearCache } from "@/app/services/_api";
 
 const collection = "tags";
 
@@ -27,6 +28,7 @@ export async function PUT(req: NextRequest, { params }: Params) {
 
   try {
     const item = await putItem({ id, req, collection, types, options });
+    clearCache(collection);
 
     return Response.json({ data: item }, { status: HTTP_STATUS_CODES.OK });
   } catch (err: any) {

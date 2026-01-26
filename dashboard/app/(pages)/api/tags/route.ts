@@ -3,6 +3,7 @@ import { NextRequest } from "next/server";
 import { corsOptions, getList, postItem } from "@/app/services/api/_db";
 import { revalidatePath } from "next/cache";
 import { ERRORS, HTTP_STATUS_CODES } from "@/app/constants";
+import { clearCache } from "@/app/services/_api";
 
 const collection = "tags";
 const idx = "name";
@@ -36,6 +37,7 @@ export async function POST(req: NextRequest) {
   }
   try {
     const item = await postItem({ req, collection, types, options });
+    clearCache(collection);
     revalidatePath(`/admin/${collection}`);
 
     return Response.json({ data: item }, { ...corsParams, status: HTTP_STATUS_CODES.OK });

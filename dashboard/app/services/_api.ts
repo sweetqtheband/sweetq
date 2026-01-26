@@ -22,6 +22,14 @@ const fetchWithCache = async (
   return data;
 };
 
+export const clearCache = (key: string) => {
+  for (const cacheKey of dbClient.cache.keys()) {
+    if (cacheKey.includes(key)) {
+      dbClient.cache.delete(cacheKey);
+    }
+  }
+};
+
 export const getAll = async (
   client: AxiosInstance,
   searchParams: any = {},
