@@ -116,15 +116,18 @@
           gap: 0;
         }
 
+        .wrapper-fields {
+          display: flex;
+          flex-flow: column;
+          gap: var(--padding);
+        }
+
         .cds--accordion {
           &__content {
             padding-inline-end: 0;
             -webkit-padding-end: 0;
             padding-inline-start: 0;
             -webkit-padding-start: 0;
-            display: flex;
-            flex-flow: column;
-            gap: var(--padding);
           }
           &__heading {
             padding-inline-end: 0;

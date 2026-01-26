@@ -80,8 +80,8 @@ export default async function InstagramPage({ searchParams }: Readonly<{ searchP
   const translations = {
     ...Followers.getTranslations(i18n, Followers),
     ...getTranslation(i18n, "actions"),
-    title: i18n.t("pages.instagram.title"),
-    description: i18n.t("pages.instagram.description", { total: data.total }),
+    title: i18n.t("pages.instagram.followers.title"),
+    description: i18n.t("pages.instagram.followers.description", { total: data.total }),
   };
 
   getFiltersTranslations(i18n, translations);

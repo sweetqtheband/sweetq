@@ -287,38 +287,41 @@ export default function ListPanel({
     ref[field] = useRef(null);
   });
 
-  const renderFields = (useFields: Record<string, any>) =>
-    Object.keys(useFields.types).map((field: string, index: number) => {
-      const fieldProps = {
-        field,
-        key: "field-" + index,
-        type: useFields.types[field],
-        value: data?.[field] || useFields.options[field]?.value,
-        translations,
-        files,
-        fields: useFields,
-        formState,
-        internalState,
-        methods,
-        params,
-        pathname,
-        renders,
-        replace,
-        ref: ref[field],
-        onAddFileHandler,
-        onInputHandler,
-        onRemoveFileHandler,
-        onInternalStateHandler,
-        onFormStateHandler: setFormState,
-        onRemoveHandler: onRemoveFileHandler,
-      };
-      const renderedField = renderField(fieldProps);
-      return (
-        <Fragment key={"fragment-" + index}>
-          {typeof renderedField === "function" ? renderedField(fieldProps) : renderedField}
-        </Fragment>
-      );
-    });
+  const renderFields = (useFields: Record<string, any>) => (
+    <Section className="wrapper-fields" level={5}>
+      {Object.keys(useFields.types).map((field: string, index: number) => {
+        const fieldProps = {
+          field,
+          key: "field-" + index,
+          type: useFields.types[field],
+          value: data?.[field] || useFields.options[field]?.value,
+          translations,
+          files,
+          fields: useFields,
+          formState,
+          internalState,
+          methods,
+          params,
+          pathname,
+          renders,
+          replace,
+          ref: ref[field],
+          onAddFileHandler,
+          onInputHandler,
+          onRemoveFileHandler,
+          onInternalStateHandler,
+          onFormStateHandler: setFormState,
+          onRemoveHandler: onRemoveFileHandler,
+        };
+        const renderedField = renderField(fieldProps);
+        return (
+          <Fragment key={"fragment-" + index}>
+            {typeof renderedField === "function" ? renderedField(fieldProps) : renderedField}
+          </Fragment>
+        );
+      })}
+    </Section>
+  );
 
   const renderGroups = (useFields: Record<string, any>) => (
     <Section level={5}>
