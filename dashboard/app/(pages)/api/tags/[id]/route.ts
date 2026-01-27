@@ -46,6 +46,8 @@ export async function DELETE(req: NextRequest, { params }: Params) {
 
   try {
     const item = await deleteItem({ id, req, collection, types, options });
+    clearCache(collection);
+
     revalidatePath(`/admin/${collection}`);
 
     return Response.json({ data: item }, { status: HTTP_STATUS_CODES.OK });
