@@ -325,11 +325,17 @@ const renderSelect = ({
     onRemoveHandler(field, null);
   };
 
-  const itemToString = renders?.[field]?.itemToString
-    ? (item: any) => renderItem(renders?.[field]?.itemToString(field, item))
-    : (item: any) => item.text;
+  const stringValue =
+    typeof renders?.[field]?.itemToString === "function"
+      ? (item: any) => renderItem(renders?.[field]?.itemToString(field, item))
+      : (item: any) => item.text;
 
-  const itemToElement = renders?.[field]?.itemToElement || itemToString;
+  const itemToElement = renders?.[field]?.itemToElement || stringValue;
+
+  const itemToString = (item: Record<string, any>) => item?.text || "";
+
+  const renderSelectedItem = (item: Record<string, any>) =>
+    typeof stringValue === "function" ? stringValue(item) : item.text;
 
   const currentValue = internalState?.[field] || null;
 
@@ -370,6 +376,7 @@ const renderSelect = ({
           titleText={translations.fields[field]}
           items={items}
           selectedItem={currentValue}
+          renderSelectedItem={renderSelectedItem}
           itemToString={itemToString}
           itemToElement={itemToElement}
           onChange={onChangeHandler}
