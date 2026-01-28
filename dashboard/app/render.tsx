@@ -305,17 +305,18 @@ const renderSelect = ({
       ? formState?.[field][0]
       : formState?.[field]
         ? formState?.[field]
-        : value;
+        : value !== "undefined"
+          ? value
+          : null;
 
   const selectedItem = defaultValue
     ? items.find((item: Record<string, any>) => item.id === value || item.id === String(value))
-    : undefined;
+    : null;
 
   if (ready && selectedItem && !internalState?.[field] && !internalState?.[`removed[${field}]`]) {
     setTimeout(() => {
       onInternalStateHandler(field, selectedItem, formState);
-      //onInputHandler(field, selectedItem?.id);
-    }, 0);
+    }, 300);
   }
 
   const handleRemoveClick = () => {
@@ -900,6 +901,7 @@ const renderCountryFilter = ({
 
 const renderStateFilter = ({
   fields,
+  filters,
   translations,
   formState,
   internalState,
@@ -908,8 +910,9 @@ const renderStateFilter = ({
   onInputHandler,
 }: Field) => {
   const isLoading =
-    (!fields.search.params["filters[country]"] && Boolean(internalState?.country?.id)) ||
-    fields.search.params["filters[country]"] !== internalState?.country?.id;
+    (!filters?.country?.value && Boolean(internalState?.country?.id)) ||
+    ((filters?.country?.value || internalState?.country?.id) &&
+      filters?.country?.value !== internalState?.country?.id);
 
   return stateDropdown({
     className: "cds--text-input__field-outer-wrapper",
@@ -929,6 +932,7 @@ const renderStateFilter = ({
 
 const renderCityFilter = ({
   fields,
+  filters,
   translations,
   formState,
   internalState,
@@ -937,8 +941,9 @@ const renderCityFilter = ({
   onInputHandler,
 }: Field) => {
   const isLoading =
-    (!fields.search.params["filters[state]"] && Boolean(internalState?.state?.id)) ||
-    fields.search.params["filters[state]"] !== internalState?.state?.id;
+    (!filters?.state?.value && Boolean(internalState?.state?.id)) ||
+    ((filters?.state?.value || internalState?.state?.id) &&
+      filters?.state?.value !== internalState?.state?.id);
   return cityDropdown({
     className: "cds--text-input__field-outer-wrapper",
     value: String(formState?.city) || null,

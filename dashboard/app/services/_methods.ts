@@ -2,6 +2,7 @@ import { HTTP_STATUS_CODES } from "../constants";
 import { getFormData } from "../utils";
 import { DELETE, POST, PUT } from "./_api";
 import { AxiosInstance } from "axios";
+import { Filters } from "./filters";
 export const onSave = async (
   instance: AxiosInstance,
   router: any,
@@ -55,4 +56,5 @@ export const getMethods = (instance?: any, router?: any): Record<string, any> =>
   onDelete: (ids: string[]) => onDelete(instance, router, ids),
   onCopy: (data: any) => onCopy(instance, router, data),
   onListSave: (value: string) => onSave(instance, router, { name: value }, {}),
+  onFilterSave: Filters.getMethods(router).onSave,
 });

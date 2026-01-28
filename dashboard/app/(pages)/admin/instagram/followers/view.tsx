@@ -6,76 +6,125 @@ import { ACTIONS, Followers } from "@/app/services/followers";
 import { useRouter } from "next/navigation";
 import MessagePanel from "../message-panel";
 import InstagramChat from "../instagram-chat";
-import { useState } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { Modal } from "@carbon/react";
 import { Action } from "@/types/action";
+import { useDeepMemo } from "@/app/hooks/memo";
 
 export default function InstagramView(params: Readonly<any>) {
   const [ids, setIds] = useState(null);
   const [item, setItem] = useState(null);
   const [action, setAction] = useState<Action>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [open, setOpen] = useState("");
+  const [open, setOpen] = useState<string | null>("");
 
   const router = useRouter();
-  const methods = Followers.getMethods(router, params.translations, open === ACTIONS?.BATCH_EDIT);
-  const renders = Followers.getRenders();
-  const batchActions = Followers.getBatchActions(setIds, params.translations, setOpen);
-  const itemActions = Followers.getItemActions(setAction, params.translations);
 
-  const onActionClickHandler = async (data: any) => {
-    methods.action.onClick(data, setItem);
-  };
+  // Memoize props from server component to prevent new references on re-renders
+  const memoItems = useDeepMemo(params.items);
+  const memoHeaders = useDeepMemo(params.headers);
+  const memoFields = useDeepMemo(params.fields);
+  const memoFilters = useDeepMemo(params.filters);
+  const memoTranslations = useDeepMemo(params.translations);
+  const memoLayouts = useDeepMemo(params.layouts);
 
-  const setIsLoadingHandler = (loading: boolean) => {
+  // Memoize all objects to prevent unnecessary re-renders
+  const methods = useMemo(
+    () => Followers.getMethods(router, memoTranslations, open === ACTIONS?.BATCH_EDIT),
+    [router, memoTranslations, open]
+  );
+
+  const renders = useMemo(() => Followers.getRenders(), []);
+
+  const batchActions = useMemo(
+    () => Followers.getBatchActions(setIds, memoTranslations, setOpen),
+    [memoTranslations]
+  );
+
+  const itemActions = useMemo(
+    () => Followers.getItemActions(setAction, memoTranslations),
+    [memoTranslations]
+  );
+
+  // Memoize CONSTANTS to prevent new object reference on every render
+  const CONSTANTS_MEMO = useMemo(() => ({ ACTIONS }), []);
+
+  // Memoize nested method properties to prevent new references on every render
+  const onSave = useMemo(() => methods.onSave, [methods]);
+  const onDelete = useMemo(() => methods.onDelete, [methods]);
+  const onCopy = useMemo(() => methods.onCopy, [methods]);
+  const actionLabel = useMemo(() => methods.action?.label ?? "", [methods]);
+  const actionIcon = useMemo(() => methods.action?.icon ?? null, [methods]);
+  const onMessageSave = useMemo(() => methods.onMessageSave, [methods]);
+  const onSendInstagramMessage = useMemo(() => methods.onSendInstagramMessage, [methods]);
+
+  const onActionClickHandler = useCallback(
+    async (data: any) => {
+      methods.action.onClick(data, setItem);
+    },
+    [methods.action]
+  );
+
+  const setIsLoadingHandler = useCallback((loading: boolean) => {
     setIsLoading(loading);
-  };
+  }, []);
 
-  const actionClear = () => {
+  const actionClear = useCallback(() => {
     setAction(null);
-  };
+  }, []);
 
-  const actionHandler = async (data: any) => {
-    if (action?.method) {
-      setIsLoadingHandler(true);
-      await methods[action?.method](data);
-      setIsLoadingHandler(false);
-    }
+  const actionHandler = useCallback(
+    async (data: any) => {
+      if (action?.method) {
+        setIsLoadingHandler(true);
+        await methods[action?.method](data);
+        setIsLoadingHandler(false);
+      }
 
-    actionClear();
-  };
+      actionClear();
+    },
+    [action?.method, methods, setIsLoadingHandler, actionClear]
+  );
 
   return (
     <>
       <InstagramLogin />
       <ListLayout
-        {...params}
+        id={params.id}
+        items={memoItems}
+        headers={memoHeaders}
+        fields={memoFields}
+        filters={memoFilters}
+        translations={memoTranslations}
+        total={params.total}
+        limit={params.limit}
+        pages={params.pages}
         ids={ids}
         methods={methods}
         renders={renders}
         batchActions={batchActions}
         itemActions={itemActions}
-        onSave={methods.onSave}
-        onDelete={methods.onDelete}
-        onCopy={methods.onCopy}
+        onSave={onSave}
+        onDelete={onDelete}
+        onCopy={onCopy}
         loading={isLoading}
         setExternalLoading={setIsLoadingHandler}
         noAdd={true}
         noDelete={true}
-        actionLabel={methods.action.label}
-        actionIcon={methods.action.icon}
+        actionLabel={actionLabel}
+        actionIcon={actionIcon}
         onAction={onActionClickHandler}
         open={open}
         setOpen={setOpen}
-        CONSTANTS={{ ACTIONS }}
+        CONSTANTS={CONSTANTS_MEMO}
       />
       <MessagePanel
         ids={ids}
-        items={params.items}
-        translations={params.translations}
+        items={memoItems}
+        translations={memoTranslations}
         setIds={setIds}
-        layouts={params.layouts}
-        onSave={methods.onMessageSave}
+        layouts={memoLayouts}
+        onSave={onMessageSave}
         setIsLoading={setIsLoadingHandler}
         open={open}
         setOpen={setOpen}
@@ -83,20 +132,20 @@ export default function InstagramView(params: Readonly<any>) {
       />
       <InstagramChat
         item={item}
-        translations={params.translations}
+        translations={memoTranslations}
         setItem={setItem}
-        onSave={methods.onSendInstagramMessage}
+        onSave={onSendInstagramMessage}
       />
       <Modal
         open={action?.type === ACTIONS?.CANCEL_MESSAGE && action?.open}
         onRequestClose={() => actionClear()}
         onRequestSubmit={() => actionHandler(action?.item)}
         danger
-        modalHeading={params.translations?.[action?.type as string]?.header || "Header"}
-        closeButtonLabel={params.translations.close}
-        primaryButtonText={params.translations.confirm}
-        secondaryButtonText={params.translations.cancel}
-        modalLabel={params.translations?.[action?.type as string]?.label || "Label"}
+        modalHeading={memoTranslations?.[action?.type as string]?.header || "Header"}
+        closeButtonLabel={memoTranslations.close}
+        primaryButtonText={memoTranslations.confirm}
+        secondaryButtonText={memoTranslations.cancel}
+        modalLabel={memoTranslations?.[action?.type as string]?.label || "Label"}
       />
     </>
   );

@@ -31,6 +31,7 @@ export async function GET(req: NextRequest) {
   }
 
   const country_id = qp.get("country_id");
+
   if (country_id) {
     queryObj.$and = [{ country_id }];
   }

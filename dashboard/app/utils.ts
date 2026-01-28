@@ -59,7 +59,6 @@ export const formDataToObject = (
   const obj: Record<string, any> = {};
 
   formData.forEach((value, key) => {
-    console.log(types[key], obj[key]);
     if ([FIELD_TYPES.IMAGE_UPLOADER, FIELD_TYPES.VIDEO_UPLOADER].includes(types[key])) {
       obj[key] = Array.isArray(obj[key]) && obj[key] instanceof File ? [...obj[key], value] : value;
     } else if (types[key] === FIELD_TYPES.MULTISELECT) {
@@ -91,6 +90,12 @@ export const formDataToObject = (
       ].includes(types[key])
     ) {
       obj[key] = value !== "undefined" && value !== "" ? new Date(value as string) : null;
+    } else if (key.endsWith("[]")) {
+      const arrayKey = key.replace("[]", "");
+      if (!obj[arrayKey]) {
+        obj[arrayKey] = [];
+      }
+      obj[arrayKey].push(value);
     } else {
       obj[key] = value !== "undefined" ? value : null;
     }

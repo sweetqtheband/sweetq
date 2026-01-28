@@ -39,15 +39,31 @@ import {
 import { Add, Close, Filter, TrashCan, Copy } from "@carbon/react/icons";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { MouseEvent, SyntheticEvent, useEffect, useRef, useState } from "react";
+import React, {
+  MouseEvent,
+  SyntheticEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 let timeout: NodeJS.Timeout;
-let imageTimeout: NodeJS.Timeout;
+let filterTimeout: NodeJS.Timeout;
 
-export default function ListTable({
+// Stable default values to prevent re-renders
+const EMPTY_ARRAY: any[] = [];
+const EMPTY_OBJECT: Record<string, any> = {};
+const NOOP = () => {};
+const NOOP_ASYNC = async () => true;
+const NOOP_ASYNC_STRING = async () => "";
+const NOOP_LOADING = (value: boolean = false) => {};
+
+function ListTable({
   id = "item.id",
-  items = [],
-  headers = [],
+  items = EMPTY_ARRAY,
+  headers = EMPTY_ARRAY,
   imageSize = "md",
   limit = config.table.limit,
   total = 0,
@@ -55,22 +71,23 @@ export default function ListTable({
   pages = 0,
   isLoading = false,
   isWaiting = false,
-  setIsLoading = (value = false) => {},
-  setIsWaiting = (value = false) => {},
-  onItemClick = () => {},
-  onDelete = async () => true,
-  onCopy = async () => true,
+  setIsLoading = NOOP_LOADING,
+  setIsWaiting = NOOP_LOADING,
+  onItemClick = NOOP,
+  onDelete = NOOP_ASYNC,
+  onCopy = NOOP_ASYNC,
+  onFiltering = NOOP_ASYNC_STRING,
   noAdd = false,
   noDelete = false,
   noCopy = false,
   noBatchActions = false,
-  translations = {},
-  actions = {},
-  batchActions = {},
-  itemActions = {},
-  fields = {},
-  filters = {},
-  renders = {},
+  translations = EMPTY_OBJECT,
+  actions = EMPTY_OBJECT,
+  batchActions = EMPTY_OBJECT,
+  itemActions = EMPTY_OBJECT,
+  fields = EMPTY_OBJECT,
+  filters = EMPTY_OBJECT,
+  renders = EMPTY_OBJECT,
 }: Readonly<{
   id?: string;
   items: any[];
@@ -87,6 +104,7 @@ export default function ListTable({
   onItemClick?: (item: any) => void;
   onDelete?: (ids: string[]) => Promise<boolean>;
   onCopy?: (ids: string[]) => Promise<boolean>;
+  onFiltering?: (filters: Record<string, any>) => Promise<string>;
   noAdd?: boolean;
   noDelete?: boolean;
   noCopy?: boolean;
@@ -104,13 +122,20 @@ export default function ListTable({
   const { replace } = useRouter();
   const [clearField, setClearField] = useState<string | null>(null);
 
-  const tableId = uuid();
+  // Memoize stable values
+  const tableId = useMemo(() => uuid(), []);
   const tableRef = useRef<HTMLDivElement>(null);
+  const debounceRef = useRef<NodeJS.Timeout | null>(null);
 
-  const tableRows = items.map((item) => ({
-    ...item,
-    id: !item.id ? item._id : item.id,
-  }));
+  // Memoize computed values
+  const tableRows = useMemo(
+    () =>
+      items.map((item) => ({
+        ...item,
+        id: !item.id ? item._id : item.id,
+      })),
+    [items]
+  );
 
   const [deleteOpen, setDeleteOpen] = useState<boolean>(false);
   const [deleteRows, setDeleteRows] = useState<any[]>([]);
@@ -118,86 +143,84 @@ export default function ListTable({
   const [internalState, setInternalState] = useState<Record<string, any>>({});
   const [formState, setFormState] = useState<Record<string, any>>({});
   const [filtering, setFiltering] = useState<boolean>(false);
+  const [fromFilter, setFromFilter] = useState<boolean>(false);
   const [canDelete, setCanDelete] = useState<boolean>(!noDelete);
   const [canCopy, setCanCopy] = useState<boolean>(!noCopy);
+  const [direction, setDirection] = useState(headers.map(() => "DESC"));
+  const [sortable, setSortable] = useState(headers.map(() => false));
+  const [allSelected, setAllSelected] = useState(false);
+  const [fitTable, setFitTable] = useState(false);
+  const [itemsShown, setItemsShown] = useState(config.table.shown);
+  const [lastSelectedIndex, setLastSelectedIndex] = useState<number | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(0);
 
-  const params = new URLSearchParams(searchParams);
-
-  const paramFiltersObj = Object.fromEntries(
-    params.entries().filter(([key]) => key.includes("filters"))
+  const limitItems = useMemo(
+    () =>
+      [10, 25, 50, 100, 200, 500].map((item) => ({
+        id: item,
+        text: item,
+      })),
+    []
   );
 
-  if (Object.keys(paramFiltersObj).length > 0) {
-    Object.keys(paramFiltersObj).forEach((key: string) => {
-      const filterName = key.match(/filters\[(.*)\]/)?.[1];
-      if (filterName && !formState[filterName]) {
-        setFormState({
-          ...formState,
-          [filterName]: paramFiltersObj[key].split(","),
-        });
-      }
-    });
-  } else {
-    const currentFormState = { ...formState };
-    let setForm = false;
-    Object.keys(filters).forEach((filterName) => {
-      if (currentFormState[filterName]) {
-        delete currentFormState[filterName];
-        setForm = true;
-      }
-    });
+  const [selectedLimit, setSelectedLimit] = useState(limitItems.find((item) => item.id === limit));
 
-    if (setForm) {
-      setFormState(currentFormState);
-    }
-  }
+  const defaultCell = useMemo(() => headers.find((header) => header.default), [headers]);
 
-  const onInternalStateHandler = (stateFields: string | string[], value: any) => {
-    setInternalState((prevState) => {
-      const filterInternalState = { ...prevState };
-      if (stateFields instanceof Array) {
-        stateFields.forEach((field, index) => {
-          delete filterInternalState[field];
+  // Memoized handlers
+  const onInternalStateHandler = useCallback(
+    (stateFields: string | string[], value: any) => {
+      setInternalState((prevState) => {
+        const filterInternalState = { ...prevState };
+        if (stateFields instanceof Array) {
+          stateFields.forEach((field, index) => {
+            delete filterInternalState[field];
 
-          if (fields?.search?.[field]?.deletes?.length > 0) {
-            fields.search[field].deletes.forEach((deleteField: string) => {
+            if (fields?.search?.[field]?.deletes?.length > 0) {
+              fields.search[field].deletes.forEach((deleteField: string) => {
+                delete filterInternalState[deleteField];
+              });
+            }
+
+            if (value) {
+              filterInternalState[field] = value[index];
+            }
+          });
+        } else {
+          delete filterInternalState[stateFields];
+
+          if (fields?.search?.[stateFields]?.deletes?.length > 0) {
+            fields.search[stateFields].deletes.forEach((deleteField: string) => {
               delete filterInternalState[deleteField];
             });
           }
 
           if (value) {
-            filterInternalState[field] = value[index];
+            filterInternalState[stateFields] = value;
           }
-        });
-      } else {
-        delete filterInternalState[stateFields];
-
-        if (fields?.search?.[stateFields]?.deletes?.length > 0) {
-          fields.search[stateFields].deletes.forEach((deleteField: string) => {
-            delete filterInternalState[deleteField];
-          });
         }
 
-        if (value) {
-          filterInternalState[stateFields] = value;
-        }
-      }
-      return filterInternalState;
-    });
-  };
+        return filterInternalState;
+      });
+    },
+    [fields]
+  );
+
   useEffect(() => {
     if (timestamp) {
       setIsWaiting(false);
     }
-  }, [timestamp]);
+  }, [timestamp, setIsWaiting]);
 
-  useTableRenderComplete(tableId, () => {
+  const handleTableRenderComplete = useCallback(() => {
     setTimeout(() => {
       if (!isWaiting) {
         setIsLoading(false);
       }
     }, 300);
-  });
+  }, [isWaiting, setIsLoading]);
+
+  useTableRenderComplete(tableId, handleTableRenderComplete);
 
   useEffect(() => {
     setFiltering(
@@ -208,301 +231,484 @@ export default function ListTable({
           }
         }
         return isFiltering;
-      }, false) || Object.keys(paramFiltersObj).length > 0
+      }, false)
     );
-  }, [internalState, filters, paramFiltersObj]);
+  }, [internalState, filters]);
 
-  const renderCell = (
-    row: Record<string, any>,
-    field: Record<string, any>,
-    item: Record<string, any>
-  ) => {
-    if (field.value) {
-      const fieldName = field.id.split(":")[1];
+  const renderCell = useCallback(
+    (row: Record<string, any>, field: Record<string, any>, item: Record<string, any>) => {
+      if (field.value) {
+        const fieldName = field.id.split(":")[1];
 
-      const fieldValue = fields?.options?.[fieldName]?.language
-        ? field.value[translations.locale]
-        : field.value;
+        const fieldValue = fields?.options?.[fieldName]?.language
+          ? field.value[translations.locale]
+          : field.value;
 
-      const isImage = String(field.value).match(/\.(png|gif|jpg|jpeg|webp|svg)/i);
+        const isImage = String(field.value).match(/\.(png|gif|jpg|jpeg|webp|svg)/i);
 
-      const defaultValue = item?.relations?.[fieldName]?.[translations.locale] || fieldValue;
+        const defaultValue = item?.relations?.[fieldName]?.[translations.locale] || fieldValue;
 
-      let value = translations.options?.[fieldName]
-        ? translations.options?.[fieldName][fieldValue]
-        : defaultValue;
+        let value = translations.options?.[fieldName]
+          ? translations.options?.[fieldName][fieldValue]
+          : defaultValue;
 
-      if (renders[fieldName]) {
-        const func =
-          typeof renders[fieldName] === "function" ? renders[fieldName] : renders[fieldName].render;
+        if (renders[fieldName]) {
+          const func =
+            typeof renders[fieldName] === "function"
+              ? renders[fieldName]
+              : renders[fieldName].render;
 
-        if (typeof func === "function") {
-          const render = func(fieldName, value, item);
-          return render instanceof Array ? (
-            <>
-              {render.map((renderedItem, renderItemIndex) => (
-                <div key={`render-${renderItemIndex}`}>{renderItem(renderedItem, itemActions)}</div>
-              ))}
-            </>
-          ) : (
-            renderItem(render, itemActions)
+          if (typeof func === "function") {
+            const render = func(fieldName, value, item);
+            return render instanceof Array ? (
+              <>
+                {render.map((renderedItem, renderItemIndex) => (
+                  <div key={`render-${renderItemIndex}`}>
+                    {renderItem(renderedItem, itemActions)}
+                  </div>
+                ))}
+              </>
+            ) : (
+              renderItem(render, itemActions)
+            );
+          }
+        }
+
+        if (isImage) {
+          if (value?.startsWith("imgs")) {
+            value = s3File("/" + value);
+          }
+
+          if (value?.startsWith("/imgs")) {
+            value = s3File(value);
+          }
+
+          return (
+            // eslint-disable-next-line @next/next/no-img-element
+            <Image
+              src={value}
+              alt={row.id}
+              height={IMAGE_SIZES[imageSize]}
+              width={IMAGE_SIZES[imageSize]}
+              crossOrigin="anonymous"
+            />
           );
         }
-      }
 
-      if (isImage) {
-        if (value?.startsWith("imgs")) {
-          value = s3File("/" + value);
+        return value;
+      } else {
+        return null;
+      }
+    },
+    [fields, translations, renders, itemActions, imageSize]
+  );
+
+  const checkRowsForWindowSize = useCallback(
+    (rows: any[]) => {
+      let rowsHeight = rows.length * 48;
+      const maxHeight = window.innerHeight - 48 * 4;
+
+      if (tableRef) {
+        const tbody = tableRef.current?.querySelector("tbody");
+        if (tbody) {
+          rowsHeight = tbody.clientHeight;
         }
-
-        if (value?.startsWith("/imgs")) {
-          value = s3File(value);
-        }
-
-        return (
-          // eslint-disable-next-line @next/next/no-img-element
-          <Image
-            src={value}
-            alt={row.id}
-            height={IMAGE_SIZES[imageSize]}
-            width={IMAGE_SIZES[imageSize]}
-            crossOrigin="anonymous"
-          />
-        );
       }
+      return rowsHeight > maxHeight;
+    },
+    [tableRef]
+  );
 
-      return value;
-    } else {
-      return null;
-    }
-  };
-
-  const checkRowsForWindowSize = (rows: any[]) => {
-    let rowsHeight = rows.length * 48;
-    const maxHeight = window.innerHeight - 48 * 4;
-
-    if (tableRef) {
-      const tbody = tableRef.current?.querySelector("tbody");
-      if (tbody) {
-        rowsHeight = tbody.clientHeight;
+  const tableRowClickHandler = useCallback(
+    (id: string | number, target: HTMLElement) => {
+      if (
+        !target.classList.contains("cds--checkbox") &&
+        !target.classList.contains("cds--table-column-checkbox")
+      ) {
+        const row = tableRows.find((row) => row.id === id);
+        onItemClick(row);
       }
-    }
-    return rowsHeight > maxHeight;
-  };
+    },
+    [tableRows, onItemClick]
+  );
 
-  const [direction, setDirection] = useState(headers.map(() => "DESC"));
-  const [sortable, setSortable] = useState(headers.map(() => false));
-  const [allSelected, setAllSelected] = useState(false);
-  const [fitTable, setFitTable] = useState(false);
-  const [itemsShown, setItemsShown] = useState(config.table.shown);
-
-  const tableRowClickHandler = (id: string | number, target: HTMLElement) => {
-    if (
-      !target.classList.contains("cds--checkbox") &&
-      !target.classList.contains("cds--table-column-checkbox")
-    ) {
-      const row = tableRows.find((row) => row.id === id);
-      onItemClick(row);
-    }
-  };
-
-  const tableAddNewHandler = () => {
+  const tableAddNewHandler = useCallback(() => {
     onItemClick(ACTIONS.ADD);
-  };
+  }, [onItemClick]);
 
-  const tableCopyHandler = (selectedRows: any[]) => {
-    selectedRows.forEach((row) => {
-      onCopy(items.find((item) => item._id === row.id));
-    });
-  };
+  const tableCopyHandler = useCallback(
+    (selectedRows: any[]) => {
+      selectedRows.forEach((row) => {
+        onCopy(items.find((item) => item._id === row.id));
+      });
+    },
+    [items, onCopy]
+  );
 
-  const tableDeleteHandler = (selectedRows: any[]) => {
-    const deleteRows = selectedRows.filter(
-      (row) => tableRows.find((item) => item._id === row.id)?.default !== true
-    );
-    if (!deleteOpen) {
-      setDeleteOpen(true);
-      setDeleteRows(deleteRows);
-    } else {
-      onDelete(deleteRows.map((row) => row.id));
-      setDeleteOpen(false);
-    }
-  };
+  const tableDeleteHandler = useCallback(
+    (selectedRows: any[]) => {
+      const deleteRows = selectedRows.filter(
+        (row) => tableRows.find((item) => item._id === row.id)?.default !== true
+      );
+      if (!deleteOpen) {
+        setDeleteOpen(true);
+        setDeleteRows(deleteRows);
+      } else {
+        onDelete(deleteRows.map((row) => row.id));
+        setDeleteOpen(false);
+      }
+    },
+    [deleteOpen, tableRows, onDelete]
+  );
 
-  const tableDeleteClear = () => {
+  const tableDeleteClear = useCallback(() => {
     setDeleteOpen(false);
     setDeleteRows([]);
-  };
+  }, []);
 
-  const tableRowSortHandler = (index: number) => {
-    const dir = [
-      ...direction.map((d, i) => (i === index && direction[i] === "DESC" ? "ASC" : "DESC")),
-    ];
+  const tableRowSortHandler = useCallback(
+    (index: number) => {
+      const dir = [
+        ...direction.map((d, i) => (i === index && direction[i] === "DESC" ? "ASC" : "DESC")),
+      ];
 
-    setDirection(dir);
+      setDirection(dir);
 
-    const params = new URLSearchParams(searchParams);
+      const params = new URLSearchParams(searchParams);
 
-    params.set("sort", headers[index].key);
-    params.set("sortDir", String(SORT[dir[index]]));
-    replace(`${pathname}?${params.toString()}`);
-  };
+      params.set("sort", headers[index].key);
+      params.set("sortDir", String(SORT[dir[index]]));
+      replace(`${pathname}?${params.toString()}`);
+    },
+    [direction, headers, searchParams, pathname, replace]
+  );
 
-  const tableRowSortableHandler = (index: number) => {
-    setSortable(sortable.map((dir, i) => (i === index ? !dir : dir)));
-  };
+  const tableRowSortableHandler = useCallback(
+    (index: number) => {
+      setSortable(sortable.map((dir, i) => (i === index ? !dir : dir)));
+    },
+    [sortable]
+  );
 
-  const tableBatchActionsTranslate = (
-    id: string,
-    { totalSelected, totalCount } = {
-      totalSelected: 0,
-      totalCount: 0,
-    }
-  ) => {
-    if (id === "carbon.table.batch.cancel") {
-      return translations.cancel;
-    }
-    if (id === "carbon.table.batch.selectAll") {
-      if (breakpoint("mobile")) {
-        return `${
-          allSelected ? translations.unselectAllShort : translations.selectAllShort
-        } (${totalCount})`;
+  const tableBatchActionsTranslate = useCallback(
+    (
+      id: string,
+      { totalSelected, totalCount } = {
+        totalSelected: 0,
+        totalCount: 0,
       }
-      return `${allSelected ? translations.unselectAll : translations.selectAll} (${totalCount})`;
-    }
-    if (id === "carbon.table.batch.selectNone") {
-      return translations.selectNone;
-    }
-    if (id === "carbon.table.batch.item.selected") {
-      if (breakpoint("mobile")) {
-        return `${totalSelected} ${translations.selectedsShort.toLocaleLowerCase()}`;
+    ) => {
+      if (id === "carbon.table.batch.cancel") {
+        return translations.cancel;
       }
-      return `${totalSelected} ${translations.selected.toLocaleLowerCase()}`;
-    }
-    if (id === "carbon.table.batch.items.selected") {
-      if (breakpoint("mobile")) {
-        return `${totalSelected} ${translations.selectedsShort.toLocaleLowerCase()}`;
-      }
-      return `${totalSelected} ${translations.selecteds.toLocaleLowerCase()}`;
-    }
-    if (id === "carbon.table.batch.actions") {
-      return translations.actions;
-    }
-    if (id === "carbon.table.batch.action") {
-      return translations.action;
-    }
-    if (id === "carbon.table.batch.clear") {
-      return translations.clear;
-    }
-    if (id === "carbon.table.batch.save") {
-      return translations.save;
-    }
-    return id;
-  };
-
-  const tableSearchTranslate = (id: string) => {
-    if (id === "carbon.table.toolbar.search.placeholder") {
-      return translations.filter;
-    }
-    if (id === "carbon.table.toolbar.search.label") {
-      return translations.search;
-    }
-
-    return id;
-  };
-
-  const onTableSearch = (value: string) => {
-    const params = new URLSearchParams(searchParams);
-
-    setIsLoading(true);
-
-    if (value) {
-      params.set("query", value);
-      params.set("page", "0");
-    } else {
-      params.delete("query");
-      params.delete("page");
-    }
-
-    replace(`${pathname}?${params.toString()}`);
-  };
-
-  const onSelectAllHandler = (rows: DataTableRow<any[]>[], selectRow: Function) => {
-    if (!allSelected) {
-      rows.forEach((row) => {
-        if (!row.isSelected) {
-          selectRow(row.id);
+      if (id === "carbon.table.batch.selectAll") {
+        if (breakpoint("mobile")) {
+          return `${
+            allSelected ? translations.unselectAllShort : translations.selectAllShort
+          } (${totalCount})`;
         }
-      });
-      setLastSelectedIndex(rows.length - 1);
-      setAllSelected(true);
-    } else {
-      rows.forEach((row) => {
-        selectRow(row.id);
-      });
-      setLastSelectedIndex(null);
-      setAllSelected(false);
-    }
-  };
+        return `${allSelected ? translations.unselectAll : translations.selectAll} (${totalCount})`;
+      }
+      if (id === "carbon.table.batch.selectNone") {
+        return translations.selectNone;
+      }
+      if (id === "carbon.table.batch.item.selected") {
+        if (breakpoint("mobile")) {
+          return `${totalSelected} ${translations.selectedsShort.toLocaleLowerCase()}`;
+        }
+        return `${totalSelected} ${translations.selected.toLocaleLowerCase()}`;
+      }
+      if (id === "carbon.table.batch.items.selected") {
+        if (breakpoint("mobile")) {
+          return `${totalSelected} ${translations.selectedsShort.toLocaleLowerCase()}`;
+        }
+        return `${totalSelected} ${translations.selecteds.toLocaleLowerCase()}`;
+      }
+      if (id === "carbon.table.batch.actions") {
+        return translations.actions;
+      }
+      if (id === "carbon.table.batch.action") {
+        return translations.action;
+      }
+      if (id === "carbon.table.batch.clear") {
+        return translations.clear;
+      }
+      if (id === "carbon.table.batch.save") {
+        return translations.save;
+      }
+      return id;
+    },
+    [translations, allSelected]
+  );
 
-  const onLimitChangeHandler = ({ selectedItem }: any) => {
-    const params = new URLSearchParams(searchParams);
+  const tableSearchTranslate = useCallback(
+    (id: string) => {
+      if (id === "carbon.table.toolbar.search.placeholder") {
+        return translations.filter;
+      }
+      if (id === "carbon.table.toolbar.search.label") {
+        return translations.search;
+      }
 
-    params.delete("page");
-    params.set("limit", String(selectedItem?.id));
+      return id;
+    },
+    [translations]
+  );
 
-    setSelectedLimit(limitItems.find((item) => item.id === selectedItem?.id));
-    setIsLoading(true);
-    setIsWaiting(true);
+  const onTableSearch = useCallback(
+    (value: string) => {
+      const params = new URLSearchParams(searchParams);
 
-    replace(`${pathname}?${params.toString()}`);
-  };
+      setIsLoading(true);
 
-  const onPaginationChangeHandler = (page: number) => {
-    setIsLoading(true);
-    setIsWaiting(true);
-    const params = new URLSearchParams(searchParams);
+      if (value) {
+        params.set("query", value);
+        params.delete("page");
+        setCurrentPage(0);
+      } else {
+        params.delete("query");
+        params.delete("page");
+        setCurrentPage(0);
+      }
 
-    params.set("page", String(page));
+      replace(`${pathname}?${params.toString()}`);
+    },
+    [searchParams, pathname, replace, setIsLoading]
+  );
 
-    replace(`${pathname}?${params.toString()}`);
-  };
+  const onSelectAllHandler = useCallback(
+    (rows: DataTableRow<any[]>[], selectRow: Function) => {
+      if (!allSelected) {
+        rows.forEach((row) => {
+          if (!row.isSelected) {
+            selectRow(row.id);
+          }
+        });
+        setLastSelectedIndex(rows.length - 1);
+        setAllSelected(true);
+      } else {
+        rows.forEach((row) => {
+          selectRow(row.id);
+        });
+        setLastSelectedIndex(null);
+        setAllSelected(false);
+      }
+    },
+    [allSelected]
+  );
+
+  const onLimitChangeHandler = useCallback(
+    ({ selectedItem }: any) => {
+      const params = new URLSearchParams(searchParams);
+
+      params.set("limit", String(selectedItem?.id));
+      params.delete("page");
+      setCurrentPage(0);
+
+      setSelectedLimit(limitItems.find((item) => item.id === selectedItem?.id));
+      setIsLoading(true);
+      setIsWaiting(true);
+
+      replace(`${pathname}?${params.toString()}`);
+    },
+    [limitItems, searchParams, pathname, replace, setIsLoading, setIsWaiting]
+  );
+
+  const onPaginationChangeHandler = useCallback(
+    (page: number) => {
+      setIsLoading(true);
+      setIsWaiting(true);
+      const params = new URLSearchParams(searchParams);
+
+      params.set("page", String(page));
+      setCurrentPage(page);
+
+      replace(`${pathname}?${params.toString()}`);
+    },
+    [searchParams, pathname, replace, setIsLoading, setIsWaiting]
+  );
+
+  const resizeHandler = useCallback(() => {
+    setFitTable(checkRowsForWindowSize(tableRows));
+    const max = Math.floor(window.innerWidth / 48 - 5);
+    setItemsShown(max);
+  }, [checkRowsForWindowSize, tableRows]);
+
+  const getFilters = useCallback(
+    () =>
+      Object.keys(formState).reduce(
+        (acc: Record<string, any>, key: string) => {
+          const filter = filters[key];
+          const value = formState[key];
+          acc.idle = filter?.idle || acc.idle;
+
+          if (value !== null && value !== undefined && value !== "") {
+            acc.useFilters[key] = value;
+          }
+
+          return acc;
+        },
+        { idle: 0, useFilters: {} }
+      ),
+    [formState, filters]
+  );
+
+  const processFilters = useCallback(() => {
+    const { idle, useFilters } = getFilters();
+    clearTimeout(filterTimeout);
+    filterTimeout = setTimeout(async () => {
+      const params = new URLSearchParams(searchParams);
+      // Fetch only once
+      if (Object.keys(useFilters).length > 0) {
+        const data = await onFiltering(useFilters);
+        params.set("filter", data);
+      } else {
+        params.delete("filter");
+      }
+
+      params.delete("page");
+      setCurrentPage(0);
+
+      let newPath = pathname;
+
+      if (params.size > 0) {
+        newPath += `?${params.toString()}`;
+      }
+
+      replace(newPath);
+      setIsLoading(false);
+      setIsWaiting(false);
+    }, idle);
+  }, [searchParams, pathname, replace, onFiltering, setIsLoading, setIsWaiting, getFilters]);
+
+  // Track if resize effect has run to avoid duplicate resize dispatches
+  const hasInitialResizeRun = useRef(false);
 
   useEffect(() => {
-    const resizeHandler = () => {
-      setFitTable(checkRowsForWindowSize(tableRows));
-      const max = Math.floor(window.innerWidth / 48 - 5);
-      setItemsShown(max);
-    };
-
     window.addEventListener("resize", resizeHandler);
 
-    clearTimeout(timeout);
-    timeout = setTimeout(() => {
-      window.dispatchEvent(new Event("resize"));
-    }, 10);
+    // Only trigger initial resize once
+    if (!hasInitialResizeRun.current) {
+      hasInitialResizeRun.current = true;
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        window.dispatchEvent(new Event("resize"));
+      }, 10);
+    }
 
     return () => {
       window.removeEventListener("resize", resizeHandler);
     };
-  }, [tableRef, tableRows]);
-  const classes = getClasses({
-    "table-wrapper": true,
-    "with-title": !!translations.title,
-    "max-top": fitTable,
-  });
+  }, [resizeHandler]);
 
-  const limitItems = [10, 25, 50, 100, 200, 500].map((item) => ({
-    id: item,
-    text: item,
-  }));
+  useEffect(() => {
+    if (!fromFilter && Object.keys(formState).length > 0) {
+      setFromFilter(true);
+    } else {
+      if (fromFilter) {
+        // We are gonna control idle state manually
+        processFilters();
+      }
+    }
+  }, [formState, fromFilter, setFiltering]);
 
-  const [lastSelectedIndex, setLastSelectedIndex] = useState<number | null>(null);
-  const [selectedLimit, setSelectedLimit] = useState(limitItems.find((item) => item.id === limit));
+  const classes = useMemo(
+    () =>
+      getClasses({
+        "table-wrapper": true,
+        "with-title": !!translations.title,
+        "max-top": fitTable,
+      }),
+    [translations.title, fitTable]
+  );
 
-  const defaultCell = headers.find((header) => header.default);
+  const handleFilterRemove = useCallback((field: any, value: any) => {
+    setClearField(field);
+    return handleFilter(field, null);
+  }, []);
 
-  const renderFilters = () => {
+  useEffect(() => {
+    if (tableRef?.current && !fromFilter) {
+      const filterValues = Object.keys(filters).reduce((acc: Record<string, any>, filterName) => {
+        if (!formState[filterName] && filters[filterName]?.value) {
+          acc[filterName] = filters[filterName].value;
+        }
+        return acc;
+      }, {});
+
+      if (Object.keys(filterValues).length > 0) {
+        setFormState((prevState) => ({
+          ...prevState,
+          ...filterValues,
+        }));
+      }
+    }
+  }, [tableRef, filters, formState, fromFilter]);
+
+  const handleFilter = useCallback(
+    (field: any, value: any) => {
+      const useField = field instanceof Array ? field[0] : field;
+
+      if (clearField && useField !== clearField) {
+        return;
+      }
+
+      setIsLoading(true);
+      setIsWaiting(true);
+
+      const currentState = {
+        ...formState,
+      };
+
+      delete currentState[useField];
+      if (value) {
+        setFormState((prevState) => {
+          return {
+            ...prevState,
+            [useField]: value,
+          };
+        });
+      } else {
+        setFormState((prevState) => ({
+          ...currentState,
+        }));
+      }
+    },
+    [clearField, formState, setIsLoading, setIsWaiting]
+  );
+
+  const handleFilterInternalState = useCallback(
+    (field: string, value: any) => {
+      onInternalStateHandler(field, value);
+      handleFilter(field, null);
+    },
+    [onInternalStateHandler, handleFilter]
+  );
+
+  const handleFilterFormState = useCallback(
+    (field: string, value: any) => {
+      setFormState((prevState) => {
+        const filterFormState = { ...prevState };
+        delete filterFormState[field];
+
+        if (value) {
+          filterFormState[field] = value;
+        } else {
+          filterFormState[field] = null;
+
+          if (fields?.search?.[field]?.deletes?.length > 0) {
+            fields.search[field].deletes.forEach((deleteField: string) => {
+              filterFormState[deleteField] = null;
+            });
+          }
+        }
+        return filterFormState;
+      });
+    },
+    [fields]
+  );
+
+  const renderFilters = useCallback(() => {
     const filterFields = Object.keys(filters);
 
     const onCloseHandler = () => {
@@ -540,107 +746,12 @@ export default function ListTable({
             ) : null}
             <>
               {filterFields.map((filterField: string, index: number) => {
-                const handleFilterRemove = (field: any, value: any) => {
-                  setClearField(field);
-                  return handleFilter(field, null);
-                };
-                const handleFilter = (field: any, value: any) => {
-                  const useField = field instanceof Array ? field[0] : field;
-
-                  if (clearField && useField !== clearField) {
-                    return;
-                  }
-
-                  setIsLoading(true);
-                  setIsWaiting(true);
-                  const params = new URLSearchParams(searchParams);
-
-                  params.delete("page");
-
-                  let isClear = false;
-
-                  if (value instanceof Array) {
-                    if (value.length > 0) {
-                      params.set(`filters[${useField}]`, value.join(","));
-                    } else {
-                      params.delete(`filters[${useField}]`);
-                      if (fields?.search?.[useField]?.deletes?.length > 0) {
-                        fields.search[useField].deletes.forEach((deleteField: string) => {
-                          params.delete(`filters[${deleteField}]`);
-                        });
-                      }
-                    }
-                    isClear = true;
-                  } else if (value) {
-                    params.set(`filters[${useField}]`, value);
-                  } else {
-                    params.delete(`filters[${useField}]`);
-
-                    if (fields?.search?.[useField]?.deletes?.length > 0) {
-                      fields.search[useField].deletes.forEach((deleteField: string) => {
-                        params.delete(`filters[${deleteField}]`);
-                      });
-                    }
-                    isClear = true;
-                  }
-
-                  let newPath = pathname;
-
-                  if (params.size > 0) {
-                    newPath += `?${params.toString()}`;
-                  }
-
-                  replace(newPath);
-
-                  const currentState = {
-                    ...formState,
-                  };
-
-                  delete currentState[useField];
-
-                  if (value) {
-                    setFormState((prevState) => ({
-                      ...prevState,
-                      [useField]: value,
-                    }));
-                  } else {
-                    setFormState((prevState) => ({
-                      ...currentState,
-                    }));
-                  }
-                };
-
-                const handleFilterInternalState = (field: string, value: any) => {
-                  onInternalStateHandler(field, value);
-                  handleFilter(field, null);
-                };
-
-                const handleFilterFormState = (field: string, value: any) => {
-                  setFormState((prevState) => {
-                    const filterFormState = { ...prevState };
-                    delete filterFormState[field];
-
-                    if (value) {
-                      filterFormState[field] = value;
-                    } else {
-                      filterFormState[field] = null;
-
-                      if (fields?.search?.[field]?.deletes?.length > 0) {
-                        fields.search[field].deletes.forEach((deleteField: string) => {
-                          filterFormState[deleteField] = null;
-                        });
-                      }
-                    }
-
-                    return filterFormState;
-                  });
-                };
-
                 return renderField({
                   ...filters[filterField],
                   key: "filter-" + index,
                   ready: !isLoading,
                   translations,
+                  filters,
                   field: filterField,
                   formState,
                   internalState,
@@ -657,37 +768,65 @@ export default function ListTable({
     }
 
     return null;
-  };
+  }, [
+    filters,
+    filtersOpen,
+    filtering,
+    translations,
+    fields,
+    formState,
+    internalState,
+    isLoading,
+    handleFilterFormState,
+    handleFilterInternalState,
+    handleFilter,
+    handleFilterRemove,
+  ]);
 
-  const renderActions = () => {
+  const renderActions = useCallback(() => {
     return null;
-  };
+  }, []);
 
-  const renderBatchActions = (batchActionProps: any, selectedRows: any) => {
-    if (batchActions) {
-      return Object.keys(batchActions).map((action, index) => (
-        <Button
-          key={`batch-action-${index}`}
-          tabIndex={batchActionProps.shouldShowBatchActions ? -1 : 0}
-          onClick={() => batchActions[action].onClick(selectedRows.map((row: any) => row.id))}
-          renderIcon={batchActions[action].icon}
-          kind={batchActions[action].kind || "primary"}
-        >
-          {batchActions[action].translations.title}
-        </Button>
-      ));
+  const renderBatchActions = useCallback(
+    (batchActionProps: any, selectedRows: any) => {
+      if (batchActions) {
+        return Object.keys(batchActions).map((action, index) => (
+          <Button
+            key={`batch-action-${index}`}
+            tabIndex={batchActionProps.shouldShowBatchActions ? -1 : 0}
+            onClick={() => batchActions[action].onClick(selectedRows.map((row: any) => row.id))}
+            renderIcon={batchActions[action].icon}
+            kind={batchActions[action].kind || "primary"}
+          >
+            {batchActions[action].translations.title}
+          </Button>
+        ));
+      }
+      return null;
+    },
+    [batchActions]
+  );
+
+  const handleSearchChange = useCallback(
+    (evt: any) => {
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+      }
+      debounceRef.current = setTimeout(() => {
+        onTableSearch(evt.target.value);
+      }, 300);
+    },
+    [onTableSearch]
+  );
+
+  const handleEscapeKey = useCallback((ev: React.KeyboardEvent) => {
+    if (ev.key === "Escape") {
+      setFiltersOpen(false);
     }
-    return null;
-  };
-
-  let debounce: any = null;
+  }, []);
 
   return (
-    <div
-      className={classes}
-      ref={tableRef}
-      onKeyDown={(ev) => ev.key === "Escape" && setFiltersOpen(false)}
-    >
+    <div className={classes} ref={tableRef} onKeyDown={handleEscapeKey}>
       <DataTable headers={headers} rows={tableRows} stickyHeader={true}>
         {({
           rows,
@@ -718,12 +857,7 @@ export default function ListTable({
                   <TableToolbarSearch
                     tabIndex={batchActionProps.shouldShowBatchActions ? -1 : 0}
                     translateWithId={tableSearchTranslate}
-                    onChange={(evt: any) => {
-                      clearTimeout(debounce);
-                      debounce = setTimeout(() => {
-                        onTableSearch(evt.target.value);
-                      }, 300);
-                    }}
+                    onChange={handleSearchChange}
                   />
                   {renderFilters()}
                   {renderActions()}
@@ -864,6 +998,7 @@ export default function ListTable({
         <PaginationNav
           itemsShown={itemsShown}
           totalItems={pages}
+          page={currentPage}
           size={breakpoint("mobile") ? "sm" : "md"}
           onChange={onPaginationChangeHandler}
         />
@@ -902,3 +1037,5 @@ export default function ListTable({
     </div>
   );
 }
+
+export default React.memo(ListTable);

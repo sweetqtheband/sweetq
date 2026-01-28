@@ -7,6 +7,7 @@ export interface Field {
   translations: Record<string, any>;
   fields: Record<string, any>;
   files: Record<string, any>;
+  filters?: Record<string, any>;
   methods: Record<string, any>;
   formState: Record<string, any>;
   internalState: Record<string, any>;

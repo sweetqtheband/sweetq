@@ -18,29 +18,31 @@ import { messagesSvc } from "./messages";
 import { configSvc } from "./config";
 import { routesSvc } from "./routes";
 import { camelCase } from "@/app/utils";
+import { filtersSvc } from "./filters";
 type FactoryType = {
   [key: string]: (collection: Collection<Document>) => any;
 };
 
 let factory: FactoryType = {
-  tracks: tracksSvc,
-  gigs: gigsSvc,
   bands: bandsSvc,
-  news: newsSvc,
+  cache: cacheSvc,
+  cities: citiesSvc,
+  config: configSvc,
+  countries: countriesSvc,
+  filters: filtersSvc,
   followers: followersSvc,
   followings: followingsSvc,
-  cache: cacheSvc,
-  countries: countriesSvc,
-  states: statesSvc,
-  cities: citiesSvc,
-  tags: tagsSvc,
+  gigs: gigsSvc,
   instagram: instagramSvc,
-  users: usersSvc,
-  userProfiles: userProfilesSvc,
   layouts: layoutsSvc,
   messages: messagesSvc,
-  config: configSvc,
+  news: newsSvc,
   routes: routesSvc,
+  states: statesSvc,
+  tags: tagsSvc,
+  tracks: tracksSvc,
+  userProfiles: userProfilesSvc,
+  users: usersSvc,
 };
 
 export const FactorySvc = (collectionName: string, collection: Collection<Document>) =>

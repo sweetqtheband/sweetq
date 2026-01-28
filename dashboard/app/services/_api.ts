@@ -43,27 +43,12 @@ export const getAll = async (
     const sort = searchParams.sort !== undefined ? String(searchParams.sort) : "";
     const sortDir = searchParams.sortDir !== undefined ? String(searchParams.sortDir) : "";
     const cursor = limit * currentPage;
-    const filters: Record<string, any> = Object.entries(searchParams).reduce(
-      (acc, [key, value]) => {
-        const match = key.match(/^filters\[(.+)\]$/); // Detectar claves como 'filters[...]'
-        if (match) {
-          const filterKey = match[1]; // Extraer el nombre del filtro (e.g., "treatment")
-          acc[filterKey] = String(value).split(","); // Añadirlo al objeto `filters`
-        } else if (key === "filters") {
-          acc = {
-            ...acc,
-            ...searchParams[key],
-          };
-        }
-        return acc;
-      },
-      {} as Record<string, any> // Inicializar como objeto vacío
-    );
+    const filter = searchParams.filter !== undefined ? searchParams.filter : null;
 
     const params: any = {
       limit,
       cursor,
-      filters: filters || {},
+      filter,
     };
 
     if (query && query !== "null") {

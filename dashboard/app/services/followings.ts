@@ -1,6 +1,6 @@
 import axios from "./_db";
 import { BaseList } from "./_list";
-import { FIELD_DEFAULTS, FIELD_TYPES, RENDER_TYPES, TREATMENTS } from "../constants";
+import { FIELD_DEFAULTS, FIELD_TYPES, FILTER_IDLE, RENDER_TYPES, TREATMENTS } from "../constants";
 import { Countries } from "./countries";
 import { States } from "./states";
 import { Cities } from "./cities";
@@ -9,7 +9,7 @@ import { Tags } from "./tags";
 import { Edit, SendAlt } from "@carbon/react/icons";
 import { client as InstagramMessagesClient } from "./instagramMessages";
 import { instagram } from "./instagram";
-import { get } from "http";
+import { Filters } from "./filters";
 
 export const client = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URI}/followings`,
@@ -173,6 +173,9 @@ const getFields = async ({ searchParams, i18n }: Readonly<{ searchParams: any; i
 
 // Get filters function
 const getFilters = async ({ searchParams, i18n }: Readonly<{ searchParams: any; i18n: any }>) => {
+  const values = searchParams?.filter
+    ? ((await Filters.getAll(searchParams)) as Record<string, any>)?.data
+    : {};
   return {
     treatment: {
       translations: {
@@ -197,6 +200,7 @@ const getFilters = async ({ searchParams, i18n }: Readonly<{ searchParams: any; 
         },
       },
       type: FIELD_TYPES.CHECKBOX,
+      value: values?.treatment || null,
     },
     country: {
       translations: {
@@ -213,6 +217,7 @@ const getFilters = async ({ searchParams, i18n }: Readonly<{ searchParams: any; 
         },
       },
       type: FIELD_TYPES.FILTER_COUNTRY,
+      value: values?.country || FIELD_DEFAULTS.COUNTRY,
     },
     state: {
       translations: {
@@ -224,9 +229,7 @@ const getFilters = async ({ searchParams, i18n }: Readonly<{ searchParams: any; 
         options: {
           state: await States.getOptions({
             locale: i18n.locale,
-            query: searchParams?.["filters[country]"]
-              ? { country_id: searchParams["filters[country]"] }
-              : null,
+            query: { country_id: values?.country ? values.country : FIELD_DEFAULTS.COUNTRY },
           }),
         },
         search: {
@@ -234,6 +237,7 @@ const getFilters = async ({ searchParams, i18n }: Readonly<{ searchParams: any; 
         },
       },
       type: FIELD_TYPES.FILTER_STATE,
+      value: values?.state || null,
     },
     city: {
       translations: {
@@ -245,9 +249,7 @@ const getFilters = async ({ searchParams, i18n }: Readonly<{ searchParams: any; 
         options: {
           city: await Cities.getOptions({
             locale: i18n.locale,
-            query: searchParams?.["filters[state]"]
-              ? { state_id: searchParams["filters[state]"] }
-              : null,
+            query: values?.state ? { state_id: values.state } : null,
           }),
         },
         search: {
@@ -255,6 +257,7 @@ const getFilters = async ({ searchParams, i18n }: Readonly<{ searchParams: any; 
         },
       },
       type: FIELD_TYPES.FILTER_CITY,
+      value: values?.city || null,
     },
     show: {
       translations: {
@@ -273,7 +276,7 @@ const getFilters = async ({ searchParams, i18n }: Readonly<{ searchParams: any; 
           },
         },
       },
-      value: "0",
+      value: values?.show || "0",
       type: FIELD_TYPES.SELECT,
     },
     tags: {
@@ -286,13 +289,13 @@ const getFilters = async ({ searchParams, i18n }: Readonly<{ searchParams: any; 
         options: {
           tags: await Tags.getOptions({
             locale: i18n.locale,
-            filters: searchParams?.["filters[tags]"]
-              ? { tags: searchParams["filters[tags]"] }
-              : null,
+            filters: values?.tags ? { tags: values.tags } : null,
           }),
         },
       },
       type: FIELD_TYPES.MULTISELECT,
+      idle: FILTER_IDLE,
+      value: values?.tags || null,
     },
     withoutTags: {
       translations: {
@@ -304,13 +307,13 @@ const getFilters = async ({ searchParams, i18n }: Readonly<{ searchParams: any; 
         options: {
           withoutTags: await Tags.getOptions({
             locale: i18n.locale,
-            filters: searchParams?.["filters[withoutTags]"]
-              ? { tags: searchParams["filters[withoutTags]"] }
-              : null,
+            filters: values ? { tags: values.withoutTags } : null,
           }),
         },
       },
       type: FIELD_TYPES.MULTISELECT,
+      idle: FILTER_IDLE,
+      value: values?.withoutTags || null,
     },
   };
 };
@@ -321,6 +324,7 @@ const getMethods = (
   translations?: any,
   batchEdit: boolean = false
 ): Record<string, any> => ({
+  onFilterSave: Filters.getMethods(router).onSave,
   onSave: async (data: any, files: any, ids: string[]) => {
     if (!data.country) {
       data.country = FIELD_DEFAULTS.COUNTRY;
