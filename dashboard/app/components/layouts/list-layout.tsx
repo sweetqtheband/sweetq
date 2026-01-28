@@ -132,6 +132,35 @@ function ListLayoutComponent({
     [onItemSelect]
   );
 
+  const parseItem = (prevItems: any, newItems: any, item: Record<string, any>) => {
+    const index = prevItems.findIndex((i: Record<string, any>) => i.id === item.id);
+
+    if (index >= 0) {
+      newItems[index] = {
+        ...prevItems[index],
+        ...Object.keys(item).reduce((acc: Record<string, any>, key) => {
+          if (filters?.[key]?.fields?.options?.[key]?.options) {
+            const opts = filters[key].fields.options[key].options;
+            if (Array.isArray(item[key])) {
+              acc[key] = item[key].map(
+                (val) => opts.find((o: any) => String(o.id) === String(val))?.value || val
+              );
+            } else {
+              acc[key] =
+                opts.find((o: any) => String(o.id) === String(item[key]))?.value || item[key];
+            }
+          } else {
+            acc[key] = item[key];
+          }
+          return acc;
+        }, {}),
+      };
+    } else {
+      newItems.unshift(item);
+    }
+
+    return newItems;
+  };
   const onSaveHandler = useCallback(
     async (data: any, files: any, idsList: string[] | null) => {
       setIsLoadingHandler(true);
@@ -140,31 +169,15 @@ function ListLayoutComponent({
       if (response) {
         setParsedItems((prevItems) => {
           const newItems = [...prevItems];
-          const index = prevItems.findIndex((i) => i.id === response?.data.id);
 
-          if (index >= 0) {
-            newItems[index] = {
-              ...prevItems[index],
-              ...Object.keys(response.data).reduce((acc: Record<string, any>, key) => {
-                if (filters?.[key]?.fields?.options?.[key]?.options) {
-                  const opts = filters[key].fields.options[key].options;
-                  if (Array.isArray(response.data[key])) {
-                    acc[key] = response.data[key].map(
-                      (val) => opts.find((o: any) => String(o.id) === String(val))?.value || val
-                    );
-                  } else {
-                    acc[key] =
-                      opts.find((o: any) => String(o.id) === String(response.data[key]))?.value ||
-                      response.data[key];
-                  }
-                } else {
-                  acc[key] = response.data[key];
-                }
-                return acc;
-              }, {}),
-            };
+          if (response?.data instanceof Array) {
+            // Batch update
+            response.data.forEach((updatedItem: any) => {
+              parseItem(prevItems, newItems, updatedItem);
+            });
           } else {
-            newItems.unshift(data);
+            // Single update
+            parseItem(prevItems, newItems, response.data);
           }
 
           return newItems;
