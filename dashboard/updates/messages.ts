@@ -18,6 +18,7 @@ const elements = {
   buttonUserMenuSendMessage: "div button:nth-child(6)",
   inputMessage: 'div[aria-label="Mensaje"][contenteditable="true"]',
   buttonSendMessage: '[role="navigation"] + div [role="button"]',
+  buttonSendMessageAlt: '[aria-label="Enviar"]',
 };
 
 const end = async () => {
@@ -136,6 +137,13 @@ const sendInstagramMessage = async ({ obj, browser, page }: InstagramMessage) =>
         await page.type(elements.inputMessage, char, { delay: 10 });
       }
     }
+    const buttonSendMessageAlt = await page.$(elements.buttonSendMessageAlt);
+
+    if (buttonSendMessageAlt) {
+      await buttonSendMessageAlt.click();
+      return true;
+    }
+
     const buttons = (await page.$$(elements.buttonSendMessage)) as any;
     const targetButton = await (async () => {
       for (const button of buttons) {
