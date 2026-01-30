@@ -9,14 +9,14 @@
   {
     "button": "primary",
     "icon": "icon-apple-music",
-    "link": "https://music.apple.com/ae/album/sácame-a-bailar-single/1854719033",
+    "link": "https://music.apple.com/ae/album/que-solo-nos-quede-ganar/1868468940",
     "text": "links.appleMusic",
     "type": "appleMusic"
   },
   {
     "button": "primary",
     "icon": "icon-youtube-music",
-    "link": "https://music.youtube.com/playlist?list=OLAK5uy_kbZO9Ekb8gI-jwwCHZjiVKLzRDkCAax3E",
+    "link": "https://music.youtube.com/playlist?list=OLAK5uy_m5kKTTcdkLim0GuCdftbKsXb41QKv27uY",
     "text": "links.youtubeMusic",
     "type": "youtubeMusic"
   },

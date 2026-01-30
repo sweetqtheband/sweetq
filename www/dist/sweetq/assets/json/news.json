@@ -1,10 +1,10 @@
 [
   {
-    "button": "presave.spotify",
+    "button": "info.spotify",
     "spotifyHref": "https://open.spotify.com/intl-es/album/0xxOGrabwMn47FfAPEWV1j",
-    "subtitle": "presave.subtitle",
-    "text": "presave.text",
-    "title": "presave.title",
+    "subtitle": "info.subtitle",
+    "text": "info.text",
+    "title": "info.title",
     "type": "info cover quesolonosquedeganar"
   },
   {

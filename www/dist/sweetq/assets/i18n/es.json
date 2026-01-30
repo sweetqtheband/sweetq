@@ -70,8 +70,8 @@
   "info": {
     "button": "Escuchar en Spotify",
     "subtitle": "Ya disponible",
-    "text": "No te pierdas <span class='bold'>'Sácame a bailar'</span>, un tema que invita a olvidarse de los problemas y te hará dejar atrás las inseguridades. Ya puedes escucharlo en todas las plataformas. ¡Déjate llevar y entrégate sin miedo al vértigo de lo nuevo!",
-    "title": "Sácame a bailar"
+    "text": "¡Nuestro primer álbum de estudio <span class='bold'>'Que solo nos quede ganar'</span> ya está disponible! 10 temas que reflejan nuestra forma de ser, sentir y ver la vida, en un viaje musical que te permitirá descubrir nuestro mundo interno con canciones que alternan entre la euforia y la inseguridad, las noches largas y la resaca emocional, las ganas de lanzarse y el miedo a no encajar. ¡Escúchalo en tu plataforma favorita!",
+    "title": "Que solo nos quede ganar"
   },
   "links": {
     "appleAvailable": "Link Apple Music (disponible {{date}})",
@@ -88,7 +88,7 @@
     },
     "spotify": "Spotify",
     "spotifyAvailable": "Link Spotify (disponible {{date}})",
-    "subtitle": "'Sácame a bailar' nuevo single",
+    "subtitle": "¡Escucha nuestro nuevo álbum 'Que solo nos quede ganar'!",
     "title": "Sweet Q",
     "whatsapp": "Únete al canal de WhatsApp",
     "youtube": {
@@ -126,7 +126,7 @@
     "title": "Que solo nos quede ganar"
   },
   "pressKit": {
-    "button": "Descargar <span class='peso'>(4.3MB)</span>",
+    "button": "Descargar <span class='peso'>(4.1MB)</span>",
     "download": "Descargar kit de prensa",
     "text": "Aquí puedes descargar nuestro <span class='bold'>kit de prensa</span>",
     "title": "Kit de prensa"
