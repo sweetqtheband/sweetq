@@ -25,6 +25,7 @@ export default function InstagramView(params: Readonly<any>) {
   const memoHeaders = useDeepMemo(params.headers);
   const memoFields = useDeepMemo(params.fields);
   const memoFilters = useDeepMemo(params.filters);
+  const memoMultiFields = useDeepMemo(params.multiFields);
   const memoTranslations = useDeepMemo(params.translations);
   const memoLayouts = useDeepMemo(params.layouts);
 
@@ -94,6 +95,7 @@ export default function InstagramView(params: Readonly<any>) {
         items={memoItems}
         headers={memoHeaders}
         fields={memoFields}
+        multiFields={memoMultiFields}
         filters={memoFilters}
         translations={memoTranslations}
         total={params.total}

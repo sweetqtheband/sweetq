@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
 
     revalidatePath(`/admin/instagram/followings`);
 
-    return Response.json({ data: [items] }, { ...corsParams, status: HTTP_STATUS_CODES.OK });
+    return Response.json({ data: items }, { ...corsParams, status: HTTP_STATUS_CODES.OK });
   } catch (err: any) {
     return Response.json({ err: err?.message }, { ...corsParams, status: HTTP_STATUS_CODES.ERROR });
   }
