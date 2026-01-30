@@ -1,6 +1,6 @@
 [
   {
-    "button": "info.spotify",
+    "button": "info.button",
     "spotifyHref": "https://open.spotify.com/intl-es/album/0xxOGrabwMn47FfAPEWV1j",
     "subtitle": "info.subtitle",
     "text": "info.text",
