@@ -1160,7 +1160,7 @@ const renderPassword = ({ field, translations, onInputHandler }: Field) => {
 };
 
 const renderContentArea = ({ field, value, translations, formState, onInputHandler }: Field) => {
-  const defaultValue = (formState[field] || value).replace(/\n/g, "<br>");
+  const defaultValue = (formState[field] || value || "").replace(/\n/g, "<br>");
 
   const onContentAreaChangeHandler = (text: string) => {
     if (text.replace(/\n/g, "<br>") !== defaultValue) {

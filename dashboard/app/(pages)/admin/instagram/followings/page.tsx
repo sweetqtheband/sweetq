@@ -39,8 +39,10 @@ export default async function InstagramPage({ searchParams }: Readonly<{ searchP
   const getMessagePanelTranslations = (i18n: any, translations: any) => {
     translations.fields.layout = i18n.t("fields.layout");
     translations.fields.vars = i18n.t("pages.instagram.panel.vars");
-    translations.fields.personalMessage = i18n.t("pages.instagram.panel.personalMessage");
-    translations.fields.collectiveMessage = i18n.t("pages.instagram.panel.collectiveMessage");
+    translations.fields.personalMessage = i18n.t("pages.instagram.messagePanel.personalMessage");
+    translations.fields.collectiveMessage = i18n.t(
+      "pages.instagram.messagePanel.collectiveMessage"
+    );
     translations.vars = i18n.t("pages.instagram.panel.variables", {
       returnObjects: true,
     });

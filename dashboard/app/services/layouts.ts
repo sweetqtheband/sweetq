@@ -18,8 +18,8 @@ const fields = {
   titles: {
     name: "fields.name",
     type: "fields.type",
-    personalMessage: "pages.instagram.panel.personalMessage",
-    collectiveMessage: "pages.instagram.panel.collectiveMessage",
+    personalMessage: "pages.instagram.messagePanel.personalMessage",
+    collectiveMessage: "pages.instagram.messagePanel.collectiveMessage",
   },
   types: Types,
   options: Options,
