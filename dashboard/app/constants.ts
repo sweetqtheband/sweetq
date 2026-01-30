@@ -158,6 +158,7 @@ export const ICON_SIZES = {
 
 export const VARIABLES = [
   { id: "short_name", text: "Nombre corto", replacement: "{{short_name}}" },
+  { id: "cityLabel", text: "Ciudad", replacement: "{{city}}" },
 ];
 
 export const FILTER_IDLE = 1000;

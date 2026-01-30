@@ -64,10 +64,6 @@ export default function ContentArea({
   const [emojiLoaded, setEmojiLoaded] = useState<boolean>(false);
 
   useEffect(() => {
-    onChangeHandler();
-  }, [defaultValue, onChangeHandler]);
-
-  useEffect(() => {
     if (emojiRef?.current && emojiLoaded) {
       let emojiHtml = emojiRef.current.innerHTML;
       setDefaultValue(defaultValue + emojiHtml);
@@ -150,6 +146,7 @@ export default function ContentArea({
             onChange={handleChange}
             onKeyDown={onKeyDownHandler}
             tagName="div"
+            onBlur={onChangeHandler}
           />
         </div>
         <div className="contenteditable--actions">

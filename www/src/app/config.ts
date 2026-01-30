@@ -22,7 +22,7 @@ export default {
     clientSecret: 'OTc5YTM2NTZiNWJmNGY0OGIzNzA2ZDA2OGM2OTY3NTU=',
     nextRelease: null,
     releaseType: 'album',
-    release: '2Nh3GTdEKu4nrKRkVkrXYC'
+    release: '0xxOGrabwMn47FfAPEWV1j',
   },
   appleMusic: {
     nextRealease: null,
