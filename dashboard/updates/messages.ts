@@ -38,6 +38,7 @@ const messagesSvc = FactorySvc("messages", await getCollection("messages"));
 const layoutsSvc = FactorySvc("layouts", await getCollection("layouts"));
 const tagsSvc = FactorySvc("tags", await getCollection("tags"));
 const instagramSvc = FactorySvc("instagram", await getCollection("instagram"));
+const citiesSvc = FactorySvc("cities", await getCollection("cities"));
 
 const sendMessage = async ({ obj }: Message) => instagramSvc.sendMessage(instagramSvc, obj);
 
@@ -210,14 +211,32 @@ const fetchMessages = async (data: any, noRetry: Boolean = false) => {
   const layoutIds = messages.map((message: any) => message._layoutId);
   const layouts = await layoutsSvc.model.find({ _id: { $in: layoutIds } }).toArray();
 
+  // Attach city names to followers
+
   const followerIds = messages.map((message: any) => message._followerId);
+  const cities: Record<string, string>[] = [];
   const followers = (await followersSvc.model.find({ _id: { $in: followerIds } }).toArray()).reduce(
-    (acc: Record<string, any>, follower: any) => ({
-      ...acc,
-      [follower._id]: follower,
-    }),
+    (acc: Record<string, any>, follower: any) => {
+      if (follower.city && cities.indexOf({ state: follower.state, city: follower.city }) === -1) {
+        cities.push({ state_id: String(follower.state), id: String(follower.city) });
+      }
+      return {
+        ...acc,
+        [follower._id]: follower,
+      };
+    },
     {}
   );
+
+  const cityNames = await citiesSvc.model
+    .find({ $or: cities })
+    .toArray()
+    .then((items: any[]) =>
+      items.reduce((acc: Record<string, string>, item: any) => {
+        acc[item.id] = item.name.es;
+        return acc;
+      }, {})
+    );
 
   data.tag = await tagsSvc.findOne({ name: "Contactado" });
   data.followers = followers;
@@ -231,6 +250,7 @@ const fetchMessages = async (data: any, noRetry: Boolean = false) => {
     }),
     {}
   );
+  data.cities = cityNames;
 
   return data;
 };
@@ -270,8 +290,10 @@ const processMessages = async (data: any) => {
           ? layouts[message._layoutId].personalMessage
           : layouts[message._layoutId].collectiveMessage) || "";
 
-      VARIABLES.forEach((variable) => {
-        tpl = tpl.replace(variable.replacement, follower[variable.id]);
+      VARIABLES.forEach((variable: Record<string, any>) => {
+        const replacement =
+          variable.id === "cityLabel" ? data.cities[follower.city] || "" : follower[variable.id];
+        tpl = tpl.replace(variable.replacement, replacement || "");
       });
 
       let sent = false;
