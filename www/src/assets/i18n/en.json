@@ -70,8 +70,8 @@
   "info": {
     "button": "Listen in Spotify",
     "subtitle": "Already available",
-    "text": "Don't miss <span class='bold'>'Sácame a bailar'</span>, a track that invites you to forget your problems and will make you let go of your insecurities. You can now listen to it on all platforms. Let yourself go and embrace the thrill of the new!",
-    "title": "Sácame a bailar"
+    "text": "Our first studio album, <span class='bold'>'Que solo nos quede ganar'</span>, is now available! Ten tracks that reflect who we are, how we feel, and how we see life, in a musical journey that will allow you to discover our inner world with songs that alternate between euphoria and insecurity, long nights and emotional hangovers, the desire to take the plunge and the fear of not fitting in. Listen to it on your favorite platform!",
+    "title": "Que solo nos quede ganar"
   },
   "links": {
     "appleAvailable": "Apple Music link (available {{date}})",
@@ -87,7 +87,7 @@
     },
     "spotify": "Spotify",
     "spotifyAvailable": "Spotify link (available {{date}})",
-    "subtitle": "New single 'No habría sido así'",
+    "subtitle": "Listen to our new album 'Que solo nos quede ganar'!",
     "title": "Sweet Q",
     "whatsapp": "Join our WhatsApp channel",
     "youtube": {
@@ -125,7 +125,7 @@
     "title": "Sácame a bailar"
   },
   "pressKit": {
-    "button": "Download <span class='peso'>(4.3MB)</span>",
+    "button": "Download <span class='peso'>(4.1MB)</span>",
     "download": "Download press kit",
     "text": "Here you can download our <span class='bold'>press kit</span>",
     "title": "Press kit"
