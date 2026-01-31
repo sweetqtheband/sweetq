@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
-import { getList, corsOptions, getQueryFilter, removeQueryFilter } from "@/app/services/api/_db";
+import { getList, corsOptions, getCollection } from "@/app/services/api/_db";
 import { ERRORS, SORT } from "@/app/constants";
+import { FactorySvc } from "@/app/services/api/factory";
 
 const collection = "followers";
 const idx = "created";
@@ -20,24 +21,35 @@ export async function GET(req: NextRequest) {
 
   const queryObj: any = {};
 
-  const filters = [];
+  const filters: { tags?: { $in: any } | { $nin: any }; unfollow?: boolean }[] = [];
+
+  const filtersSvc = FactorySvc("filters", await getCollection("filters"));
+
+  const filterKey = qp.get("filter");
+
+  if (filterKey) {
+    const filterItem = await filtersSvc.findOne({ key: filterKey });
+
+    Object.keys(filterItem.filters).forEach((key) => {
+      switch (key) {
+        case "tags":
+          filters.push({ tags: { $in: filterItem.filters[key] } });
+          break;
+        case "withoutTags":
+          filters.push({ tags: { $nin: filterItem.filters[key] } });
+          break;
+        case "show":
+          if (filterItem.filters[key] !== "2") {
+            filters.push({ unfollow: filterItem.filters[key] === "1" });
+          }
+          break;
+        default:
+          break;
+      }
+    });
+  }
 
   const query = qp.get("query");
-  const filterShow = getQueryFilter(req, "show");
-  if (filterShow !== "2") {
-    filters.push({
-      unfollow: filterShow === "1",
-    });
-  }
-  removeQueryFilter(req, "show");
-
-  const filterWithoutTags = getQueryFilter(req, "withoutTags", true);
-  if (filterWithoutTags) {
-    filters.push({
-      tags: { $nin: filterWithoutTags },
-    });
-  }
-  removeQueryFilter(req, "withoutTags");
 
   if (filters.length > 0) {
     queryObj.$and = filters;
@@ -53,7 +65,6 @@ export async function GET(req: NextRequest) {
       },
     ];
   }
-
   return Response.json(
     await getList({
       req,
