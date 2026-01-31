@@ -1,11 +1,5 @@
 import { NextRequest } from "next/server";
-import {
-  getList,
-  corsOptions,
-  getQueryFilter,
-  removeQueryFilter,
-  getCollection,
-} from "@/app/services/api/_db";
+import { getList, corsOptions, getCollection } from "@/app/services/api/_db";
 import { ERRORS, SORT } from "@/app/constants";
 import { FactorySvc } from "@/app/services/api/factory";
 
