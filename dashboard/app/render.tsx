@@ -910,9 +910,10 @@ const renderStateFilter = ({
   onInputHandler,
 }: Field) => {
   const isLoading =
-    (!filters?.country?.value && Boolean(internalState?.country?.id)) ||
-    ((filters?.country?.value || internalState?.country?.id) &&
-      filters?.country?.value !== internalState?.country?.id);
+    ((!filters?.country?.value && Boolean(internalState?.country?.id)) ||
+      ((filters?.country?.value || internalState?.country?.id) &&
+        filters?.country?.value !== internalState?.country?.id)) &&
+    !internalState?.["removed[country]"];
 
   return stateDropdown({
     className: "cds--text-input__field-outer-wrapper",
@@ -941,9 +942,10 @@ const renderCityFilter = ({
   onInputHandler,
 }: Field) => {
   const isLoading =
-    (!filters?.state?.value && Boolean(internalState?.state?.id)) ||
-    ((filters?.state?.value || internalState?.state?.id) &&
-      filters?.state?.value !== internalState?.state?.id);
+    ((!filters?.state?.value && Boolean(internalState?.state?.id)) ||
+      ((filters?.state?.value || internalState?.state?.id) &&
+        filters?.state?.value !== internalState?.state?.id)) &&
+    !internalState?.["removed[state]"];
   return cityDropdown({
     className: "cds--text-input__field-outer-wrapper",
     value: String(formState?.city) || null,

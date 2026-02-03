@@ -6,10 +6,20 @@ const client = axios.create({
 });
 
 export const Countries = {
+  store: {} as Record<string, any>,
   getAll: async (params: Record<string, any> | null = null) => {
-    const response = await GET(client, "", params, cacheHeaders);
+    let storeKey = "all";
+    if (params) {
+      storeKey += JSON.stringify(params);
+    }
 
-    return response.data;
+    if (Countries.store[storeKey]) {
+      return Countries.store[storeKey];
+    }
+    const response = await GET(client, "", params, cacheHeaders);
+    Countries.store[storeKey] = response.data;
+
+    return Countries.store[storeKey];
   },
 
   getOptions: async (params: Record<string, any> | null = null) => {

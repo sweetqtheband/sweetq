@@ -6,10 +6,21 @@ const client = axios.create({
 });
 
 export const Cities = {
+  store: {} as Record<string, any>,
   getAll: async (params: any = null) => {
-    const response = await GET(client, "", params, cacheHeaders);
+    let storeKey = "all";
+    if (params) {
+      storeKey += JSON.stringify(params);
+    }
 
-    return response.data;
+    if (Cities.store[storeKey]) {
+      return Cities.store[storeKey];
+    }
+
+    const response = await GET(client, "", params, cacheHeaders);
+    Cities.store[storeKey] = response.data;
+
+    return Cities.store[storeKey];
   },
 
   getOptions: async (params: Record<string, any> | null = null) => {

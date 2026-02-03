@@ -680,9 +680,8 @@ function ListTable({
   const handleFilterInternalState = useCallback(
     (field: string, value: any) => {
       onInternalStateHandler(field, value);
-      handleFilter(field, null);
     },
-    [onInternalStateHandler, handleFilter]
+    [onInternalStateHandler]
   );
 
   const handleFilterFormState = useCallback(

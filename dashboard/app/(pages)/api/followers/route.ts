@@ -21,7 +21,14 @@ export async function GET(req: NextRequest) {
 
   const queryObj: any = {};
 
-  const filters: { tags?: { $in: any } | { $nin: any }; unfollow?: boolean }[] = [];
+  const filters: {
+    tags?: { $in: any } | { $nin: any };
+    unfollow?: boolean;
+    treatment?: { $in: any };
+    country?: string;
+    state?: string;
+    city?: string;
+  }[] = [];
 
   const filtersSvc = FactorySvc("filters", await getCollection("filters"));
 
@@ -43,7 +50,17 @@ export async function GET(req: NextRequest) {
             filters.push({ unfollow: filterItem.filters[key] === "1" });
           }
           break;
-        default:
+        case "treatment":
+          if (filterItem.filters[key] instanceof Array && filterItem.filters[key].length > 0) {
+            filters.push({ treatment: { $in: filterItem.filters[key].map((item) => +item) } });
+          }
+          break;
+        case "country":
+        case "state":
+        case "city":
+          if (filterItem.filters[key]) {
+            filters.push({ [key]: +filterItem.filters[key] });
+          }
           break;
       }
     });
