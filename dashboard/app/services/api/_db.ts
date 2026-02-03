@@ -218,18 +218,21 @@ export const postItem = async ({
   collection,
   types = {},
   options = {},
+  modelize = false,
 }: Readonly<{
   req: NextRequest;
   collection: string;
   types?: Record<string, any>;
   options?: Record<string, any>;
+  modelize?: boolean;
 }>) => {
   const col = await getCollection(collection);
   const svc = FactorySvc(collection, col);
 
   const formData = await req.formData();
+  const postObj: Record<string, any> = formDataToObject(formData, types, options);
 
-  const newObject = { ...formDataToObject(formData, types, options) };
+  const newObject = { ...(modelize ? svc.modelize(postObj) : postObj) };
 
   Object.keys(types).forEach(async (key) => {
     const [value] = formData.getAll(key);
@@ -250,6 +253,7 @@ export const putItem = async ({
   types = {},
   options = {},
   avoidUnset = false,
+  modelize = false,
 }: Readonly<{
   id: string;
   req: NextRequest;
@@ -257,6 +261,7 @@ export const putItem = async ({
   types?: Record<string, any>;
   options?: Record<string, any>;
   avoidUnset?: boolean;
+  modelize?: boolean;
 }>) => {
   const col = await getCollection(collection);
   const svc = FactorySvc(collection, col);
@@ -279,8 +284,10 @@ export const putItem = async ({
     }
   });
 
+  const putObj: Record<string, any> = formDataToObject(formData, types, options);
+
   const updateObject = {
-    ...formDataToObject(formData, types, options),
+    ...(modelize ? svc.modelize(putObj) : putObj),
     _id: id,
   };
 

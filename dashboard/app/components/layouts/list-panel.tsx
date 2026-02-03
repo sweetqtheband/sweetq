@@ -270,7 +270,7 @@ function ListPanel({
 
       newFormState[field] = value;
 
-      setFormState(newFormState);
+      setFormState((prevState: Record<string, any>) => ({ ...prevState, ...newFormState }));
     },
     [formState, fields?.search, searchState]
   );

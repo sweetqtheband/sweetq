@@ -1177,7 +1177,7 @@ const renderContentArea = ({ field, value, translations, formState, onInputHandl
         translations={translations}
         value={defaultValue}
         hasParameter={true}
-        onChange={(text: string) => onContentAreaChangeHandler(text)}
+        onChange={onContentAreaChangeHandler}
       />
     </FormItem>
   );

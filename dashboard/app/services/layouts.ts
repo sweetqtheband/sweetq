@@ -6,12 +6,16 @@ import { onDelete, onSave } from "./_methods";
 export const Types = {
   _id: FIELD_TYPES.HIDDEN,
   name: FIELD_TYPES.TEXT,
-  type: FIELD_TYPES.HIDDEN,
+  type: FIELD_TYPES.SELECT,
   personalMessage: FIELD_TYPES.CONTENTAREA,
   collectiveMessage: FIELD_TYPES.CONTENTAREA,
 };
 
-export const Options = {};
+export const Options = {
+  type: {
+    options: [{ id: "instagram", value: "Instagram" }],
+  },
+};
 
 // Fields
 const fields = {

@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const item = await postItem({ req, collection, types, options });
+    const item = await postItem({ req, collection, types, options, modelize: true });
     revalidatePath(`/admin/${collection}`);
 
     return Response.json({ data: item }, { ...corsParams, status: HTTP_STATUS_CODES.OK });

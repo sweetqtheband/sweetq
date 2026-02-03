@@ -49,6 +49,11 @@ export async function GET(req: NextRequest) {
     });
   }
 
+  if (!filterKey) {
+    // Default filter to exclude unfollowed users
+    filters.push({ unfollow: false });
+  }
+
   const query = qp.get("query");
 
   if (filters.length > 0) {

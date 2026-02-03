@@ -22,7 +22,7 @@ export async function PUT(req: NextRequest, { params }: Params) {
   const { id } = params;
 
   try {
-    const item = await putItem({ id, req, collection, types, options });
+    const item = await putItem({ id, req, collection, types, options, modelize: true });
 
     return Response.json({ data: item }, { ...corsParams, status: HTTP_STATUS_CODES.OK });
   } catch (err: any) {
