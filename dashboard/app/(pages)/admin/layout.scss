@@ -103,6 +103,10 @@ body {
     }
   }
 
+  .cds--paragraph {
+    padding-top: var(--padding);
+  }
+
   .cds--language-selector {
     display: flex;
     padding-top: var(--padding);

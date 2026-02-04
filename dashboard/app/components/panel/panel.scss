@@ -155,7 +155,6 @@
           z-index: 2;
           background-color: var(--light-bg-color);
           padding-bottom: calc(var(--padding) * 2);
-          border-bottom: 1px solid var(--cds-border-subtle);
         }
 
         @include breakpoint(mobile) {

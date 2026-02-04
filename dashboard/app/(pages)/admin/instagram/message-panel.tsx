@@ -167,9 +167,10 @@ export default function MessagePanel({
     <>
       <Section className="fields" level={4}>
         <Form>
-          <Stack gap={4}>
-            <Heading>{translations.messagePanel.title}</Heading>
-            <p>
+          <Heading>
+            {translations.messagePanel.title}
+            <br />
+            <p className="cds--paragraph cds--label">
               {translations.messagePanel.subtitle}{" "}
               {ids && ids.length > 1
                 ? t(translations.messagePanel.description, {
@@ -177,6 +178,8 @@ export default function MessagePanel({
                   })
                 : items.find((item) => item.id === ids?.at(0)).full_name}
             </p>
+          </Heading>
+          <Section className="wrapper-fields" level={5}>
             <ContentSwitcher selectedIndex={mode} size="md" onChange={onMessageModeChange}>
               {modes.map((mode, index) => (
                 <Switch key={index} name={mode.name} text={mode.text} />
@@ -236,7 +239,7 @@ export default function MessagePanel({
                 hasParameter={true}
               />
             </FormItem>
-          </Stack>
+          </Section>
         </Form>
       </Section>
       <footer>

@@ -419,15 +419,18 @@ function ListPanel({
               <Stack gap={4}>
                 {open === ACTIONS?.BATCH_EDIT && ids?.length ? (
                   <>
-                    <Heading>{translations.listPanel.batchEdit.title}</Heading>
-                    <p>
-                      {translations.listPanel.batchEdit.subtitle}{" "}
-                      {ids && ids.length > 1
-                        ? t(translations.listPanel.batchEdit.description, {
-                            total: ids.length,
-                          })
-                        : items.find((item) => item.id === ids?.at(0))?.full_name}
-                    </p>
+                    <Heading>
+                      {translations.listPanel.batchEdit.title}
+                      <br />
+                      <p className="cds--paragraph cds--label">
+                        {translations.listPanel.batchEdit.subtitle}{" "}
+                        {ids && ids.length > 1
+                          ? t(translations.listPanel.batchEdit.description, {
+                              total: ids.length,
+                            })
+                          : items.find((item) => item.id === ids?.at(0))?.full_name}
+                      </p>
+                    </Heading>
                   </>
                 ) : translations?.panels?.title ? (
                   <Heading>{translations?.panels?.title}</Heading>
