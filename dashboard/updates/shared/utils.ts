@@ -83,3 +83,10 @@ export const toLocalISOString = (date = new Date()) => {
 
   return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${millis}${sign}${offsetHours}:${offsetMinutes}`;
 };
+
+export const ucFirst = (str: string) => {
+  if (typeof str !== "string" || str.length === 0) {
+    return str;
+  }
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};

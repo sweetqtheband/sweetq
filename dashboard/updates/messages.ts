@@ -1,5 +1,5 @@
 import { getCollection } from "@/app/services/api/_db";
-import { pipe } from "./shared/utils";
+import { pipe, ucFirst } from "./shared/utils";
 import { Instagram } from "./shared/instagram";
 import { Browser, Page } from "puppeteer";
 import { FactorySvc } from "@/app/services/api/factory";
@@ -126,7 +126,15 @@ const sendInstagramMessage = async ({ obj, browser, page }: InstagramMessage) =>
 
     await randomWait(2);
 
-    for (let char of obj.text.replace(/\r\n|\r|\n/g, "\n").trim()) {
+    const text = obj.text
+      .replace(/\r\n|\r|\n/g, "\n")
+      .trim()
+      .split("\n")
+      .map((line: string) => ucFirst(line.trim()))
+      .join("\n\n")
+      .trim();
+
+    for (let char of text) {
       if (char === "\n") {
         // Cuando encuentres un salto de línea, simula Shift + Enter
         await page.keyboard.down("Shift");
