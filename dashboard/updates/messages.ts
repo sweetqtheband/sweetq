@@ -130,7 +130,11 @@ const sendInstagramMessage = async ({ obj, browser, page }: InstagramMessage) =>
       .replace(/\r\n|\r|\n/g, "\n")
       .trim()
       .split("\n")
-      .map((line: string) => ucFirst(line.trim()))
+      .map((line: string) =>
+        line.trim().startsWith("http://") || line.trim().startsWith("https://")
+          ? line.trim()
+          : ucFirst(line.trim())
+      )
       .join("\n\n")
       .trim();
 
