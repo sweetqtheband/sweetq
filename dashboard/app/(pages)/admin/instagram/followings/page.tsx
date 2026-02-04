@@ -43,16 +43,16 @@ export default async function InstagramPage({ searchParams }: Readonly<{ searchP
     translations.fields.collectiveMessage = i18n.t(
       "pages.instagram.messagePanel.collectiveMessage"
     );
-    translations.vars = i18n.t("pages.instagram.panel.variables", {
+    translations.vars = i18n.t("pages.instagram.messagePanel.variables", {
       returnObjects: true,
     });
     translations.messagePanel = {
-      title: i18n.t("pages.instagram.panel.title"),
-      subtitle: i18n.t("pages.instagram.panel.subtitle"),
-      description: i18n.t("pages.instagram.description"),
+      title: i18n.t("pages.instagram.messagePanel.title"),
+      subtitle: i18n.t("pages.instagram.messagePanel.subtitle"),
+      description: i18n.t("pages.instagram.followings.description"),
       modes: {
-        new: i18n.t("pages.instagram.panel.modes.createNew"),
-        layout: i18n.t("pages.instagram.panel.modes.loadLayout"),
+        new: i18n.t("pages.instagram.messagePanel.modes.createNew"),
+        layout: i18n.t("pages.instagram.messagePanel.modes.loadLayout"),
       },
     };
   };

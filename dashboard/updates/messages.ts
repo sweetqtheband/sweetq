@@ -35,6 +35,7 @@ interface InstagramMessage {
 }
 
 const followersSvc = FactorySvc("followers", await getCollection("followers"));
+const followingsSvc = FactorySvc("followings", await getCollection("followings"));
 const messagesSvc = FactorySvc("messages", await getCollection("messages"));
 const layoutsSvc = FactorySvc("layouts", await getCollection("layouts"));
 const tagsSvc = FactorySvc("tags", await getCollection("tags"));
@@ -72,7 +73,6 @@ const sendMessageFromMenuOld = async (page: Page) => {
 const sendMessageDirectFromMenu = async (page: Page) => {
   try {
     const directFromMenu = await page.evaluate((handler: any) => {
-      console.log((document.querySelector(handler) as HTMLElement)?.innerText);
       return (
         (document.querySelector(handler) as HTMLElement)?.innerText === "Send Message" ||
         (document.querySelector(handler) as HTMLElement)?.innerText === "Enviar mensaje"
@@ -234,6 +234,10 @@ const fetchMessages = async (data: any, noRetry: Boolean = false) => {
   // Attach city names to followers
 
   const followerIds = messages.map((message: any) => message._followerId);
+  const followingsIds = messages
+    .filter((message: any) => message._followingId && !message._followerId)
+    .map((message: any) => message._followingId);
+
   const cities: Record<string, string>[] = [];
   const followers = (await followersSvc.model.find({ _id: { $in: followerIds } }).toArray()).reduce(
     (acc: Record<string, any>, follower: any) => {
@@ -248,18 +252,34 @@ const fetchMessages = async (data: any, noRetry: Boolean = false) => {
     {}
   );
 
-  const cityNames = await citiesSvc.model
-    .find({ $or: cities })
-    .toArray()
-    .then((items: any[]) =>
-      items.reduce((acc: Record<string, string>, item: any) => {
-        acc[item.id] = item.name.es;
-        return acc;
-      }, {})
-    );
+  const followings = (
+    await followingsSvc.model.find({ _id: { $in: followingsIds } }).toArray()
+  ).reduce((acc: Record<string, any>, following: any) => {
+    if (following.city && cities.indexOf({ state: following.state, city: following.city }) === -1) {
+      cities.push({ state_id: String(following.state), id: String(following.city) });
+    }
+    return {
+      ...acc,
+      [following._id]: following,
+    };
+  }, {});
+
+  const cityNames =
+    cities.length > 0
+      ? await citiesSvc.model
+          .find({ $or: cities })
+          .toArray()
+          .then((items: any[]) =>
+            items.reduce((acc: Record<string, string>, item: any) => {
+              acc[item.id] = item.name.es;
+              return acc;
+            }, {})
+          )
+      : {};
 
   data.tag = await tagsSvc.findOne({ name: "Contactado" });
   data.followers = followers;
+  data.followings = followings;
   data.messages = messages;
   data.layouts = layouts.reduce(
     (acc: Record<string, any>, layout: any) => ({
@@ -299,26 +319,40 @@ const useBrowser = {
  * @returns
  */
 const processMessages = async (data: any) => {
-  const { messages, layouts, followers } = data;
+  const { messages, layouts, followers, followings } = data;
 
   if (messages.length > 0) {
     for (const message of messages) {
-      const follower = followers[message._followerId];
+      const usersSvc = message._followerId ? followersSvc : followingsSvc;
+      const users = message._followerId ? followers : followings;
+      const userId = message._followerId ? message._followerId : message._followingId;
+
+      if (message._followerId && !followers[message._followerId]) {
+        logProcess(
+          `Follower with id ${message._followerId} not found, skipping message ${message._id}`
+        );
+      } else if (message._followingId && !followings[message._followingId]) {
+        logProcess(
+          `Following with id ${message._followingId} not found, skipping message ${message._id}`
+        );
+      }
+
+      const user = users[userId];
 
       let tpl =
-        (!follower.treatment || follower.treatment === 1
+        (!user.treatment || user.treatment === 1
           ? layouts[message._layoutId].personalMessage
           : layouts[message._layoutId].collectiveMessage) || "";
 
       VARIABLES.forEach((variable: Record<string, any>) => {
         const replacement =
-          variable.id === "cityLabel" ? data.cities[follower.city] || "" : follower[variable.id];
+          variable.id === "cityLabel" ? data.cities[user.city] || "" : user[variable.id];
         tpl = tpl.replace(variable.replacement, replacement || "");
       });
 
       let sent = false;
 
-      if (follower?.instagram_conversation_id) {
+      if (user?.instagram_conversation_id) {
         try {
           const textParts = tpl
             .replace(/\r\n|\r|\n/g, "\n")
@@ -328,8 +362,8 @@ const processMessages = async (data: any) => {
             if (textParts[i].length) {
               await sendMessage({
                 obj: {
-                  conversation_id: follower.instagram_conversation_id,
-                  recipient: follower.instagram_id,
+                  conversation_id: user.instagram_conversation_id,
+                  recipient: user.instagram_id,
                   text: textParts[i],
                 },
               });
@@ -339,7 +373,7 @@ const processMessages = async (data: any) => {
           }
           sent = true;
         } catch (error) {
-          logProcess(`Error al enviar mensaje a ${follower.username} via Instagram API: ${error}`);
+          logProcess(`Error al enviar mensaje a ${user.username} via Instagram API: ${error}`);
         }
       } else {
         try {
@@ -351,24 +385,24 @@ const processMessages = async (data: any) => {
 
           sent = await sendInstagramMessage({
             obj: {
-              user: follower.username,
+              user: user.username,
               text: tpl,
             },
             browser: browserInstance as Browser,
             page: pageInstance as Page,
           });
         } catch (error) {
-          logProcess(`Error al enviar mensaje a ${follower.username} via puppeteer: ${error}`);
+          logProcess(`Error al enviar mensaje a ${user.username} via puppeteer: ${error}`);
         }
       }
 
       if (!sent) {
         if (message?.retry && message.retry >= 3) {
-          logProcess(`Mensaje a ${follower.username} fallido después de 3 intentos. Se eliminará.`);
+          logProcess(`Mensaje a ${user.username} fallido después de 3 intentos. Se eliminará.`);
           await messagesSvc.delete({ _id: message._id }, true);
         } else {
           logProcess(
-            `No se pudo enviar el mensaje a ${follower.username}. Se reprogramará para más tarde.`
+            `No se pudo enviar el mensaje a ${user.username}. Se reprogramará para más tarde.`
           );
           await messagesSvc.update(
             { _id: message._id, retry: message?.retry ? message.retry + 1 : 1 },
@@ -379,15 +413,15 @@ const processMessages = async (data: any) => {
       }
       await messagesSvc.update({ _id: message._id, status: "sent" }, true);
 
-      await followersSvc.update({ _id: follower._id, tags: follower.tags }, true);
+      await usersSvc.update({ _id: user._id, tags: user.tags }, true);
 
       logProcess(
         `Mensaje enviado via ${
-          follower?.instagram_conversation_id ? "Instagram API" : "puppeteer"
-        } a ${follower.username}: ${tpl.split("\n")[0]}...`
+          user?.instagram_conversation_id ? "Instagram API" : "puppeteer"
+        } a ${user.username}: ${tpl.split("\n")[0]}...`
       );
       processedCount++;
-      await randomWait(follower?.instagram_conversation_id ? 1 : 10, true);
+      await randomWait(user?.instagram_conversation_id ? 1 : 10, true);
     }
   }
 

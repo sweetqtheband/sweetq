@@ -15,7 +15,7 @@ export const followingsSvc = (collection: Collection<Document>) => ({
     const citiesSvc = FactorySvc("cities", await getCollection("cities"));
     const tagsSvc = FactorySvc("tags", await getCollection("tags"));
     const messagesSvc = FactorySvc("messages", await getCollection("messages"));
-    const messages = await messagesSvc.getAllByFollowerId(item._id);
+    const messages = await messagesSvc.getAllByFollowingId(item._id);
 
     const obj = {
       ...item,
@@ -44,7 +44,7 @@ export const followingsSvc = (collection: Collection<Document>) => ({
       .map((m: Record<string, any>) => m._id);
 
     obj.pending_messages =
-      messages.length > 0 ? await messagesSvc.parseForFollower(obj, messages.at(0)) : null;
+      messages.length > 0 ? await messagesSvc.parse(obj, messages.at(0)) : null;
     return obj;
   },
 });

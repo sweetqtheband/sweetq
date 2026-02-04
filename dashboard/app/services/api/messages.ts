@@ -10,22 +10,26 @@ import { VARIABLES } from "@/app/constants";
  */
 export const messagesSvc = (collection: Collection<Document>) => ({
   ...BaseSvc(collection, Model),
-  getAllByFollowerId: async (followerId: string) =>
+  getAllById: async (queryObj: Record<string, any> = {}) =>
     collection
-      .find({ _followerId: new ObjectId(followerId), status: "scheduled" })
+      .find({ ...queryObj, status: "scheduled" })
       .toArray()
       .then((items) => items.map((item) => Model(item))),
-  parseForFollower: async (follower: Record<string, any>, message: Record<string, any>) => {
+  getAllByFollowerId: async (followerId: string) =>
+    messagesSvc(collection).getAllById({ _followerId: new ObjectId(followerId) }),
+  getAllByFollowingId: async (followingId: string) =>
+    messagesSvc(collection).getAllById({ _followingId: new ObjectId(followingId) }),
+  parse: async (user: Record<string, any>, message: Record<string, any>) => {
     const layoutSvc = FactorySvc("layouts", await getCollection("layouts"));
     const layout = await layoutSvc.getById(message._layoutId);
 
     let tpl =
-      (!follower.treatment || follower.treatment === 1
+      (!user.treatment || user.treatment === 1
         ? layout.tpl.personalMessage
         : layout.tpl.collectiveMessage) || "";
 
     VARIABLES.forEach((variable) => {
-      tpl = tpl.replace(variable.replacement, follower[variable.id]);
+      tpl = tpl.replace(variable.replacement, user[variable.id]);
     });
 
     return tpl;

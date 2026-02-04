@@ -26,6 +26,7 @@ export async function POST(req: NextRequest) {
   const dataObj = formDataToObject(formData, { ids: FIELD_TYPES.MULTISELECT });
   const layoutSvc = FactorySvc("layouts", await getCollection("layouts"));
   const followersSvc = FactorySvc("followers", await getCollection("followers"));
+  const followingsSvc = FactorySvc("followings", await getCollection("followings"));
 
   const isUpdate =
     (dataObj.layoutId && dataObj.layoutId !== "undefined") ||
@@ -62,21 +63,32 @@ export async function POST(req: NextRequest) {
     const items = await Promise.all(
       dataObj.ids.map(async (id: string) => {
         const follower = await followersSvc.findOne({ id });
-        // If message already exist for this user, skip it
-        const messageExist = await svc.findOne({
-          _followerId: new ObjectId(follower._id),
+        const following = await followingsSvc.findOne({ id });
+
+        if (!follower && !following) {
+          throw new Error(`Follower or Following with id ${id} not found`);
+        }
+
+        const findObj: Record<string, any> = {
           _layoutId: new ObjectId(layout._id),
           status: "scheduled",
-        });
+        };
+
+        if (follower) {
+          findObj["_followerId"] = new ObjectId(follower._id);
+        }
+        if (following) {
+          findObj["_followingId"] = new ObjectId(following._id);
+        }
+        // If message already exist for this user, skip it
+        const messageExist = await svc.findOne(findObj);
 
         if (messageExist) {
           return messageExist;
         }
         const obj: Record<string, any> = {
-          _followerId: new ObjectId(follower._id),
-          _layoutId: new ObjectId(layout._id),
+          ...findObj,
           type: layout.type,
-          status: "scheduled",
           created: createDate,
         };
         return svc.create(obj);
