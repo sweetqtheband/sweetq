@@ -92,7 +92,6 @@ const getSharedOptionsFields = async ({
   return {
     country: {
       ...(await Countries.getOptions({ locale: i18n.locale })),
-      value: FIELD_DEFAULTS.COUNTRY,
     },
     state: await States.getOptions({
       locale: i18n.locale,
@@ -216,7 +215,7 @@ const getFilters = async ({ searchParams, i18n }: Readonly<{ searchParams: any; 
         },
       },
       type: FIELD_TYPES.FILTER_COUNTRY,
-      value: values?.country || FIELD_DEFAULTS.COUNTRY,
+      value: values?.country || null,
     },
     state: {
       translations: {

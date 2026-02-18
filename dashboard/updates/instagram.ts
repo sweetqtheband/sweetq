@@ -9,11 +9,12 @@ import { FactorySvc } from "@/app/services/api/factory.js";
 
 const { logProcess } = createLogger("instagram.log");
 
-const skipLimit = 30;
+const skipLimit = 100;
 
 const instagramSvc = FactorySvc("instagram", await getCollection("instagram"));
 const tagsSvc = FactorySvc("tags", await getCollection("tags"));
 const followersSvc = FactorySvc("followers", await getCollection("followers"));
+const followingsSvc = FactorySvc("followings", await getCollection("followings"));
 
 const useTags = await tagsSvc.model.find({ name: { $in: ["Contactado", "Responde"] } }).toArray();
 
@@ -72,10 +73,15 @@ const fetchMessages = async (data: Record<string, any>) => {
     const follower = await followersSvc.findOne({
       instagram_conversation_id: conversation.id,
     });
+    const following = await followingsSvc.findOne({
+      instagram_conversation_id: conversation.id,
+    });
 
     if (
-      !follower ||
-      (follower && (!follower.instagram_id || !follower.instagram_conversation_id))
+      (!follower ||
+        (follower && (!follower.instagram_id || !follower.instagram_conversation_id))) &&
+      (!following ||
+        (following && (!following.instagram_id || !following.instagram_conversation_id)))
     ) {
       try {
         const conversationMessage = await getConversationMessageParticipants(conversation);
@@ -102,6 +108,37 @@ const fetchMessages = async (data: Record<string, any>) => {
   return data;
 };
 
+const updateInstagramUser = async (
+  user: Record<string, any>,
+  message: Record<string, any>,
+  tags: string[],
+  type: "follower" | "following"
+) => {
+  logProcess(`Updating ${type} ${user.username}`);
+
+  if (!user?.tags) {
+    user.tags = [];
+  }
+  tags.map((tag: string) => {
+    if (!user.tags.includes(tag)) {
+      user.tags.push(tag);
+    }
+  });
+
+  const obj = {
+    _id: user._id,
+    tags: user.tags,
+    instagram_conversation_id: message.conversationId,
+    instagram_id: message.from[user.username] || message.to[user.username],
+  };
+  const svc = type === "follower" ? followersSvc : followingsSvc;
+
+  await svc.update(obj, true);
+  logProcess(
+    `Updated ${type} ${user.username} with tags ${user.tags}, conversationId: ${message.conversationId} and instagramId ${obj.instagram_id}`
+  );
+};
+
 const processMessage = async (message: Record<string, any>) => {
   const tags: string[] = [];
   if (Object.keys(message.from).length > 1) {
@@ -121,29 +158,17 @@ const processMessage = async (message: Record<string, any>) => {
         if (username === "sweetqtheband") return;
         const follower = await followersSvc.findOne({ username });
         if (follower) {
-          logProcess(`Updating follower ${follower.username}`);
-
-          if (!follower?.tags) {
-            follower.tags = [];
+          updateInstagramUser(follower, message, tags, "follower");
+          // Maybe we should check if the user is also a following and update it as well?
+          const following = await followingsSvc.findOne({ username });
+          if (following) {
+            updateInstagramUser(following, message, tags, "following");
           }
-          tags.map((tag: string) => {
-            if (!follower.tags.includes(tag)) {
-              follower.tags.push(tag);
-            }
-          });
-
-          const obj = {
-            _id: follower._id,
-            tags: follower.tags,
-            instagram_conversation_id: message.conversationId,
-            instagram_id: message.from[username] || message.to[username],
-          };
-
-          await followersSvc.update(obj, true);
-          logProcess(
-            `Updated follower ${follower.username} with tags ${follower.tags}, conversationId: ${message.conversationId} and instagramId ${obj.instagram_id}`
-          );
         } else {
+          const following = await followingsSvc.findOne({ username });
+          if (following) {
+            updateInstagramUser(following, message, tags, "following");
+          }
           logProcess(`Follower ${username} not found`);
         }
       }

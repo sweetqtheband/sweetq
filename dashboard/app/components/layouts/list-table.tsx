@@ -558,6 +558,7 @@ function ListTable({
     clearTimeout(filterTimeout);
     filterTimeout = setTimeout(async () => {
       const params = new URLSearchParams(searchParams);
+
       // Fetch only once
       if (Object.keys(useFilters).length > 0) {
         const data = await onFiltering(useFilters);
