@@ -191,7 +191,19 @@
   },
   {
     "id": 17,
-    "date": "2026-05-23 21:00",
+    "date": "2026-05-30 21:00",
+    "city": "Santander",
+    "hour": "21:00",
+    "venue": "<span>Gira 'Que solo nos quede ganar': </span><span>Santander</span>",
+    "address": "Primera Fila Fest: Rock Beer The New",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2895.919302662594!2d-3.8168830999999988!3d43.4622819!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd494bd234312941%3A0x5f291f8e47a9c39c!2sRock%20Beer%20The%20New!5e0!3m2!1ses!2ses!4v1771783677866!5m2!1ses!2ses",
+    "bands": [],
+    "event": null,
+    "tickets": null
+  },
+  {
+    "id": 17,
+    "date": "2026-06-27 21:00",
     "city": "Zaragoza",
     "hour": "21:00",
     "venue": "<span>Gira 'Que solo nos quede ganar': </span><span>Zaragoza</span>",

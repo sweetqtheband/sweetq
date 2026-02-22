@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunksweetq=self.webpackChunksweetq||[]).push([[119],{3119:(o,n,a)=>{a.d(n,{o:()=>s});var r=a(7413);let s=(()=>{const e=class{isMobile(){return/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)}};let t=e;return e.\u0275fac=function(i){return new(i||e)},e.\u0275prov=r.Yz7({token:e,factory:e.\u0275fac}),t})()}}]);
