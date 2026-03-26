@@ -178,31 +178,7 @@
     "tickets": "https://ticketandroll.com/evento/sweet-q-vortice-cero-en-sala-hangar-48"
   },
   {
-    "id": 16,
-    "date": "2026-04-25 21:00",
-    "city": "Murcia",
-    "hour": "21:00",
-    "venue": "<span>Gira 'Que solo nos quede ganar': </span><span>Murcia</span>",
-    "address": "La Yesería",
-    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3386.1813421828556!2d-1.1276800239961258!3d37.98637659994256!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd6382107d3f261f%3A0x768dd71b0413c518!2sLa%20Yeser%C3%ADa!5e1!3m2!1ses!2ses!4v1764104975476!5m2!1ses!2ses",
-    "bands": [42],
-    "event": null,
-    "tickets": null
-  },
-  {
-    "id": 17,
-    "date": "2026-05-30 21:00",
-    "city": "Santander",
-    "hour": "21:00",
-    "venue": "<span>Gira 'Que solo nos quede ganar': </span><span>Santander</span>",
-    "address": "Primera Fila Fest: Rock Beer The New",
-    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2895.919302662594!2d-3.8168830999999988!3d43.4622819!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd494bd234312941%3A0x5f291f8e47a9c39c!2sRock%20Beer%20The%20New!5e0!3m2!1ses!2ses!4v1771783677866!5m2!1ses!2ses",
-    "bands": [],
-    "event": null,
-    "tickets": null
-  },
-  {
-    "id": 17,
+    "id": 18,
     "date": "2026-06-27 21:00",
     "city": "Zaragoza",
     "hour": "21:00",
