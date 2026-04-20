@@ -209,7 +209,7 @@
       }
     }
 
-    @include from(desktop) {
+    @include from(desktop-s) {
       &.right {
         .panel-wrapper {
           transform: translateX(var(--panel-right-desktop-transform, 45vw));

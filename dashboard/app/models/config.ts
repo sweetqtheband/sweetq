@@ -7,6 +7,7 @@ type Model = {
   created: Date;
   from?: Date;
   default?: boolean;
+  logo?: string;
   headerImage?: string;
   headerImageMobile?: string;
   headerVideo?: string;
@@ -48,6 +49,10 @@ export const Model = (data: any): Model => {
 
   if (data.default) {
     obj.default = Boolean(data.default);
+  }
+
+  if (data.logo) {
+    obj.logo = String(data.logo);
   }
 
   if (data.headerImage) {

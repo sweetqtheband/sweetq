@@ -7,8 +7,8 @@ export const Types = {
   _id: FIELD_TYPES.HIDDEN,
   name: FIELD_TYPES.TEXT,
   type: FIELD_TYPES.SELECT,
-  personalMessage: FIELD_TYPES.CONTENTAREA,
-  collectiveMessage: FIELD_TYPES.CONTENTAREA,
+  personalMessage: FIELD_TYPES.CONTENT_AREA,
+  collectiveMessage: FIELD_TYPES.CONTENT_AREA,
 };
 
 export const Options = {

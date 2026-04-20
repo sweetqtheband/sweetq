@@ -1,0 +1,10 @@
+:root {
+  --section-padding-top: 70px;
+  --section-padding-bottom: 100px;
+  --section-padding-horizontal: 20px;
+}
+.sq {
+  &-gigs {
+    background-color: var(--bg-secondary-color);
+  }
+}

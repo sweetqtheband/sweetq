@@ -35,6 +35,7 @@ export default async function GigsPage({
       limit={data?.next?.limit}
       pages={data.pages}
       fields={fields}
+      apiKey={process.env.PLACES_API_KEY}
     />
   );
 }

@@ -4,7 +4,6 @@ import { getClasses } from "@/app/utils";
 import "./modal.scss";
 import { useContext, useEffect, useRef, useState } from "react";
 import { WindowContext } from "@/app/context";
-import { Close } from "@carbon/react/icons";
 
 export default function ModalComponent({
   children,

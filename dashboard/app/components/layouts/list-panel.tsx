@@ -4,18 +4,39 @@ import { Panel } from "@/app/components";
 import React, { useEffect, useMemo, useRef, useState, useCallback, Fragment } from "react";
 import { Accordion, AccordionItem, Button, Form, Heading, Section, Stack } from "@carbon/react";
 import { renderField } from "@/app/render";
-import { FIELD_TYPES } from "@/app/constants";
+import {
+  EMPTY_ARRAY,
+  EMPTY_OBJECT,
+  FIELD_TYPES,
+  NOOP,
+  NOOP_ACTION,
+  NOOP_ASYNC,
+  NOOP_CLOSE,
+} from "@/app/constants";
 import { s3File, uuid } from "@/app/utils";
 import { t } from "@/app/utils";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-// Stable default values to prevent re-renders
-const EMPTY_ARRAY: any[] = [];
-const EMPTY_OBJECT: Record<string, any> = {};
-const NOOP_ASYNC = async () => true;
-const NOOP_CLOSE = async (item: any) => {};
-const NOOP_ACTION = async () => {};
-const NOOP = () => true;
+interface ListPanelProps {
+  id: string;
+  ids?: string[] | null;
+  items?: any[];
+  data: any;
+  onSave?: (data: any, files: any, ids: string[] | null) => Promise<boolean>;
+  onClose?: (item: any) => Promise<void>;
+  onAction?: Function;
+  actionLabel?: string;
+  actionIcon?: string | null;
+  checkAction?: Function | null;
+  translations?: Record<string, any>;
+  fields?: Record<string, any>;
+  multiFields?: Record<string, any>;
+  methods?: Record<string, any>;
+  renders?: Record<string, any>;
+  open?: string | null;
+  setOpen?: Function;
+  CONSTANTS?: any;
+}
 
 function ListPanel({
   id = "",
@@ -36,26 +57,7 @@ function ListPanel({
   open = "",
   setOpen = NOOP,
   CONSTANTS = EMPTY_OBJECT,
-}: Readonly<{
-  id: string;
-  ids?: string[] | null;
-  items?: any[];
-  data: any;
-  onSave?: (data: any, files: any, ids: string[] | null) => Promise<boolean>;
-  onClose?: (item: any) => Promise<void>;
-  onAction?: Function;
-  actionLabel?: string;
-  actionIcon?: string | null;
-  checkAction?: Function | null;
-  translations?: Record<string, any>;
-  fields?: Record<string, any>;
-  multiFields?: Record<string, any>;
-  methods?: Record<string, any>;
-  renders?: Record<string, any>;
-  open?: string | null;
-  setOpen?: Function;
-  CONSTANTS?: any;
-}>) {
+}: Readonly<ListPanelProps>) {
   const { ACTIONS } = CONSTANTS;
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -170,7 +172,7 @@ function ListPanel({
         setFormState((prev: any) => ({ ...prev, ...formData, _id: data._id }));
       }
     }
-  }, [data, fields.types, fields.options]);
+  }, [data, fields.types, fields.options, files, isInitialized, searchState]);
 
   // Search params effect
   useEffect(() => {
@@ -251,24 +253,31 @@ function ListPanel({
   }, [onSave, formState, files, ids, resetPanel, onClose]);
 
   const onInputHandler = useCallback(
-    (field: string, value: any) => {
+    (field: string | string[], value: any) => {
       let newFormState = { ...formState };
 
-      if (fields?.search && Object.keys(fields.search).includes(field)) {
-        let newSearchState = { ...searchState };
+      if (field instanceof Array) {
+        field.forEach((f: string, index: number) => {
+          newFormState[f] = value[index];
+        });
+      }
+      if (typeof field === "string") {
+        if (fields?.search && Object.keys(fields.search).includes(field)) {
+          let newSearchState = { ...searchState };
 
-        if (fields?.search[field]?.deletes) {
-          fields.search[field].deletes.forEach((deleteField: string) => {
-            newFormState[deleteField] = null;
-            newSearchState[deleteField] = false;
-          });
+          if (fields?.search[field]?.deletes) {
+            fields.search[field].deletes.forEach((deleteField: string) => {
+              newFormState[deleteField] = null;
+              newSearchState[deleteField] = false;
+            });
+          }
+
+          newSearchState[field] = true;
+          setSearchState(newSearchState);
         }
 
-        newSearchState[field] = true;
-        setSearchState(newSearchState);
+        newFormState[field] = value;
       }
-
-      newFormState[field] = value;
 
       setFormState((prevState: Record<string, any>) => ({ ...prevState, ...newFormState }));
     },
@@ -285,6 +294,11 @@ function ListPanel({
       ...prevFiles,
       [field]: processedFiles,
     }));
+
+    setFormState((prevState: Record<string, any>) => ({
+      ...prevState,
+      [field]: uploadedFiles,
+    }));
   }, []);
 
   const onRemoveFileHandler = useCallback((field: string, fileObj: Record<string, any>) => {
@@ -299,7 +313,7 @@ function ListPanel({
       return updatedFiles;
     });
 
-    setFormState((prevFormState: any) => {
+    setFormState((prevFormState: Record<string, any>) => {
       const newFormState = { ...prevFormState };
       delete newFormState[field];
       return newFormState;
@@ -353,7 +367,9 @@ function ListPanel({
           const renderedField = renderField(fieldProps);
           return (
             <Fragment key={"fragment-" + index}>
-              {typeof renderedField === "function" ? renderedField(fieldProps) : renderedField}
+              {typeof renderedField === "function"
+                ? (renderedField as Function)(fieldProps)
+                : renderedField}
             </Fragment>
           );
         })}

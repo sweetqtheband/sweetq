@@ -17,6 +17,7 @@ import { layoutsSvc } from "./layouts";
 import { messagesSvc } from "./messages";
 import { configSvc } from "./config";
 import { routesSvc } from "./routes";
+import { socialNetworksSvc } from "./socialNetworks";
 import { camelCase } from "@/app/utils";
 import { filtersSvc } from "./filters";
 type FactoryType = {
@@ -43,6 +44,7 @@ let factory: FactoryType = {
   tracks: tracksSvc,
   userProfiles: userProfilesSvc,
   users: usersSvc,
+  socialNetworks: socialNetworksSvc,
 };
 
 export const FactorySvc = (collectionName: string, collection: Collection<Document>) =>

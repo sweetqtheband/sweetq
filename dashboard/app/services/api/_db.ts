@@ -1,4 +1,4 @@
-import { Db, MongoClient } from "mongodb";
+import { Db, MongoClient, ObjectId } from "mongodb";
 import type { NextRequest } from "next/server";
 import { v4 as uuid } from "uuid";
 import config from "@/app/config";
@@ -8,6 +8,7 @@ import { FactorySvc } from "@/app/services/api/factory";
 import { formDataToObject } from "@/app/utils";
 import qs from "qs";
 import { Types } from "../bands";
+import path from "path/win32";
 
 let _db: Db | null = null;
 let _client: MongoClient | null = null;
@@ -126,15 +127,20 @@ export const getList = async ({
 
     if (!queryObj.$or) {
       const query = qp.get("query");
+
       if (query) {
-        queryObj.$or = [
-          {
-            [idx]: { $regex: query, $options: "i" },
-          },
-        ];
+        if (typeof JSON.parse(query) === "string") {
+          queryObj.$or = [
+            {
+              [idx]: { $regex: JSON.parse(query), $options: "i" },
+            },
+          ];
+        } else {
+          const queryObjParsed = JSON.parse(query);
+          queryObj.$or = queryObjParsed;
+        }
       }
     }
-
     const searchParams = req.nextUrl.searchParams.toString();
 
     const params = qs.parse(searchParams, {
@@ -152,6 +158,18 @@ export const getList = async ({
       {}
     );
 
+    const customFilters: Record<string, any> = Object.keys(
+      (params.filter as Record<string, any>) || {}
+    );
+    if (customFilters.length > 0) {
+      customFilters.forEach((key: string) => {
+        const filterValue = (params.filter as Record<string, any>)?.[key];
+        filters[key] =
+          key === "_id" && filterValue?.$in
+            ? filterValue.$in.map((id: string) => new ObjectId(id))
+            : filterValue;
+      });
+    }
     if (Object.keys(filters).length > 0) {
       if (!queryObj.$and) {
         queryObj.$and = [];
@@ -237,7 +255,7 @@ export const postItem = async ({
   Object.keys(types).forEach(async (key) => {
     const [value] = formData.getAll(key);
     if (value instanceof File) {
-      if ("path" in options[key]) {
+      if (options?.[key]?.path) {
         await uploadSvc.uploadS3(value, options[key].path as string);
       }
     }
@@ -269,20 +287,26 @@ export const putItem = async ({
 
   const formData = await req.formData();
 
-  Object.keys(types).forEach(async (key) => {
+  for (const key of Object.keys(types)) {
     const [value] = formData.getAll(key);
     if (value instanceof File) {
-      if ("path" in options[key]) {
-        await uploadSvc.uploadS3(value, options[key].path as string);
+      if (options?.[key]?.path) {
+        try {
+          await uploadSvc.uploadS3(value, options[key].path as string);
+        } catch {}
+        formData.set(key, value.name);
       }
     }
 
     if (!value && [FIELD_TYPES.IMAGE_UPLOADER, FIELD_TYPES.VIDEO_UPLOADER].includes(types[key])) {
-      if ("path" in options[key]) {
-        await uploadSvc.deleteS3(item[key]);
+      if (options?.[key]?.path) {
+        try {
+          await uploadSvc.deleteS3(item[key]);
+        } catch {}
+        formData.delete(key);
       }
     }
-  });
+  }
 
   const putObj: Record<string, any> = formDataToObject(formData, types, options);
 
@@ -314,7 +338,7 @@ export const deleteItem = async ({
   if (types && options) {
     Object.keys(types).forEach(async (key) => {
       if ([FIELD_TYPES.IMAGE_UPLOADER, FIELD_TYPES.VIDEO_UPLOADER].includes(types[key])) {
-        if ("path" in options[key]) {
+        if (options?.[key]?.path) {
           await uploadSvc.deleteS3(item[key]);
         }
       }

@@ -1,0 +1,149 @@
+@use "@scss/mixins" as *;
+
+:root {
+  --header-bg-color: var(--bg-primary-color);
+  --desktop-max-height: 84vh;
+  --2k-max-height: 70vh;
+  --header-bg-max-height: 768px;
+  --header-bg-min-height: 500px;
+  --social-icons-width: 100px;
+  --social-icons-height: 38px;
+  --logo-width: 500px;
+  --logo-height: 75px;
+  --spotify-min-width: 415px;
+  --spotify-height: 80px;
+
+  @include breakpoint(mobile) {
+    --header-bg-max-height: unset;
+  }
+}
+.sq {
+  &-bg {
+    width: 100%;
+    height: var(--full-height);
+    color: #fff;
+    background-image: var(--header-background-image);
+    background-position: center 10%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
+    max-height: var(--header-bg-max-height);
+    min-height: var(--header-bg-min-height);
+
+    &-video {
+      position: absolute;
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+      z-index: 0;
+      top: 0;
+      left: 50%;
+      transform: translate(-50%);
+      object-position: center 30%;
+    }
+    &:before {
+      content: "";
+      display: block;
+      height: 100%;
+      width: 100%;
+      background: alpha(var(--header-bg-color), 0.4);
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    &:after {
+      content: "";
+      display: block;
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(
+        0deg,
+        alpha(var(--header-bg-color), 0) 39.81%,
+        alpha(var(--header-bg-color), 0.8) 100%
+      );
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+    }
+  }
+
+  &-platforms-icons {
+    margin-top: 36px;
+    width: 100%;
+    flex: 1;
+    .sq-button {
+      margin: 0 10px;
+
+      .sq-logo {
+        background-repeat: no-repeat;
+        background-position: center;
+        height: var(--social-icons-height);
+        width: var(--social-icons-width);
+        transition: background-size 0.1s cubic-bezier(0.4, 0, 1, 1);
+      }
+
+      &:hover {
+        .sq-logo {
+          background-size: contain;
+        }
+      }
+    }
+  }
+
+  &-logo {
+    flex: 8;
+    display: flex;
+    align-items: flex-end;
+    &-image {
+      width: var(--logo-width);
+      height: var(--logo-height);
+      margin: 0 auto;
+      background-image: var(--logo-image);
+      background-repeat: no-repeat;
+      background-size: contain;
+      transition: all 0.25s linear;
+    }
+  }
+
+  &-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px;
+    box-sizing: border-box;
+    border-radius: 3px;
+    text-align: center;
+    cursor: pointer;
+    background-color: transparent;
+    text-transform: none;
+    text-decoration: none;
+    transition: box-shadow 0.15s ease-out;
+  }
+
+  &-spotify-wrapper {
+    min-width: var(--spotify-min-width);
+    flex: 2;
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-end;
+    padding-bottom: 42px;
+    iframe {
+      height: var(--spotify-height);
+    }
+  }
+
+  @include from(desktop-l) {
+    &-bg {
+      max-height: var(--desktop-max-height);
+    }
+  }
+
+  @include from(2k) {
+    &-bg {
+      max-height: var(--2k-max-height);
+    }
+  }
+}

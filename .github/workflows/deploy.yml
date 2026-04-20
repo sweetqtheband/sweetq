@@ -42,6 +42,7 @@ jobs:
               echo "API_INSTAGRAM=${{ vars.API_INSTAGRAM }}"
               echo "GRAPH_INSTAGRAM=${{ vars.GRAPH_INSTAGRAM }}"
               echo "API_INSTAGRAM_VERSION=${{ vars.API_INSTAGRAM_VERSION }}"
+              echo "PLACES_API_KEY=${{ secrets.PLACES_API_KEY }}"
               echo "NODE_ENV=${{ vars.NODE_ENV }}"
               echo "NEXT_PUBLIC_URL=${{ vars.NEXT_PUBLIC_URL }}"
               echo "NEXT_PUBLIC_API_URI=${{ vars.NEXT_PUBLIC_API_URI }}"
@@ -52,6 +53,7 @@ jobs:
               echo "NEXT_PUBLIC_INSTAGRAM_ID=${{ vars.NEXT_PUBLIC_INSTAGRAM_ID }}"
               echo "NEXT_PUBLIC_INSTAGRAM_USERNAME=${{ vars.NEXT_PUBLIC_INSTAGRAM_USERNAME }}"
               echo "NEXT_PUBLIC_INSTAGRAM_REDIRECT_URI=${{ vars.NEXT_PUBLIC_INSTAGRAM_REDIRECT_URI }}"
+              echo "NEXT_PUBLIC_EMBED_MAPS_API_KEY=${{ vars.NEXT_PUBLIC_EMBED_MAPS_API_KEY }}"
             } > .env.production
             rm -Rf /var/www/sweetq/dist /var/www/sweetq/www
             docker-compose down --remove-orphans

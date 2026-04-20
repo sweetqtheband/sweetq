@@ -1,0 +1,54 @@
+@import "./fonts.scss";
+@import "./icons.scss";
+
+:root {
+  --bg-primary-color: #121619;
+  --bg-secondary-color: #16181a;
+  --bg-tertiary-color: #282c33;
+  --text-primary-color: #ffffff;
+  --text-secondary-color: #e3e6ea;
+  --section-padding-top: 80px;
+  --section-padding-bottom: 80px;
+  --section-padding-horizontal: 20px;
+  --wrapper-width: 1200px;
+  --font-family-primary: interstate-light;
+}
+
+.sq {
+  &-wrapper {
+    max-width: var(--wrapper-width);
+    height: 100%;
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-evenly;
+    align-items: center;
+    z-index: 3;
+  }
+
+  &-section {
+    padding: var(--section-padding-top) var(--section-padding-horizontal)
+      var(--section-padding-bottom);
+    box-sizing: border-box;
+  }
+  &-subtitle {
+    color: var(--text-secondary-color);
+    font-family: var(--font-family-primary);
+    font-size: 36px;
+    text-transform: uppercase;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

@@ -29,7 +29,7 @@ const getTranslations = (translations: any[] = []) => {
   };
 };
 
-export default async function () {
+export default async function FollowersByStatePage() {
   const response = await Dashboard.getFollowersByState();
 
   const translations = getTranslations(response.translations);

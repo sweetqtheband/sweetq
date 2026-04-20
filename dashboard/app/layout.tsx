@@ -1,12 +1,11 @@
 export const dynamic = "force-dynamic";
 
 import RootView from "./view";
-import "./reset.css";
-import "./globals.scss";
 import { Config } from "./services/config";
 import i18n from "@/app/services/translate";
+import "./reset.scss";
+import "./globals.scss";
 
-// app/layout.tsx (Servidor)
 export async function generateMetadata() {
   await i18n.init();
 

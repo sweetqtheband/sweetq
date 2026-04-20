@@ -11,6 +11,7 @@ type Model = {
   map?: string;
   event?: string;
   tickets?: string;
+  published?: boolean;
 };
 export const Model = (data: any): Model => {
   const obj = {
@@ -38,6 +39,10 @@ export const Model = (data: any): Model => {
   }
   if (data.tickets) {
     obj.tickets = String(data.tickets);
+  }
+
+  if (data.published !== undefined) {
+    obj.published = Boolean(data.published);
   }
 
   return obj;

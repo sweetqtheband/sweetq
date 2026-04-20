@@ -6,6 +6,7 @@ type Model = {
   cover: string;
   video: string;
   status: string;
+  published?: boolean;
 };
 export const Model = (data: any): Model => {
   const obj = {
@@ -19,6 +20,10 @@ export const Model = (data: any): Model => {
 
   if (data._id) {
     obj._id = String(data._id);
+  }
+
+  if (data.published !== undefined) {
+    obj.published = Boolean(data.published);
   }
 
   return obj;

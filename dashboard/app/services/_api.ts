@@ -39,7 +39,7 @@ export const getAll = async (
     const limit =
       searchParams.limit !== undefined ? Number(searchParams.limit) : config.table.limit;
     const currentPage = searchParams.page !== undefined ? Number(searchParams.page) : 0;
-    const query = searchParams.query !== undefined ? String(searchParams.query) : "";
+    const query = searchParams.query !== undefined ? JSON.stringify(searchParams.query) : "";
     const sort = searchParams.sort !== undefined ? String(searchParams.sort) : "";
     const sortDir = searchParams.sortDir !== undefined ? String(searchParams.sortDir) : "";
     const cursor = limit * currentPage;

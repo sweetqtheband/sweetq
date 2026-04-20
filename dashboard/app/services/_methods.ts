@@ -7,8 +7,8 @@ export const onSave = async (
   instance: AxiosInstance,
   router: any,
   data: any,
-  files: any,
-  batch: boolean = false
+  files?: any,
+  batch?: boolean
 ) => {
   const formData = getFormData(data, files);
 
@@ -57,4 +57,10 @@ export const getMethods = (instance?: any, router?: any): Record<string, any> =>
   onCopy: (data: any) => onCopy(instance, router, data),
   onListSave: (value: string) => onSave(instance, router, { name: value }, {}),
   onFilterSave: Filters.getMethods(router).onSave,
+  onSort: (ids: string[]) => {
+    ids.forEach((data: any, index: number) => {
+      onSave(instance, router, { ...data, ordering: index });
+    });
+    return true;
+  },
 });

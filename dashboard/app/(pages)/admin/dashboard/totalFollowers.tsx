@@ -155,7 +155,7 @@ const getFollowerTypes = (response: Record<string, any>) => {
   };
 };
 
-export default async function () {
+export default async function TotalFollowersPage() {
   const response = await Dashboard.getTotalFollowers();
 
   const translations = getTranslations(response.translations);

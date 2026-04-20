@@ -38,6 +38,24 @@ export const BaseSvc = (model: Collection<Document>, Model: Function) => {
       });
       return obj;
     },
+
+    /**
+     * Prepare input for storing in the database
+     * @param item
+     * @returns
+     */
+    async prepare(item: Record<string, any>) {
+      const obj = { ...item.value };
+      Object.keys(item.value).forEach((key) => {
+        if (item.value[key] === undefined) {
+          delete item.value[key];
+        }
+        if (item.value[key] instanceof File) {
+          obj[key] = item.value[key].name;
+        }
+      });
+      return Model(obj);
+    },
   };
 
   return {
@@ -50,7 +68,7 @@ export const BaseSvc = (model: Collection<Document>, Model: Function) => {
       return obj;
     },
     create: async (item: Record<string, any>) => {
-      const obj = { ...item };
+      const obj = await instance.prepare({ value: { ...item } });
       const dbResult = await instance.model.insertOne(obj);
 
       const created = await instance.model.findOne({
@@ -61,7 +79,7 @@ export const BaseSvc = (model: Collection<Document>, Model: Function) => {
     },
     update: async (item: Record<string, any>, avoidUnset: Boolean = false) => {
       const dbObj = await instance.getById(item._id);
-      const obj = await instance.parse({ value: { ...item } });
+      const obj = await instance.prepare({ value: { ...item } });
 
       delete obj._id;
 

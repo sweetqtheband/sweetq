@@ -28,8 +28,10 @@ export function useEventBus(channel: string) {
       console.log("Retrying connection...");
       connect(); // Intentar reconectar
     }, 3000); // Reintentar cada 3 segundos
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const connect = useCallback(() => {
     if (eventSourceRef.current) {
       eventSourceRef.current.close(); // Cerrar cualquier conexión previa
@@ -63,7 +65,8 @@ export function useEventBus(channel: string) {
         console.error("Failed to parse event:", event.data);
       }
     };
-  }, [retryConnection]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Conectar al iniciar el componente
   useEffect(() => {

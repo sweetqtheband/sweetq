@@ -1,0 +1,10 @@
+@use "@scss/mixins" as *;
+
+.sq {
+  &-videos {
+    --section-padding-top: 70px;
+    --section-padding-bottom: 0px;
+    --section-padding-horizontal: 30px;
+    background-color: var(--bg-tertiary-color);
+  }
+}

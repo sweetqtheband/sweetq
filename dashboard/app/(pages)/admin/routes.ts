@@ -47,6 +47,10 @@ export const routes: Route[] = [
         path: "/admin/routes",
       },
       {
+        text: "social-networks",
+        path: "/admin/social-networks",
+      },
+      {
         text: "tags",
         path: "/admin/tags",
       },
