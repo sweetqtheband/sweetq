@@ -152,11 +152,11 @@
     "lyrics": "Letra"
   },
   "video": {
-    "sacameabailar": {
+    "quieromas": {
       "button": "Ver en Youtube",
-      "subtitle": "Sácame a bailar",
-      "text": "No te pierdas el lyric video de nuestro último single 'Sácame a bailar'. Lánzate sin miedo hacia lo desconocido, coge tus cascos, cierra los ojos y dejate llevar..",
-      "title": "Nuevo lyric video"
+      "subtitle": "Nuevo videoclip",
+      "text": "Hay momentos en los que sientes que necesitas más. Más ilusión. Más intentos. Más vida. Si no eres de los que te conformas con lo preestablecido, ¡no te pierdas nuestro nuevo videoclip!",
+      "title": "Quiero más"
     }
   },
   "videoLabel": {
@@ -168,7 +168,8 @@
     "losiento": "Vídeo - Lo siento, pero no",
     "nohabriasidoasi": "Vídeo - No habría sido así",
     "quevamosahacer": "Vídeo - ¿Qué vamos a hacer?",
-    "sacameabailar": "Lyric video - Sácame a bailar"
+    "sacameabailar": "Lyric video - Sácame a bailar",
+    "quieromas": "Vídeo - Quiero más"
   },
   "videos": "Vídeos"
 }

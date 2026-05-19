@@ -8,12 +8,12 @@
     "type": "info cover quesolonosquedeganar"
   },
   {
-    "button": "video.sacameabailar.button",
+    "button": "video.quieromas.button",
     "icon": "icon-youtube",
-    "subtitle": "video.sacameabailar.subtitle",
-    "text": "video.sacameabailar.text",
-    "title": "video.sacameabailar.title",
-    "type": "info video sacameabailar",
-    "youtubeHref": "https://www.youtube.com/watch?v=z0qzpXxHj8k"
+    "subtitle": "video.quieromas.subtitle",
+    "text": "video.quieromas.text",
+    "title": "video.quieromas.title",
+    "type": "info video quieromas",
+    "youtubeHref": "https://www.youtube.com/watch?v=_4V9ZS51sok"
   }
 ]
