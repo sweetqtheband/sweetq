@@ -228,7 +228,9 @@ sweetq-gigs {
   box-shadow: inset 0 0 1px 0 #24aeb8;
 }
 .sq-button.line-blue:hover {
-  box-shadow: inset 0 0 1px 0 #24aeb8, 0 0 0 3px rgba(36, 174, 184, 0.3);
+  box-shadow:
+    inset 0 0 1px 0 #24aeb8,
+    0 0 0 3px rgba(36, 174, 184, 0.3);
 }
 .sq-button.line-blue .sq-icon {
   color: #24aeb8;
@@ -569,6 +571,10 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
 
 .sq-section.notice.video.sacameabailar .sq-image.image-cover {
   background-image: url("../imgs/youtube/videoclips/sacameabailar.webp");
+}
+
+.sq-section.notice.video.quieromas .sq-image.image-cover {
+  background-image: url("../imgs/youtube/videoclips/quieromas.webp");
 }
 
 .sq-section.notice.video.fiestas-arganzuela .column-left {

@@ -176,5 +176,17 @@
     "bands": [41],
     "event": null,
     "tickets": "https://ticketandroll.com/evento/sweet-q-vortice-cero-en-sala-hangar-48"
+  },
+  {
+    "id": 16,
+    "date": "2026-07-11",
+    "city": "Caleruega (Burgos)",
+    "hour": "Noche",
+    "venue": "Lavanda Fest",
+    "address": "Festival Gratuito",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5946.339917672811!2d-3.486637!3d41.82463824999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd443463b4dc5f4b%3A0xf15cdd84d90aa72!2s09451%20Caleruega%2C%20Burgos!5e0!3m2!1ses!2ses!4v1779218536752!5m2!1ses!2ses",
+    "bands": [],
+    "event": "https://www.enaranda.es/evento/lavanda-fest-en-caleruega-julio-2026/",
+    "tickets": null
   }
 ]

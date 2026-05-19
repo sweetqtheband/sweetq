@@ -151,11 +151,11 @@
     "lyrics": "Lyrics"
   },
   "video": {
-    "sacameabailar": {
+    "quieromas": {
       "button": "Watch on YouTube",
-      "subtitle": "Sácame a bailar",
-      "text": "Don't miss the lyric video of our latest single 'Sácame a bailar'. Throw yourself fearlessly into the unknown, grab your headphones, close your eyes, and let yourself go..",
-      "title": "New lyric video"
+      "subtitle": "New music video",
+      "text": "There are moments when you feel you need more. More excitement. More attempts. More life. If you're not one to settle for the pre-established, don't miss our new music video!",
+      "title": "Quiero más"
     }
   },
   "videoLabel": {
@@ -167,7 +167,8 @@
     "losiento": "Video - Lo siento, pero no",
     "nohabriasidoasi": "Video - No habría sido así",
     "quevamosahacer": "Video - ¿Qué vamos a hacer?",
-    "sacameabailar": "Lyric video - Sácame a bailar"
+    "sacameabailar": "Lyric video - Sácame a bailar",
+    "quieromas": "Video - Quiero más"
   },
   "videos": "Videos"
 }
