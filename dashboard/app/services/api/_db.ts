@@ -157,10 +157,11 @@ export const getList = async ({
       },
       {}
     );
+    const customFilters: Record<string, any> =
+      typeof params.filter === "object"
+        ? Object.keys((params.filter as Record<string, any>) || {})
+        : [];
 
-    const customFilters: Record<string, any> = Object.keys(
-      (params.filter as Record<string, any>) || {}
-    );
     if (customFilters.length > 0) {
       customFilters.forEach((key: string) => {
         const filterValue = (params.filter as Record<string, any>)?.[key];

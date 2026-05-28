@@ -87,6 +87,7 @@ export async function GET(req: NextRequest) {
       },
     ];
   }
+
   return Response.json(
     await getList({
       req,
