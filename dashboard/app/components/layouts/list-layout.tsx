@@ -7,6 +7,7 @@ import { EMPTY_ARRAY, EMPTY_OBJECT, NOOP, NOOP_ASYNC, SIZES } from "@/app/consta
 import ListTable from "./list-table";
 import ListPanel from "./list-panel";
 import "./list.scss";
+import { NavigationProvider } from "@/app/providers/navigation";
 
 interface ListLayoutProps {
   items?: any[];
@@ -115,30 +116,30 @@ function ListLayoutComponent({
       const index = prevItems.findIndex((i: Record<string, any>) => i.id === item.id);
 
       if (index >= 0) {
-      newItems[index] = {
-        ...prevItems[index],
-        ...Object.keys(item).reduce((acc: Record<string, any>, key) => {
-          if (filters?.[key]?.fields?.options?.[key]?.options) {
-            const opts = filters[key].fields.options[key].options;
-            if (Array.isArray(item[key])) {
-              acc[key] = item[key].map(
-                (val) => opts.find((o: any) => String(o.id) === String(val))?.value || val
-              );
+        newItems[index] = {
+          ...prevItems[index],
+          ...Object.keys(item).reduce((acc: Record<string, any>, key) => {
+            if (filters?.[key]?.fields?.options?.[key]?.options) {
+              const opts = filters[key].fields.options[key].options;
+              if (Array.isArray(item[key])) {
+                acc[key] = item[key].map(
+                  (val) => opts.find((o: any) => String(o.id) === String(val))?.value || val
+                );
+              } else {
+                acc[key] =
+                  opts.find((o: any) => String(o.id) === String(item[key]))?.value || item[key];
+              }
             } else {
-              acc[key] =
-                opts.find((o: any) => String(o.id) === String(item[key]))?.value || item[key];
+              acc[key] = item[key];
             }
-          } else {
-            acc[key] = item[key];
-          }
-          return acc;
-        }, {}),
-      };
-    } else {
-      newItems.unshift(item);
-    }
+            return acc;
+          }, {}),
+        };
+      } else {
+        newItems.unshift(item);
+      }
 
-    return newItems;
+      return newItems;
     },
     [filters]
   );
@@ -219,7 +220,7 @@ function ListLayoutComponent({
   }, [memoItems, setIsLoadingHandler]);
 
   return (
-    <>
+    <NavigationProvider>
       <ListTable
         id={id}
         items={parsedItems}
@@ -267,7 +268,7 @@ function ListLayoutComponent({
         setOpen={setOpen}
         CONSTANTS={memoCONSTANTS}
       />
-    </>
+    </NavigationProvider>
   );
 }
 
