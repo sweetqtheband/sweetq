@@ -7,8 +7,6 @@ import { ERRORS, FIELD_TYPES, HTTP_STATUS_CODES, SORT } from "@/app/constants";
 import { FactorySvc } from "@/app/services/api/factory";
 import { formDataToObject } from "@/app/utils";
 import qs from "qs";
-import { Types } from "../bands";
-import path from "path/win32";
 
 let _db: Db | null = null;
 let _client: MongoClient | null = null;
@@ -157,10 +155,11 @@ export const getList = async ({
       },
       {}
     );
+    const customFilters: Record<string, any> =
+      typeof params.filter === "object"
+        ? Object.keys((params.filter as Record<string, any>) || {})
+        : [];
 
-    const customFilters: Record<string, any> = Object.keys(
-      (params.filter as Record<string, any>) || {}
-    );
     if (customFilters.length > 0) {
       customFilters.forEach((key: string) => {
         const filterValue = (params.filter as Record<string, any>)?.[key];
