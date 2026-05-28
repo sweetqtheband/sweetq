@@ -71,7 +71,15 @@ export async function GET(req: NextRequest) {
     filters.push({ unfollow: false });
   }
 
-  const query = qp.get("query");
+  let query = qp.get("query") || "";
+
+  // Remove quotes if they exist
+  if (
+    (query !== "" && query.startsWith('"') && query.endsWith('"')) ||
+    (query !== "" && query.startsWith("'") && query.endsWith("'"))
+  ) {
+    query = query.slice(1, -1);
+  }
 
   if (filters.length > 0) {
     queryObj.$and = filters;
