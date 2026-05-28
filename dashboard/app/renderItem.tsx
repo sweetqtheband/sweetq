@@ -61,7 +61,12 @@ const renderInstagramMessage = (obj: any) => {
   return <LogoWechat size={ICON_SIZES.LG} />;
 };
 
+const renderPercentage = (obj: any) => {
+  return `${obj.value ?? 0}%`;
+};
+
 const renderers = {
+  [RENDER_TYPES.PERCENTAGE]: renderPercentage,
   [RENDER_TYPES.BOOLEAN]: renderBoolean,
   [RENDER_TYPES.COLOR]: renderColor,
   [RENDER_TYPES.TAG]: renderTag,

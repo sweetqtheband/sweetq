@@ -7,7 +7,7 @@ import useTableRenderComplete from "@/app/hooks/table";
 import { renderField } from "@/app/render";
 import { renderItem } from "@/app/renderItem";
 import { breakpoint, s3File, uuid } from "@/app/utils";
-import type { SizeType } from "@/types/size.d";
+import type { SizeType } from "@/types/size";
 import { DataTable, DataTableRow, Table, TableContainer } from "@carbon/react";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -196,9 +196,20 @@ function ListTableContent({
 
         const defaultValue = item?.relations?.[fieldName]?.[translations.locale] || fieldValue;
 
-        let value = translations.options?.[fieldName]
-          ? translations.options?.[fieldName][fieldValue]
-          : defaultValue;
+        // Try to find label with case-insensitive lookup for select fields
+        let value = defaultValue;
+        if (translations.fieldValueLabels?.[fieldName]) {
+          // First try exact match
+          value =
+            translations.fieldValueLabels[fieldName][fieldValue] ||
+            // Then try uppercase
+            translations.fieldValueLabels[fieldName][String(fieldValue).toUpperCase()] ||
+            // Then try lowercase
+            translations.fieldValueLabels[fieldName][String(fieldValue).toLowerCase()] ||
+            value;
+        } else if (translations.options?.[fieldName]?.[fieldValue]) {
+          value = translations.options[fieldName][fieldValue];
+        }
 
         if (renders[fieldName]) {
           const func =
@@ -440,7 +451,16 @@ function ListTableContent({
       setIsLoading(false);
       setIsWaiting(false);
     }, idle);
-  }, [searchParams, pathname, replace, onFiltering, setIsLoading, setIsWaiting, getFilters, setCurrentPage]);
+  }, [
+    searchParams,
+    pathname,
+    replace,
+    onFiltering,
+    setIsLoading,
+    setIsWaiting,
+    getFilters,
+    setCurrentPage,
+  ]);
 
   useEffect(() => {
     if (!fromFilter && Object.keys(formState).length > 0) {
@@ -503,10 +523,13 @@ function ListTableContent({
     [clearField, formState, setIsLoading, setIsWaiting]
   );
 
-  const handleFilterRemove = useCallback((field: any) => {
-    setClearField(field);
-    return handleFilter(field, null);
-  }, [handleFilter, setClearField]);
+  const handleFilterRemove = useCallback(
+    (field: any) => {
+      setClearField(field);
+      return handleFilter(field, null);
+    },
+    [handleFilter, setClearField]
+  );
 
   const handleFilterInternalState = useCallback(
     (field: string, value: any) => {
@@ -536,11 +559,7 @@ function ListTableContent({
         };
 
         return (
-          <TableContainer
-            title={translations.title}
-            description={translations.description}
-            {...getTableContainerProps()}
-          >
+          <TableContainer {...getTableContainerProps()}>
             <ListTableToolbar
               {...getToolbarProps()}
               translations={translations}

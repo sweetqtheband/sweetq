@@ -3,11 +3,11 @@
 import config from "@/app/config";
 import useTableRenderComplete from "@/app/hooks/table";
 import { breakpoint, getClasses, s3File, uuid } from "@/app/utils";
-import type { SizeType } from "@/types/size.d";
+import type { SizeType } from "@/types/size";
 import { Dropdown, Modal, PaginationNav, Stack } from "@carbon/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { DndContext, closestCenter } from "@dnd-kit/core";
+import { DndContext, PointerSensor, closestCenter, useSensor, useSensors } from "@dnd-kit/core";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { EMPTY_ARRAY, EMPTY_OBJECT, NOOP, NOOP_ASYNC, NOOP_LOADING } from "@/app/constants";
 import ListTableContent from "./table/content";
@@ -295,10 +295,18 @@ function ListTable(props: Readonly<ListTableProps>) {
     setSortedItems(items);
   }, [items]);
 
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 5,
+      },
+    })
+  );
+
   return (
     <div className={classes} ref={tableRef} onKeyDown={handleEscapeKey}>
       {canSort ? (
-        <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+        <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} sensors={sensors}>
           <SortableContext
             items={sortedItems.map((item) => item.id || item._id)}
             strategy={verticalListSortingStrategy}

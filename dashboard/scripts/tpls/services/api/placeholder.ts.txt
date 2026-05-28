@@ -1,10 +1,10 @@
-import { Model } from '@/app/models/{{plural}}';
+import { {{entity}} } from '@/app/models/{{camelCasePlural}}';
 import { BaseSvc } from './_base';
 import { Collection, Document } from 'mongodb';
 
 /**
  * {{entity}} service
  */
-export const {{plural}}Svc = (collection: Collection<Document>) => ({
-  ...BaseSvc(collection, Model),
+export const {{entity}}Svc = (collection: Collection<Document>) => ({
+  ...BaseSvc(collection, {{entity}}),
 });

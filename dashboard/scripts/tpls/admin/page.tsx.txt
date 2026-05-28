@@ -1,5 +1,5 @@
-import { {{entity}} } from '@/app/services/{{plural}}';
-import type { {{type}} } from '@/types/{{singular}}';
+import { {{entity}} } from '@/app/services/{{camelCasePlural}}';
+import type { {{type}} } from '@/types/{{camelCaseSingular}}';
 import i18n from '@/app/services/translate';
 import {{entity}}View from './view';
 import { getTranslation } from '@/app/services/_list';
@@ -12,8 +12,10 @@ export default async function {{entity}}Page({
   const data = await {{entity}}.getAll(searchParams);
   const items: {{type}}[] = await {{entity}}.parseAll(data.items);
 
+  // TODO: Personaliza los headers según los campos de tu entidad
   const headers = [
     { key: 'name', header: i18n.t('fields.name'), default: true },
+    // { key: 'field2', header: i18n.t('fields.field2') },
   ];
 
   const translations = {

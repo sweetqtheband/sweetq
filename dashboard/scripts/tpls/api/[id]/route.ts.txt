@@ -1,4 +1,4 @@
-import { Options as options, Types as types } from '@/app/services/{{plural}}';
+import { Options as options, Types as types } from '@/app/services/{{camelCasePlural}}';
 import { NextRequest } from 'next/server';
 import { corsOptions, deleteItem, putItem } from '@/app/services/api/_db';
 import { ERRORS, HTTP_STATUS_CODES } from '@/app/constants';

@@ -1,15 +1,21 @@
-type Model = {
+// TODO: Personaliza este modelo según los campos de tu entidad
+// Asegúrate de validar cada propiedad según su tipo
+type {{entity}} = {
   _id: string;
-  name: string;
+  // name: string; // Ejemplo de campo
 };
-export const Model = (data: any): Model => {
-  const obj = {
-    name: String(data.name),
-  } as Model;
+
+export const {{entity}} = (data: any): {{entity}} => {
+  const obj = {} as {{entity}};
 
   if (data._id) {
     obj._id = String(data._id);
   }
-	
+
+  // TODO: Añade validaciones para cada campo
+  // if (data.name) {
+  //   obj.name = String(data.name);
+  // }
+
   return obj;
 };

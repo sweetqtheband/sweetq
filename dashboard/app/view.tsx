@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
 import { WindowContext } from "./context";
+import { ToastProvider } from "./context/ToastContext";
+import { ToastContainer } from "./components/toast-container";
 import { getClasses, isMobile } from "./utils";
 
 export default function RootView({ children }: { children: React.ReactNode }) {
@@ -46,8 +48,13 @@ export default function RootView({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <WindowContext.Provider value={windowState}>
-      <div className={classes}>{children}</div>
-    </WindowContext.Provider>
+    <ToastProvider>
+      <WindowContext.Provider value={windowState}>
+        <div className={classes}>
+          <ToastContainer />
+          {children}
+        </div>
+      </WindowContext.Provider>
+    </ToastProvider>
   );
 }

@@ -1,0 +1,21 @@
+// TODO: Personaliza este modelo según los campos de tu entidad
+// Asegúrate de validar cada propiedad según su tipo
+type FinanceConcepts = {
+  _id: string;
+  // name: string; // Ejemplo de campo
+};
+
+export const FinanceConcepts = (data: any): FinanceConcepts => {
+  const obj = {} as FinanceConcepts;
+
+  if (data._id) {
+    obj._id = String(data._id);
+  }
+
+  // TODO: Añade validaciones para cada campo
+  // if (data.name) {
+  //   obj.name = String(data.name);
+  // }
+
+  return obj;
+};

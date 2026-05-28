@@ -137,6 +137,7 @@
     "password": "Contraseña",
     "path": "Ruta",
     "pendingMessages": "Mensajes pendientes",
+    "percentage": "Porcentaje",
     "profile": "Tipo de usuario",
     "published": "Publicado",
     "robots": "Robots",
@@ -174,6 +175,250 @@
     },
     "withoutTags": "Sin etiquetas"
   },
+  "finance": {
+    "title": "Finanzas",
+    "description": "Gesiona gastos, ingresos y repartos de beneficios",
+    "sections": "Secciones de finanzas",
+    "tabs": {
+      "expenses": "Gastos",
+      "incomes": "Ingresos",
+      "summary": "Resumen"
+    },
+    "buttons": {
+      "newExpense": "+ Nuevo Gasto",
+      "newIncome": "+ Nuevo Ingreso",
+      "edit": "✏️ Editar",
+      "delete": "🗑️ Eliminar",
+      "viewDistribution": "📊 Ver Distribución",
+      "createExpense": "Crear Gasto",
+      "createIncome": "Crear Ingreso",
+      "registerPayment": "Registrar Pago",
+      "detail": "Detalle"
+    },
+    "messages": {
+      "loading": "Cargando...",
+      "deleteExpenseConfirm": "¿Eliminar este gasto? Se perderán todos los pagos asociados.",
+      "deleteIncomeConfirm": "¿Eliminar este ingreso? Se perderá la distribución asociada.",
+      "distributionNotCalculated": "Distribución no calculada aún"
+    },
+    "errors": {
+      "createExpense": "Error al crear gasto",
+      "updateExpense": "Error al actualizar gasto",
+      "deleteExpense": "Error al eliminar gasto",
+      "createIncome": "Error al crear ingreso",
+      "updateIncome": "Error al actualizar ingreso",
+      "deleteIncome": "Error al eliminar ingreso",
+      "registerPayment": "Error al registrar pago",
+      "unknown": "Error desconocido"
+    },
+    "table": {
+      "expenses": {
+        "name": "Nombre",
+        "type": "Tipo",
+        "total": "Total",
+        "percentage": "% Cobrado",
+        "pending": "Pendiente",
+        "status": "Estado",
+        "actions": "Acciones",
+        "add": "Añadir Gasto"
+      },
+      "incomes": {
+        "name": "Nombre",
+        "source": "Fuente",
+        "amount": "Monto",
+        "date": "Fecha",
+        "concept": "Concepto",
+        "actions": "Acciones",
+        "viewDistribution": "Ver Distribución",
+        "add": "Añadir Ingreso"
+      }
+    },
+    "panels": {
+      "createExpense": {
+        "title": "➕ Crear Nuevo Gasto",
+        "editTitle": "✏️ Editar Gasto",
+        "creatingAs": "Creando como:",
+        "labels": {
+          "name": "Nombre del Gasto *",
+          "type": "Tipo de Gasto *",
+          "concept": "Concepto (vinculado a ingresos) *",
+          "totalAmount": "Monto Total € *",
+          "percentage": "% a Cobrar (0-100) *",
+          "valueDate": "Fecha Contable (opcional)",
+          "description": "Descripción (opcional)"
+        },
+        "placeholders": {
+          "name": "Ej: Alquiler Sala Black Bourbon",
+          "concept": "Ej: Concierto Black Bourbon"
+        },
+        "types": {
+          "operational": "Operativo",
+          "core": "Núcleo"
+        },
+        "help": {
+          "toCharge": "A cobrar:"
+        },
+        "buttons": {
+          "create": "Crear Gasto",
+          "update": "Actualizar"
+        }
+      },
+      "createIncome": {
+        "title": "➕ Crear Nuevo Ingreso",
+        "editTitle": "✏️ Editar Ingreso",
+        "creatingAs": "Creando como:",
+        "labels": {
+          "name": "Nombre del Ingreso *",
+          "concept": "Concepto *",
+          "amount": "Monto € *",
+          "source": "Fuente",
+          "receivedAt": "Fecha de Recepción *",
+          "valueDate": "Fecha Contable (opcional)",
+          "description": "Descripción (opcional)"
+        },
+        "placeholders": {
+          "name": "Ej: Concierto Black Bourbon",
+          "concept": "Ej: Concierto Black Bourbon",
+          "source": "Ej: Sala Black, Festival, Contrato"
+        },
+        "buttons": {
+          "create": "Crear Ingreso",
+          "update": "Actualizar"
+        }
+      },
+      "payment": {
+        "title": "Registrar Pago",
+        "labels": {
+          "paidBy": "¿Quién paga?",
+          "amount": "¿Cuánto paga? (máximo: {quota}€)",
+          "paidTo": "¿Quién adelantó? (opcional)"
+        },
+        "placeholders": {
+          "selectUser": "Selecciona un usuario",
+          "noPaid": "Nadie (pago normal)"
+        },
+        "info": "Se registrará: {user} paga {amount}€{credit}"
+      },
+      "detail": {
+        "buttons": {
+          "registerPayment": "Registrar Pago",
+          "viewHistory": "Ver Historial",
+          "detail": "Detalle"
+        },
+        "sections": {
+          "obligations": "Obligaciones Individuales",
+          "table": {
+            "user": "Usuario",
+            "quota": "Cuota",
+            "paid": "Pagado",
+            "pending": "Pendiente",
+            "status": "Estado",
+            "total": "TOTAL"
+          }
+        }
+      },
+      "registerPayment": {
+        "title": "💳 Registrar Pago",
+        "expense": "Gasto:",
+        "total": "Total:",
+        "toCharge": "A Cobrar",
+        "labels": {
+          "amount": "Monto a Registrar € *",
+          "method": "Método de Pago *",
+          "paymentDate": "Fecha de Pago *",
+          "reference": "Referencia (opcional)"
+        },
+        "placeholders": {
+          "reference": "Número de transferencia, recibo, etc."
+        },
+        "methods": {
+          "transfer": "Transferencia",
+          "cash": "Efectivo",
+          "card": "Tarjeta",
+          "other": "Otro"
+        },
+        "buttons": {
+          "register": "Registrar Pago"
+        }
+      },
+      "summary": {
+        "title": "💰 Resumen de Balances",
+        "subtitle": "Consolidado de todas las distribuciones",
+        "sections": {
+          "balanceByMember": "Balance por Miembro",
+          "stats": "Estadísticas",
+          "distributions": "Detalle de Distribuciones"
+        },
+        "table": {
+          "headers": {
+            "user": "Usuario",
+            "debtCoverage": "Cobertura Deuda",
+            "coreReservation": "Reserva Núcleo",
+            "equalShare": "Parte Igual",
+            "variableShare": "Parte Variable",
+            "total": "Total"
+          },
+          "memberType": {
+            "core": "🔴 CORE",
+            "operative": "🔵 OPERATIVE"
+          },
+          "noDistributions": "No hay distribuciones registradas"
+        },
+        "cards": {
+          "toDistribute": "Total a Distribuir",
+          "distributionsProcessed": "Distribuciones Procesadas",
+          "coreMembers": "Miembros Núcleo",
+          "operativeMembers": "Miembros Operativos"
+        },
+        "distribution": {
+          "debtCovered": "Deuda Cubierta:",
+          "coreReservation": "Reserva Núcleo",
+          "netBenefit": "Beneficio Neto:"
+        }
+      },
+      "distributionDetail": {
+        "title": "Distribución:",
+        "closeButton": "Cerrar",
+        "phases": {
+          "title": "📊 Fases de Distribución",
+          "phase1": "Fase 1: Cobertura de Deudas",
+          "phase2": "Fase 2: Reserva Núcleo",
+          "phase3": "Fase 3: Beneficio Neto"
+        },
+        "phase1": {
+          "totalDebtCovered": "Total Deuda Cubierta:",
+          "operationalExpense": "Gastos Operativos:"
+        },
+        "phase2": {
+          "reservedAmount": "Monto Reservado:",
+          "assignmentByMember": "Asignación por miembro núcleo:"
+        },
+        "phase3": {
+          "equalShare": "Parte Igual",
+          "variableShare": "Parte Variable"
+        },
+        "finalDistribution": {
+          "title": "💰 Distribución Final por Usuario",
+          "headers": {
+            "user": "Usuario",
+            "debtCoverage": "Deuda Cubierta",
+            "coreReservation": "Reserva Núcleo",
+            "equalShare": "Parte Igual",
+            "variableShare": "Parte Variable",
+            "total": "Total"
+          }
+        },
+        "distributionDate": "📝 Fecha de Distribución:"
+      }
+    },
+    "validation": {
+      "requiredFields": "Por favor completa los campos requeridos",
+      "completeFields": "Por favor completa todos los campos",
+      "userNotSelected": "Usuario financiero no seleccionado",
+      "amountGreaterThanZero": "El monto debe ser mayor a 0",
+      "expenseNotSelected": "No hay gasto seleccionado"
+    }
+  },
   "groups": {
     "header": "Cabecera",
     "metadata": "Metadatos"
@@ -187,6 +432,12 @@
       "gig": "Concierto",
       "news": "Noticia",
       "release": "Lanzamiento"
+    }
+  },
+  "operations": {
+    "types": {
+      "core": "Estratégico",
+      "operational": "Operativo"
     }
   },
   "pages": {
@@ -256,7 +507,11 @@
     "tags": "Etiquetas",
     "tracks": "Pistas",
     "users": "Usuarios",
-    "videos": "Vídeos"
+    "videos": "Vídeos",
+    "finance": "Finanzas",
+    "finance-concepts": "Conceptos",
+    "finance-operations": "Operaciones",
+    "finance-users": "Repartos"
   },
   "status": {
     "published": "Publicado",
@@ -288,5 +543,8 @@
     "videos": {
       "title": "Vídeos"
     }
+  },
+  "invalidMessages": {
+    "percentage": "El valor debe ser un número entre {{min}} y {{max}}"
   }
 }

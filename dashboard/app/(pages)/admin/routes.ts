@@ -28,6 +28,24 @@ export const routes: Route[] = [
     path: "/admin/bands",
   },
   {
+    text: "finance",
+    path: "/admin/finance",
+    children: [
+      {
+        text: "finance-operations",
+        path: "/admin/finance/operations",
+      },
+      {
+        text: "finance-users",
+        path: "/admin/finance/users",
+      },
+      {
+        text: "finance-concepts",
+        path: "/admin/finance/concepts",
+      },
+    ],
+  },
+  {
     text: "config",
     children: [
       {

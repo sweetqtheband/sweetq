@@ -108,6 +108,7 @@ export const IG = {
   EXPIRES: "instagram:expires",
 };
 export const RENDER_TYPES: Record<string, string> = {
+  PERCENTAGE: "percentage",
   BOOLEAN: "boolean",
   TAG: "tag",
   LINK: "link",

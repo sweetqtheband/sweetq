@@ -1,0 +1,142 @@
+.toast-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 9999;
+
+  .toast-stack {
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    pointer-events: auto;
+    max-width: 100%;
+
+    // Top positions
+    &.toast-top-right {
+      top: 1rem;
+      right: 1rem;
+      align-items: flex-end;
+
+      @media (max-width: 640px) {
+        right: 0.5rem;
+        left: 0.5rem;
+        max-width: calc(100% - 1rem);
+        align-items: stretch;
+      }
+    }
+
+    &.toast-top-left {
+      top: 1rem;
+      left: 1rem;
+      align-items: flex-start;
+
+      @media (max-width: 640px) {
+        right: 0.5rem;
+        left: 0.5rem;
+        max-width: calc(100% - 1rem);
+        align-items: stretch;
+      }
+    }
+
+    &.toast-top-center {
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      align-items: center;
+
+      @media (max-width: 640px) {
+        left: 0.5rem;
+        right: 0.5rem;
+        transform: none;
+        max-width: calc(100% - 1rem);
+        align-items: stretch;
+      }
+    }
+
+    // Bottom positions
+    &.toast-bottom-right {
+      bottom: 1rem;
+      right: 1rem;
+      align-items: flex-end;
+
+      @media (max-width: 640px) {
+        right: 0.5rem;
+        left: 0.5rem;
+        max-width: calc(100% - 1rem);
+        align-items: stretch;
+      }
+    }
+
+    &.toast-bottom-left {
+      bottom: 1rem;
+      left: 1rem;
+      align-items: flex-start;
+
+      @media (max-width: 640px) {
+        right: 0.5rem;
+        left: 0.5rem;
+        max-width: calc(100% - 1rem);
+        align-items: stretch;
+      }
+    }
+
+    &.toast-bottom-center {
+      bottom: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      align-items: center;
+
+      @media (max-width: 640px) {
+        left: 0.5rem;
+        right: 0.5rem;
+        transform: none;
+        max-width: calc(100% - 1rem);
+        align-items: stretch;
+      }
+    }
+  }
+
+  .toast-item {
+    animation: slideIn 0.3s ease-out;
+    max-width: 500px;
+    width: auto;
+
+    @media (max-width: 640px) {
+      width: 100%;
+      max-width: none;
+    }
+
+    // Ensure InlineNotification doesn't overflow
+    :deep(.cds--inline-notification) {
+      width: 100%;
+      word-wrap: break-word;
+      word-break: break-word;
+    }
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}

@@ -3,17 +3,18 @@ import { BaseList } from "./_list";
 import { FIELD_TYPES } from "../constants";
 import { onDelete, onSave } from "./_methods";
 
+// TODO: Personaliza los tipos de campo según tu entidad
 export const Types = {
   _id: FIELD_TYPES.HIDDEN,
-  name: FIELD_TYPES.TEXT,
+  // name: FIELD_TYPES.TEXT, // Ejemplo de campo
 };
 
 export const Options = {};
 
-// Fields
+// TODO: Personaliza los títulos de campo según tu entidad
 const fields = {
   titles: {
-    name: 'fields.name',
+    // name: 'fields.name', // Ejemplo
   },
   types: Types,
   options: Options,
@@ -30,20 +31,19 @@ const getOptions = async (params: any = {}) => {
       ...(await {{entity}}.getAll(params, true)).items.map(
         (item: Record<string, string>) => ({
           id: item._id,
-          value: item.name,
+          value: item.name, // TODO: Cambia 'name' por el campo que desees mostrar
         })
       ),
     ],
   };
 };
 
+const client = axios.create({
+  baseURL: `${process.env.NEXT_PUBLIC_API_URI}/{{plural}}`,
+});
 
 export const {{entity}} = {
-  ...BaseList(
-    axios.create({
-      baseURL: `${process.env.NEXT_PUBLIC_API_URI}/{{plural}}`,
-    })
-  ),
+  ...BaseList(client),
   fields,
   getOptions,
 };

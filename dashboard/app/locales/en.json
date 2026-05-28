@@ -136,6 +136,7 @@
     "password": "Password",
     "path": "Path",
     "pendingMessages": "Pending messages",
+    "percentage": "Percentage",
     "profile": "Profile",
     "published": "Published",
     "robots": "Robots",
@@ -172,6 +173,249 @@
       "notFollowing": "Not following"
     },
     "withoutTags": "Without tags"
+  },
+  "finance": {
+    "title": "Finances",
+    "description": "Manage expenses, incomes and benefit distributions",
+    "sections": "Finance sections",
+    "tabs": {
+      "expenses": "Expenses",
+      "incomes": "Incomes",
+      "summary": "Summary"
+    },
+    "buttons": {
+      "newExpense": "+ New Expense",
+      "newIncome": "+ New Income",
+      "edit": "✏️ Edit",
+      "delete": "🗑️ Delete",
+      "viewDistribution": "📊 View Distribution",
+      "createExpense": "Create Expense",
+      "createIncome": "Create Income",
+      "registerPayment": "Register Payment"
+    },
+    "messages": {
+      "loading": "Loading...",
+      "deleteExpenseConfirm": "Delete this expense? All associated payments will be lost.",
+      "deleteIncomeConfirm": "Delete this income? The associated distribution will be lost.",
+      "distributionNotCalculated": "Distribution not calculated yet"
+    },
+    "errors": {
+      "createExpense": "Error creating expense",
+      "updateExpense": "Error updating expense",
+      "deleteExpense": "Error deleting expense",
+      "createIncome": "Error creating income",
+      "updateIncome": "Error updating income",
+      "deleteIncome": "Error deleting income",
+      "registerPayment": "Error registering payment",
+      "unknown": "Unknown error"
+    },
+    "table": {
+      "expenses": {
+        "name": "Name",
+        "type": "Type",
+        "total": "Total",
+        "percentage": "% Billed",
+        "pending": "Pending",
+        "status": "Status",
+        "actions": "Actions",
+        "add": "Add Expense"
+      },
+      "incomes": {
+        "name": "Name",
+        "source": "Source",
+        "amount": "Amount",
+        "date": "Date",
+        "concept": "Concept",
+        "actions": "Actions",
+        "viewDistribution": "View Distribution",
+        "add": "Add Income"
+      }
+    },
+    "panels": {
+      "createExpense": {
+        "title": "➕ Create New Expense",
+        "editTitle": "✏️ Edit Expense",
+        "creatingAs": "Creating as:",
+        "labels": {
+          "name": "Expense Name *",
+          "type": "Expense Type *",
+          "concept": "Concept (linked to incomes) *",
+          "totalAmount": "Total Amount € *",
+          "percentage": "% to Charge (0-100) *",
+          "valueDate": "Accounting Date (optional)",
+          "description": "Description (optional)"
+        },
+        "placeholders": {
+          "name": "E.g: Rent Black Bourbon Room",
+          "concept": "E.g: Black Bourbon Concert"
+        },
+        "types": {
+          "operational": "Operational",
+          "core": "Core"
+        },
+        "help": {
+          "toCharge": "To charge:"
+        },
+        "buttons": {
+          "create": "Create Expense",
+          "update": "Update"
+        }
+      },
+      "createIncome": {
+        "title": "➕ Create New Income",
+        "editTitle": "✏️ Edit Income",
+        "creatingAs": "Creating as:",
+        "labels": {
+          "name": "Income Name *",
+          "concept": "Concept *",
+          "amount": "Amount € *",
+          "source": "Source",
+          "receivedAt": "Reception Date *",
+          "valueDate": "Accounting Date (optional)",
+          "description": "Description (optional)"
+        },
+        "placeholders": {
+          "name": "E.g: Black Bourbon Concert",
+          "concept": "E.g: Black Bourbon Concert",
+          "source": "E.g: Black Room, Festival, Contract"
+        },
+        "buttons": {
+          "create": "Create Income",
+          "update": "Update"
+        }
+      },
+      "payment": {
+        "title": "Register Payment",
+        "labels": {
+          "paidBy": "Who pays?",
+          "amount": "How much pays? (maximum: {quota}€)",
+          "paidTo": "Who advanced? (optional)"
+        },
+        "placeholders": {
+          "selectUser": "Select a user",
+          "noPaid": "No one (normal payment)"
+        },
+        "info": "Will be registered: {user} pays {amount}€{credit}"
+      },
+      "detail": {
+        "buttons": {
+          "registerPayment": "Register Payment",
+          "viewHistory": "View History",
+          "detail": "Detail"
+        },
+        "sections": {
+          "obligations": "Individual Obligations",
+          "table": {
+            "user": "User",
+            "quota": "Quota",
+            "paid": "Paid",
+            "pending": "Pending",
+            "status": "Status",
+            "total": "TOTAL"
+          }
+        }
+      },
+      "registerPayment": {
+        "title": "💳 Register Payment",
+        "expense": "Expense:",
+        "total": "Total:",
+        "toCharge": "To Charge",
+        "labels": {
+          "amount": "Amount to Register € *",
+          "method": "Payment Method *",
+          "paymentDate": "Payment Date *",
+          "reference": "Reference (optional)"
+        },
+        "placeholders": {
+          "reference": "Transfer number, receipt, etc."
+        },
+        "methods": {
+          "transfer": "Transfer",
+          "cash": "Cash",
+          "card": "Card",
+          "other": "Other"
+        },
+        "buttons": {
+          "register": "Register Payment"
+        }
+      },
+      "summary": {
+        "title": "💰 Balance Summary",
+        "subtitle": "Consolidated from all distributions",
+        "sections": {
+          "balanceByMember": "Balance by Member",
+          "stats": "Statistics",
+          "distributions": "Distribution Details"
+        },
+        "table": {
+          "headers": {
+            "user": "User",
+            "debtCoverage": "Debt Coverage",
+            "coreReservation": "Core Reserve",
+            "equalShare": "Equal Share",
+            "variableShare": "Variable Share",
+            "total": "Total"
+          },
+          "memberType": {
+            "core": "🔴 CORE",
+            "operative": "🔵 OPERATIVE"
+          },
+          "noDistributions": "No distributions registered"
+        },
+        "cards": {
+          "toDistribute": "Total to Distribute",
+          "distributionsProcessed": "Distributions Processed",
+          "coreMembers": "Core Members",
+          "operativeMembers": "Operative Members"
+        },
+        "distribution": {
+          "debtCovered": "Debt Covered:",
+          "coreReservation": "Core Reserve",
+          "netBenefit": "Net Benefit:"
+        }
+      },
+      "distributionDetail": {
+        "title": "Distribution:",
+        "closeButton": "Close",
+        "phases": {
+          "title": "📊 Distribution Phases",
+          "phase1": "Phase 1: Debt Coverage",
+          "phase2": "Phase 2: Core Reserve",
+          "phase3": "Phase 3: Net Benefit"
+        },
+        "phase1": {
+          "totalDebtCovered": "Total Debt Covered:",
+          "operationalExpense": "Operational Expenses:"
+        },
+        "phase2": {
+          "reservedAmount": "Reserved Amount:",
+          "assignmentByMember": "Assignment by core member:"
+        },
+        "phase3": {
+          "equalShare": "Equal Share",
+          "variableShare": "Variable Share"
+        },
+        "finalDistribution": {
+          "title": "💰 Final Distribution by User",
+          "headers": {
+            "user": "User",
+            "debtCoverage": "Debt Coverage",
+            "coreReservation": "Core Reserve",
+            "equalShare": "Equal Share",
+            "variableShare": "Variable Share",
+            "total": "Total"
+          }
+        },
+        "distributionDate": "📝 Distribution Date:"
+      }
+    },
+    "validation": {
+      "requiredFields": "Please complete the required fields",
+      "completeFields": "Please complete all fields",
+      "userNotSelected": "Finance user not selected",
+      "amountGreaterThanZero": "Amount must be greater than 0",
+      "expenseNotSelected": "No expense selected"
+    }
   },
   "groups": {
     "header": "Header",
@@ -256,7 +500,11 @@
     "tags": "Tags",
     "tracks": "Tracks",
     "users": "Users",
-    "videos": "Videos"
+    "videos": "Videos",
+    "finance": "Finance",
+    "finance-concepts": "Concepts",
+    "finance-operations": "Operations",
+    "finance-users": "Shares"
   },
   "status": {
     "published": "Published",
@@ -288,5 +536,8 @@
     "videos": {
       "title": "Videos"
     }
+  },
+  "invalidMessages": {
+    "percentage": "The value must be a number between {{min}} and {{max}}"
   }
 }

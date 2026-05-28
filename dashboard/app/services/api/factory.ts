@@ -19,6 +19,9 @@ import { configSvc } from "./config";
 import { routesSvc } from "./routes";
 import { socialNetworksSvc } from "./socialNetworks";
 import { camelCase } from "@/app/utils";
+import { FinanceUsersSvc } from "./financeUsers";
+import { FinanceOperationsSvc } from "./financeOperations";
+import { FinanceConceptsSvc } from "./financeConcepts";
 import { filtersSvc } from "./filters";
 type FactoryType = {
   [key: string]: (collection: Collection<Document>) => any;
@@ -45,6 +48,9 @@ let factory: FactoryType = {
   userProfiles: userProfilesSvc,
   users: usersSvc,
   socialNetworks: socialNetworksSvc,
+  financeUsers: FinanceUsersSvc,
+  financeOperations: FinanceOperationsSvc,
+  financeConcepts: FinanceConceptsSvc,
 };
 
 export const FactorySvc = (collectionName: string, collection: Collection<Document>) =>

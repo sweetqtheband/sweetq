@@ -48,6 +48,20 @@ export const getTranslations = (i18n: any, instance: Record<string, any>) => ({
       }),
       {}
     ),
+  messages: Object.keys(instance?.fields?.messages || {})
+    .filter((field) => instance.fields.messages[field])
+    .reduce(
+      (messages, field) => ({
+        ...messages,
+        [field]: Object.keys(instance?.fields.messages[field] || {}).reduce((acc, key) => {
+          return {
+            ...acc,
+            [key]: i18n.t(instance.fields.messages[field][key]),
+          };
+        }, {}),
+      }),
+      {}
+    ),
 });
 
 export const getTranslation = (i18n: any, key: string) => i18n.t(key, { returnObjects: true });

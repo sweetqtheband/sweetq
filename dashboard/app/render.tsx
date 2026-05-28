@@ -12,6 +12,7 @@ import {
   FormItem,
   IconButton,
   Loading,
+  NumberInput,
   PasswordInput,
   SelectItem,
   Stack,
@@ -176,6 +177,54 @@ const renderTextInput = ({
             onInputHandler: onLanguageChangeHandler,
           } as Field)
         : null}
+    </div>
+  );
+};
+
+// Number input field
+const renderNumberInput = ({
+  field,
+  value,
+  fields,
+  translations,
+  formState,
+  internalState,
+  onInputHandler,
+  onInternalStateHandler,
+}: Field) => {
+  const inputValue = formState?.[field] || value;
+
+  const onChangeHandler = (field: string, value: number) => {
+    onInternalStateHandler(field, value);
+    onInputHandler(field, value);
+  };
+  const min = fields?.options[field]?.min;
+  const max = fields?.options[field]?.max;
+  let invalidText =
+    translations?.messages?.[field]?.invalidText ||
+    FIELD_DEFAULTS?.number?.invalidText ||
+    "Invalid value";
+
+  console.log(translations);
+
+  if (min !== undefined && max !== undefined) {
+    invalidText = invalidText.replace("{{min}}", String(min)).replace("{{max}}", String(max));
+  }
+  return (
+    <div className="cds--number-input__field-outer-wrapper">
+      <NumberInput
+        key={field}
+        id={field}
+        label={translations.fields[field]}
+        value={(inputValue as string) || ""}
+        onChange={(_: any, state: any) => onChangeHandler(field, state.value)}
+        readOnly={fields?.options[field]?.readOnly}
+        max={fields?.options[field]?.max}
+        min={fields?.options[field]?.min}
+        step={fields?.options[field]?.step}
+        allowEmpty={fields?.options[field]?.allowEmpty}
+        invalidText={invalidText}
+      ></NumberInput>
     </div>
   );
 };
@@ -1231,6 +1280,7 @@ const renderers = {
   [FIELD_TYPES.PLACE_SEARCH]: renderPlaceSearcher,
   [FIELD_TYPES.SELECT]: renderSelect,
   [FIELD_TYPES.TEXT]: renderTextInput,
+  [FIELD_TYPES.NUMBER]: renderNumberInput,
   [FIELD_TYPES.TEXTAREA]: renderTextArea,
   [FIELD_TYPES.TEXT_MAP]: renderTextMap,
   [FIELD_TYPES.VIDEO_UPLOADER]: renderUploader,
