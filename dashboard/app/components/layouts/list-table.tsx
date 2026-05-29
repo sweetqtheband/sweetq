@@ -75,7 +75,7 @@ function ListTable(props: Readonly<ListTableProps>) {
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false);
   const [fitTable, setFitTable] = useState(false);
   const [itemsShown, setItemsShown] = useState(config.table.shown);
-  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<number>(Number(searchParams.get("page")) || 0);
   const [sortedItems, setSortedItems] = useState<any[]>(items);
   const { setIsNavigating } = useNavigation();
 

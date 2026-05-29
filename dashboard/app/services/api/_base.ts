@@ -54,7 +54,7 @@ export const BaseSvc = (model: Collection<Document>, Model: Function) => {
           obj[key] = item.value[key].name;
         }
       });
-      return Model(obj);
+      return Model(obj, true);
     },
   };
 
