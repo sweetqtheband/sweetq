@@ -11,7 +11,7 @@ const routes: Routes = [
     path: 'callback',
     loadChildren: () =>
       import('@views/callback/callback.module').then(
-        (m) => m.CallbackViewModule
+        (m) => m.CallbackViewModule,
       ),
   },
   {
@@ -33,7 +33,7 @@ const routes: Routes = [
     path: 'smart-link/:track',
     loadChildren: () =>
       import('@views/smart-link/smart-link.module').then(
-        (m) => m.SmartLinkViewModule
+        (m) => m.SmartLinkViewModule,
       ),
   },
   {
@@ -41,14 +41,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('@views/album/album.module').then((m) => m.AlbumViewModule),
   },
-  {
-    path: '404',
-    loadChildren: () =>
-      import('@views/not-found/not-found.module').then(
-        (m) => m.NotFoundViewModule
-      ),
-  },
-  { path: '**', redirectTo: '/404' },
+  { path: '**', redirectTo: '/' },
 ];
 
 @NgModule({

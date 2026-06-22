@@ -22,10 +22,10 @@
   },
   {
     "button": "secondary",
-    "icon": "icon-gigs",
-    "link": "https://ticketandroll.com/evento/sweet-q-vortice-cero-en-sala-hangar-48",
-    "text": "links.gigs.20260313",
-    "type": "gig"
+    "icon": "icon-youtube",
+    "link": "https://www.youtube.com/watch?v=_4V9ZS51sok",
+    "text": "links.youtube.quieromas",
+    "type": "youtube"
   },
   {
     "button": "secondary",

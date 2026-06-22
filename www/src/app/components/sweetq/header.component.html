@@ -1,4 +1,5 @@
 <div class="sq-bg">
+  <!--
   <video
     class="sq-bg-video"
     [autoplay]="true"
@@ -6,38 +7,22 @@
     [loop]="true"
     [src]="videoUrl"
   ></video>
+-->
   <div class="sq-wrapper">
     <div class="sq-platforms-icons">
-      <a
-        [target]="target"
-        [href]="links.youtubeMusic"
-        class="sq-button sq-youtube-music {{ release ? '' : 'disabled' }}"
-        title="Youtube Music"
-      >
+      <a [target]="target" [href]="links.youtubeMusic"
+        class="sq-button sq-youtube-music {{ release ? '' : 'disabled' }}" title="Youtube Music">
         <span class="sq-logo logo-youtube-music"></span>
       </a>
-      <a
-        [target]="target"
-        [href]="links.spotify"
-        class="sq-button {{ release ? '' : 'disabled' }}"
-        title="Spotify"
-      >
+      <a [target]="target" [href]="links.spotify" class="sq-button {{ release ? '' : 'disabled' }}" title="Spotify">
         <span class="sq-logo logo-spotify"></span>
       </a>
-      <a
-        [target]="target"
-        [href]="links.appleMusic"
-        class="sq-button sq-apple-music {{ release ? '' : 'disabled' }}"
-        title="Apple Music"
-      >
+      <a [target]="target" [href]="links.appleMusic" class="sq-button sq-apple-music {{ release ? '' : 'disabled' }}"
+        title="Apple Music">
         <span class="sq-logo logo-apple-music"></span>
       </a>
-      <a
-        [target]="target"
-        [href]="links.amazon"
-        class="sq-button sq-amazon {{ release ? '' : 'disabled' }}"
-        title="Amazon"
-      >
+      <a [target]="target" [href]="links.amazon" class="sq-button sq-amazon {{ release ? '' : 'disabled' }}"
+        title="Amazon">
         <span class="sq-logo logo-amazon"></span>
       </a>
     </div>
@@ -47,16 +32,9 @@
       </div>
     </h1>
     <div class="sq-ep sq-hero" *ngIf="!release"></div>
-    <div class="sq-platforms">  
-      <iframe
-        style="border-radius: 12px"
-        [src]="embedUrl | safe"
-        width="100%"
-        frameBorder="0"
-        allowfullscreen=""
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        loading="lazy"
-      ></iframe>
+    <div class="sq-platforms">
+      <iframe style="border-radius: 12px" [src]="embedUrl | safe" width="100%" frameBorder="0" allowfullscreen=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
   </div>
 </div>

@@ -10,6 +10,18 @@ export class SweetQGigComponent {
 
   constructor() {}
 
+  get hasTickets(): boolean {
+    return (
+      (this.gig.event || this.gig.tickets) &&
+      !this.gig.expired &&
+      this.gig.tickets !== 'free'
+    );
+  }
+
+  get isFree(): boolean {
+    return this.gig.tickets === 'free';
+  }
+
   showModalHandler(gig: any): void {
     this.showModal.emit(gig);
   }

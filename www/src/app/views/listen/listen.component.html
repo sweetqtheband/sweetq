@@ -5,16 +5,17 @@
   </div>
   <div class="listen--viewport">
     <div class="listen--content">
-      <div class="listen--wrapper">       
-        <div class="listen--panels">          
+      <div class="listen--wrapper">
+        <div class="listen--panels">
           <div class="listen--panel video" [class]="{'playing': isPlaying}" [style]="{'max-height': maxHeight}">
             <header>
-              <div class="image"></div><h1>Sweet Q</h1>
-            </header>            
+              <div class="image"></div>
+              <h1>Sweet Q</h1>
+            </header>
             <section class="video-wrapper">
               <button class="close-button" *ngIf="isPlaying" role="button" (click)="closePanel()"></button>
               <div class="loader" *ngIf="showLoader"></div>
-              <div class="player default" *ngIf="!isInit">                
+              <div class="player default" *ngIf="!isInit">
                 <video [autoplay]="true" [muted]="true" [loop]="true" height="100%" #video>
                   <source [src]="loadVideo" type="video/mp4">
                 </video>
@@ -25,7 +26,7 @@
               <div class="player" *ngIf="items.length > 0">
                 <player type="canvas" [track]="item" *ngFor="let item of items" [tid]="tid"></player>
               </div>
-            </section>          
+            </section>
           </div>
           <div class="listen--panel releases">
             <header>
@@ -33,10 +34,10 @@
               <h1>Sweet Q</h1>
             </header>
             <section class="next-releases">
-              <sweetq-albums (onPlay)="openPanel()" *ngIf="items.length > 0" [items]="albums.released" [initial-id]="initialId"
-                title="{{'albums.released' | translate}}"></sweetq-albums>
-              <sweetq-albums (onPlay)="openPanel()" *ngIf="items.length > 0" [items]="albums.upcoming" [initial-id]="initialId"
-                title="{{'albums.upcoming' | translate}}"></sweetq-albums>
+              <sweetq-albums (onPlay)="openPanel()" *ngIf="items.length > 0" [items]="albums.released"
+                [initial-id]="initialId" title="{{'albums.released' | translate}}"></sweetq-albums>
+              <sweetq-albums (onPlay)="openPanel()" *ngIf="items.length > 0" [items]="albums.upcoming"
+                [initial-id]="initialId" title="{{'albums.upcoming' | translate}}"></sweetq-albums>
             </section>
           </div>
         </div>
