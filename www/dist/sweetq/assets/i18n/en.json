@@ -51,6 +51,7 @@
       "title": "Download our track '{{track}}'"
     }
   },
+  "freeGig": "Free access event",
   "gigs": {
     "20251025": {
       "button": "Buy tickets",
@@ -91,7 +92,7 @@
     "title": "Sweet Q",
     "whatsapp": "Join our WhatsApp channel",
     "youtube": {
-      "fiesta": "Music Video 'Fiesta'"
+      "quieromas": "Music Video 'Quiero más'"
     },
     "youtubeMusic": "Youtube Music"
   },

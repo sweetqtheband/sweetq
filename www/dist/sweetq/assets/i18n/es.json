@@ -51,6 +51,7 @@
       "title": "Descarga nuestro tema '{{track}}'"
     }
   },
+  "freeGig": "Evento gratuito",
   "gigs": {
     "20251025": {
       "button": "Link a entradas",
@@ -92,7 +93,7 @@
     "title": "Sweet Q",
     "whatsapp": "Únete al canal de WhatsApp",
     "youtube": {
-      "fiesta": "Videoclip 'Fiesta'"
+      "quieromas": "Videoclip 'Quiero más'"
     },
     "youtubeMusic": "Youtube Music"
   },

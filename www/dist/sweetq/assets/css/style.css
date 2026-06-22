@@ -767,6 +767,11 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   text-decoration: none;
   display: inline;
 }
+
+.gigs .sq-item .sq-item-data .sq-free-gig {
+  color: #96f0b6;
+}
+
 .gigs .sq-gigs-list .sq-item.old-gig {
   opacity: 0.3;
 }
@@ -824,6 +829,7 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   .sq-bg {
     background-image: url("../imgs/img-sweetq-mobile.webp");
     max-height: unset;
+    margin-bottom: -1px;
   }
 
   .sq-contact-icons {

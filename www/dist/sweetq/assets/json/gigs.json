@@ -179,14 +179,62 @@
   },
   {
     "id": 16,
-    "date": "2026-07-11",
+    "date": "2026-06-23 21:00",
+    "city": "Leganés (Madrid)",
+    "hour": "21:00",
+    "venue": "Fiestas de San Juan",
+    "address": "Plaza del Laberinto",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6556.966143722041!2d-3.75109232373841!3d40.34430177145136!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4189e3f60d0a2d%3A0xea1ce78fb343cd22!2sPlaza%20del%20Laberinto!5e1!3m2!1ses!2ses!4v1782116801069!5m2!1ses!2ses",
+    "bands": [],
+    "event": null,
+    "tickets": "free"
+  },
+  {
+    "id": 17,
+    "date": "2026-07-11 01:15",
     "city": "Caleruega (Burgos)",
-    "hour": "Noche",
+    "hour": "01:15",
     "venue": "Lavanda Fest",
     "address": "Festival Gratuito",
     "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5946.339917672811!2d-3.486637!3d41.82463824999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd443463b4dc5f4b%3A0xf15cdd84d90aa72!2s09451%20Caleruega%2C%20Burgos!5e0!3m2!1ses!2ses!4v1779218536752!5m2!1ses!2ses",
     "bands": [],
     "event": "https://www.enaranda.es/evento/lavanda-fest-en-caleruega-julio-2026/",
+    "tickets": "free"
+  },
+  {
+    "id": 17,
+    "date": "2026-09-05",
+    "city": "Benavente (Zamora)",
+    "hour": "Noche",
+    "venue": "Benafest",
+    "address": "Parque de las Pavas",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2965.157783403538!2d-5.6837214!3d41.9968892!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd384d705f232743%3A0xe797bebd3ae14c8e!2sLas%20Pavas%20GastroPark!5e0!3m2!1ses!2ses!4v1782118420261!5m2!1ses!2ses",
+    "bands": [],
+    "event": "https://www.enaranda.es/evento/lavanda-fest-en-caleruega-julio-2026/",
+    "tickets": "free"
+  },
+  {
+    "id": 18,
+    "date": "2026-09-12 20:30",
+    "city": "Zaragoza",
+    "hour": "20:30",
+    "venue": "Gira 'Que solo nos quede ganar': Zaragoza",
+    "address": "La Ley Seca",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6429.483202719367!2d-0.8921215120414465!3d41.638685297188694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd5914dfef515c11%3A0xb38d1cbb2a3e5706!2sLa%20Ley%20Seca%20-%20Sala%20de%20conciertos!5e1!3m2!1ses!2ses!4v1782119418673!5m2!1ses!2ses",
+    "bands": [42],
+    "event": null,
+    "tickets": null
+  },
+  {
+    "id": 19,
+    "date": "2027-04-24 21:00",
+    "city": "Murcia",
+    "hour": "21:00",
+    "venue": "Gira 'Que solo nos quede ganar': Murcia",
+    "address": "La Yesería",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3144.603894383379!2d-1.1276800238436449!3d37.986372371932795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd6382107d3f261f%3A0x768dd71b0413c518!2sLa%20Yeser%C3%ADa!5e0!3m2!1ses!2ses!4v1782120358187!5m2!1ses!2ses",
+    "bands": [9999],
+    "event": null,
     "tickets": null
   }
 ]
