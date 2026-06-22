@@ -1,3 +1,4 @@
+import { ButtonType } from "@/types/button";
 import { FieldTypesType } from "@/types/field-types";
 import { SizeType } from "@/types/size";
 
@@ -61,6 +62,12 @@ export const SIZES: Record<string, SizeType> = {
   MD: "md",
   LG: "lg",
   XL: "xl",
+};
+
+export const BUTTON_TYPES: Record<string, ButtonType> = {
+  PRIMARY: "primary",
+  SECONDARY: "secondary",
+  GHOST: "ghost",
 };
 
 export const SORT: Record<string, number> = {

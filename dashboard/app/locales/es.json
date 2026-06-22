@@ -417,6 +417,16 @@
       "userNotSelected": "Usuario financiero no seleccionado",
       "amountGreaterThanZero": "El monto debe ser mayor a 0",
       "expenseNotSelected": "No hay gasto seleccionado"
+    },
+    "routes": {
+      "dashboard": "Dashboard",
+      "fund": "Inversión",
+      "events": "Eventos"
+    },
+    "layout": {
+      "title": "Admin de banda",
+      "subtitle": "Gestión financiera",
+      "icon": "🎵"
     }
   },
   "groups": {
@@ -509,6 +519,7 @@
     "users": "Usuarios",
     "videos": "Vídeos",
     "finance": "Finanzas",
+    "finance-dashboard": "Panel de control",
     "finance-concepts": "Conceptos",
     "finance-operations": "Operaciones",
     "finance-users": "Repartos"

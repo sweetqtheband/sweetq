@@ -32,6 +32,10 @@ export const routes: Route[] = [
     path: "/admin/finance",
     children: [
       {
+        text: "finance-dashboard",
+        path: "/admin/finance",
+      },
+      {
         text: "finance-operations",
         path: "/admin/finance/operations",
       },

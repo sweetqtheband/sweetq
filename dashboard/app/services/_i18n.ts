@@ -64,4 +64,10 @@ export const getTranslations = (i18n: any, instance: Record<string, any>) => ({
     ),
 });
 
-export const getTranslation = (i18n: any, key: string) => i18n.t(key, { returnObjects: true });
+export const getTranslation = (i18n: any, key: string, keepKey = false) => {
+  let obj = i18n.t(key, { returnObjects: true });
+  if (keepKey) {
+    obj = Object.keys(obj).reduce((acc, k) => ({ ...acc, [`${key}.${k}`]: obj[k] || k }), {});
+  }
+  return obj;
+};

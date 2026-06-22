@@ -5,6 +5,7 @@ import { Config } from "./services/config";
 import i18n from "@/app/services/translate";
 import "./reset.scss";
 import "./globals.scss";
+import { TranslationProvider } from "./providers/translation";
 
 export async function generateMetadata() {
   await i18n.init();
@@ -16,7 +17,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="es">
       <body>
-        <RootView>{children}</RootView>
+        <TranslationProvider>
+          <RootView>{children}</RootView>
+        </TranslationProvider>
       </body>
     </html>
   );

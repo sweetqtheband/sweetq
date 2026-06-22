@@ -205,8 +205,6 @@ const renderNumberInput = ({
     FIELD_DEFAULTS?.number?.invalidText ||
     "Invalid value";
 
-  console.log(translations);
-
   if (min !== undefined && max !== undefined) {
     invalidText = invalidText.replace("{{min}}", String(min)).replace("{{max}}", String(max));
   }

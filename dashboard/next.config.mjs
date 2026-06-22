@@ -23,12 +23,28 @@ const nextConfig = {
   },
   webpack: (config) => {
     config.resolve.alias["@scss"] = "./app/scss";
+
+    config.module.rules.push({
+      test: /\.svg$/i,
+      issuer: /\.[jt]sx?$/,
+      use: ["@svgr/webpack"],
+    });
+
     return config;
   },
   experimental: {
     outputFileTracingExcludes: {
       "*": ["./updates/**", "./scripts/**"],
     },
+  },
+  async redirects() {
+    return [
+      {
+        source: "/admin/finance",
+        destination: "/admin/finance/dashboard",
+        permanent: true,
+      },
+    ];
   },
 };
 

@@ -189,6 +189,23 @@ export const camelCase = (str: string) =>
     .replace(/[-_](.)/g, (_, char) => char.toUpperCase())
     .replace(/^[A-Z]/, (char) => char.toLowerCase());
 
+export const pascalCase = (str: string) =>
+  str
+    .replace(/[-_](.)/g, (_, char) => char.toUpperCase())
+    .replace(/^[a-z]/, (char) => char.toUpperCase());
+
+export const snakeCase = (str: string) =>
+  str
+    .replace(/([a-z])([A-Z])/g, "$1_$2")
+    .replace(/[-\s]+/g, "_")
+    .toLowerCase();
+
+export const kebabCase = (str: string) =>
+  str
+    .replace(/([a-z])([A-Z])/g, "$1-$2")
+    .replace(/[_\s]+/g, "-")
+    .toLowerCase();
+
 export const t = (template: string, params: Record<string, any>) =>
   template.replace(/\{\{(\w+)\}\}/g, (_, key) => params[key] || `{{${key}}}`);
 

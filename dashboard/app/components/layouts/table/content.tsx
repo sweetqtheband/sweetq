@@ -1,20 +1,19 @@
 "use client";
 
 import Loader from "@/app/(pages)/admin/loading";
-import config from "@/app/config";
 import { ACTIONS, IMAGE_SIZES, SORT } from "@/app/constants";
 import useTableRenderComplete from "@/app/hooks/table";
-import { renderField } from "@/app/render";
 import { renderItem } from "@/app/renderItem";
 import { breakpoint, s3File, uuid } from "@/app/utils";
 import type { SizeType } from "@/types/size";
 import { DataTable, DataTableRow, Table, TableContainer } from "@carbon/react";
 import Image from "next/image";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import React, { MouseEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useContext, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import ListTableToolbar from "@/app/components/layouts/table/toolbar";
 import ListTableHead from "@/app/components/layouts/table/head";
 import ListTableBody from "@/app/components/layouts/table/body";
+import { useNavigation } from "@/app/providers/navigation";
 
 let filterTimeout: NodeJS.Timeout;
 
@@ -104,10 +103,16 @@ function ListTableContent({
     [items]
   );
 
+  const { isNavigating, finishNavigation } = useNavigation();
   const [internalState, setInternalState] = useState<Record<string, any>>({});
   const [formState, setFormState] = useState<Record<string, any>>({});
   const [filtering, setFiltering] = useState<boolean>(false);
   const [fromFilter, setFromFilter] = useState<boolean>(false);
+  const processFiltersRef = useRef<(() => void) | null>(null);
+  const finishNavigationRef = useRef<(() => void) | null>(null);
+  const previousFormStateRef = useRef<string>("");
+  const previousFromFilterRef = useRef<boolean>(false);
+
   const [canDelete, setCanDelete] = useState<boolean>(!noDelete);
   const [canCopy, _] = useState<boolean>(!noCopy);
   const [direction, setDirection] = useState(headers.map(() => "DESC"));
@@ -424,11 +429,27 @@ function ListTableContent({
     [formState, filters]
   );
 
+  const getFiltersRef = useRef(getFilters);
+  useEffect(() => {
+    getFiltersRef.current = getFilters;
+  }, [getFilters]);
+
+  // Store router values in refs to avoid recreating processFilters when they change
+  const searchParamsRef = useRef(searchParams);
+  const pathnameRef = useRef(pathname);
+  const replaceRef = useRef(replace);
+
+  useEffect(() => {
+    searchParamsRef.current = searchParams;
+    pathnameRef.current = pathname;
+    replaceRef.current = replace;
+  }, [searchParams, pathname, replace]);
+
   const processFilters = useCallback(() => {
-    const { idle, useFilters } = getFilters();
+    const { idle, useFilters } = getFiltersRef.current();
     clearTimeout(filterTimeout);
     filterTimeout = setTimeout(async () => {
-      const params = new URLSearchParams(searchParams);
+      const params = new URLSearchParams(searchParamsRef.current);
 
       // Fetch only once
       if (Object.keys(useFilters).length > 0) {
@@ -441,37 +462,52 @@ function ListTableContent({
       params.delete("page");
       setCurrentPage(0);
 
-      let newPath = pathname;
+      let newPath = pathnameRef.current;
 
       if (params.size > 0) {
         newPath += `?${params.toString()}`;
       }
 
-      replace(newPath);
+      replaceRef.current(newPath);
       setIsLoading(false);
       setIsWaiting(false);
     }, idle);
-  }, [
-    searchParams,
-    pathname,
-    replace,
-    onFiltering,
-    setIsLoading,
-    setIsWaiting,
-    getFilters,
-    setCurrentPage,
-  ]);
+  }, [onFiltering, setIsLoading, setIsWaiting, setCurrentPage]);
+
+  // Update refs when functions change
+  useEffect(() => {
+    processFiltersRef.current = processFilters;
+    finishNavigationRef.current = finishNavigation;
+  }, [processFilters, finishNavigation]);
 
   useEffect(() => {
+    const formStateString = JSON.stringify(formState);
+    const formStateChanged = formStateString !== previousFormStateRef.current;
+    const fromFilterChanged = fromFilter !== previousFromFilterRef.current;
+
+    // Only skip if both formState AND fromFilter haven't changed
+    if (!formStateChanged && !fromFilterChanged) {
+      return;
+    }
+
+    if (formStateChanged) {
+      previousFormStateRef.current = formStateString;
+    }
+    if (fromFilterChanged) {
+      previousFromFilterRef.current = fromFilter;
+    }
+
     if (!fromFilter && Object.keys(formState).length > 0) {
       setFromFilter(true);
     } else {
-      if (fromFilter) {
+      if (fromFilter && !isNavigating) {
         // We are gonna control idle state manually
-        processFilters();
+        processFiltersRef.current?.();
+      } else {
+        finishNavigationRef.current?.();
       }
     }
-  }, [formState, fromFilter, processFilters]);
+  }, [formState, fromFilter, isNavigating]);
 
   useEffect(() => {
     if (tableRef?.current && !fromFilter) {

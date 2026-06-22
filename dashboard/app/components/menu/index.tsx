@@ -26,6 +26,8 @@ import {
 import Image from "next/image";
 import { Power, UpdateNow } from "@carbon/react/icons";
 import { routes } from "@/app/(pages)/admin/routes";
+import { getClasses } from "@/app/utils";
+import { useMainView } from "@/app/providers/mainView";
 
 export default function MenuComponent({
   translations,
@@ -33,6 +35,8 @@ export default function MenuComponent({
   translations: Record<string, string>;
 }>) {
   const [needUpdate, setNeedUpdate] = useState(false);
+  const { hideMenu } = useMainView();
+
   const logoutHandler = () => {
     Auth.logout();
   };
@@ -67,8 +71,13 @@ export default function MenuComponent({
     );
   };
 
+  const classes = getClasses({
+    "menu-container": true,
+    "hide-menu": hideMenu,
+  });
+
   return (
-    <Theme theme="g100">
+    <Theme theme="g100" className={classes}>
       <HeaderContainer
         render={({
           isSideNavExpanded,

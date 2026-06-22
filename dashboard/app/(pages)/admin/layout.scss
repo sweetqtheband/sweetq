@@ -10,7 +10,7 @@ body {
   height: 100%;
   width: 100%;
 
-  &.with-menu {
+  &.with-menu:not(.hide-menu) {
     height: calc(100% - 48px);
     top: 48px;
     position: relative;

@@ -1,0 +1,17 @@
+@use "@scss/mixins" as *;
+
+.sq-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  stroke-width: 2 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+
+  svg {
+    width: 1em;
+    height: 1em;
+    fill: var(--icon-bg-color, transparent);
+    stroke: var(--icon-stroke-color, var(--light-text-color));
+  }
+}

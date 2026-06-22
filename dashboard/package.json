@@ -21,6 +21,7 @@
     "update": "pnpm run update:followers && pnpm run update:instagram && pnpm run update:catalog",
     "messages": "dotenv -e .env.production tsx updates/messages.ts",
     "sq": "node scripts/swq.js",
+    "icons": "npx tsx -- scripts/icons.ts",
     "expose": "ngrok http 3000  --url=overly-awaited-leech.ngrok-free.app"
   },
   "bin": {
@@ -66,6 +67,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.5",
+    "@svgr/webpack": "^8.1.0",
     "@types/node": "^20.19.13",
     "@types/react": "^18.3.24",
     "@types/react-dom": "^18.3.7",
@@ -82,6 +84,7 @@
     "prettier": "^3.6.2",
     "puppeteer": "^24.19.0",
     "sass": "^1.92.1",
+    "svgtofont": "^6.5.2",
     "ts-node": "^10.9.2",
     "tsx": "^4.20.5",
     "typescript": "^5.9.2",

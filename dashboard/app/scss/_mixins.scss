@@ -43,3 +43,7 @@
 @function alpha($color-var, $opacity) {
   @return unquote("color-mix(in srgb, #{$color-var} #{$opacity * 100}%, transparent)");
 }
+
+@function rem($pixels) {
+  @return calc($pixels / 16) * 1rem;
+}

@@ -62,7 +62,6 @@ export const getAll = async (
 
     if (!isBuild) {
       const response = await GET(client, "", params, cache ? cacheHeaders : {});
-
       return response.data;
     } else {
       return { items: [], total: 0, pages: 0 };

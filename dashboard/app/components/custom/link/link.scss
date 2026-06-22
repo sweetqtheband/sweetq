@@ -1,0 +1,38 @@
+.sq-button {
+  border-radius: var(--button-border-radius);
+  padding: var(--button-padding);
+  font-size: var(--button-font-size);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--padding);
+  cursor: pointer;
+
+  &[data-variant="primary"] {
+    --icon-bg-color: var(--button-primary-bg-color);
+    --icon-stroke-color: var(--button-primary-text-color);
+    background-color: var(--button-primary-bg-color);
+    color: var(--button-primary-text-color);
+  }
+  &[data-variant="secondary"] {
+    --icon-bg-color: var(--button-secondary-bg-color);
+    --icon-stroke-color: var(--button-secondary-text-color);
+    background-color: var(--button-secondary-bg-color);
+    color: var(--button-secondary-text-color);
+  }
+  &[data-variant="ghost"] {
+    --icon-bg-color: var(--button-ghost-bg-color);
+    --icon-stroke-color: var(--button-ghost-text-color);
+    background-color: var(--button-ghost-bg-color);
+    color: var(--button-ghost-text-color);
+  }
+
+  &[data-size="sm"] {
+    min-height: var(--button-sm-height);
+  }
+  &[data-size="md"] {
+    min-height: var(--button-md-height);
+  }
+  &[data-size="lg"] {
+    min-height: var(--button-lg-height);
+  }
+}

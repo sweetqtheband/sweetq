@@ -6,6 +6,7 @@ import i18n from "@/app/services/translate";
 import { routes } from "./routes";
 import { Route } from "@/types/route";
 import { Config } from "@/app/services/config";
+import { MainViewProvider } from "@/app/providers/mainView";
 
 export const metadata: Metadata = Object.assign(Config.faviconMetadata, {
   title: "Sweet Q Dashboard",
@@ -38,5 +39,9 @@ export default async function ViewportLayout({
 
   const translations = getTranslations(routes);
 
-  return <Main translations={translations}>{children}</Main>;
+  return (
+    <MainViewProvider translations={translations}>
+      <Main>{children}</Main>
+    </MainViewProvider>
+  );
 }

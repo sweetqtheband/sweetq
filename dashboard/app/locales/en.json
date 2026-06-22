@@ -26,7 +26,7 @@
     "selectAll": "Select all",
     "selectAllShort": "Sel. all",
     "selected": "Selected",
-    "selectedShort": "Sel.",
+    "selectdShort": "Sel.",
     "selecteds": "Selected",
     "selectedsShort": "Sel.",
     "sendMessage": "Send message",
@@ -130,6 +130,7 @@
     "limit": "Limit",
     "link": "Link",
     "linkType": "Link type",
+    "logo": "Logo",
     "map": "Google Maps embed URL",
     "name": "Name",
     "ordering": "Order",
@@ -191,7 +192,8 @@
       "viewDistribution": "📊 View Distribution",
       "createExpense": "Create Expense",
       "createIncome": "Create Income",
-      "registerPayment": "Register Payment"
+      "registerPayment": "Register Payment",
+      "detail": "Detail"
     },
     "messages": {
       "loading": "Loading...",
@@ -415,6 +417,16 @@
       "userNotSelected": "Finance user not selected",
       "amountGreaterThanZero": "Amount must be greater than 0",
       "expenseNotSelected": "No expense selected"
+    },
+    "routes": {
+      "dashboard": "Dashboard",
+      "fund": "Investments",
+      "events": "Events"
+    },
+    "layout": {
+      "title": "Band admin",
+      "subtitle": "Financial management",
+      "icon": "🎵"
     }
   },
   "groups": {
@@ -430,6 +442,12 @@
       "gig": "Gig",
       "news": "News",
       "release": "Release"
+    }
+  },
+  "operations": {
+    "types": {
+      "core": "Strategic",
+      "operational": "Operational"
     }
   },
   "pages": {
@@ -471,8 +489,7 @@
           "alias": "Short name"
         },
         "vars": "Variables"
-      },
-      "title": "Instagram"
+      }
     }
   },
   "panels": {
@@ -502,6 +519,7 @@
     "users": "Users",
     "videos": "Videos",
     "finance": "Finance",
+    "finance-dashboard": "Control panel",
     "finance-concepts": "Concepts",
     "finance-operations": "Operations",
     "finance-users": "Shares"

@@ -18,8 +18,9 @@
     display: flex;
     align-items: center;
     list-style-type: none;
+    gap: var(--menu-gap, calc(var(--padding) * 2));
     li {
-      padding: calc(var(--padding) * 2);
+      padding: var(--menu-li-padding, calc(var(--padding) * 2));
     }
   }
   img {
@@ -30,5 +31,26 @@
 
   .button {
     height: calc(calc(var(--controls-height) / 4) * 3);
+  }
+}
+
+.menu-container {
+  display: flex;
+  position: absolute;
+  z-index: 10;
+  width: 100%;
+  background-color: transparent;
+  &.hide-menu {
+    height: 4px;
+    &:hover {
+      height: var(--menu-height);
+      .cds--header {
+        transform: translateY(0);
+      }
+    }
+    .cds--header {
+      transform: translateY(-48px);
+      transition: transform 0.3s ease;
+    }
   }
 }

@@ -11,6 +11,7 @@ import { DndContext, PointerSensor, closestCenter, useSensor, useSensors } from 
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { EMPTY_ARRAY, EMPTY_OBJECT, NOOP, NOOP_ASYNC, NOOP_LOADING } from "@/app/constants";
 import ListTableContent from "./table/content";
+import { useNavigation } from "@/app/providers/navigation";
 
 let timeout: NodeJS.Timeout;
 
@@ -74,8 +75,9 @@ function ListTable(props: Readonly<ListTableProps>) {
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false);
   const [fitTable, setFitTable] = useState(false);
   const [itemsShown, setItemsShown] = useState(config.table.shown);
-  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<number>(Number(searchParams.get("page")) || 0);
   const [sortedItems, setSortedItems] = useState<any[]>(items);
+  const { setIsNavigating } = useNavigation();
 
   // Memoize computed values
   const tableRows = useMemo(
@@ -178,10 +180,11 @@ function ListTable(props: Readonly<ListTableProps>) {
 
       params.set("page", String(page));
       setCurrentPage(page);
+      setIsNavigating(true);
 
       replace(`${pathname}?${params.toString()}`);
     },
-    [searchParams, pathname, replace, setIsLoading, setIsWaiting]
+    [searchParams, pathname, replace, setIsLoading, setIsWaiting, setIsNavigating]
   );
 
   const resizeHandler = useCallback(() => {

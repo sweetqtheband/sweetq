@@ -1,0 +1,22 @@
+@use "@scss/mixins" as *;
+
+[data-theme="sweetq"] {
+  --layout-bg-primary: var(--light-bg-color);
+  --layout-bg-secondary: var(--dark-bg-color);
+  --button-border-radius: #{rem(10)};
+  --button-padding: #{rem(10)};
+  --button-font-size: #{rem(14)};
+  --button-sm-height: #{rem(32)};
+  --button-md-height: #{rem(40)};
+  --button-lg-height: #{rem(48)};
+  --layout-header-title-color: var(--dark-text-color);
+  --layout-header-subtitle-color: var(--dark-text-alt-color);
+
+  .sq-icon {
+    gap: rem(12);
+    svg {
+      width: rem(18);
+      height: rem(18);
+    }
+  }
+}
