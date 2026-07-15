@@ -1,0 +1,6 @@
+allowBuilds:
+  core-js: true
+  esbuild: true
+  fsevents: true
+  nice-napi: true
+  puppeteer: true
