@@ -144,6 +144,7 @@ sweetq-gigs {
   background-image: url("../imgs/logo-sweetq.svg");
   background-repeat: no-repeat;
   background-size: contain;
+  background-position: center;
   transition: all 0.25s linear;
 }
 
