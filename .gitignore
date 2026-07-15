@@ -1,0 +1,47 @@
+## Dependencies
+node_modules/
+**/node_modules/
+
+## Package manager / cache
+.pnpm-store/
+.npm/
+.yarn/
+
+## Build outputs
+dist/
+build/
+out/
+.next/
+**/.next/
+.angular/
+**/.angular/
+
+## Coverage / test artifacts
+coverage/
+**/coverage/
+
+## Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+## Environment files
+.env
+.env.*
+!.env.example
+
+## TypeScript cache
+*.tsbuildinfo
+
+## OS / editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+## Temporary files
+tmp/
+temp/
+*.tmp

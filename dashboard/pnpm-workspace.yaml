@@ -1,0 +1,22 @@
+allowBuilds:
+  '@carbon/charts': true
+  '@carbon/charts-react': true
+  '@carbon/colors': true
+  '@carbon/feature-flags': true
+  '@carbon/grid': true
+  '@carbon/icon-helpers': true
+  '@carbon/icons-react': true
+  '@carbon/layout': true
+  '@carbon/motion': true
+  '@carbon/react': true
+  '@carbon/styles': true
+  '@carbon/themes': true
+  '@carbon/type': true
+  '@carbon/utilities': true
+  '@carbon/utils-position': true
+  '@parcel/watcher': true
+  core-js: true
+  esbuild: true
+  puppeteer: true
+  sharp: true
+  unrs-resolver: true
