@@ -479,6 +479,7 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
 }
 .sq-aside-actions .sq-button {
   margin-left: 10px;
+  margin-right: 3px;
 }
 
 /* Kit notice */
@@ -959,6 +960,11 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
 
   .sq-platforms {
     min-width: calc(100% - 40px);
+  }
+
+  .sq-aside-actions .sq-button {
+    margin-left: 0px;
+    margin-right: 0px;
   }
 }
 
