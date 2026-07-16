@@ -21,6 +21,13 @@
     "type": "youtubeMusic"
   },
   {
+    "type": "gig",
+    "icon": "icon-gigs",
+    "text": "links.gigs.20260919",
+    "button": "secondary",
+    "link": "https://entradium.com/events/sweet-q-la-mujer-inversa-gira-que-solo-nos-quede-ganar"
+  },
+  {
     "button": "secondary",
     "icon": "icon-youtube",
     "link": "https://www.youtube.com/watch?v=_4V9ZS51sok",
