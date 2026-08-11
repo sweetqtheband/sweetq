@@ -7,7 +7,10 @@
     "venue": "Finales FIB Rising Stars",
     "address": "Sala Jerusalem",
     "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6160.416538768407!2d-0.3802138!3d39.4646234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd604f361ae0f8bb%3A0x781610caf591330d!2sSala%20Jerusalem!5e0!3m2!1ses!2ses!4v1719237598996!5m2!1ses!2ses",
-    "bands": [27, 28],
+    "bands": [
+      27,
+      28
+    ],
     "event": null,
     "tickets": null
   },
@@ -19,7 +22,9 @@
     "venue": "Brisa en tu barrio",
     "address": "Auditorio Playa Virginia",
     "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3198.169609473131!2d-4.351918899999999!3d36.718487599999996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd7259cc08a97bf7%3A0x8b3108e87faf015e!2sAuditorio%20Playa%20Virginia!5e0!3m2!1ses!2ses!4v1716888834754!5m2!1ses!2ses",
-    "bands": [26],
+    "bands": [
+      26
+    ],
     "event": null,
     "tickets": null
   },
@@ -43,7 +48,10 @@
     "venue": "IV Concurso de bandas de Vicálvaro",
     "address": "ReviLive",
     "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3038.3438392124685!2d-3.5935740877339737!3d40.40123307132298!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42251081e0ce13%3A0x978e66ebb6114cf8!2sReviLive!5e0!3m2!1ses!2ses!4v1728587869214!5m2!1ses!2ses",
-    "bands": [29, 30],
+    "bands": [
+      29,
+      30
+    ],
     "event": null,
     "tickets": null
   },
@@ -55,7 +63,12 @@
     "venue": "Guerra de bandas Festival Actual",
     "address": "Sala Fundición",
     "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5886.639821185906!2d-2.452277!3d42.4634843!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd5aab13050a6a71%3A0x5ee4c72f814ce70d!2sSala%20Fundici%C3%B3n!5e0!3m2!1ses!2ses!4v1733492292398!5m2!1ses!2ses",
-    "bands": [31, 32, 33, 34],
+    "bands": [
+      31,
+      32,
+      33,
+      34
+    ],
     "event": null,
     "tickets": null
   },
@@ -67,7 +80,10 @@
     "venue": "Vivo Back to Bands",
     "address": "Teatro Albéniz",
     "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1456.7144460404322!2d-3.7045900259373776!3d40.415239611497725!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42287e3452f6f1%3A0xdb0b8a0bc443290d!2sTeatro%20Alb%C3%A9niz!5e1!3m2!1ses!2ses!4v1741080208337!5m2!1ses!2ses",
-    "bands": [36, 37],
+    "bands": [
+      36,
+      37
+    ],
     "event": null,
     "tickets": "https://tickets.oneboxtds.com/umusichotelteatroalbeniz/select/2367122?viewCode=Vista_Principal"
   },
@@ -91,7 +107,9 @@
     "venue": "Vivo Back to Bands Semifinal II",
     "address": "Teatro Albéniz",
     "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1456.7144460404322!2d-3.7045900259373776!3d40.415239611497725!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42287e3452f6f1%3A0xdb0b8a0bc443290d!2sTeatro%20Alb%C3%A9niz!5e1!3m2!1ses!2ses!4v1741080208337!5m2!1ses!2ses",
-    "bands": [38],
+    "bands": [
+      38
+    ],
     "event": null,
     "tickets": "https://tickets.oneboxtds.com/umusichotelteatroalbeniz/select/2367128?viewCode=Vista_Principal"
   },
@@ -102,7 +120,9 @@
     "venue": "Valiente Bosque + Sweet Q",
     "address": "El Perro de la Parte de Atrás del Coche",
     "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.3947121181004!2d-3.706448922301062!3d40.422257971438725!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42287d45b7e65f%3A0xee76b4babb779be0!2sEl%20Perro%20de%20la%20Parte%20de%20Atr%C3%A1s%20del%20Coche!5e0!3m2!1ses!2ses!4v1711014732662!5m2!1ses!2ses",
-    "bands": [39],
+    "bands": [
+      39
+    ],
     "event": null,
     "tickets": "https://www.notikumi.com/channel/sweet-q/2025/6/14/valiente-bosque-sweet-q-en-madrid"
   },
@@ -161,7 +181,9 @@
     "venue": "Sweet Q + Lorreine",
     "address": "Vesta",
     "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4073.54559307776!2d-3.6956384!3d40.4229791!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42297c0e03ba33%3A0x28f0b82774563387!2sSALA%20VESTA!5e1!3m2!1ses!2ses!4v1759834021705!5m2!1ses!2ses",
-    "bands": [40],
+    "bands": [
+      40
+    ],
     "event": null,
     "tickets": "https://entradium.com/events/sweet-q-y-lorreine-en-vesta"
   },
@@ -173,7 +195,9 @@
     "venue": "<span>Concierto presentación </span><span>'Que solo nos quede ganar'</span>",
     "address": "Hangar 48",
     "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3271.2639418863473!2d-3.7166152238955417!3d40.4114033559634!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4227d815ce0229%3A0x4c666f48af6ec5ac!2sHangar%2048%20-%20Sala%20de%20conciertos%20y%20clubbing%20en%20Madrid!5e1!3m2!1ses!2ses!4v1764101170050!5m2!1ses!2ses",
-    "bands": [41],
+    "bands": [
+      41
+    ],
     "event": null,
     "tickets": "https://ticketandroll.com/evento/sweet-q-vortice-cero-en-sala-hangar-48"
   },
@@ -221,7 +245,9 @@
     "venue": "Gira 'Que solo nos quede ganar': Zaragoza",
     "address": "La Ley Seca",
     "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6429.483202719367!2d-0.8921215120414465!3d41.638685297188694!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd5914dfef515c11%3A0xb38d1cbb2a3e5706!2sLa%20Ley%20Seca%20-%20Sala%20de%20conciertos!5e1!3m2!1ses!2ses!4v1782119418673!5m2!1ses!2ses",
-    "bands": [42],
+    "bands": [
+      42
+    ],
     "event": null,
     "tickets": "https://entradium.com/events/sweet-q-la-mujer-inversa-gira-que-solo-nos-quede-ganar"
   },
@@ -233,8 +259,22 @@
     "venue": "Gira 'Que solo nos quede ganar': Murcia",
     "address": "La Yesería",
     "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3144.603894383379!2d-1.1276800238436449!3d37.986372371932795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd6382107d3f261f%3A0x768dd71b0413c518!2sLa%20Yeser%C3%ADa!5e0!3m2!1ses!2ses!4v1782120358187!5m2!1ses!2ses",
-    "bands": [9999],
+    "bands": [
+      9999
+    ],
     "event": null,
     "tickets": null
+  },
+  {
+    "id": 20,
+    "date": "2026-09-04 20:00",
+    "city": "Madrid",
+    "hour": "20:00",
+    "venue": "Fiestas de La Melonera",
+    "address": "Nave de Terneras (Matadero)",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3038.7301357981114!2d-3.7001592999999993!3d40.39267329999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd4227f95a1dbc8f%3A0x85b19d0ff7f21c6b!2sNave%20de%20Terneras!5e0!3m2!1ses!2ses!4v1786360906625!5m2!1ses!2ses",
+    "bands": [],
+    "event": null,
+    "tickets": "free"
   }
 ]
