@@ -21,11 +21,18 @@
     "type": "youtubeMusic"
   },
   {
-    "button": "secondary",
+    "type": "gig",
     "icon": "icon-gigs",
-    "link": "https://ticketandroll.com/evento/sweet-q-vortice-cero-en-sala-hangar-48",
-    "text": "links.gigs.20260313",
-    "type": "gig"
+    "text": "links.gigs.20260919",
+    "button": "secondary",
+    "link": "https://entradium.com/events/sweet-q-la-mujer-inversa-gira-que-solo-nos-quede-ganar"
+  },
+  {
+    "button": "secondary",
+    "icon": "icon-youtube",
+    "link": "https://www.youtube.com/watch?v=_4V9ZS51sok",
+    "text": "links.youtube.quieromas",
+    "type": "youtube"
   },
   {
     "button": "secondary",

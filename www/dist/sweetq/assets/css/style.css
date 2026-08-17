@@ -144,6 +144,7 @@ sweetq-gigs {
   background-image: url("../imgs/logo-sweetq.svg");
   background-repeat: no-repeat;
   background-size: contain;
+  background-position: center;
   transition: all 0.25s linear;
 }
 
@@ -228,7 +229,9 @@ sweetq-gigs {
   box-shadow: inset 0 0 1px 0 #24aeb8;
 }
 .sq-button.line-blue:hover {
-  box-shadow: inset 0 0 1px 0 #24aeb8, 0 0 0 3px rgba(36, 174, 184, 0.3);
+  box-shadow:
+    inset 0 0 1px 0 #24aeb8,
+    0 0 0 3px rgba(36, 174, 184, 0.3);
 }
 .sq-button.line-blue .sq-icon {
   color: #24aeb8;
@@ -476,6 +479,7 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
 }
 .sq-aside-actions .sq-button {
   margin-left: 10px;
+  margin-right: 3px;
 }
 
 /* Kit notice */
@@ -569,6 +573,10 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
 
 .sq-section.notice.video.sacameabailar .sq-image.image-cover {
   background-image: url("../imgs/youtube/videoclips/sacameabailar.webp");
+}
+
+.sq-section.notice.video.quieromas .sq-image.image-cover {
+  background-image: url("../imgs/youtube/videoclips/quieromas.webp");
 }
 
 .sq-section.notice.video.fiestas-arganzuela .column-left {
@@ -761,6 +769,11 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   text-decoration: none;
   display: inline;
 }
+
+.gigs .sq-item .sq-item-data .sq-free-gig {
+  color: #96f0b6;
+}
+
 .gigs .sq-gigs-list .sq-item.old-gig {
   opacity: 0.3;
 }
@@ -818,6 +831,7 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
   .sq-bg {
     background-image: url("../imgs/img-sweetq-mobile.webp");
     max-height: unset;
+    margin-bottom: -1px;
   }
 
   .sq-contact-icons {
@@ -946,6 +960,11 @@ sweetq-videos + sweetq-info .sq-image-wrapper.square .sq-image {
 
   .sq-platforms {
     min-width: calc(100% - 40px);
+  }
+
+  .sq-aside-actions .sq-button {
+    margin-left: 0px;
+    margin-right: 0px;
   }
 }
 
