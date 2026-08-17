@@ -101,7 +101,10 @@ const fetchMessages = async (data: Record<string, any>) => {
     } else {
       data.consecutiveSkipped += 1;
       data.skipped += 1;
-      logProcess(`Follower ${follower.username} already setted. Skipping.`);
+      const userSkip = follower
+        ? `Follower ${follower.username}`
+        : `Following ${following.username}`;
+      logProcess(`${userSkip} already setted. Skipping.`);
     }
   }
 

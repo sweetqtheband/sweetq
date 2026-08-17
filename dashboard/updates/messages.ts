@@ -8,7 +8,7 @@ import { createLogger } from "./shared/logger.js";
 
 const { logProcess } = createLogger("messages.log");
 
-const MESSAGE_LIMIT = 100;
+const MESSAGE_LIMIT = 500;
 let processedCount = 0;
 
 const elements = {
@@ -372,8 +372,10 @@ const processMessages = async (data: any) => {
             }
           }
           sent = true;
-        } catch (error) {
-          logProcess(`Error al enviar mensaje a ${user.username} via Instagram API: ${error}`);
+        } catch (error: any) {
+          logProcess(
+            `Error al enviar mensaje a ${user.username} via Instagram API: ${error.message}`
+          );
         }
       } else {
         try {
@@ -399,7 +401,7 @@ const processMessages = async (data: any) => {
       if (!sent) {
         if (message?.retry && message.retry >= 3) {
           logProcess(`Mensaje a ${user.username} fallido después de 3 intentos. Se eliminará.`);
-          await messagesSvc.delete({ _id: message._id }, true);
+          await messagesSvc.remove(message._id);
         } else {
           logProcess(
             `No se pudo enviar el mensaje a ${user.username}. Se reprogramará para más tarde.`

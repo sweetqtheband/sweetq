@@ -6,9 +6,12 @@ type Model = {
   created: string;
   status?: "scheduled" | "sent" | "error";
   updated?: string;
+  retry?: number;
 };
 export const Model = (data: any): Model => {
-  const obj = {} as Model;
+  const obj = {
+    retry: 0,
+  } as Model;
 
   if (data._id) {
     obj._id = String(data._id);
@@ -36,6 +39,10 @@ export const Model = (data: any): Model => {
   }
   if (data.updated) {
     obj.updated = data.updated;
+  }
+
+  if (data.retry) {
+    obj.retry = data.retry;
   }
 
   return obj;
