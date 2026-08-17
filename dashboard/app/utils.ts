@@ -155,11 +155,17 @@ export const dateFormat = (
 type Breakpoint = "mobile" | "tablet" | "laptop" | "desktop" | "large";
 export const breakpoint = (size: Breakpoint): boolean => {
   const sizes = {
-    mobile: screen.width < BREAKPOINTS.MOBILE,
-    tablet: screen.width >= BREAKPOINTS.MOBILE && screen.width < BREAKPOINTS.TABLET,
-    laptop: screen.width >= BREAKPOINTS.TABLET && screen.width < BREAKPOINTS.LAPTOP,
-    desktop: screen.width >= BREAKPOINTS.LAPTOP && screen.width < BREAKPOINTS.DESKTOP,
-    large: screen.width >= BREAKPOINTS.DESKTOP,
+    mobile: document.body.clientWidth < BREAKPOINTS.MOBILE,
+    tablet:
+      document.body.clientWidth >= BREAKPOINTS.MOBILE &&
+      document.body.clientWidth < BREAKPOINTS.TABLET,
+    laptop:
+      document.body.clientWidth >= BREAKPOINTS.TABLET &&
+      document.body.clientWidth < BREAKPOINTS.LAPTOP,
+    desktop:
+      document.body.clientWidth >= BREAKPOINTS.LAPTOP &&
+      document.body.clientWidth < BREAKPOINTS.DESKTOP,
+    large: document.body.clientWidth >= BREAKPOINTS.DESKTOP,
   };
 
   return sizes[size];
@@ -208,4 +214,33 @@ export const isMobile = () => {
   return typeof navigator !== "undefined"
     ? /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
     : false;
+};
+
+export const throttle = (func: Function, limit: number) => {
+  let inThrottle: boolean;
+  return function (this: any, ...args: any[]): Promise<any> {
+    return new Promise((resolve) => {
+      if (!inThrottle) {
+        func.apply(this, args);
+        inThrottle = true;
+        setTimeout(() => {
+          inThrottle = false;
+          resolve(undefined);
+        }, limit);
+      }
+    });
+  };
+};
+
+export const debounce = (func: Function, delay: number) => {
+  let timeoutId: NodeJS.Timeout;
+  return function (this: any, ...args: any[]): Promise<any> {
+    return new Promise((resolve) => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        const result = func.apply(this, args);
+        resolve(result);
+      }, delay);
+    });
+  };
 };

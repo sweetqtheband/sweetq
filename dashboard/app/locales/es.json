@@ -130,12 +130,15 @@
     "limit": "Límite",
     "link": "Enlace",
     "linkType": "Tipo de enlace",
+    "logo": "Logo",
     "map": "URL embed de Google Maps",
     "name": "Nombre",
+    "ordering": "Orden",
     "password": "Contraseña",
     "path": "Ruta",
     "pendingMessages": "Mensajes pendientes",
     "profile": "Tipo de usuario",
+    "published": "Publicado",
     "robots": "Robots",
     "shortName": "Nombre corto",
     "slug": "Slug",
@@ -249,6 +252,7 @@
     "layouts": "Plantillas",
     "news": "Noticias",
     "routes": "Rutas",
+    "social-networks": "Redes sociales",
     "tags": "Etiquetas",
     "tracks": "Pistas",
     "users": "Usuarios",
@@ -273,5 +277,16 @@
   "userProfiles": {
     "admin": "Administrador",
     "user": "Usuario"
+  },
+  "home": {
+    "logo": {
+      "title": "Sweet Q"
+    },
+    "gigs": {
+      "title": "Conciertos"
+    },
+    "videos": {
+      "title": "Vídeos"
+    }
   }
 }

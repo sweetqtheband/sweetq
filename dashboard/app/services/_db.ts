@@ -29,4 +29,5 @@ const create = (...args: any[]) => {
   return instance;
 };
 
-export default { create, cache };
+const dbApi = { create, cache };
+export default dbApi;

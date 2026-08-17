@@ -1,32 +1,13 @@
 "use client";
 
 import React, { useCallback, useEffect, useState, useMemo, useRef } from "react";
+import { SizeType } from "@/types/size";
+import { useDeepMemo } from "@/app/hooks/memo";
+import { EMPTY_ARRAY, EMPTY_OBJECT, NOOP, NOOP_ASYNC, SIZES } from "@/app/constants";
 import ListTable from "./list-table";
 import ListPanel from "./list-panel";
-
-// Custom hook for deep comparison memoization - only stringify when comparing
-function useDeepMemo<T>(value: T): T {
-  const ref = useRef<T>(value);
-  const prevStringified = useRef<string | null>(null);
-
-  // Only compute stringified on first render or when we need to compare
-  const currentStringified = useMemo(() => JSON.stringify(value), [value]);
-
-  if (prevStringified.current === null) {
-    // First render
-    prevStringified.current = currentStringified;
-    ref.current = value;
-  } else if (prevStringified.current !== currentStringified) {
-    // Value changed
-    ref.current = value;
-    prevStringified.current = currentStringified;
-  }
-
-  return ref.current;
-}
-import { SizeType } from "@/types/size";
-import { SIZES } from "@/app/constants";
 import "./list.scss";
+import { NavigationProvider } from "@/app/providers/navigation";
 
 interface ListLayoutProps {
   items?: any[];
@@ -42,6 +23,7 @@ interface ListLayoutProps {
   onSave?: (data: any, files: any, ids: string[] | null) => Promise<any>;
   onCopy?: (ids: string[]) => Promise<boolean>;
   onDelete?: (ids: string[]) => Promise<boolean>;
+  onSort?: (items: any[]) => void;
   open?: string | null;
   setOpen?: (open: string | null) => void;
   actionIcon?: string | null;
@@ -61,13 +43,8 @@ interface ListLayoutProps {
   renders?: Record<string, any>;
   onItemSelect?: (item: any) => void;
   CONSTANTS?: any;
+  sortable?: boolean;
 }
-
-// Stable default values to prevent re-renders
-const EMPTY_ARRAY: any[] = [];
-const EMPTY_OBJECT: Record<string, any> = {};
-const NOOP = () => {};
-const NOOP_ASYNC = async () => true;
 
 function ListLayoutComponent({
   items = EMPTY_ARRAY,
@@ -83,6 +60,7 @@ function ListLayoutComponent({
   onSave = NOOP_ASYNC,
   onCopy = NOOP_ASYNC,
   onDelete = NOOP_ASYNC,
+  onSort = NOOP,
   open = "",
   setOpen = NOOP,
   actionIcon = null,
@@ -102,6 +80,7 @@ function ListLayoutComponent({
   renders = EMPTY_OBJECT,
   onItemSelect = NOOP,
   CONSTANTS = EMPTY_OBJECT,
+  sortable = false,
 }: Readonly<ListLayoutProps>) {
   const [item, setItem] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(loading);
@@ -132,35 +111,38 @@ function ListLayoutComponent({
     [onItemSelect]
   );
 
-  const parseItem = (prevItems: any, newItems: any, item: Record<string, any>) => {
-    const index = prevItems.findIndex((i: Record<string, any>) => i.id === item.id);
+  const parseItem = useCallback(
+    (prevItems: any, newItems: any, item: Record<string, any>) => {
+      const index = prevItems.findIndex((i: Record<string, any>) => i.id === item.id);
 
-    if (index >= 0) {
-      newItems[index] = {
-        ...prevItems[index],
-        ...Object.keys(item).reduce((acc: Record<string, any>, key) => {
-          if (filters?.[key]?.fields?.options?.[key]?.options) {
-            const opts = filters[key].fields.options[key].options;
-            if (Array.isArray(item[key])) {
-              acc[key] = item[key].map(
-                (val) => opts.find((o: any) => String(o.id) === String(val))?.value || val
-              );
+      if (index >= 0) {
+        newItems[index] = {
+          ...prevItems[index],
+          ...Object.keys(item).reduce((acc: Record<string, any>, key) => {
+            if (filters?.[key]?.fields?.options?.[key]?.options) {
+              const opts = filters[key].fields.options[key].options;
+              if (Array.isArray(item[key])) {
+                acc[key] = item[key].map(
+                  (val) => opts.find((o: any) => String(o.id) === String(val))?.value || val
+                );
+              } else {
+                acc[key] =
+                  opts.find((o: any) => String(o.id) === String(item[key]))?.value || item[key];
+              }
             } else {
-              acc[key] =
-                opts.find((o: any) => String(o.id) === String(item[key]))?.value || item[key];
+              acc[key] = item[key];
             }
-          } else {
-            acc[key] = item[key];
-          }
-          return acc;
-        }, {}),
-      };
-    } else {
-      newItems.unshift(item);
-    }
+            return acc;
+          }, {}),
+        };
+      } else {
+        newItems.unshift(item);
+      }
 
-    return newItems;
-  };
+      return newItems;
+    },
+    [filters]
+  );
   const onSaveHandler = useCallback(
     async (data: any, files: any, idsList: string[] | null) => {
       setIsLoadingHandler(true);
@@ -189,7 +171,7 @@ function ListLayoutComponent({
 
       return true;
     },
-    [onSave, filters, onClose, setIsLoadingHandler]
+    [onSave, onClose, setIsLoadingHandler, parseItem]
   );
 
   const onActionHandler = useCallback(
@@ -238,7 +220,7 @@ function ListLayoutComponent({
   }, [memoItems, setIsLoadingHandler]);
 
   return (
-    <>
+    <NavigationProvider>
       <ListTable
         id={id}
         items={parsedItems}
@@ -246,10 +228,11 @@ function ListLayoutComponent({
         onDelete={onDelete}
         onCopy={onCopy}
         onFiltering={onFiltering}
+        onSort={onSort}
         imageSize={imageSize}
         headers={memoHeaders}
-        total={total}
         limit={limit}
+        canSort={sortable}
         pages={pages}
         filters={memoFilters}
         translations={memoTranslations}
@@ -262,7 +245,6 @@ function ListLayoutComponent({
         setIsWaiting={setIsWaiting}
         setIsLoading={setIsLoadingHandler}
         renders={memoRenders}
-        actions={memoActions}
         batchActions={memoBatchActions}
         itemActions={memoItemActions}
       />
@@ -286,9 +268,8 @@ function ListLayoutComponent({
         setOpen={setOpen}
         CONSTANTS={memoCONSTANTS}
       />
-    </>
+    </NavigationProvider>
   );
 }
 
-// --- Export con memoización de props externas ---
 export default React.memo(ListLayoutComponent);

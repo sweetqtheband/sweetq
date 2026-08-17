@@ -70,15 +70,15 @@ export async function POST(req: NextRequest) {
         }
 
         const findObj: Record<string, any> = {
-          _layoutId: new ObjectId(layout._id),
+          _layoutId: layout._id,
           status: "scheduled",
         };
 
         if (follower) {
-          findObj["_followerId"] = new ObjectId(follower._id);
+          findObj["_followerId"] = follower._id;
         }
         if (following) {
-          findObj["_followingId"] = new ObjectId(following._id);
+          findObj["_followingId"] = following._id;
         }
         // If message already exist for this user, skip it
         const messageExist = await svc.findOne(findObj);

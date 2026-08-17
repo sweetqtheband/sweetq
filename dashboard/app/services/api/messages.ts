@@ -16,9 +16,9 @@ export const messagesSvc = (collection: Collection<Document>) => ({
       .toArray()
       .then((items) => items.map((item) => Model(item))),
   getAllByFollowerId: async (followerId: string) =>
-    messagesSvc(collection).getAllById({ _followerId: new ObjectId(followerId) }),
+    messagesSvc(collection).getAllById({ _followerId: followerId }),
   getAllByFollowingId: async (followingId: string) =>
-    messagesSvc(collection).getAllById({ _followingId: new ObjectId(followingId) }),
+    messagesSvc(collection).getAllById({ _followingId: followingId }),
   parse: async (user: Record<string, any>, message: Record<string, any>) => {
     const layoutSvc = FactorySvc("layouts", await getCollection("layouts"));
     const layout = await layoutSvc.getById(message._layoutId);

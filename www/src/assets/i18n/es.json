@@ -51,6 +51,7 @@
       "title": "Descarga nuestro tema '{{track}}'"
     }
   },
+  "freeGig": "Evento gratuito",
   "gigs": {
     "20251025": {
       "button": "Link a entradas",
@@ -80,7 +81,7 @@
       "lesarts": "¡Vótanos para tocar en el Festival de les Arts!"
     },
     "gigs": {
-      "20260313": "Concierto presentación LP Hangar 48 (Madrid) 13/03/26"
+      "20260919": "Gira 'Que solo nos quede ganar' - Zaragoza (19/09/26)"
     },
     "presave": {
       "quesolonosquedeganar": "Pre-save 'Que solo nos quede ganar'",
@@ -92,7 +93,7 @@
     "title": "Sweet Q",
     "whatsapp": "Únete al canal de WhatsApp",
     "youtube": {
-      "fiesta": "Videoclip 'Fiesta'"
+      "quieromas": "Videoclip 'Quiero más'"
     },
     "youtubeMusic": "Youtube Music"
   },
@@ -126,7 +127,7 @@
     "title": "Que solo nos quede ganar"
   },
   "pressKit": {
-    "button": "Descargar <span class='peso'>(4.1MB)</span>",
+    "button": "Descargar <span class='peso'>(13.1MB)</span>",
     "download": "Descargar kit de prensa",
     "text": "Aquí puedes descargar nuestro <span class='bold'>kit de prensa</span>",
     "title": "Kit de prensa"
@@ -152,11 +153,11 @@
     "lyrics": "Letra"
   },
   "video": {
-    "sacameabailar": {
+    "quieromas": {
       "button": "Ver en Youtube",
-      "subtitle": "Sácame a bailar",
-      "text": "No te pierdas el lyric video de nuestro último single 'Sácame a bailar'. Lánzate sin miedo hacia lo desconocido, coge tus cascos, cierra los ojos y dejate llevar..",
-      "title": "Nuevo lyric video"
+      "subtitle": "Nuevo videoclip",
+      "text": "Hay momentos en los que sientes que necesitas más. Más ilusión. Más intentos. Más vida. Si no eres de los que te conformas con lo preestablecido, ¡no te pierdas nuestro nuevo videoclip!",
+      "title": "Quiero más"
     }
   },
   "videoLabel": {
@@ -168,7 +169,8 @@
     "losiento": "Vídeo - Lo siento, pero no",
     "nohabriasidoasi": "Vídeo - No habría sido así",
     "quevamosahacer": "Vídeo - ¿Qué vamos a hacer?",
-    "sacameabailar": "Lyric video - Sácame a bailar"
+    "sacameabailar": "Lyric video - Sácame a bailar",
+    "quieromas": "Vídeo - Quiero más"
   },
   "videos": "Vídeos"
 }

@@ -8,6 +8,7 @@ import { States } from "./states";
 import { Cities } from "./cities";
 import { Bands } from "./bands";
 import { onDelete, onSave } from "./_methods";
+import { GooglePlace } from "./google/places";
 
 const client = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URI}/gigs`,
@@ -21,8 +22,8 @@ export const Types = {
   city: FIELD_TYPES.CITY,
   hour: FIELD_TYPES.HOUR,
   title: FIELD_TYPES.TEXT,
-  venue: FIELD_TYPES.TEXT,
-  map: FIELD_TYPES.TEXTMAP,
+  venue: FIELD_TYPES.PLACE_SEARCH,
+  map: FIELD_TYPES.TEXT_MAP,
   bands: FIELD_TYPES.MULTISELECT,
   event: FIELD_TYPES.TEXT,
   tickets: FIELD_TYPES.TEXT,
@@ -41,6 +42,9 @@ export const Options = {
         value: "status.unpublished",
       },
     ],
+  },
+  map: {
+    readOnly: true,
   },
 };
 
@@ -128,8 +132,96 @@ const getMethods = (router?: any): Record<string, any> => ({
   bands: {
     onSave: Bands.getMethods(router).onListSave,
   },
+  venue: {
+    setAddress: async (params: {
+      value: string;
+      field: string;
+      formState: any;
+      onInputHandler: any;
+      fields: any;
+    }) => {
+      const { value, field, formState, onInputHandler, fields } = params;
+
+      let searchParams: Record<string, any> = {};
+
+      if (formState.country) {
+        searchParams.country =
+          fields.options.country.options.find((option: any) => +option.id === +formState.country)
+            ?.value || formState.country;
+      }
+      if (formState.state) {
+        searchParams.state =
+          fields.options.state.options.find((option: any) => +option.id === +formState.state)
+            ?.value || formState.state;
+      }
+
+      const address = await GooglePlace.search({
+        address: value,
+        ...searchParams,
+      });
+
+      const embedURI = address
+        ? await GooglePlace.getEmbedURI({
+            address: address,
+            ...searchParams,
+          })
+        : undefined;
+
+      onInputHandler([field, "map"], [value, embedURI ? embedURI : ""]);
+    },
+  },
 });
 
+export const getList = async (params: any = {}) => {
+  try {
+    const list = await Gigs.getAll(params);
+
+    if (!list) return { items: [], total: 0 };
+
+    await Promise.all(
+      list?.items instanceof Array && list.items.length > 0
+        ? list.items.map(async (item: any) => {
+            if (item?.bands instanceof Array && item.bands.length > 0) {
+              const bands = await Bands.getAll({
+                filter: { _id: { $in: item.bands.map((band: any) => band) } },
+              });
+
+              item.bands = bands?.items instanceof Array ? bands.items : [];
+            }
+            return {
+              ...item,
+            };
+          })
+        : new Promise((resolve) => resolve([]))
+    );
+
+    return parseFront(list?.items || []);
+  } catch (error) {
+    return [];
+  }
+};
+
+const getFutureGigs = async (params: any = {}) => {
+  params.filter = {
+    ...params.filter,
+    date: { $gte: new Date() },
+  };
+  return await getList(params);
+};
+
+const getPastGigs = async (params: any = {}) => {
+  params.filter = {
+    ...params.filter,
+    date: { $lt: new Date() },
+  };
+  return await getList(params);
+};
+
+const parseFront = (items: any) => {
+  return items.map((item: Record<string, any>) => ({
+    ...item,
+  }));
+};
 // Gigs service
 export const Gigs = {
   ...BaseList(client),
@@ -137,4 +229,7 @@ export const Gigs = {
   parseAll,
   getFields,
   getMethods,
+  getList,
+  getFutureGigs,
+  getPastGigs,
 };

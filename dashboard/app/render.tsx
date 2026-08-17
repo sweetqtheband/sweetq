@@ -20,6 +20,7 @@ import {
   Tile,
   TimePicker,
   TimePickerSelect,
+  Toggle,
 } from "@carbon/react";
 import { FIELD_DEFAULTS, FIELD_TYPES, IMAGE_SIZES, SIZES, TAG_TYPES } from "./constants";
 import Image from "next/image";
@@ -31,19 +32,30 @@ import { getClasses, s3File } from "./utils";
 import { ContentArea } from "./components";
 import Link from "next/link";
 import { Field } from "@/types/field";
+import PlaceSearcher from "./components/place-searcher";
 
 // Renderers
 
 // Hidden field
 const renderHidden = ({ field, value }: Field) => <input type="hidden" key={field} value={value} />;
 
-const renderBoolean = ({ field, value, translations }: Field) => {
+// Render boolean
+const renderBoolean = ({ field, translations, disabled, formState, onInputHandler }: Field) => {
+  const handleCheckboxChange = (checked: Boolean): void => {
+    onInputHandler(field, String(checked));
+  };
+
+  const toggled = formState[field] || false;
+
   return (
     <FormItem key={field}>
-      <Checkbox
-        labelText={translations.fields[field]}
+      <p className="cds--label">{translations.fields[field]}</p>
+      <Toggle
         id={field}
-        checked={value === true || value === "true"}
+        hideLabel={true}
+        toggled={toggled}
+        disabled={disabled}
+        onToggle={handleCheckboxChange}
       />
     </FormItem>
   );
@@ -154,6 +166,7 @@ const renderTextInput = ({
         labelText={translations.fields[field]}
         value={(language ? inputValue?.[internalState?.[field]?.locale] : inputValue) || ""}
         onChange={(e: ChangeEvent<HTMLInputElement>) => onChangeHandler(field, e.target.value)}
+        readOnly={fields?.options[field]?.readOnly}
       ></TextInput>
       {language
         ? renderLanguageSelector({
@@ -265,17 +278,9 @@ const renderLanguageSelector = ({ field, translations, value, onInputHandler }: 
   </div>
 );
 
-const renderTextMap = ({ field, value, translations, formState, onInputHandler }: Field) => (
-  <>
-    {renderTextInput({
-      field,
-      value,
-      translations,
-      formState,
-      onInputHandler,
-    } as Field)}
-  </>
-);
+const renderTextMap = (params: Field) => {
+  return renderTextInput(params);
+};
 
 // Select field
 const renderSelect = ({
@@ -747,7 +752,7 @@ const renderUploader = ({
 }: Field) => {
   const accepted =
     type === FIELD_TYPES.IMAGE_UPLOADER
-      ? ["image/jpeg", "image/png", "image/gif", "image/webp"]
+      ? ["image/jpeg", "image/png", "image/gif", "image/webp", "image/svg+xml"]
       : ["video/mp4"];
   return (
     <FormItem key={field}>
@@ -1185,10 +1190,26 @@ const renderContentArea = ({ field, value, translations, formState, onInputHandl
   );
 };
 
+const renderPlaceSearcher = (params: Field) => {
+  const { field, value, translations, formState, fields, methods, onInputHandler } = params;
+  return (
+    <PlaceSearcher
+      key={field}
+      field={field}
+      value={value}
+      translations={translations}
+      formState={formState}
+      fields={fields}
+      methods={methods}
+      onInputHandler={onInputHandler as (field: string, value: string) => void}
+    />
+  );
+};
+
 const renderers = {
-  [FIELD_TYPES.BOOLEAN]: () => renderBoolean,
+  [FIELD_TYPES.BOOLEAN]: renderBoolean,
   [FIELD_TYPES.CHECKBOX]: renderCheckbox,
-  [FIELD_TYPES.CONTENTAREA]: renderContentArea,
+  [FIELD_TYPES.CONTENT_AREA]: renderContentArea,
   [FIELD_TYPES.CITY]: renderCity,
   [FIELD_TYPES.DATE_LABEL]: renderDatePickerLabel,
   [FIELD_TYPES.DATE]: renderDatePicker,
@@ -1207,10 +1228,11 @@ const renderers = {
   [FIELD_TYPES.LINK]: renderLink,
   [FIELD_TYPES.MULTISELECT]: renderMultiSelect,
   [FIELD_TYPES.PASSWORD]: renderPassword,
+  [FIELD_TYPES.PLACE_SEARCH]: renderPlaceSearcher,
   [FIELD_TYPES.SELECT]: renderSelect,
   [FIELD_TYPES.TEXT]: renderTextInput,
   [FIELD_TYPES.TEXTAREA]: renderTextArea,
-  [FIELD_TYPES.TEXTMAP]: renderTextMap,
+  [FIELD_TYPES.TEXT_MAP]: renderTextMap,
   [FIELD_TYPES.VIDEO_UPLOADER]: renderUploader,
 };
 
@@ -1224,6 +1246,7 @@ export const renderField = (obj: any) => {
     });
 
     const renderObj = renderers[type](obj);
+
     return type === FIELD_TYPES.HIDDEN ? (
       renderObj
     ) : (

@@ -9,6 +9,7 @@ export type ConfigType = {
   created: Date;
   from: Date;
   default?: boolean;
+  logo?: string;
   headerImage?: string;
   headerImageMobile?: string;
   headerVideo?: string;

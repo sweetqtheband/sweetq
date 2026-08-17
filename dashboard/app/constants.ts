@@ -72,7 +72,7 @@ export const FIELD_TYPES: Record<string, FieldTypesType> = {
   BOOLEAN: "boolean",
   CHECKBOX: "checkbox",
   CITY: "city",
-  CONTENTAREA: "contentArea",
+  CONTENT_AREA: "contentArea",
   DATE_LABEL: "dateLabel",
   DATE: "date",
   DATE_HOUR_LABEL: "dateHourLabel",
@@ -92,8 +92,10 @@ export const FIELD_TYPES: Record<string, FieldTypesType> = {
   NONE: "none",
   NUMBER: "number",
   PASSWORD: "password",
+  PLACE_SEARCH: "placeSearch",
   SELECT: "select",
   TEXT: "text",
+  TEXT_MAP: "textMap",
   TEXTAREA: "textarea",
   UPLOADER: "uploader",
   VIDEO_UPLOADER: "videoUploader",
@@ -162,3 +164,11 @@ export const VARIABLES = [
 ];
 
 export const FILTER_IDLE = 1000;
+
+export const EMPTY_ARRAY: any[] = [];
+export const EMPTY_OBJECT: Record<string, any> = {};
+export const NOOP = () => {};
+export const NOOP_ASYNC = async () => true;
+export const NOOP_CLOSE = async (item: any) => {};
+export const NOOP_ACTION = async () => {};
+export const NOOP_LOADING = (value: boolean = false) => {};

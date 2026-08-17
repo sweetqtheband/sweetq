@@ -132,10 +132,12 @@
     "linkType": "Link type",
     "map": "Google Maps embed URL",
     "name": "Name",
+    "ordering": "Order",
     "password": "Password",
     "path": "Path",
     "pendingMessages": "Pending messages",
     "profile": "Profile",
+    "published": "Published",
     "robots": "Robots",
     "shortName": "Short name",
     "slug": "Slug",
@@ -250,6 +252,7 @@
     "layouts": "Layouts",
     "news": "News",
     "routes": "Routes",
+    "social-networks": "Social networks",
     "tags": "Tags",
     "tracks": "Tracks",
     "users": "Users",
@@ -274,5 +277,16 @@
   "userProfiles": {
     "admin": "Administrator",
     "user": "User"
+  },
+  "home": {
+    "logo": {
+      "title": "Sweet Q"
+    },
+    "gigs": {
+      "title": "Gigs"
+    },
+    "videos": {
+      "title": "Videos"
+    }
   }
 }

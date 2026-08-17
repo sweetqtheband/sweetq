@@ -1,6 +1,7 @@
 type Model = {
   _id: string;
   _followerId: string;
+  _followingId: string;
   _layoutId: string;
   type: "instagram";
   created: string;
@@ -8,7 +9,7 @@ type Model = {
   updated?: string;
   retry?: number;
 };
-export const Model = (data: any): Model => {
+export const Model = (data: any, fromPrepare: boolean = false): Model => {
   const obj = {
     retry: 0,
   } as Model;
@@ -22,11 +23,15 @@ export const Model = (data: any): Model => {
   }
 
   if (data._followerId) {
-    obj._followerId = String(data._followerId);
+    obj._followerId = fromPrepare ? data._followerId : String(data._followerId);
+  }
+
+  if (data._followingId) {
+    obj._followingId = fromPrepare ? data._followingId : String(data._followingId);
   }
 
   if (data._layoutId) {
-    obj._layoutId = String(data._layoutId);
+    obj._layoutId = fromPrepare ? data._layoutId : String(data._layoutId);
   }
 
   if (data.type) {

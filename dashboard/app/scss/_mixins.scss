@@ -39,3 +39,7 @@
     }
   }
 }
+
+@function alpha($color-var, $opacity) {
+  @return unquote("color-mix(in srgb, #{$color-var} #{$opacity * 100}%, transparent)");
+}

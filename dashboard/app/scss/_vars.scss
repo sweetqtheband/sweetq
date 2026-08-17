@@ -2,16 +2,20 @@ $breakpoints: (
   mobile: "max-width: 639px",
   tablet: "min-width: 640px) and (max-width: 1023px",
   laptop: "min-width: 1024px) and (max-width: 1279px",
-  desktop: "min-width: 1280px) and (max-width: 1920px",
-  widescreen: "min-width: 1920px",
+  desktop-s: "min-width: 1280px) and (max-width: 1439px",
+  desktop-l: "min-width: 1440px) and (max-width: 1919px",
+  widescreen: "min-width: 1920px) and (max-width: 2559px",
+  2k: "min-width: 2560px",
 );
 
 $from: (
   mobile: "min-width: 0px",
   tablet: "min-width: 640px",
   laptop: "min-width: 1024px",
-  desktop: "min-width: 1280px",
+  desktop-s: "min-width: 1280px",
+  desktop-l: "min-width: 1440px",
   widescreen: "min-width: 1920px",
+  2k: "min-width: 2560px",
 );
 
 $heights: (

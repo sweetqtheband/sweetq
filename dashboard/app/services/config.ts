@@ -19,6 +19,7 @@ export const Types: Record<string, string> = {
   from: FIELD_TYPES.DATE_HOUR_LABEL,
   created: FIELD_TYPES.HIDDEN_DATE,
   default: FIELD_TYPES.HIDDEN_BOOLEAN,
+  logo: FIELD_TYPES.IMAGE_UPLOADER,
   headerImage: FIELD_TYPES.IMAGE_UPLOADER,
   headerImageMobile: FIELD_TYPES.IMAGE_UPLOADER,
   headerVideo: FIELD_TYPES.VIDEO_UPLOADER,
@@ -27,6 +28,7 @@ export const Types: Record<string, string> = {
 };
 
 export const Options: Record<string, any> = {
+  logo: { path: "/imgs/logos" },
   headerImage: { path: "/imgs/header" },
   headerImageMobile: { path: "/imgs/header" },
   headerVideo: { path: "/video/header" },
@@ -62,7 +64,14 @@ export const Options: Record<string, any> = {
 
 export const Groups: Record<string, string[]> = {
   metadata: ["_id", "name", "description", "keywords", "robots", "from"],
-  header: ["headerImage", "headerImageMobile", "headerVideo", "headerVideoMobile", "spotifyId"],
+  header: [
+    "logo",
+    "headerImage",
+    "headerImageMobile",
+    "headerVideo",
+    "headerVideoMobile",
+    "spotifyId",
+  ],
 };
 
 // Fields
@@ -73,6 +82,7 @@ const fields = {
     keywords: "fields.keywords",
     robots: "fields.robots",
     from: "fields.from",
+    logo: "fields.logo",
     headerImage: "fields.headerImage",
     headerImageMobile: "fields.headerImageMobile",
     headerVideo: "fields.headerVideo",
@@ -157,6 +167,20 @@ const getRenders = (): Record<string, Function> => ({
   },
 });
 
+const getActive = async () => {
+  const query = {
+    query: [{ from: { $lte: new Date().toISOString() } }, { default: true }],
+    limit: 1,
+    sort: "from",
+  };
+
+  const configs = await Config.getAll(query);
+
+  return configs?.items instanceof Array && configs.items.length > 0
+    ? parseFront(configs.items)[0]
+    : null;
+};
+
 const faviconMetadata = {
   manifest: "/site.webmanifest",
   icons: {
@@ -208,20 +232,39 @@ const parseMetadata = (metadata: Record<string, any>) => {
   return obj;
 };
 
-// Parse all method
-const parseAll = (data: ConfigType[] = []) =>
+// Parse front method
+const parseFront = (data: ConfigType[] = []) =>
   data.map((item: any) => {
-    return {
+    const obj = {
       ...item,
-      headerImage: s3File(`${Config.fields.options.headerImage.path}/${item.headerImage}`),
-      headerImageMobile: s3File(
-        `${Config.fields.options.headerImageMobile.path}/${item.headerImageMobile}`
-      ),
-      headerVideo: s3File(`${Config.fields.options.headerVideo.path}/${item.headerVideo}`),
-      headerVideoMobile: s3File(
-        `${Config.fields.options.headerVideoMobile.path}/${item.headerVideoMobile}`
-      ),
     };
+
+    if (item.headerImage) {
+      obj.headerImage = s3File(`${Config.fields.options.headerImage.path}/${item.headerImage}`);
+    }
+
+    if (item.headerImageMobile) {
+      obj.headerImageMobile = s3File(
+        `${Config.fields.options.headerImageMobile.path}/${item.headerImageMobile}`
+      );
+    }
+    if (item.headerVideo) {
+      obj.headerVideo = s3File(`${Config.fields.options.headerVideo.path}/${item.headerVideo}`);
+    }
+    if (item.headerVideoMobile) {
+      obj.headerVideoMobile = s3File(
+        `${Config.fields.options.headerVideoMobile.path}/${item.headerVideoMobile}`
+      );
+    }
+
+    if (item.spotifyId) {
+      obj.spotifyId = `https://open.spotify.com/embed/${item.spotifyId}?utm_source=generator&theme=0`;
+    }
+
+    if (item.logo) {
+      obj.logo = s3File(`${Config.fields.options.logo.path}/${item.logo}`);
+    }
+    return obj;
   });
 
 export const Config = {
@@ -232,5 +275,5 @@ export const Config = {
   getOptions,
   getMetadata,
   getMethods,
-  parseAll,
+  getActive,
 };
