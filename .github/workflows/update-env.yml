@@ -51,26 +51,13 @@ jobs:
               echo "NEXT_PUBLIC_INSTAGRAM_REDIRECT_URI=${{ vars.NEXT_PUBLIC_INSTAGRAM_REDIRECT_URI }}"
               echo "NEXT_PUBLIC_EMBED_MAPS_API_KEY=${{ vars.NEXT_PUBLIC_EMBED_MAPS_API_KEY }}"
             } > .env.production
-
-      - name: Reiniciar contenedores Docker para aplicar cambios
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          script: |
-            set -e
-            cd /var/www/sweetq/dashboard
-            docker-compose down
-            docker-compose up -d
-
-            # Copiar el nuevo .env.production dentro del contenedor en ejecución
+            
+            # Optimización: Copiar .env sin reiniciar si solo cambió .env
             CONTAINER_ID=$(docker ps -q --filter "name=sweetq")
             if [ -n "$CONTAINER_ID" ]; then
               docker cp .env.production $CONTAINER_ID:/app/.env.production
-              docker-compose down
-              docker-compose up -d
+              echo "✓ .env.production actualizado sin reinicio"
             else
-              echo "Unable to find container'sweetq'."
-              exit 1
+              echo "⚠ Contenedor no encontrado, reiniciando..."
+              docker-compose up -d
             fi

@@ -55,9 +55,16 @@ jobs:
               echo "NEXT_PUBLIC_INSTAGRAM_REDIRECT_URI=${{ vars.NEXT_PUBLIC_INSTAGRAM_REDIRECT_URI }}"
               echo "NEXT_PUBLIC_EMBED_MAPS_API_KEY=${{ vars.NEXT_PUBLIC_EMBED_MAPS_API_KEY }}"
             } > .env.production
-            rm -Rf /var/www/sweetq/dist /var/www/sweetq/www
+            
+            # Optimización: Solo limpiar contenedores, preservar caché de Docker
             docker-compose down --remove-orphans
-            docker system prune -af --volumes
-            docker-compose build
-            export NODE_OPTIONS="--max-old-space-size=512"
+            
+            # Construcción optimizada con caché de BuildKit
+            export DOCKER_BUILDKIT=1
+            export COMPOSE_DOCKER_CLI_BUILD=1
+            export BUILDKIT_PROGRESS=plain
+            docker-compose build --no-rm
+            
+            # Aumentar memoria para Next.js build
+            export NODE_OPTIONS="--max-old-space-size=2048"
             docker-compose up -d
