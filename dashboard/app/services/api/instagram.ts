@@ -337,7 +337,7 @@ const getMessages = async (
         conversationMessages,
         maxDate
       );
-      return nextMessages ? [...messages, ...nextMessages] : null;
+      return nextMessages ? [...messages, ...nextMessages] : [...messages];
     }
 
     return messages || [];
