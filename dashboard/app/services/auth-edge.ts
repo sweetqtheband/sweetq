@@ -3,41 +3,10 @@
  * Safe to use in middleware and other Edge environments
  */
 
-/**
- * Decodes JWT without verifying signature (safe for middleware)
- * Signature verification happens on backend
- */
-const decodeJWT = (token: string): Record<string, any> | null => {
-    try {
-        const parts = token.split(".");
-        if (parts.length !== 3) return null;
-
-        // Decode payload (second part)
-        const payload = JSON.parse(
-            Buffer.from(parts[1], "base64").toString("utf-8")
-        );
-        return payload;
-    } catch {
-        return null;
-    }
-};
-
-/**
- * Checks if JWT token is expired
- */
-const isTokenExpired = (token: string): boolean => {
-    const payload = decodeJWT(token);
-    if (!payload || !payload.exp) return true;
-
-    // exp is in seconds, Date.now() is in milliseconds
-    const expirationTime = payload.exp * 1000;
-    return Date.now() >= expirationTime;
-};
-
 export const AuthEdge = {
     /**
-     * Validates auth with JWT expiration check (Edge-compatible)
-     * No external calls, only local validation
+     * Validates basic auth structure from cookies (Edge-compatible)
+     * Only checks presence and JSON validity, no external calls
      */
     isAuthBasic(params: {
         user: Record<string, any> | { value: string } | string | null;
@@ -72,12 +41,8 @@ export const AuthEdge = {
             if (typeof userData === "string") {
                 JSON.parse(userData);
             }
-
-            // Validate JWT structure and expiration
             if (typeof tokenValue === "string") {
-                if (isTokenExpired(tokenValue)) {
-                    return false;
-                }
+                JSON.parse(tokenValue);
             }
             return true;
         } catch {
