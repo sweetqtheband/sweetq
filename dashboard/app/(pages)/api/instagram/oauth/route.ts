@@ -3,7 +3,6 @@ import { NextRequest } from "next/server";
 import { corsOptions, getCollection } from "@/app/services/api/_db";
 import { instagramSvc } from "@/app/services/api/instagram";
 import { EA } from "@/app/services/api/_events";
-import { revalidatePath } from "next/dist/server/web/spec-extension/revalidate";
 
 const collection = "instagram";
 
@@ -73,32 +72,6 @@ export async function POST(req: NextRequest) {
 
   const formData = await req.formData();
   return Response.json("", {
-    ...corsParams,
-    status: HTTP_STATUS_CODES.OK,
-  });
-}
-
-export async function DELETE(req: NextRequest) {
-  const [message, corsParams] = corsOptions(req);
-
-  if (message?.error === ERRORS.CORS) {
-    return new Response(message, corsParams);
-  }
-  const col = await getCollection(collection);
-  const svc = instagramSvc(col);
-
-  try {
-    await svc.deleteAccessToken(svc);
-  } catch (error) {
-    return Response.json("Error", {
-      ...corsParams,
-      status: HTTP_STATUS_CODES.ERROR,
-    });
-  }
-
-  revalidatePath("/admin/instagram");
-
-  return Response.json("OK", {
     ...corsParams,
     status: HTTP_STATUS_CODES.OK,
   });

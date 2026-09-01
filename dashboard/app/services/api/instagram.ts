@@ -5,7 +5,6 @@ import { Collection, Document } from "mongodb";
 import { Model } from "@/app/models/instagram";
 import { Model as CacheModel } from "@/app/models/cache";
 import { getFormData } from "@/app/utils";
-import IGError, { IGErrorType } from "./errors/instagram";
 
 const CACHE_KEYS = {
   CONVERSATIONS: "ig_conversations",
@@ -38,8 +37,6 @@ const MAX_LIMITS = {
 let accessToken: string | any = null;
 
 const getAccessToken = async (instance: any) => instance.findOne({ id: "instagram" });
-
-const deleteAccessToken = async (instance: any) => instance.delete({ id: "instagram" });
 
 const getShortLiveAccessToken = async (code: string) => {
   try {
@@ -337,15 +334,11 @@ const getMessages = async (
         conversationMessages,
         maxDate
       );
-      return nextMessages ? [...messages, ...nextMessages] : null;
+      return [...messages, ...nextMessages];
     }
 
     return messages || [];
-  } catch (error) {
-    if (IGError.isExpired(error as IGErrorType)) {
-      await deleteAccessToken(instance);
-      return ["REVOKED"];
-    }
+  } catch {
     return [];
   }
 };
@@ -407,7 +400,6 @@ export const instagramSvc = (collection: Collection<Document>) => ({
   storeShortLiveAccessToken,
   getLongLiveAccessToken,
   storeLongLiveAccessToken,
-  deleteAccessToken,
   getAccessToken,
   parseAuthToken,
   getConversations,
