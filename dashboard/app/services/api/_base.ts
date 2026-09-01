@@ -90,8 +90,8 @@ export const BaseSvc = (model: Collection<Document>, Model: Function) => {
       if (!avoidUnset) {
         modifiers["$unset"] = dbObj
           ? Object.keys(dbObj)
-              .filter((key) => !(key in obj) && key !== "_id")
-              .reduce((acc: Record<string, string>, key: string) => ((acc[key] = ""), acc), {})
+            .filter((key) => !(key in obj) && key !== "_id")
+            .reduce((acc: Record<string, string>, key: string) => ((acc[key] = ""), acc), {})
           : [];
       } else {
         modifiers["$unset"] = Object.keys(obj).reduce((acc: Record<string, any>, key: string) => {
@@ -114,6 +114,15 @@ export const BaseSvc = (model: Collection<Document>, Model: Function) => {
 
       if (dbObj) {
         await instance.model.deleteOne({ _id: new ObjectId(id) });
+      }
+
+      return instance.parse({ value: dbObj });
+    },
+    delete: async (query: Record<string, any>) => {
+      const dbObj = await instance.model.findOne(query);
+
+      if (dbObj) {
+        await instance.model.deleteOne(query);
       }
 
       return instance.parse({ value: dbObj });

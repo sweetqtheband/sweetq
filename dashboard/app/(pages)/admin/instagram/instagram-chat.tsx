@@ -79,7 +79,13 @@ export default function InstagramChat({
     if (item && !isInitialized) {
       const initialize = async () => {
         const response = await instagram.getMessages(item.instagram_conversation_id);
-        setMessages([...response.data.reverse()]);
+        if (response.data[0] === "REVOKED") {
+          setMessages([]);
+          instagram.revokeAccessToken();
+          location.reload();
+        } else {
+          setMessages([...response.data.reverse()]);
+        }
         setIsInitialized(true);
       };
       initialize();
@@ -308,13 +314,13 @@ export default function InstagramChat({
             {!isInitialized
               ? renderSkeletons(5)
               : messages.map((message, index) =>
-                  renderMessage(
-                    message,
-                    messages?.[index - 1] || null,
-                    messages?.[index + 1] || null,
-                    index
-                  )
-                )}
+                renderMessage(
+                  message,
+                  messages?.[index - 1] || null,
+                  messages?.[index + 1] || null,
+                  index
+                )
+              )}
           </div>
         </div>
         <footer>
