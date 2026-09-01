@@ -178,7 +178,7 @@ const getActive = async () => {
 
   return configs?.items instanceof Array && configs.items.length > 0
     ? parseFront(configs.items)[0]
-    : null;
+    : parseFront([] as ConfigType[]);
 };
 
 const faviconMetadata = {

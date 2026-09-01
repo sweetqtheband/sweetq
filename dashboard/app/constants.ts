@@ -167,8 +167,8 @@ export const FILTER_IDLE = 1000;
 
 export const EMPTY_ARRAY: any[] = [];
 export const EMPTY_OBJECT: Record<string, any> = {};
-export const NOOP = () => {};
+export const NOOP = () => { };
 export const NOOP_ASYNC = async () => true;
-export const NOOP_CLOSE = async (item: any) => {};
-export const NOOP_ACTION = async () => {};
-export const NOOP_LOADING = (value: boolean = false) => {};
+export const NOOP_CLOSE = async (item: any) => { };
+export const NOOP_ACTION = async () => { };
+export const NOOP_LOADING = (value: boolean = false) => { };
