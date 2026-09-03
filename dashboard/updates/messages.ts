@@ -8,15 +8,15 @@ import { createLogger } from "./shared/logger.js";
 
 const { logProcess } = createLogger("messages.log");
 
-const MESSAGE_LIMIT = 500;
+const MESSAGE_LIMIT = 100;
 let processedCount = 0;
 
 const elements = {
-  buttonMenuSendMessage: 'main section:nth-child(2) > div > div > div:nth-child(2) [role="button"]',
+  buttonMenuSendMessage: 'header div[aria-haspopup="dialog"]',
   buttonUserMenu: "main section:nth-child(2) > div > div > div:nth-child(3) > div",
   buttonDirectSendMessage: "main header > section:nth-of-type(2) [role=button]",
-  buttonUserMenuSendMessage: "div button:nth-child(6)",
-  inputMessage: 'div[aria-label="Mensaje"][contenteditable="true"]',
+  buttonUserMenuSendMessage: "div[role='dialog'] div[role='button']:last-child",
+  inputMessage: 'div[role="textbox"][contenteditable="true"]',
   buttonSendMessage: '[role="navigation"] + div [role="button"]',
   buttonSendMessageAlt: '[aria-label="Enviar"]',
 };
@@ -217,7 +217,7 @@ const fetchMessages = async (data: any, noRetry: Boolean = false) => {
 
   const messages = await messagesSvc.model
     .find(findOptions)
-    .sort({ created: -1 })
+    .sort({ created: 1 })
     .limit(limit)
     .toArray();
 
