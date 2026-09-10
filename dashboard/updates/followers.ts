@@ -14,14 +14,14 @@ const limit = pLimit(10); // Máximo 10 fetch simultáneos
 const { logProcess } = createLogger("followers.log");
 
 const browse = async (params: any) => {
-  const [browser, page] = await Instagram.start();
+  const [browser, page] = await Instagram.start(false, true, true, '/api/');
   await scrapPage(browser, page, params);
   return params;
 };
 
 const scrapPage = async (browser: any, page: any, params: any) => {
   console.log("SCRAPPING DATA...");
-  const scrappedData = await page.evaluate(scrap, process.env.NEXT_PUBLIC_INSTAGRAM_USERNAME);
+  const scrappedData = await page.evaluate(scrap, { headers: page?.lastRequest?.headers() || {}, username: process.env.NEXT_PUBLIC_INSTAGRAM_USERNAME });
   params.scrapped = {
     followers: scrappedData.followers,
     followings: scrappedData.followings,

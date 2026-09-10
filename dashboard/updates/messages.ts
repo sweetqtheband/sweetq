@@ -8,7 +8,7 @@ import { createLogger } from "./shared/logger.js";
 
 const { logProcess } = createLogger("messages.log");
 
-const MESSAGE_LIMIT = 100;
+const MESSAGE_LIMIT = 250;
 let processedCount = 0;
 
 const elements = {
@@ -267,14 +267,14 @@ const fetchMessages = async (data: any, noRetry: Boolean = false) => {
   const cityNames =
     cities.length > 0
       ? await citiesSvc.model
-          .find({ $or: cities })
-          .toArray()
-          .then((items: any[]) =>
-            items.reduce((acc: Record<string, string>, item: any) => {
-              acc[item.id] = item.name.es;
-              return acc;
-            }, {})
-          )
+        .find({ $or: cities })
+        .toArray()
+        .then((items: any[]) =>
+          items.reduce((acc: Record<string, string>, item: any) => {
+            acc[item.id] = item.name.es;
+            return acc;
+          }, {})
+        )
       : {};
 
   data.tag = await tagsSvc.findOne({ name: "Contactado" });
@@ -302,7 +302,7 @@ const useBrowser = {
   },
   async start(isHeadless: boolean) {
     if (!this.instance.browser) {
-      const [browser, page] = await Instagram.start(isHeadless);
+      const [browser, page] = await Instagram.start(isHeadless, true);
       this.instance.browser = browser;
       this.instance.page = page;
     }
@@ -418,8 +418,7 @@ const processMessages = async (data: any) => {
       await usersSvc.update({ _id: user._id, tags: user.tags }, true);
 
       logProcess(
-        `Mensaje enviado via ${
-          user?.instagram_conversation_id ? "Instagram API" : "puppeteer"
+        `Mensaje enviado via ${user?.instagram_conversation_id ? "Instagram API" : "puppeteer"
         } a ${user.username}: ${tpl.split("\n")[0]}...`
       );
       processedCount++;

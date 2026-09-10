@@ -2,27 +2,30 @@ import puppeteer from 'puppeteer';
 import { getLocalHostIp } from './utils';
 
 export const Instagram = {
-  start: async (debugConsole = true) => {
+  start: async (debugConsole = true, isLocal = false, captureRequest = false, captureRequestPattern = '/api/') => {
     const options = {
       headless: false,
       defaultViewport: { width: 1024, height: 768 },
-      browserURL: `http://${getLocalHostIp()}:9222`,
+      browserURL: `http://${getLocalHostIp(isLocal)}:9222`,
       executablePath:
         '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
       userDataDir:
         '/Users/jesus.garciag/Library/Application Support/Google/Chrome',
-      args: ['--profile-directory=Profile 4'],
+      args: ['--profile-directory=Profile 4', '--disable-logging',
+        '--log-level=3', '--disable-gpu',
+        '--disable-gpu-compositing'],
     };
 
     const browser = await puppeteer.connect(options);
-    const page = await Instagram.initialize(browser, options, debugConsole);
+    const page = await Instagram.initialize(browser, options, debugConsole, captureRequest, captureRequestPattern);
 
     return [browser, page];
   },
 
-  initialize: async (browser: any, options: any, debugConsole = true) => {
+  initialize: async (browser: any, options: any, debugConsole = true, captureRequest = false, captureRequestPattern = '/api/') => {
     console.log('LOGIN INTO INSTAGRAM');
     const page = await browser.newPage();
+
     page.setDefaultNavigationTimeout(90000);
 
     if (debugConsole) {
@@ -31,12 +34,22 @@ export const Instagram = {
       });
     }
 
+    if (captureRequest) {
+      page.on('request', (req: any) => {
+        if (req.url().includes(captureRequestPattern)) {
+          page.lastRequest = req;
+        }
+      });
+    }
+
     await page.setViewport({
       width: options.defaultViewport.width,
       height: options.defaultViewport.height,
     });
+
     await page.goto('https://instagram.com', { waitUntil: 'domcontentloaded' });
     await new Promise((r) => setTimeout(r, 1000));
+
     return page;
   },
 

@@ -1,4 +1,4 @@
-export const scrap = async (username: string) => {
+export const scrap = async ({ headers, username }: { headers: Record<string, string>, username: string }) => {
   /**
    * Initialized like this so we can still run it from browsers, but also use typescript on a code editor for intellisense.
    */
@@ -26,27 +26,17 @@ export const scrap = async (username: string) => {
 
     while (has_next) {
       await fetch(
-        `https://www.instagram.com/graphql/query/?query_hash=c76146de99bb02f6415203be841dd25a&variables=` +
-          encodeURIComponent(
-            JSON.stringify({
-              id: userId,
-              include_reel: false,
-              fetch_mutual: true,
-              first: 50,
-              after: after,
-            })
-          )
+        `https://www.instagram.com/api/v1/friendships/${userId}/followers/${after ? `?max_id=${after}` : ''}`,
+        {
+          headers: headers || {}
+        }
       )
         .then((res) => res.json())
         .then((res) => {
-          has_next = res.data.user.edge_followed_by.page_info.has_next_page;
-          after = res.data.user.edge_followed_by.page_info.end_cursor;
+          has_next = res.has_more;
+          after = res.next_max_id;
           followers = followers.concat(
-            res.data.user.edge_followed_by.edges.map(
-              ({ node }: { node: any }) => {
-                return { ...node };
-              }
-            )
+            res.users
           );
         });
     }
@@ -58,25 +48,17 @@ export const scrap = async (username: string) => {
 
     while (has_next) {
       await fetch(
-        `https://www.instagram.com/graphql/query/?query_hash=d04b0a864b4b54837c0d870b0e77e076&variables=` +
-          encodeURIComponent(
-            JSON.stringify({
-              id: userId,
-              include_reel: false,
-              fetch_mutual: true,
-              first: 50,
-              after: after,
-            })
-          )
+        `https://www.instagram.com/api/v1/friendships/${userId}/following/${after ? `?max_id=${after}` : ''}`,
+        {
+          headers: headers || {}
+        }
       )
         .then((res) => res.json())
         .then((res) => {
-          has_next = res.data.user.edge_follow.page_info.has_next_page;
-          after = res.data.user.edge_follow.page_info.end_cursor;
+          has_next = res.has_more;
+          after = res.next_max_id;
           followings = followings.concat(
-            res.data.user.edge_follow.edges.map(({ node }: { node: any }) => {
-              return { ...node };
-            })
+            res.users
           );
         });
     }

@@ -53,7 +53,10 @@ export const getUserImage = async (user: any) => {
   }
 };
 
-export const getLocalHostIp = () => {
+export const getLocalHostIp = (isLocal: boolean = false) => {
+  if (isLocal) {
+    return "localhost";
+  }
   try {
     const output = execSync("cat /etc/resolv.conf | grep nameserver").toString();
     const match = output.match(/\d+\.\d+\.\d+\.\d+/);
