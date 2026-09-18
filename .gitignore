@@ -8,6 +8,7 @@ node_modules/
 .yarn/
 
 ## Build outputs
+dist/
 build/
 out/
 .next/
@@ -44,3 +45,5 @@ Thumbs.db
 tmp/
 temp/
 *.tmp
+
+bot/
