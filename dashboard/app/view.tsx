@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { WindowContext } from "./context";
 import { getClasses, isMobile } from "./utils";
+import { ToastProvider } from "./providers/toast";
 
 export default function RootView({ children }: { children: React.ReactNode }) {
   const [classes, setClasses] = useState("");
@@ -47,7 +48,9 @@ export default function RootView({ children }: { children: React.ReactNode }) {
 
   return (
     <WindowContext.Provider value={windowState}>
-      <div className={classes}>{children}</div>
+      <ToastProvider>
+        <div className={classes}>{children}</div>
+      </ToastProvider>
     </WindowContext.Provider>
   );
 }

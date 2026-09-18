@@ -6,16 +6,20 @@ import { ACTIONS, Followings } from "@/app/services/followings";
 import { useRouter } from "next/navigation";
 import MessagePanel from "../message-panel";
 import InstagramChat from "../instagram-chat";
-import { useState, useMemo, useCallback } from "react";
+import { useState, useMemo, useCallback, useEffect } from "react";
 import { Modal } from "@carbon/react";
 import { Action } from "@/types/action";
 import { useDeepMemo } from "@/app/hooks/memo";
+import { useToast } from "@/app/hooks/toast";
 
 export default function InstagramView(params: Readonly<any>) {
   const [ids, setIds] = useState(null);
   const [item, setItem] = useState(null);
+  const [items, setItems] = useState([]);
   const [action, setAction] = useState<Action>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isWaiting, setIsWaiting] = useState(false);
+
   const [open, setOpen] = useState<string | null>("");
 
   const router = useRouter();
@@ -29,6 +33,15 @@ export default function InstagramView(params: Readonly<any>) {
   const memoTranslations = useDeepMemo(params.translations);
   const memoLayouts = useDeepMemo(params.layouts);
 
+  const Toast = useToast();
+
+
+  useEffect(() => {
+    setItems(memoItems);
+  }, [memoItems]);
+
+
+
   // Memoize all objects to prevent unnecessary re-renders
   const methods = useMemo(
     () => Followings.getMethods(router, memoTranslations, open === ACTIONS?.BATCH_EDIT),
@@ -37,9 +50,16 @@ export default function InstagramView(params: Readonly<any>) {
 
   const renders = useMemo(() => Followings.getRenders(), []);
 
+  const setIsLoadingHandler = useCallback((loading: boolean) => {
+    setIsLoading(loading);
+  }, []);
+  const setIsWaitingHandler = useCallback((waiting: boolean) => {
+    setIsWaiting(waiting);
+  }, []);
+
   const batchActions = useMemo(
-    () => Followings.getBatchActions(setIds, memoTranslations, setOpen),
-    [memoTranslations]
+    () => Followings.getBatchActions({ setIds, translations: memoTranslations, router, setOpen, setIsLoading: setIsLoadingHandler, setIsWaiting: setIsWaitingHandler, setItems, Toast }),
+    [memoTranslations, router, setIsLoadingHandler, setIsWaitingHandler, setItems, setIds, setOpen, Toast]
   );
 
   const itemActions = useMemo(
@@ -66,10 +86,6 @@ export default function InstagramView(params: Readonly<any>) {
     [methods.action]
   );
 
-  const setIsLoadingHandler = useCallback((loading: boolean) => {
-    setIsLoading(loading);
-  }, []);
-
   const actionClear = useCallback(() => {
     setAction(null);
   }, []);
@@ -92,7 +108,7 @@ export default function InstagramView(params: Readonly<any>) {
       <InstagramLogin />
       <ListLayout
         id={params.id}
-        items={memoItems}
+        items={items}
         headers={memoHeaders}
         fields={memoFields}
         multiFields={memoMultiFields}
@@ -119,6 +135,10 @@ export default function InstagramView(params: Readonly<any>) {
         open={open}
         setOpen={setOpen}
         CONSTANTS={CONSTANTS_MEMO}
+        isLoading={isLoading}
+        isWaiting={isWaiting}
+        setIsLoading={setIsLoadingHandler}
+        setIsWaiting={setIsWaitingHandler}
       />
       <MessagePanel
         ids={ids}

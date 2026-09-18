@@ -77,6 +77,7 @@ export const FIELD_TYPES: Record<string, FieldTypesType> = {
   DATE: "date",
   DATE_HOUR_LABEL: "dateHourLabel",
   DATE_HOUR: "dateHour",
+  FILE_UPLOADER: "fileUploader",
   FILTER_CITY: "filterCity",
   FILTER_COUNTRY: "filterCountry",
   FILTER_STATE: "filterState",

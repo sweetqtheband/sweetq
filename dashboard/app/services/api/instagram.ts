@@ -4,8 +4,13 @@ import { BaseSvc } from "./_base";
 import { Collection, Document } from "mongodb";
 import { Model } from "@/app/models/instagram";
 import { Model as CacheModel } from "@/app/models/cache";
-import { getFormData } from "@/app/utils";
+import { getFormData, getMeta } from "@/app/utils";
 import IGError, { IGErrorType } from "./errors/instagram";
+import puppeteer, { HTTPResponse, Page, Browser } from "puppeteer";
+import { InstagramProfile } from "@/types/instagram-profile";
+import { uploadSvc } from "./upload";
+import { userAgentSvc } from "./userAgent";
+import { proxySvc } from "./proxy";
 
 const CACHE_KEYS = {
   CONVERSATIONS: "ig_conversations",
@@ -33,6 +38,14 @@ const EP = {
 const MAX_LIMITS = {
   CONVERSATIONS: 100,
   MESSAGES: 100,
+};
+
+const CONCURRENCY = 5;
+const TIMEOUT = 15_000;
+
+const browserInstance: Record<string, Page | Browser | null> = {
+  browser: null,
+  page: null,
 };
 
 let accessToken: string | any = null;
@@ -398,6 +411,388 @@ const sendMessage = async (instance: any, data: Record<string, any>) => {
   }
 };
 
+const fetchInstagramProfile = async (
+  username: string,
+  headers?: Record<string, any>,
+  agents?: { httpAgent?: any; httpsAgent?: any }
+) => {
+  const response = await fetch(
+    `https://www.instagram.com/${username}/`,
+    {
+      headers: {
+        "User-Agent": headers?.["User-Agent"] || "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36",
+        Referer: "https://www.instagram.com/",
+      },
+      ...(agents?.httpsAgent && { agent: agents.httpsAgent }),
+      cache: "no-store",
+      redirect: "manual",
+    }
+  );
+
+
+  if (!response.ok && response.status >= 300 && response.status < 400) {
+    const location = response.headers.get("location");
+
+    if (location?.includes("/accounts/login")) {
+      console.log(`Redirected to login for user ${username}, retrying with new User-Agent and Proxy`);
+
+      try {
+        // Obtener proxy
+        const proxy = await proxySvc.getProxyForPuppeteer();
+        const proxyUrl = `http://${proxy.username}:${proxy.password}@${proxy.ip}`;
+
+        // Crear agents
+        const { HttpProxyAgent } = await import('http-proxy-agent');
+        const { HttpsProxyAgent } = await import('https-proxy-agent');
+
+        const httpAgent = new HttpProxyAgent(proxyUrl);
+        const httpsAgent = new HttpsProxyAgent(proxyUrl);
+
+        console.log(`Using proxy: ${proxy.ip}`);
+
+        return fetchInstagramProfile(
+          username,
+          userAgentSvc.getForFetch(),
+          { httpAgent, httpsAgent }
+        );
+      } catch (proxyError) {
+        console.warn(`Failed to get proxy, retrying without proxy:`, proxyError);
+        return fetchInstagramProfile(username, userAgentSvc.getForFetch());
+      }
+    }
+  }
+
+  const html = await response.text();
+
+  const fullName = getMeta(html, "og:title");
+  const image = getMeta(html, "og:image");
+  const ogDescription = getMeta(html, "og:description");
+  const description = getMeta(html, "description")?.replace(`${ogDescription?.split(" - ")[0]}${" - "}`, "");
+  console.log(`Fetched Instagram profile for ${username}: fullName=${fullName}, image=${image}, description=${description}`);
+
+  return {
+    username,
+    full_name: fullName,
+    description: description,
+    profile_pic_url: image,
+  };
+}
+
+const fetchInstagramProfileData = async (users: string[], cb: (result: Record<string, any>) => void = () => { }, concurrency = CONCURRENCY) => {
+  console.log(`fetchInstagramProfileData called with ${users?.length || 0} users`);
+
+  if (!users || users.length === 0) {
+    console.log("fetchInstagramProfileData: No users to process, returning empty array");
+    return [];
+  }
+
+  console.log(`fetchInstagramProfileData: Starting with concurrency=${concurrency}`);
+  const results: Record<string, any>[] = new Array(users.length);
+  let processedIndex = 0;
+
+  async function worker() {
+    while (processedIndex < users.length) {
+      const currentIndex = processedIndex++;
+      const user = users[currentIndex];
+      console.log(`Worker processing user ${currentIndex + 1}/${users.length}: ${user}`);
+
+      try {
+        results[currentIndex] = { ...await fetchInstagramProfile(user) };
+        console.log(`Worker got profile for ${user}`);
+        await cb(results[currentIndex]);
+      } catch (error) {
+        console.error(`Error fetching profile for ${user}:`, error);
+        results[currentIndex] = {
+          username: user,
+        };
+      }
+    }
+  }
+
+  try {
+    const numWorkers = Math.min(concurrency, users.length);
+    console.log(`fetchInstagramProfileData: Starting ${numWorkers} workers`);
+    await Promise.all(Array.from({ length: numWorkers }, () => worker()));
+    console.log(`fetchInstagramProfileData: All workers completed, returning ${results.length} results`);
+    return results;
+  } catch (error) {
+    console.error("Error in fetchInstagramProfileData:", error);
+    return results;
+  }
+};
+
+function parseInstagramProfile(
+  text: string
+): InstagramProfile | null {
+  const marker = '"xig_user_by_username":';
+
+  const markerIndex = text.indexOf(marker);
+
+  if (markerIndex === -1) {
+    return null;
+  }
+
+  const objectStart = text.indexOf(
+    "{",
+    markerIndex + marker.length
+  );
+
+  if (objectStart === -1) {
+    return null;
+  }
+
+  let depth = 0;
+  let inString = false;
+  let escaped = false;
+
+  for (let i = objectStart; i < text.length; i++) {
+    const char = text[i];
+
+    if (inString) {
+      if (escaped) {
+        escaped = false;
+      } else if (char === "\\") {
+        escaped = true;
+      } else if (char === '"') {
+        inString = false;
+      }
+
+      continue;
+    }
+
+    if (char === '"') {
+      inString = true;
+    } else if (char === "{") {
+      depth++;
+    } else if (char === "}") {
+      depth--;
+
+      if (depth === 0) {
+        try {
+          const user = JSON.parse(
+            text.slice(objectStart, i + 1)
+          );
+
+          return {
+            id: user.pk ?? null,
+            username: user.username ?? null,
+            full_name: user.full_name ?? null,
+            biography: user.biography ?? null,
+            profile_pic_url: user.profile_pic_url ?? null,
+            isPrivate: user.is_private ?? null,
+            isVerified: user.is_verified ?? null,
+          };
+        } catch {
+          return null;
+        }
+      }
+    }
+  }
+
+  return null;
+}
+
+async function getInstagramProfile(
+  page: Page,
+  username: string,
+): Promise<InstagramProfile | null> {
+
+  try {
+    await page.goto(
+      `https://www.instagram.com/${username}/`,
+      { waitUntil: "networkidle2" }
+    );
+    try {
+      await page.waitForFunction(
+        () =>
+          document.documentElement.innerHTML.includes(
+            "xig_user_by_username"
+          ),
+        {
+          timeout: 10_000,
+        }
+      );
+    } catch {
+      console.log(`[PUPPETEER] Not found: ${username}`);
+      return null;
+    }
+
+    const html = await page.content();
+    const profile = parseInstagramProfile(html);
+
+    return profile;
+
+  } catch (err) {
+    console.error(`[PUPPETEER] Error fetching Instagram profile for ${username}:`, err);
+    return null;
+  }
+};
+
+
+const getPuppeteerEnvironment = async () => {
+  if (!browserInstance.browser && !browserInstance.page) {
+    browserInstance.browser = await puppeteer.launch({
+      headless: true,
+    });
+    browserInstance.page = await browserInstance.browser.newPage();
+    await browserInstance.page.setRequestInterception(true);
+
+    browserInstance.page.on("request", (request: any) => {
+      const blocked = [
+        "image",
+        "font",
+        "stylesheet",
+        "media",
+      ];
+
+      if (blocked.includes(request.resourceType())) {
+        request.abort();
+      } else {
+        request.continue();
+      }
+    });
+  }
+
+  return { browser: browserInstance.browser, page: browserInstance.page };
+};
+
+const fetchInstagramData = async (user: Record<string, any>) => {
+  try {
+
+    const profile = await getInstagramProfile(
+      browserInstance.page as Page,
+      user.username
+    );
+
+
+    return profile;
+  } catch (error) {
+    console.error(`[PUPPETEER] Error fetching Instagram data for user: ${user.username}`, error);
+    return null;
+  }
+}
+
+const mimeTypesToExtensions: { [key: string]: string } = {
+  "image/jpeg": "jpg",
+  "image/png": "png",
+  "image/gif": "gif",
+  "image/webp": "webp",
+  "image/apng": "apng",
+  "image/svg+xml": "svg",
+  "image/avif": "avif",
+};
+
+const getFileExtensionFromMimeType = (mimeType: string): string => {
+  const extension = mimeTypesToExtensions[mimeType.toLowerCase()];
+  if (extension) {
+    return extension;
+  }
+  return ""; // Si no se encuentra, devolver una cadena vacía
+};
+
+export const getUserImage = async (user: any) => {
+  try {
+    const response = await fetch(user.profile_pic_url, {
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36",
+        Accept: "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+        Referer: "https://www.instagram.com/",
+      },
+    });
+
+    if (!response.ok)
+      throw new Error(`Failed to fetch image: ${response.status}: ${response.statusText}`);
+
+    const mimeType = response.headers.get("Content-Type") || "image/jpeg";
+
+    const arrayBuffer = await response.arrayBuffer();
+
+    const blob = new Blob([arrayBuffer], { type: mimeType });
+
+    const fileName = `${user.username}.${getFileExtensionFromMimeType(mimeType)}`;
+    const file = new File([blob], fileName, { type: mimeType });
+
+    return file;
+  } catch (error: any) {
+    console.log(`ERROR!!!!!! ${error.message} ${user.profile_pic_url}`);
+    return null;
+  }
+};
+
+const updateUser = async (user: Record<string, any>, users: any[], col: any, match: any[] = [], logProcess = (str: string) => { }) => {
+
+  if (!user || !user.username) {
+    throw new Error("Invalid user or missing username");
+  }
+  try {
+    const fol = users.find((item: any) => item.username === user.username);
+
+    logProcess(`UPDATING USER: ${user.username}`);
+    logProcess(`USER: ${user.username} DATA: ${JSON.stringify(user)}`);
+    logProcess(`FOLLOWER: ${fol ? fol.username : "N/A"} DATA: ${JSON.stringify(fol)}`);
+
+    // Follower doesn't have S3 image stored, proceed
+    if ((fol && !fol.hasS3Image) || !fol) {
+      if (user.profile_pic_url) {
+        logProcess(`USER: ${user.username} DOESN'T HAVE S3 IMAGE`);
+        user.instagram_profile_pic_url = user.profile_pic_url;
+        const file = await getUserImage(user);
+
+        if (file) {
+          await uploadSvc.uploadS3(file, "/imgs/users");
+          logProcess(`USER: ${user.username} IMAGE UPLOADED TO S3`);
+
+          user.profile_pic_url = `/imgs/users/${file.name}`;
+          user.hasS3Image = true;
+        } else {
+          logProcess(`USER: ${user.username} IMAGE NOT UPLOADED TO S3`);
+          user.hasS3Image = false;
+        }
+      } else {
+        user.extracted = false;
+      }
+    } else if (fol.hasS3Image && fol.instagram_profile_pic_url !== user.profile_pic_url) {
+      const file = await getUserImage(user);
+      if (file) {
+        try {
+          await uploadSvc.deleteS3(fol.profile_pic_url);
+        } catch { }
+        await uploadSvc.uploadS3(file, "/imgs/users");
+        user.profile_pic_url = `/imgs/users/${file.name}`;
+        logProcess(`USER: ${user.username} IMAGE UPDATED TO S3`);
+      } else {
+        fol.hasS3Image = false;
+        logProcess(`USER: ${user.username} IMAGE NOT UPDATED TO S3`);
+      }
+    }
+
+    if (match.length) {
+      const matched = match.includes(user.username);
+      if (matched) {
+        user.followed_back = true;
+      }
+    }
+
+    await col.updateOne(
+      { username: user.username },
+      {
+        $set: Object.keys(user).reduce((acc: Record<string, any>, key) => {
+          acc[key] = user[key];
+          acc.unfollow = false;
+          return acc;
+        }, {}),
+      },
+      { upsert: true }
+    );
+
+    return await col.findOne({ username: user.username });
+  } catch (error: any) {
+    logProcess(`Failed to update user ${error.message}`);
+    throw error;
+  }
+};
+
 /**
  * Instagram service
  */
@@ -419,4 +814,10 @@ export const instagramSvc = (collection: Collection<Document>) => ({
   getMessages,
   getMessage,
   sendMessage,
+  fetchInstagramProfileData,
+  fetchInstagramProfile,
+  getInstagramProfile,
+  fetchInstagramData,
+  updateUser,
+  getPuppeteerEnvironment,
 });

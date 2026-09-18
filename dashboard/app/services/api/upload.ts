@@ -52,6 +52,7 @@ export const uploadSvc: UploadService = {
         await s3Client.send(new PutObjectCommand(params));
         return true;
       } catch (error) {
+        console.log(error);
         throw new Error("S3 upload error");
       }
     } else {

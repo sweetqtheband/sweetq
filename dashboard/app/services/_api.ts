@@ -118,10 +118,12 @@ export const PUT = async (client: AxiosInstance, id: string, data: any, url: str
   return response;
 };
 
-export const DELETE = async (client: AxiosInstance, ids: string | string[], url: string = "") => {
-  const response = await (ids instanceof Array
+export const DELETE = async (client: AxiosInstance, ids: string | string[], url: string = "", batch: boolean = false) => {
+  const singleDeletion = async () => await (ids instanceof Array
     ? Promise.all(ids.map((id) => client.delete(url + id)))
     : client.delete(url + ids));
+  const batchDeletion = async () => await (client.delete(url, { data: { ids } }));
+  const response = batch ? await batchDeletion() : await singleDeletion();
 
   return response;
 };

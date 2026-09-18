@@ -20,6 +20,11 @@ const browse = async (params: any) => {
 };
 
 const scrapPage = async (browser: any, page: any, params: any) => {
+  if (!page?.lastRequest) {
+    await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait for 1 second before retrying
+    console.log("REQUEST NOT READY, RETRYING...");
+    return scrapPage(browser, page, params); // Retry scrapping
+  }
   console.log("SCRAPPING DATA...");
   const scrappedData = await page.evaluate(scrap, { headers: page?.lastRequest?.headers() || {}, username: process.env.NEXT_PUBLIC_INSTAGRAM_USERNAME });
   params.scrapped = {

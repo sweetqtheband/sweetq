@@ -1,4 +1,6 @@
 export const scrap = async ({ headers, username }: { headers: Record<string, string>, username: string }) => {
+  debugger;
+
   /**
    * Initialized like this so we can still run it from browsers, but also use typescript on a code editor for intellisense.
    */
@@ -63,6 +65,10 @@ export const scrap = async ({ headers, username }: { headers: Record<string, str
         });
     }
   } catch (err) {
+    debugger;
+    console.log(`Error occurred while scraping data for username: ${username}`);
+    console.log(err);
+
     return { err };
   }
 

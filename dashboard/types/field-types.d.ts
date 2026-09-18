@@ -7,6 +7,7 @@ export enum FieldTypes {
   dateLabel = "dateLabel",
   dateHourLabel = "dateHourLabel",
   dateHour = "dateHour",
+  fileUploader = "fileUploader",
   filter_city = "filterCity",
   filter_country = "filterCountry",
   filter_state = "filterState",

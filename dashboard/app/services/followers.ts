@@ -6,10 +6,13 @@ import { States } from "./states";
 import { Cities } from "./cities";
 import { onSave, onDelete } from "./_methods";
 import { Tags } from "./tags";
-import { Edit, SendAlt } from "@carbon/react/icons";
+import { Edit, SendAlt, SyncSettings } from "@carbon/react/icons";
 import { client as InstagramMessagesClient } from "./instagramMessages";
 import { instagram } from "./instagram";
 import { Filters } from "./filters";
+import { Imports } from "./imports";
+import { batchActionProps } from "@/types/batchActionProps";
+import { t } from "../utils";
 
 export const client = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URI}/followers`,
@@ -82,6 +85,7 @@ export const ACTIONS = {
   BATCH_EDIT: "batchEdit",
   CANCEL_MESSAGE: "cancelMessage",
   MESSAGE: "message",
+  SYNC: "sync",
 };
 
 // Get shared fields function
@@ -386,22 +390,32 @@ const getRenders = (): Record<string, Function> => ({
   },
 });
 
-const getBatchActions = (setIds: Function, translations: any, setOpen: Function) => {
+const getBatchActions = (batchActionProps: batchActionProps) => {
+
+  const { translations } = batchActionProps;
+  if (!translations) return;
   return {
     edit: {
       translations: {
         title: translations[ACTIONS.BATCH_EDIT],
       },
       icon: Edit,
-      onClick: (selectedRows: string[]) => openBatchEditPanel(selectedRows, setIds, setOpen),
+      onClick: (selectedRows: string[]) => openBatchEditPanel({ ...batchActionProps, selectedRows }),
     },
     message: {
       translations: {
         title: translations.sendMessage,
       },
       icon: SendAlt,
-      onClick: (selectedRows: string[]) => openMessagePanel(selectedRows, setIds, setOpen),
+      onClick: (selectedRows: string[]) => openMessagePanel({ ...batchActionProps, selectedRows }),
     },
+    sync: {
+      translations: {
+        title: translations[ACTIONS.SYNC],
+      },
+      icon: SyncSettings,
+      onClick: (selectedRows: string[]) => syncUsers({ ...batchActionProps, selectedRows }),
+    }
   };
 };
 
@@ -432,14 +446,86 @@ export const Followers = {
   getMethods,
 };
 
+// WATCHERS
+
+const watchSyncProgress = (importId: string, onProgress: any = () => { }): Promise<Record<string, any>> => {
+  return new Promise<Record<string, any>>((resolve, reject) => {
+
+    const eventSource = new EventSource(
+      `/api/imports/progress?id=${importId}`
+    );
+
+    eventSource.onmessage = (event) => {
+      const progress = JSON.parse(event.data);
+      onProgress(progress);
+
+      if (progress.status === "completed") {
+        eventSource.close();
+        resolve(progress);
+      }
+      if (progress.status === "error") {
+        eventSource.close();
+        reject("Sync process encountered an error");
+      }
+    };
+    eventSource.onerror = (error) => {
+      eventSource.close();
+      reject(error);
+    };
+  });
+};
+
 // ACTIONS
 
-const openMessagePanel = async (selectedRows: string[], setIds: Function, setOpen: Function) => {
+const openMessagePanel = async ({ selectedRows, setIds, setOpen }: batchActionProps) => {
+  if (!setIds || !setOpen) return;
   setIds(selectedRows);
   setOpen(ACTIONS.MESSAGE);
 };
 
-const openBatchEditPanel = async (selectedRows: string[], setIds: Function, setOpen: Function) => {
+const openBatchEditPanel = async ({ selectedRows, setIds, setOpen }: batchActionProps) => {
+  if (!setIds || !setOpen) return;
   setIds(selectedRows);
   setOpen(ACTIONS.BATCH_EDIT);
+};
+
+
+const syncUsers = async ({ selectedRows, translations, setIsLoading, setIsWaiting, setItems, Toast }: batchActionProps) => {
+  if (!setIsLoading || !setIsWaiting || !setItems || !Toast) return;
+
+  const toastId = await Toast.addToast({ title: translations?.imports.toast.title, subtitle: t(translations?.imports.toast.syncing, { percentage: '0%' }) });
+
+  setIsWaiting(true);
+  setIsLoading(true);
+
+  const syncId = await Imports.onSync({ userIds: selectedRows, origin: "followers" });
+  try {
+    const response = await watchSyncProgress(syncId, (progress: any) => {
+      Toast.updateToast(toastId, { subtitle: t(translations?.imports.toast.syncing, { percentage: `${Math.round(progress.processed * 100 / progress.total)}%` }) });
+    });
+    if (response.status === 'completed' && Object.keys(response.results).length) {
+
+      setItems((prevItems: any[]) => {
+        const updatedItems = [...prevItems];
+        Object.keys(response.results).forEach((key) => {
+          const updatedUser = response.results[key];
+          const index = updatedItems.findIndex(item => item.username === updatedUser.username);
+          if (index !== -1) {
+            updatedItems[index] = { ...updatedItems[index], ...updatedUser };
+          }
+        });
+        return updatedItems;
+      });
+      Toast.updateToast(toastId, { subtitle: translations?.imports.toast.synced, kind: "success" });
+
+    } else {
+      Toast.updateToast(toastId, { subtitle: translations?.imports.toast.failedSync, kind: "error" });
+    }
+  } catch (error: any) {
+    console.error(`Error syncing users:`, error);
+    Toast.updateToast(toastId, { subtitle: translations?.imports.toast.failedSync, kind: "error" });
+  } finally {
+    setIsLoading(false);
+    setIsWaiting(false);
+  }
 };
