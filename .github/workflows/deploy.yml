@@ -39,6 +39,7 @@ jobs:
               echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}"
               echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}"
               echo "ALLOWED_ORIGINS=${{ secrets.ALLOWED_ORIGINS }}"
+              echo "PROXYLIST_KEY=${{ secrets.PROXYLIST_KEY }}"
               echo "API_INSTAGRAM=${{ vars.API_INSTAGRAM }}"
               echo "GRAPH_INSTAGRAM=${{ vars.GRAPH_INSTAGRAM }}"
               echo "API_INSTAGRAM_VERSION=${{ vars.API_INSTAGRAM_VERSION }}"

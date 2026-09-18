@@ -239,7 +239,7 @@
   },
   {
     "id": 18,
-    "date": "2026-09-12 20:30",
+    "date": "2026-09-19 20:30",
     "city": "Zaragoza",
     "hour": "20:30",
     "venue": "Gira 'Que solo nos quede ganar': Zaragoza",
@@ -276,5 +276,47 @@
     "bands": [],
     "event": null,
     "tickets": "free"
+  },
+  {
+    "id": 21,
+    "date": "2026-10-24 21:00",
+    "city": "Murcia",
+    "hour": "21:00",
+    "venue": "Gira 'Que solo nos quede ganar': Murcia",
+    "address": "La Yesería",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3144.603894383379!2d-1.1276800238436449!3d37.986372371932795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd6382107d3f261f%3A0x768dd71b0413c518!2sLa%20Yeser%C3%ADa!5e0!3m2!1ses!2ses!4v1782120358187!5m2!1ses!2ses",
+    "bands": [
+      39
+    ],
+    "event": null,
+    "tickets": null
+  },
+  {
+    "id": 22,
+    "date": "2026-11-27 21:00",
+    "city": "Madrid",
+    "hour": "21:00",
+    "venue": "Gira 'Que solo nos quede ganar': Madrid",
+    "address": "Vesta",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4073.54559307776!2d-3.6956384!3d40.4229791!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42297c0e03ba33%3A0x28f0b82774563387!2sSALA%20VESTA!5e1!3m2!1ses!2ses!4v1759834021705!5m2!1ses!2ses",
+    "bands": [
+      43
+    ],
+    "event": null,
+    "tickets": null
+  },
+  {
+    "id": 23,
+    "date": "2027-06-19 21:00",
+    "city": "Granada",
+    "hour": "21:00",
+    "venue": "Gira 'Que solo nos quede ganar': Granada",
+    "address": "RockNRolla",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5335.528124397024!2d-3.6054354!3d37.177308!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd71fc94b8c9b6c9%3A0xf6af567434d2cc40!2sRocknRolla%20Underground%20Club!5e1!3m2!1ses!2ses!4v1789723354360!5m2!1ses!2ses",
+    "bands": [
+      9999
+    ],
+    "event": null,
+    "tickets": null
   }
 ]

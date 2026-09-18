@@ -1,0 +1,74 @@
+@use "@scss/mixins" as *;
+
+.imports-view {
+    padding: calc(var(--padding) * 2);
+    max-width: 1366px;
+    margin: 0 auto;
+
+    h3 {
+        margin-bottom: var(--padding);
+    }
+
+    section:not(:first-of-type),
+    footer {
+        padding-top: calc(var(--padding) * 2);
+    }
+
+    div.cds--cc--legend.vertical {
+        display: flex;
+        flex-flow: wrap;
+
+        div.legend-item {
+            margin-right: 0;
+            margin-bottom: 10px;
+            white-space: nowrap;
+            width: 150px;
+        }
+    }
+
+    .chart+.chart {
+        padding-top: calc(var(--padding) * 2);
+    }
+
+    .chart-row {
+        padding-top: var(--padding);
+        display: flex;
+        flex-wrap: wrap;
+        gap: calc(var(--padding) * 4);
+
+        @include from(tablet) {
+            justify-content: center;
+        }
+
+        .chart-cell {
+            &.flex-1 {
+                @include from(tablet) {
+                    max-width: 50vw;
+                }
+
+                min-width: 50%;
+                flex: 1;
+            }
+        }
+    }
+
+    .values-chart {
+        .value-item {
+            padding-top: var(--padding);
+            font-size: var(--charts-font-size);
+
+            .value-label {
+                margin-right: var(--padding);
+            }
+
+            .value-number {
+                font-weight: 600;
+            }
+        }
+    }
+
+    .react-terminal-wrapper {
+        padding: var(--padding);
+        font-size: var(--charts-font-size);
+    }
+}

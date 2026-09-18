@@ -33,7 +33,8 @@
     "showPassword": "Mostrar contraseña",
     "unselectAll": "Deseleccionar todo",
     "unselectAllShort": "Desel.",
-    "upload": "Subir"
+    "upload": "Subir",
+    "sync": "Sincronizar"
   },
   "charts": {
     "answering": "Responden",
@@ -178,6 +179,31 @@
     "header": "Cabecera",
     "metadata": "Metadatos"
   },
+  "imports": {
+    "title": "Importación de usuarios",
+    "chart": {
+      "title": "Datos de importación",
+      "currentFollowers": "Seguidores actuales",
+      "currentFollowings": "Siguiendo actualmente",
+      "newFollowers": "Nuevos seguidores",
+      "newFollowings": "Nuevas seguimientos",
+      "followersDifference": "Seguidores que dejaron de seguir",
+      "followingDifference": "Seguidos que hemos dejado de seguir",
+      "notFollowingAndFollowing": "Gente que no nos sigue y seguimos"
+    },
+    "progress": {
+      "title": "Progreso de importación",
+      "total": "Total"
+    },
+    "files": "Archivos de importación de instagram (html)",
+    "button": "Importar",
+    "toast": {
+      "title": "Importación de usuarios",
+      "syncing": "Sincronizando usuarios {{percentage}}",
+      "synced": "Usuarios sincronizados correctamente",
+      "failedSync": "Error al sincronizar usuarios"
+    }
+  },
   "languages": {
     "en": "Inglés",
     "es": "Español"
@@ -256,7 +282,8 @@
     "tags": "Etiquetas",
     "tracks": "Pistas",
     "users": "Usuarios",
-    "videos": "Vídeos"
+    "videos": "Vídeos",
+    "imports": "Importaciones"
   },
   "status": {
     "published": "Publicado",

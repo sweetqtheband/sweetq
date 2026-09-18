@@ -1,0 +1,16 @@
+    .toast-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: var(--full-height);
+        z-index: 1;
+        display: inline-flex;
+        align-items: flex-end;
+        pointer-events: none;
+        padding: var(--padding);
+
+        >* {
+            pointer-events: auto;
+        }
+    }

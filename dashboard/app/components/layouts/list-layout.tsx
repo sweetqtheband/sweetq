@@ -44,6 +44,10 @@ interface ListLayoutProps {
   onItemSelect?: (item: any) => void;
   CONSTANTS?: any;
   sortable?: boolean;
+  isLoading?: boolean;
+  isWaiting?: boolean;
+  setIsLoading?: (loading: boolean) => void;
+  setIsWaiting?: (waiting: boolean) => void;
 }
 
 function ListLayoutComponent({
@@ -81,10 +85,12 @@ function ListLayoutComponent({
   onItemSelect = NOOP,
   CONSTANTS = EMPTY_OBJECT,
   sortable = false,
+  isLoading = false,
+  isWaiting = false,
+  setIsLoading = NOOP,
+  setIsWaiting = NOOP,
 }: Readonly<ListLayoutProps>) {
   const [item, setItem] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(loading);
-  const [isWaiting, setIsWaiting] = useState(false);
   // Initialize with items directly - useEffect will sync with memoItems
   const [parsedItems, setParsedItems] = useState<any[]>(() => items);
 
@@ -93,7 +99,7 @@ function ListLayoutComponent({
       setIsLoading(newLoading);
       setExternalLoading(newLoading);
     },
-    [setExternalLoading]
+    [setIsLoading, setExternalLoading]
   );
 
   const onClose = useCallback(async () => {
@@ -217,7 +223,7 @@ function ListLayoutComponent({
         setIsWaiting(false);
       }
     }
-  }, [memoItems, setIsLoadingHandler]);
+  }, [memoItems, setIsWaiting, setIsLoadingHandler]);
 
   return (
     <NavigationProvider>

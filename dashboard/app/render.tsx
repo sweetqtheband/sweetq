@@ -170,11 +170,11 @@ const renderTextInput = ({
       ></TextInput>
       {language
         ? renderLanguageSelector({
-            field,
-            translations,
-            value: internalState?.[field]?.locale,
-            onInputHandler: onLanguageChangeHandler,
-          } as Field)
+          field,
+          translations,
+          value: internalState?.[field]?.locale,
+          onInputHandler: onLanguageChangeHandler,
+        } as Field)
         : null}
     </div>
   );
@@ -248,11 +248,11 @@ const renderTextArea = ({
       />
       {language
         ? renderLanguageSelector({
-            field,
-            translations,
-            value: internalState?.[field]?.locale,
-            onInputHandler: onLanguageChangeHandler,
-          } as Field)
+          field,
+          translations,
+          value: internalState?.[field]?.locale,
+          onInputHandler: onLanguageChangeHandler,
+        } as Field)
         : null}
     </>
   );
@@ -293,10 +293,10 @@ const renderSelect = ({
   fields,
   formState,
   internalState = {},
-  onFormStateHandler = () => {},
-  onInputHandler = () => {},
-  onInternalStateHandler = () => {},
-  onRemoveHandler = () => {},
+  onFormStateHandler = () => { },
+  onInputHandler = () => { },
+  onInternalStateHandler = () => { },
+  onRemoveHandler = () => { },
   className,
   renders,
   ready = true,
@@ -749,46 +749,79 @@ const renderUploader = ({
   files,
   onAddFileHandler,
   onRemoveFileHandler,
+  size = 'md',
 }: Field) => {
-  const accepted =
-    type === FIELD_TYPES.IMAGE_UPLOADER
-      ? ["image/jpeg", "image/png", "image/gif", "image/webp", "image/svg+xml"]
-      : ["video/mp4"];
+  let accepted = null;
+  switch (type) {
+    case FIELD_TYPES.IMAGE_UPLOADER:
+      accepted = ["image/jpeg", "image/png", "image/gif", "image/webp", "image/svg+xml"];
+      break;
+    case FIELD_TYPES.VIDEO_UPLOADER:
+      accepted = ["video/mp4"];
+      break;
+    default:
+      accepted = ["text/html", "application/json", "text/plain", "text/csv"];
+      break;
+  }
+
+  const uploadField = <>
+    <FileUploaderDropContainer
+      key={field}
+      id={field}
+      labelText={translations.uploader}
+      name={field}
+      multiple={true}
+      disabled={false}
+      onChange={(e) => true}
+      onAddFiles={(_, { addedFiles: files }) => onAddFileHandler(field, files)}
+      accept={accepted}
+    />
+    <div className="cds--file-container cds--file-container--drop" />
+  </>;
+
+  const uploadItems = (
+    type === FIELD_TYPES.IMAGE_UPLOADER || type === FIELD_TYPES.VIDEO_UPLOADER ? (
+      <>
+        {files[field].map((fileObj: Record<string, any>) => {
+          return (
+            <Tile key={fileObj.id}>
+              <Stack gap={4} orientation="horizontal" className="align-center">
+                {getFileAside(type, fileObj.file)}
+                <FileUploaderItem
+                  name={fileObj.file.name}
+                  status="edit"
+                  onDelete={() => onRemoveFileHandler(field, fileObj)}
+                  size={size || SIZES.MD}
+                ></FileUploaderItem>
+              </Stack>
+            </Tile>
+          );
+        })}
+      </>
+    ) : (
+      <>
+        {files[field].map((fileObj: Record<string, any>) => (
+          <FileUploaderItem
+            key={fileObj.id}
+            name={fileObj.file.name}
+            status="edit"
+            onDelete={() => onRemoveFileHandler(field, fileObj)}
+            size={size || SIZES.MD}
+          ></FileUploaderItem>
+        ))}
+      </>
+    )
+  );
+
   return (
     <FormItem key={field}>
       <p className="cds--file--label">{translations.fields[field]}</p>
-      {!files[field].length ? (
-        <>
-          <FileUploaderDropContainer
-            key={field}
-            id={field}
-            labelText={translations.uploader}
-            name={field}
-            disabled={false}
-            onChange={(e) => true}
-            onAddFiles={(_, { addedFiles: files }) => onAddFileHandler(field, files)}
-            accept={accepted}
-          />
-          <div className="cds--file-container cds--file-container--drop" />
-        </>
+      {(!files[field].length && type !== FIELD_TYPES.FILE_UPLOADER) || type === FIELD_TYPES.FILE_UPLOADER ? (
+        uploadField
       ) : (
-        <>
-          {files[field].map((fileObj: Record<string, any>) => {
-            return (
-              <Tile key={fileObj.id}>
-                <Stack gap={4} orientation="horizontal" className="align-center">
-                  {getFileAside(type, fileObj.file)}
-                  <FileUploaderItem
-                    name={fileObj.file.name}
-                    status="edit"
-                    onDelete={() => onRemoveFileHandler(field, fileObj)}
-                  ></FileUploaderItem>
-                </Stack>
-              </Tile>
-            );
-          })}
-        </>
+        uploadItems
       )}
+      {(type === FIELD_TYPES.FILE_UPLOADER && files[field].length) ? uploadItems : null}
     </FormItem>
   );
 };
@@ -1085,8 +1118,8 @@ const renderDateHourPicker = ({
   translations,
   formState,
   internalState,
-  onInternalStateHandler = () => {},
-  onInputHandler = () => {},
+  onInternalStateHandler = () => { },
+  onInputHandler = () => { },
 }: Field) => {
   const defaultDate = formState[field] || value;
   const initialDate = defaultDate ? new Date(defaultDate) : null;
@@ -1222,6 +1255,7 @@ const renderers = {
   [FIELD_TYPES.HIDDEN_BOOLEAN]: renderHidden,
   [FIELD_TYPES.HIDDEN_DATE]: renderHidden,
   [FIELD_TYPES.HOUR]: renderHour,
+  [FIELD_TYPES.FILE_UPLOADER]: renderUploader,
   [FIELD_TYPES.IMAGE_UPLOADER]: renderUploader,
   [FIELD_TYPES.IMAGE]: renderImage,
   [FIELD_TYPES.LABEL]: renderLabel,

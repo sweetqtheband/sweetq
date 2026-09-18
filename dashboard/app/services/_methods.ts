@@ -45,15 +45,15 @@ export const onCopy = async (instance: AxiosInstance, router: any, data: any) =>
   return response.status === HTTP_STATUS_CODES.OK ? response.data : false;
 };
 
-export const onDelete = async (instance: AxiosInstance, router: any, ids: string | string[]) => {
-  const response = (await DELETE(instance, ids)) as any;
+export const onDelete = async (instance: AxiosInstance, router: any, ids: string | string[], batch?: boolean) => {
+  const response = (await DELETE(instance, ids, batch ? "/batch" : "", batch)) as any;
   router.refresh();
   return response.status === HTTP_STATUS_CODES.OK ? response.data : false;
 };
 
 export const getMethods = (instance?: any, router?: any): Record<string, any> => ({
   onSave: (data: any, files: any) => onSave(instance, router, data, files),
-  onDelete: (ids: string[]) => onDelete(instance, router, ids),
+  onDelete: (ids: string[], batch?: boolean) => onDelete(instance, router, ids, batch),
   onCopy: (data: any) => onCopy(instance, router, data),
   onListSave: (value: string) => onSave(instance, router, { name: value }, {}),
   onFilterSave: Filters.getMethods(router).onSave,

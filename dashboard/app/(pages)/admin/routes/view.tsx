@@ -3,11 +3,22 @@
 import ListLayout from "@/app/components/layouts/list-layout";
 import { Routes } from "@/app/services/routes";
 import { useRouter } from "next/navigation";
+import { useCallback, useState } from "react";
 
 export default function RoutesView(params: Readonly<any>) {
   const router = useRouter();
   const methods = Routes.getMethods(router);
   const renders = Routes.getRenders();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isWaiting, setIsWaiting] = useState(false);
+
+  const setIsLoadingHandler = useCallback((loading: boolean) => {
+    setIsLoading(loading);
+  }, []);
+  const setIsWaitingHandler = useCallback((waiting: boolean) => {
+    setIsWaiting(waiting);
+  }, []);
+
 
   return (
     <ListLayout
@@ -17,6 +28,10 @@ export default function RoutesView(params: Readonly<any>) {
       onSave={methods.onSave}
       onDelete={methods.onDelete}
       onCopy={methods.onCopy}
+      isLoading={isLoading}
+      isWaiting={isWaiting}
+      setIsLoading={setIsLoadingHandler}
+      setIsWaiting={setIsWaitingHandler}
     />
   );
 }

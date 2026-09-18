@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/router";
+import { useCallback, useState } from "react";
 import ListLayout from "../components/layouts/list-layout";
 import { BaseListItem } from "@/types/list";
 
@@ -22,6 +23,15 @@ export const ListView = (Service: BaseListItem) =>
   }>) {
     const router = useRouter();
     const methods = Service.getMethods(router);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isWaiting, setIsWaiting] = useState(false);
+
+    const setIsLoadingHandler = useCallback((loading: boolean) => {
+      setIsLoading(loading);
+    }, []);
+    const setIsWaitingHandler = useCallback((waiting: boolean) => {
+      setIsWaiting(waiting);
+    }, []);
 
     return (
       <ListLayout
@@ -35,6 +45,10 @@ export const ListView = (Service: BaseListItem) =>
         onSave={methods.onSave}
         onDelete={methods.onDelete}
         onCopy={methods.onCopy}
+        isLoading={isLoading}
+        isWaiting={isWaiting}
+        setIsLoading={setIsLoadingHandler}
+        setIsWaiting={setIsWaitingHandler}
       />
     );
   };

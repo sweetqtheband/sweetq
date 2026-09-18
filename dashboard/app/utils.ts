@@ -1,6 +1,7 @@
 import { I18n } from "next-i18next";
 import { v4 as uuidv4 } from "uuid";
 import { BREAKPOINTS, FIELD_TYPES } from "./constants";
+import { decode } from "he";
 
 export const getClasses = (obj: Record<string, any>) =>
   Object.keys(obj)
@@ -131,8 +132,8 @@ export const dateFormat = (
       i18n
         ? i18n?.t(`date.months.${date.getMonth()}`)
         : getValue(translations?.date, `months.${String(date.getMonth())}`)
-            .substring(0, 3)
-            .toLocaleLowerCase()
+          .substring(0, 3)
+          .toLocaleLowerCase()
     ),
     "%y": String(date.getFullYear()).substring(2, 4),
     "%Y": String(date.getFullYear()),
@@ -243,4 +244,57 @@ export const debounce = (func: Function, delay: number) => {
       }, delay);
     });
   };
+};
+
+export const parseFile = (file: File): Promise<Record<string, any>> => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const content = await file.text();
+      const parser = new DOMParser();
+
+      let doc = null;
+      if (file.type === "text/html") {
+        doc = parser.parseFromString(content, "text/html");
+      }
+      resolve({ doc });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+
+export const getMeta = (html: string, key: string) => {
+  const metas = html.match(/<meta\b[^>]*>/gi) ?? [];
+
+  for (const meta of metas) {
+    const keyMatch = meta.match(
+      /\b(?:property|name)=["']([^"']+)["']/i
+    );
+
+    if (keyMatch?.[1] !== key) continue;
+
+    const contentMatch = meta.match(
+      /\bcontent=["']([^"']*)["']/i
+    );
+
+    return contentMatch?.[1] ? decode(contentMatch[1]) : null;
+  }
+
+  return null;
+};
+
+export const pipe = (...args: any) => {
+  const [fn, ...rest] = args;
+  return async (params: any): Promise<any> =>
+    rest.length ? pipe(...rest)(await fn(params)) : fn(params);
+};
+
+export const randomWait = async (seconds: number) => {
+  const randomTime = Math.floor(Math.random() * (seconds * 1000 - 1000 + 1)) + 1000;
+  return new Promise((r) => setTimeout(r, randomTime));
+};
+
+export const wait = async (seconds: number) => {
+  return new Promise((r) => setTimeout(r, seconds * 1000));
 };

@@ -25,4 +25,5 @@ export interface Field {
   className?: string | undefined;
   loading?: boolean;
   ready?: boolean;
+  size?: "sm" | "md" | "lg";
 }
