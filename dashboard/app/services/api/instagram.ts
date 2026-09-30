@@ -6,7 +6,7 @@ import { Model } from "@/app/models/instagram";
 import { Model as CacheModel } from "@/app/models/cache";
 import { getFormData, getMeta } from "@/app/utils";
 import IGError, { IGErrorType } from "./errors/instagram";
-import puppeteer, { HTTPResponse, Page, Browser } from "puppeteer";
+import puppeteer, { Page, Browser, LaunchOptions } from "puppeteer";
 import { InstagramProfile } from "@/types/instagram-profile";
 import { uploadSvc } from "./upload";
 import { userAgentSvc } from "./userAgent";
@@ -631,9 +631,21 @@ async function getInstagramProfile(
 
 const getPuppeteerEnvironment = async () => {
   if (!browserInstance.browser && !browserInstance.page) {
-    browserInstance.browser = await puppeteer.launch({
+
+    const launchOptions: LaunchOptions = {
       headless: true,
-    });
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+      ],
+      ...(process.env.PUPPETEER_EXECUTABLE_PATH
+        ? {
+          executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
+        }
+        : {}),
+    };
+
+    browserInstance.browser = await puppeteer.launch(launchOptions);
     browserInstance.page = await browserInstance.browser.newPage();
     await browserInstance.page.setRequestInterception(true);
 
