@@ -1,7 +1,7 @@
 import { I18n } from "next-i18next";
 import { v4 as uuidv4 } from "uuid";
 import { BREAKPOINTS, FIELD_TYPES } from "./constants";
-import { decode } from "he";
+import he from "he";
 
 export const getClasses = (obj: Record<string, any>) =>
   Object.keys(obj)
@@ -278,7 +278,7 @@ export const getMeta = (html: string, key: string) => {
       /\bcontent=["']([^"']*)["']/i
     );
 
-    return contentMatch?.[1] ? decode(contentMatch[1]) : null;
+    return contentMatch?.[1] ? he.decode(contentMatch[1]) : null;
   }
 
   return null;
