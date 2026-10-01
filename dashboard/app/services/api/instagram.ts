@@ -525,65 +525,79 @@ function parseInstagramProfile(
   text: string
 ): InstagramProfile | null {
   const marker = '"xig_user_by_username":';
+  let searchStart = 0;
 
-  const markerIndex = text.indexOf(marker);
+  // Buscar todas las ocurrencias de "xig_user_by_username"
+  while (searchStart < text.length) {
+    const markerIndex = text.indexOf(marker, searchStart);
 
-  if (markerIndex === -1) {
-    return null;
-  }
+    if (markerIndex === -1) {
+      break;
+    }
 
-  const objectStart = text.indexOf(
-    "{",
-    markerIndex + marker.length
-  );
+    const objectStart = text.indexOf(
+      "{",
+      markerIndex + marker.length
+    );
 
-  if (objectStart === -1) {
-    return null;
-  }
-
-  let depth = 0;
-  let inString = false;
-  let escaped = false;
-
-  for (let i = objectStart; i < text.length; i++) {
-    const char = text[i];
-
-    if (inString) {
-      if (escaped) {
-        escaped = false;
-      } else if (char === "\\") {
-        escaped = true;
-      } else if (char === '"') {
-        inString = false;
-      }
-
+    if (objectStart === -1) {
+      searchStart = markerIndex + marker.length;
       continue;
     }
 
-    if (char === '"') {
-      inString = true;
-    } else if (char === "{") {
-      depth++;
-    } else if (char === "}") {
-      depth--;
+    let depth = 0;
+    let inString = false;
+    let escaped = false;
 
-      if (depth === 0) {
-        try {
-          const user = JSON.parse(
-            text.slice(objectStart, i + 1)
-          );
+    for (let i = objectStart; i < text.length; i++) {
+      const char = text[i];
 
-          return {
-            id: user.pk ?? null,
-            username: user.username ?? null,
-            full_name: user.full_name ?? null,
-            biography: user.biography ?? null,
-            profile_pic_url: user.profile_pic_url ?? null,
-            isPrivate: user.is_private ?? null,
-            isVerified: user.is_verified ?? null,
-          };
-        } catch {
-          return null;
+      if (inString) {
+        if (escaped) {
+          escaped = false;
+        } else if (char === "\\") {
+          escaped = true;
+        } else if (char === '"') {
+          inString = false;
+        }
+
+        continue;
+      }
+
+      if (char === '"') {
+        inString = true;
+      } else if (char === "{") {
+        depth++;
+      } else if (char === "}") {
+        depth--;
+
+        if (depth === 0) {
+          try {
+            const user = JSON.parse(
+              text.slice(objectStart, i + 1)
+            );
+
+            // Validar que tenga username antes de retornar
+            if (user.username) {
+              return {
+                id: user.pk ?? null,
+                username: user.username ?? null,
+                full_name: user.full_name ?? null,
+                biography: user.biography ?? null,
+                profile_pic_url: user.profile_pic_url ?? null,
+                isPrivate: user.is_private ?? null,
+                isVerified: user.is_verified ?? null,
+              };
+            }
+
+            // Si no tiene username, continuar buscando la siguiente ocurrencia
+            searchStart = i + 1;
+            break;
+          } catch {
+            // Si falla el parse, continuar buscando
+            searchStart = i + 1;
+            break;
+          }
         }
       }
     }
@@ -602,6 +616,8 @@ async function getInstagramProfile(
       `https://www.instagram.com/${username}/`,
       { waitUntil: "networkidle2" }
     );
+
+
     try {
       await page.waitForFunction(
         () =>

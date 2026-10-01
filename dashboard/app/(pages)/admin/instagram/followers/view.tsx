@@ -107,7 +107,7 @@ export default function InstagramView(params: Readonly<any>) {
       <InstagramLogin />
       <ListLayout
         id={params.id}
-        items={memoItems}
+        items={items}
         headers={memoHeaders}
         fields={memoFields}
         multiFields={memoMultiFields}

@@ -507,9 +507,9 @@ const syncUsers = async ({ selectedRows, translations, setIsLoading, setIsWaitin
 
       setItems((prevItems: any[]) => {
         const updatedItems = [...prevItems];
-        Object.keys(response.results).forEach((key) => {
-          const updatedUser = response.results[key];
-          const index = updatedItems.findIndex(item => item.username === updatedUser.username);
+        Object.keys(response.results).forEach((userId) => {
+          const updatedUser = response.results[userId];
+          const index = updatedItems.findIndex(item => item._id === userId);
           if (index !== -1) {
             updatedItems[index] = { ...updatedItems[index], ...updatedUser };
           }
