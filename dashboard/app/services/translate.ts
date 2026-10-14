@@ -1,5 +1,4 @@
-import i18next, { Resource } from "i18next";
-import { I18n } from "next-i18next";
+import i18next, { Resource, i18n as I18nType } from "i18next";
 import { uuid } from "../utils";
 import es from "../locales/es.json";
 import en from "../locales/en.json";
@@ -13,7 +12,7 @@ class TranslateClass {
   private static instance: TranslateClass | null = null;
 
   public id: string = uuid();
-  public i18n: I18n | null = null;
+  public i18n: I18nType | null = null;
   public locale: string = "es";
 
   public static getInstance() {
