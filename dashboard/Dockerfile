@@ -1,18 +1,21 @@
-FROM node:20-alpine AS builder
+FROM node:22-alpine AS builder
 
 WORKDIR /app
 
-COPY package*.json ./
+RUN npm install -g pnpm
 
-RUN npm install
+COPY pnpm-lock.yaml ./
+COPY package.json ./
+
+RUN pnpm install --frozen-lockfile
 
 COPY . .
 
-RUN npm run build
+RUN pnpm run build
 
 
 # ---- Runtime ----
-FROM node:20-alpine
+FROM node:22-alpine
 
 WORKDIR /app
 
@@ -26,11 +29,13 @@ RUN apk add --no-cache \
     freetype \
     harfbuzz \
     ca-certificates \
-    ttf-freefont
+    ttf-freefont && \
+    npm install -g pnpm
 
-COPY package*.json ./
+COPY pnpm-lock.yaml ./
+COPY package.json ./
 
-RUN npm install --omit=dev
+RUN pnpm install --prod --frozen-lockfile
 
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
@@ -38,4 +43,4 @@ COPY --from=builder /app/.env.production ./
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["pnpm", "start"]

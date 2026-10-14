@@ -4,7 +4,7 @@ import { Menu } from "@/app/components";
 import { usePathname } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { Auth } from "@/app/services/auth";
-import { Layout } from "@/app/services/layout";
+import { Layout } from "@/app/services/layoutHelpers";
 import Loader from "./loading";
 import "./main.scss";
 

@@ -6,10 +6,10 @@ import { getTranslation } from "@/app/services/_list";
 
 export default async function RoutesPage({
   searchParams,
-}: Readonly<{ searchParams: URLSearchParams }>) {
+}: Readonly<{ searchParams: Promise<URLSearchParams> }>) {
   await i18n.init();
 
-  const data = await Routes.getAll(searchParams);
+  const data = await Routes.getAll(await searchParams);
   const items: Route[] = await Routes.parseAll(data.items);
 
   const headers = [{ key: "name", header: i18n.t("fields.name"), default: true }];

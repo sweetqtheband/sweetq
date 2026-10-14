@@ -17,19 +17,19 @@ const nextConfig = {
     silenceDeprecations: ["legacy-js-api"],
     includePaths: ["app/scss", "node_modules"],
   },
-  i18n: {
-    locales: ["en", "es"],
-    defaultLocale: "es",
-  },
   webpack: (config) => {
     config.resolve.alias["@scss"] = "./app/scss";
     return config;
   },
-  experimental: {
-    outputFileTracingExcludes: {
-      "*": ["./updates/**", "./scripts/**"],
+  turbopack: {
+    resolveAlias: {
+      "@scss": "./app/scss",
     },
   },
+  outputFileTracingExcludes: {
+    "*": ["./updates/**", "./scripts/**"],
+  },
+  outputFileTracingRoot: "/Users/harrison4mac/www/sweetq/dashboard",
 };
 
 export default nextConfig;

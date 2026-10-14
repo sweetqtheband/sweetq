@@ -6,10 +6,10 @@ import { getTranslation } from "@/app/services/_list";
 
 export default async function TagsPage({
   searchParams,
-}: Readonly<{ searchParams: URLSearchParams }>) {
+}: Readonly<{ searchParams: Promise<URLSearchParams> }>) {
   await i18n.init();
 
-  const data = await Tags.getAll(searchParams);
+  const data = await Tags.getAll(await searchParams);
   const items: Tag[] = await Tags.parseAll(data.items);
 
   const headers = [

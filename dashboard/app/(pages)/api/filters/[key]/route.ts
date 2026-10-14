@@ -6,9 +6,9 @@ import { FactorySvc } from "@/app/services/api/factory";
 const collection = "filters";
 
 interface Params {
-  params: {
+  params: Promise<{
     key: string;
-  };
+  }>;
 }
 
 export async function OPTIONS(req: NextRequest) {
@@ -26,7 +26,7 @@ export async function GET(req: NextRequest, { params }: Params) {
 
     const svc = FactorySvc(collection, await getCollection(collection));
 
-    const { key } = params;
+    const { key } = await params;
 
     const response = await svc.findOne({ key });
     return Response.json({ data: response.filters }, { status: HTTP_STATUS_CODES.OK });

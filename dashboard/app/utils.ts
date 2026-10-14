@@ -1,7 +1,8 @@
-import { I18n } from "next-i18next";
 import { v4 as uuidv4 } from "uuid";
 import { BREAKPOINTS, FIELD_TYPES } from "./constants";
 import he from "he";
+
+export type I18nType = { t: (key: string) => string } | null;
 
 export const getClasses = (obj: Record<string, any>) =>
   Object.keys(obj)
@@ -108,7 +109,7 @@ export const formDataToObject = (
 export const dateFormat = (
   date: Date = new Date(),
   format: string = "short.date",
-  i18n?: I18n | null,
+  i18n?: I18nType,
   translations?: Record<string, any>
 ) => {
   let dateFormat = format;

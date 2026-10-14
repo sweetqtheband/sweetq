@@ -9,7 +9,8 @@ import { Layouts } from "@/app/services/layouts";
 export default async function InstagramPage({ searchParams }: Readonly<{ searchParams?: any }>) {
   await i18n.init();
 
-  const data = await Followers.getAll(searchParams);
+  const resolvedSearchParams = await searchParams;
+  const data = await Followers.getAll(resolvedSearchParams);
   const items: Follower[] = await Followers.parseAll(data.items, i18n);
 
   const headers = [
@@ -94,9 +95,9 @@ export default async function InstagramPage({ searchParams }: Readonly<{ searchP
   getChatTranslations(i18n, translations);
   getActionTranslations(i18n, translations);
 
-  const fields = await Followers.getFields({ searchParams, i18n });
-  const multiFields = await Followers.getMultiFields({ searchParams, i18n });
-  const filters = await Followers.getFilters({ searchParams, i18n });
+  const fields = await Followers.getFields({ searchParams: resolvedSearchParams, i18n });
+  const multiFields = await Followers.getMultiFields({ searchParams: resolvedSearchParams, i18n });
+  const filters = await Followers.getFilters({ searchParams: resolvedSearchParams, i18n });
 
   const layouts = (
     await Layouts.getAll(

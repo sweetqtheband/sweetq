@@ -6,10 +6,10 @@ import { getTranslation } from "@/app/services/_list";
 
 export default async function SocialNetworksPage({
   searchParams,
-}: Readonly<{ searchParams: URLSearchParams }>) {
+}: Readonly<{ searchParams: Promise<URLSearchParams> }>) {
   await i18n.init();
 
-  const data = await SocialNetworks.getAll(searchParams);
+  const data = await SocialNetworks.getAll(await searchParams);
   const items: SocialNetwork[] = await SocialNetworks.parseAll(data.items);
 
   const headers = [{ key: "name", header: i18n.t("fields.name"), default: true }];

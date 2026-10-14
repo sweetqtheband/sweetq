@@ -7,9 +7,9 @@ import { revalidatePath } from "next/cache";
 const collection = "layouts";
 
 interface Params {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export async function PUT(req: NextRequest, { params }: Params) {
@@ -19,7 +19,7 @@ export async function PUT(req: NextRequest, { params }: Params) {
     return new Response(message, corsParams);
   }
 
-  const { id } = params;
+  const { id } = await params;
 
   try {
     const item = await putItem({ id, req, collection, types, options, modelize: true });
@@ -37,7 +37,7 @@ export async function DELETE(req: NextRequest, { params }: Params) {
     return new Response(message, corsParams);
   }
 
-  const { id } = params;
+  const { id } = await params;
 
   try {
     const item = await deleteItem({ id, req, collection, types, options });
