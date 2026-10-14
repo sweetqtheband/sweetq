@@ -75,7 +75,7 @@ const updateUser = async (scrappedUsers: any[], users: any[], col: any, match: a
         }
 
         if (match.length) {
-          const matched = match.includes(user.username);
+          const matched = match.find((username: string) => username === user.username);
           if (matched) {
             user.followed_back = true;
           }

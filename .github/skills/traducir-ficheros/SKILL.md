@@ -1,8 +1,8 @@
 ---
 name: traducir-ficheros
-description: "Sincroniza y traduce archivos de localización. Completa claves faltantes en en.json con traducciones al inglés basadas en es.json como referencia, y elimina claves huérfanas."
+description: Sincroniza y traduce archivos de localización. Completa claves faltantes en en.json con traducciones al inglés basadas en es.json como referencia, y elimina claves huérfanas.
+disable-model-invocation: true
 ---
-
 # Traductor de Ficheros de Localización
 
 Necesito que sincronices los archivos de localización en `dashboard/app/locales/`:

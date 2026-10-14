@@ -365,6 +365,32 @@ export const getPipeObject = async ({ data, logProcess = () => { } }: { data: Im
         followings
     };
 };
+
+export const updateFollowedBacks = async ({ data, followersCol, followingsCol, logProcess = () => { } }: { data: Import, followersCol: Collection, followingsCol: Collection, logProcess?: (str: string) => void }) => {
+    const followerUsernames = (await followersCol.distinct("username"))
+        .filter((username): username is string => typeof username === "string");
+    const matchedFollowings = followerUsernames.length
+        ? await followingsCol.find(
+            { username: { $in: followerUsernames } },
+            { projection: { username: 1, _id: 0 } }
+        ).toArray()
+        : [];
+
+    if (matchedFollowings.length) {
+        await followingsCol.updateMany(
+            { username: { $in: matchedFollowings.map(({ username }) => username) } },
+            { $set: { followed_back: true } }
+        );
+
+        for (const following of matchedFollowings) {
+            logProcess(`User ${following.username} followed back`);
+        }
+    }
+    logProcess(`Followed back update completed`);
+    const pipeObject = await getPipeObject({ data, logProcess });
+    return pipeObject;
+};
+
 export const processInstagramImport = async (importId: string, data: any) => {
     const currentImport = getImport(importId);
     if (!currentImport) {
@@ -387,6 +413,7 @@ export const processInstagramImport = async (importId: string, data: any) => {
             createNewFollowers,
             updateSameFollowings,
             createNewFollowings,
+            updateFollowedBacks,
             deleteNotFollowing,
             importEnd
         )(pipeObject);

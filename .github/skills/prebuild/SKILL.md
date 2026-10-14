@@ -1,8 +1,8 @@
 ---
-description: "Ejecuta prebuild en el scope correcto: detecta paquete, corre pnpm build y corrige errores/warnings"
-name: "Prebuild"
+name: prebuild
+description: Ejecuta prebuild en el scope correcto: detecta paquete, corre pnpm build y corrige errores/warnings
+disable-model-invocation: true
 argument-hint: "Ruta opcional del paquete (por ejemplo: dashboard)"
-agent: "agent"
 ---
 Realiza un prebuild completo del proyecto y no te detengas hasta terminar.
 
