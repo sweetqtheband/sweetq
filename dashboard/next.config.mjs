@@ -21,6 +21,11 @@ const nextConfig = {
     config.resolve.alias["@scss"] = "./app/scss";
     return config;
   },
+  turbopack: {
+    resolveAlias: {
+      "@scss": "./app/scss",
+    },
+  },
   outputFileTracingExcludes: {
     "*": ["./updates/**", "./scripts/**"],
   },
