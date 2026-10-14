@@ -1,7 +1,9 @@
+@use "sass:map";
+@use "sass:string";
 @use "@scss/vars" as vars;
 
 @mixin breakpoint($breakpoint) {
-  $query: map-get(vars.$breakpoints, $breakpoint);
+  $query: map.get(vars.$breakpoints, $breakpoint);
 
   @if $query {
     @media screen and (#{$query}) {
@@ -11,7 +13,7 @@
 }
 
 @mixin from($from) {
-  $query: map-get(vars.$from, $from);
+  $query: map.get(vars.$from, $from);
 
   @if $query {
     @media screen and (#{$query}) {
@@ -21,7 +23,7 @@
 }
 
 @mixin heightBreakpoint($height) {
-  $query: map-get(vars.$heights, $height);
+  $query: map.get(vars.$heights, $height);
 
   @if $query {
     @media (#{$query}) {
@@ -31,7 +33,7 @@
 }
 
 @mixin theme($theme) {
-  $query: map-get(vars.$themes, $theme);
+  $query: map.get(vars.$themes, $theme);
 
   @if $query {
     @media (#{$query}) {
@@ -41,5 +43,5 @@
 }
 
 @function alpha($color-var, $opacity) {
-  @return unquote("color-mix(in srgb, #{$color-var} #{$opacity * 100}%, transparent)");
+  @return string.unquote("color-mix(in srgb, #{$color-var} #{$opacity * 100}%, transparent)");
 }
