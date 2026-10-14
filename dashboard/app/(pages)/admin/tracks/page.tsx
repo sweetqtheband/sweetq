@@ -6,10 +6,10 @@ import { getTranslation } from "@/app/services/_list";
 
 export default async function TracksPage({
   searchParams,
-}: Readonly<{ searchParams?: URLSearchParams }>) {
+}: Readonly<{ searchParams?: Promise<URLSearchParams> }>) {
   await i18n.init();
 
-  const data = await Tracks.getAll(searchParams);
+  const data = await Tracks.getAll(await searchParams);
   const items: Track[] = await Tracks.parseAll(data.items);
 
   const headers = [

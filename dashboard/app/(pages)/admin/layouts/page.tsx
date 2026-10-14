@@ -6,10 +6,10 @@ import { getTranslation } from "@/app/services/_list";
 
 export default async function LayoutsPage({
   searchParams,
-}: Readonly<{ searchParams: URLSearchParams }>) {
+}: Readonly<{ searchParams: Promise<URLSearchParams> }>) {
   await i18n.init();
 
-  const data = await Layouts.getAll(searchParams);
+  const data = await Layouts.getAll(await searchParams);
   const items: Layout[] = await Layouts.parseAll(data.items);
 
   const headers = [{ key: "name", header: i18n.t("fields.name"), default: true }];

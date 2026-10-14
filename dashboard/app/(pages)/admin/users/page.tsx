@@ -7,10 +7,10 @@ import { UserProfiles } from "@/app/services/userProfiles";
 
 export default async function UsersPage({
   searchParams,
-}: Readonly<{ searchParams: URLSearchParams }>) {
+}: Readonly<{ searchParams: Promise<URLSearchParams> }>) {
   await i18n.init();
 
-  const data = await Users.getAll(searchParams);
+  const data = await Users.getAll(await searchParams);
   const items: User[] = await Users.parseAll(data.items);
 
   const headers = [

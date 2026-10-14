@@ -6,9 +6,9 @@ import { revalidatePath } from "next/cache";
 const collection = "messages";
 
 interface Params {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export async function OPTIONS(req: NextRequest) {
@@ -22,7 +22,7 @@ export async function DELETE(req: NextRequest, { params }: Params) {
   if (message?.error === ERRORS.CORS) {
     return new Response(message, corsParams);
   }
-  const { id } = params;
+  const { id } = await params;
 
   try {
     const item = await deleteItem({ id, req, collection });

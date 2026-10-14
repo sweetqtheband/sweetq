@@ -6,10 +6,10 @@ import { getTranslation } from "@/app/services/_list";
 
 export default async function ConfigPage({
   searchParams,
-}: Readonly<{ searchParams: URLSearchParams }>) {
+}: Readonly<{ searchParams: Promise<URLSearchParams> }>) {
   await i18n.init();
 
-  const data = await Config.getAll(searchParams);
+  const data = await Config.getAll(await searchParams);
   const items: ConfigType[] = await Config.parseAll(data.items);
 
   const headers = [

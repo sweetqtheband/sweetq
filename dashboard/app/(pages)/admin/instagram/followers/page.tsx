@@ -9,7 +9,7 @@ import { Layouts } from "@/app/services/layouts";
 export default async function InstagramPage({ searchParams }: Readonly<{ searchParams?: any }>) {
   await i18n.init();
 
-  const data = await Followers.getAll(searchParams);
+  const data = await Followers.getAll(await searchParams);
   const items: Follower[] = await Followers.parseAll(data.items, i18n);
 
   const headers = [

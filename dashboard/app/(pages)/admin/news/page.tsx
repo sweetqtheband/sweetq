@@ -6,10 +6,10 @@ import { getTranslation } from "@/app/services/_list";
 
 export default async function NewsPage({
   searchParams,
-}: Readonly<{ searchParams?: URLSearchParams }>) {
+}: Readonly<{ searchParams?: Promise<URLSearchParams> }>) {
   await i18n.init();
 
-  const data = await News.getAll(searchParams);
+  const data = await News.getAll(await searchParams);
   const items: New[] = await News.parseAll(data.items);
 
   const headers = [

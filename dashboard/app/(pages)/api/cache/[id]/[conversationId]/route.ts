@@ -6,9 +6,9 @@ import { FactorySvc } from "@/app/services/api/factory";
 
 const collection = "cache";
 interface Params {
-  params: {
+  params: Promise<{
     conversationId: string;
-  };
+  }>;
 }
 
 export async function OPTIONS(req: NextRequest) {
@@ -17,7 +17,7 @@ export async function OPTIONS(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest, { params }: Params) {
-  const { conversationId } = params;
+  const { conversationId } = await params;
 
   try {
     const svc = FactorySvc(collection, await getCollection(collection));

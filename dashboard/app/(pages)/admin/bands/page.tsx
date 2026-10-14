@@ -6,10 +6,11 @@ import { getTranslation } from "@/app/services/_list";
 
 export default async function BandsPage({
   searchParams,
-}: Readonly<{ searchParams: URLSearchParams }>) {
+}: Readonly<{ searchParams: Promise<URLSearchParams> }>) {
   await i18n.init();
 
-  const data = await Bands.getAll(searchParams);
+  const params = await searchParams;
+  const data = await Bands.getAll(params);
   const items: Band[] = await Bands.parseAll(data.items);
 
   const headers = [

@@ -6,10 +6,10 @@ import { getTranslation } from "@/app/services/_list";
 
 export default async function GigsPage({
   searchParams,
-}: Readonly<{ searchParams?: URLSearchParams }>) {
+}: Readonly<{ searchParams?: Promise<URLSearchParams> }>) {
   await i18n.init();
 
-  const data = await Gigs.getAll(searchParams);
+  const data = await Gigs.getAll(await searchParams);
   const items: Gig[] = await Gigs.parseAll(data.items, i18n);
 
   const headers = [

@@ -7,7 +7,7 @@ import "./imports.scss";
 
 export default async function ImportsPage({
     searchParams,
-}: Readonly<{ searchParams?: URLSearchParams }>) {
+}: Readonly<{ searchParams?: Promise<URLSearchParams> }>) {
     await i18n.init();
 
     const translations = {
