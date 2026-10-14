@@ -2,7 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 import { AuthEdge } from "./app/services/auth-edge";
 import Translate from "@/app/services/translate";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   await Translate.init();
 
   // If the request is for the admin dashboard, check if the user is authenticated

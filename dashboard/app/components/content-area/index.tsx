@@ -35,9 +35,9 @@ export default function ContentArea({
   variant?: string;
   hasParameter?: boolean;
 }>) {
-  const contentEditableRef = useRef(null) as RefObject<HTMLElement>;
+  const contentEditableRef = useRef<HTMLElement>(null) as RefObject<HTMLElement>;
   const emojiWrapperRef = useRef<HTMLDivElement>(null);
-  const emojiRef = useRef(null) as RefObject<HTMLElement>;
+  const emojiRef = useRef<HTMLElement>(null) as RefObject<HTMLElement>;
 
   const [defaultVarValue, setDefaultVarValue] = useState<string>();
   const [defaultValue, setDefaultValue] = useState<string>(value);

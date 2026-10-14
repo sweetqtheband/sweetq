@@ -25,7 +25,7 @@ export default function RadioGroupComponent({
       if (isValidElement(child)) {
         return (
           <child.type
-            {...child.props}
+            {...(child.props as object)}
             className={`radio-${index}`}
             onChange={(e: any) => onChange(index + 1)}
           />
