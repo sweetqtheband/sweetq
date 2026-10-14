@@ -10,7 +10,8 @@ export default async function UsersPage({
 }: Readonly<{ searchParams: Promise<URLSearchParams> }>) {
   await i18n.init();
 
-  const data = await Users.getAll(await searchParams);
+  const resolvedSearchParams = await searchParams;
+  const data = await Users.getAll(resolvedSearchParams);
   const items: User[] = await Users.parseAll(data.items);
 
   const headers = [
@@ -24,7 +25,7 @@ export default async function UsersPage({
   } as Record<string, any>;
   translations.options.profile = UserProfiles.getTranslations(i18n);
 
-  const fields = await Users.getFields({ searchParams, i18n });
+  const fields = await Users.getFields({ searchParams: resolvedSearchParams, i18n });
 
   return (
     <UsersView

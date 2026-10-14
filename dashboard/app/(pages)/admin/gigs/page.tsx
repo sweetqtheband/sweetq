@@ -9,7 +9,8 @@ export default async function GigsPage({
 }: Readonly<{ searchParams?: Promise<URLSearchParams> }>) {
   await i18n.init();
 
-  const data = await Gigs.getAll(await searchParams);
+  const resolvedSearchParams = await searchParams;
+  const data = await Gigs.getAll(resolvedSearchParams);
   const items: Gig[] = await Gigs.parseAll(data.items, i18n);
 
   const headers = [
@@ -24,7 +25,7 @@ export default async function GigsPage({
     ...getTranslation(i18n, "actions"),
   };
 
-  const fields = await Gigs.getFields({ searchParams, i18n });
+  const fields = await Gigs.getFields({ searchParams: resolvedSearchParams, i18n });
 
   return (
     <GigsView
