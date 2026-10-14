@@ -29,7 +29,7 @@ const nextConfig = {
   outputFileTracingExcludes: {
     "*": ["./updates/**", "./scripts/**"],
   },
-  outputFileTracingRoot: "/Users/harrison4mac/www/sweetq/dashboard",
+  outputFileTracingRoot: import.meta.dirname,
 };
 
 export default nextConfig;
