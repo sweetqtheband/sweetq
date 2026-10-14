@@ -5,7 +5,7 @@ WORKDIR /app
 RUN npm install -g pnpm
 
 COPY pnpm-lock.yaml ./
-COPY package.json ./
+COPY package.json pnpm-workspace.yaml .npmrc ./
 
 RUN pnpm install --frozen-lockfile
 
@@ -33,7 +33,7 @@ RUN apk add --no-cache \
     npm install -g pnpm
 
 COPY pnpm-lock.yaml ./
-COPY package.json ./
+COPY package.json pnpm-workspace.yaml .npmrc ./
 
 RUN pnpm install --prod --frozen-lockfile
 
