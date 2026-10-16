@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 
+const MAX_CACHE_ENTRIES = 100;
 const cache = new Map<string, AxiosResponse<string, any>>();
 const create = (...args: any[]) => {
   const instance = axios.create(...args);
@@ -12,7 +13,11 @@ const create = (...args: any[]) => {
     const cacheKey = baseURL + url + params;
 
     if (response.config.method === "get") {
+      cache.delete(cacheKey);
       cache.set(cacheKey, response);
+      while (cache.size > MAX_CACHE_ENTRIES) {
+        cache.delete(cache.keys().next().value as string);
+      }
     }
 
     if (["put", "post", "delete"].includes(response.config.method || "")) {

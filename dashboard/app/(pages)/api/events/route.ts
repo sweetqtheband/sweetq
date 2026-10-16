@@ -5,25 +5,13 @@ import { corsOptions } from "@/app/services/api/_db"; // Added corsOptions impor
 import { ERRORS } from "@/app/constants";
 
 const channels = ["chat", "instagram"];
+const POLL_INTERVAL_MS = 1000;
+const KEEP_ALIVE_MS = 15000;
 
 export async function OPTIONS(req: NextRequest) {
   const [message, params] = corsOptions(req);
   return new Response(message, params);
 }
-
-const check = async (controller: any) => {
-  const event = await EA.find({ eventType: { $in: channels } });
-  if (event) {
-    controller.enqueue(
-      "data: " + JSON.stringify({ eventType: event.eventType, data: event.data }) + "\n\n"
-    );
-
-    await EA.remove(event._id);
-
-    controller._readableState.buffer.clear();
-    controller._readableState.length = 0;
-  }
-};
 
 export function GET(req: NextRequest) {
   const [message, corsParams] = corsOptions(req);
@@ -32,40 +20,58 @@ export function GET(req: NextRequest) {
     return new Response(message, corsParams);
   }
 
-  let keepAliveTimer: NodeJS.Timeout;
-  let eventTimer: NodeJS.Timeout;
+  let keepAliveTimer: NodeJS.Timeout | undefined;
+  let pollTimer: NodeJS.Timeout | undefined;
+  let closed = false;
+
+  const cleanup = () => {
+    closed = true;
+    clearInterval(keepAliveTimer);
+    clearTimeout(pollTimer);
+  };
 
   const stream = new ReadableStream({
-    async start(controller) {
+    start(controller) {
       const encoder = new TextEncoder();
 
-      // Mantén viva la conexión con un ping cada 15s
-      keepAliveTimer = setInterval(() => {
-        controller.enqueue(encoder.encode(":\n\n")); // Comentario SSE para mantener conexión
-      }, 15000);
+      const send = (chunk: string) => {
+        if (closed) return;
+        try {
+          controller.enqueue(encoder.encode(chunk));
+        } catch {
+          cleanup();
+        }
+      };
 
-      // Emitir eventos reales
-      eventTimer = setInterval(async () => {
+      req.signal.addEventListener("abort", () => {
+        cleanup();
+        try {
+          controller.close();
+        } catch {}
+      });
+
+      // Mantén viva la conexión con un ping cada 15s
+      keepAliveTimer = setInterval(() => send(":\n\n"), KEEP_ALIVE_MS);
+
+      // Cada consulta espera a que termine la anterior para no acumular peticiones
+      const poll = async () => {
+        if (closed) return;
         try {
           const events = (await EA.find({ eventType: { $in: channels } })) || [];
-          if (events?.length) {
-            for (const event of Array.isArray(events) ? events : [events]) {
-              const payload = JSON.stringify({
-                eventType: event.eventType,
-                data: event.data,
-              });
-              controller.enqueue(encoder.encode(`data: ${payload}\n\n`));
-              await EA.remove(event._id);
-            }
+          for (const event of Array.isArray(events) ? events : [events]) {
+            if (!event) continue;
+            send(`data: ${JSON.stringify({ eventType: event.eventType, data: event.data })}\n\n`);
+            await EA.remove(event._id);
           }
         } catch (err) {
           console.error("Error enviando SSE:", err);
         }
-      }, 1000);
+        if (!closed) pollTimer = setTimeout(poll, POLL_INTERVAL_MS);
+      };
+      poll();
     },
     cancel() {
-      clearInterval(keepAliveTimer);
-      clearInterval(eventTimer);
+      cleanup();
     },
   });
 
