@@ -318,5 +318,18 @@
     ],
     "event": null,
     "tickets": null
+  },
+  {
+    "id": 24,
+    "date": "2026-11-14 22:15",
+    "city": "Sevilla",
+    "hour": "22:15",
+    "venue": "Chicharfest Sevilla",
+    "address": "Parque Fernando Magallanes",
+    "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3417.5594129871997!2d-6.010981323869274!3d37.391956372084564!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd126c723f64f22f%3A0xb78e793ec9ca2ca7!2sParque%20Fernando%20Magallanes!5e1!3m2!1ses!2ses!4v1794043520404!5m2!1ses!2ses",
+    "bands": [
+    ],
+    "event": null,
+    "tickets": "free"
   }
 ]
