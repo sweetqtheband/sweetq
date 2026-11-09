@@ -30,6 +30,9 @@ const nextConfig = {
     "*": ["./updates/**", "./scripts/**"],
   },
   outputFileTracingRoot: import.meta.dirname,
+  experimental: {
+    agentUpgrade: "security"
+  },
 };
 
 export default nextConfig;
