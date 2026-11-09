@@ -16,21 +16,24 @@ export async function listInstagramPosts(
       fields:
         "id,caption,media_type,media_url,thumbnail_url,permalink,timestamp",
       limit,
-      access_token: accessToken,
     };
 
     if (cursor) {
       params.after = cursor;
     }
 
+    const headers = {
+      Authorization: `Bearer ${accessToken}`,
+    };
+
     console.log("[listInstagramPosts] Calling Instagram API with params:", {
       url: "/me/media",
       fields: params.fields,
       limit: params.limit,
-      hasToken: !!params.access_token,
+      hasToken: !!accessToken,
     });
 
-    const response = await GET(graph, `/me/media`, params);
+    const response = await GET(graph, `/me/media`, params, headers);
 
     console.log("[listInstagramPosts] Response status:", response.status);
 
