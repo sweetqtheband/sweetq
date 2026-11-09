@@ -39,7 +39,7 @@ const doInstagramLogin = () => {
   const win = window.open(
     "https://www.instagram.com/oauth/authorize?enable_fb_login=0&force_authentication=1&client_id=1116438159688778&redirect_uri=" +
     process.env.NEXT_PUBLIC_INSTAGRAM_REDIRECT_URI +
-    "&response_type=code&scope=instagram_business_basic%2Cinstagram_business_manage_messages%2Cinstagram_business_manage_comments%2Cinstagram_business_content_publish%2Cinstagram_business_content_read",
+    "&response_type=code&scope=instagram_business_basic%2Cinstagram_business_manage_messages%2Cinstagram_business_manage_comments%2Cinstagram_business_content_publish",
     "_blank",
     "width=600,height=600"
   );
