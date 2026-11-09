@@ -11,6 +11,7 @@ import { InstagramProfile } from "@/types/instagram-profile";
 import { uploadSvc } from "./upload";
 import { userAgentSvc } from "./userAgent";
 import { proxySvc } from "./proxy";
+import { listInstagramPosts } from "./instagram/media";
 
 const CACHE_KEYS = {
   CONVERSATIONS: "ig_conversations",
@@ -848,4 +849,5 @@ export const instagramSvc = (collection: Collection<Document>) => ({
   fetchInstagramData,
   updateUser,
   getPuppeteerEnvironment,
+  listInstagramPosts,
 });

@@ -35,6 +35,8 @@ export const Model = (data: any): Model => {
     const date = new Date();
     date.setSeconds(date.getSeconds() + Number(data.expires_in));
     obj.expires = date;
+  } else if (data.expires) {
+    obj.expires = new Date(data.expires);
   }
 
   return obj;
