@@ -3,7 +3,7 @@ type Model = {
   id: string;
   short_live_access_token?: string;
   long_live_access_token?: string;
-  user_id?: number;
+  user_id?: string;
   expires?: Date;
 };
 export const Model = (data: any): Model => {
@@ -20,7 +20,7 @@ export const Model = (data: any): Model => {
   }
 
   if (data.user_id) {
-    obj.user_id = Number(data.user_id);
+    obj.user_id = String(data.user_id);
   }
 
   if (data.short_live_access_token) {
