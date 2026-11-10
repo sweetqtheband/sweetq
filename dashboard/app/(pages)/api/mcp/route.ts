@@ -2,6 +2,7 @@ import { timingSafeEqual } from "node:crypto";
 import type { InstagramPost } from "@/types/instagram-post";
 import { getCollection } from "@/app/services/api/_db";
 import { FactorySvc } from "@/app/services/api/factory";
+import { OAuthService } from "@/app/services/api/oauth/service";
 import {
   ListPostsInput,
   GetPostInput,
@@ -13,8 +14,16 @@ import {
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-// Verify Bearer token
-function verifyToken(authHeader: string | null): boolean {
+interface AuthResult {
+  valid: boolean;
+  method?: "bearer" | "oauth";
+  error?: string;
+}
+
+/**
+ * Verify Bearer token (legacy MCP_READ_TOKEN)
+ */
+function verifyBearerToken(authHeader: string | null): boolean {
   const secret = process.env.MCP_READ_TOKEN;
   if (!secret || !authHeader) return false;
 
@@ -35,17 +44,75 @@ function verifyToken(authHeader: string | null): boolean {
   return true;
 }
 
-// Send SSE message
+/**
+ * Verify OAuth access token
+ */
+function verifyOAuthToken(authHeader: string | null): boolean {
+  if (!authHeader) return false;
+
+  const parts = authHeader.split(" ");
+  if (parts.length !== 2 || parts[0] !== "Bearer") return false;
+
+  const token = parts[1];
+  const oauthToken = OAuthService.verifyToken(token);
+  return !!oauthToken;
+}
+
+/**
+ * Authenticate request with OAuth or Bearer token
+ */
+function authenticate(authHeader: string | null): AuthResult {
+  if (!authHeader) {
+    return {
+      valid: false,
+      error: "Missing Authorization header",
+    };
+  }
+
+  // Try OAuth token first
+  if (verifyOAuthToken(authHeader)) {
+    return { valid: true, method: "oauth" };
+  }
+
+  // Fall back to Bearer token (legacy)
+  if (verifyBearerToken(authHeader)) {
+    return { valid: true, method: "bearer" };
+  }
+
+  return {
+    valid: false,
+    error: "Invalid token",
+  };
+}
+
+/**
+ * Send SSE message
+ */
 function sendSSE(message: Record<string, unknown>): string {
   return `data: ${JSON.stringify(message)}\n\n`;
 }
 
-// Main MCP handler
+/**
+ * Build WWW-Authenticate header for 401 responses
+ */
+function getWWWAuthenticateHeader(): string {
+  const baseUrl =
+    process.env.NEXT_PUBLIC_URL || "https://srv659934.hstgr.cloud";
+  return `Bearer realm="Instagram MCP", error="invalid_token", error_description="The access token is invalid or expired", error_uri="${baseUrl}/.well-known/oauth-protected-resource"`;
+}
+
+/**
+ * Main MCP POST handler - processes tool calls
+ */
 export async function POST(request: Request) {
   try {
     // Verify authentication
     const authHeader = request.headers.get("authorization");
-    if (!verifyToken(authHeader)) {
+    const auth = authenticate(authHeader);
+
+    if (!auth.valid) {
+      const baseUrl =
+        process.env.NEXT_PUBLIC_URL || "https://srv659934.hstgr.cloud";
       return new Response(
         sendSSE({
           jsonrpc: "2.0",
@@ -54,7 +121,10 @@ export async function POST(request: Request) {
         }),
         {
           status: 401,
-          headers: { "Content-Type": "text/event-stream" },
+          headers: {
+            "Content-Type": "text/event-stream",
+            "WWW-Authenticate": getWWWAuthenticateHeader(),
+          },
         }
       );
     }
@@ -62,7 +132,7 @@ export async function POST(request: Request) {
     const body = (await request.json()) as any;
     const { jsonrpc, method, params, id } = body;
 
-    // Tools/call RPC
+    // Handle tools/call RPC method
     if (method === "tools/call") {
       const { name, arguments: args } = params;
 
@@ -106,7 +176,6 @@ export async function POST(request: Request) {
               input.media_type
             );
 
-            // Apply date filtering
             let filteredPosts = posts.posts;
             if (input.start_date || input.end_date) {
               const startDate = input.start_date
@@ -240,7 +309,7 @@ export async function POST(request: Request) {
       }
     }
 
-    // List tools (discovery)
+    // Handle tools/list RPC method (discovery)
     if (method === "tools/list") {
       return new Response(
         sendSSE({
@@ -405,18 +474,26 @@ export async function POST(request: Request) {
   }
 }
 
-// GET request for discovery
+/**
+ * GET request for tool discovery (for direct HTTP clients)
+ */
 export async function GET(request: Request) {
   // Verify authentication
   const authHeader = request.headers.get("authorization");
-  if (!verifyToken(authHeader)) {
+  const auth = authenticate(authHeader);
+
+  if (!auth.valid) {
     return new Response(
       JSON.stringify({
         error: "Unauthorized",
+        error_description: auth.error,
       }),
       {
         status: 401,
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "WWW-Authenticate": getWWWAuthenticateHeader(),
+        },
       }
     );
   }
