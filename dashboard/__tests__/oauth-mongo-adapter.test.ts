@@ -55,7 +55,7 @@ test("the OAuth provider persists its models in the configured MongoDB database"
   } finally {
     console.error = originalError;
   }
-  assert.match(logged.join("\n"), /Provider server error Error token\.js:12:34/);
+  assert.match(logged.join("\n"), /Provider server error Error category=unclassified fingerprint=[a-f0-9]{16} stack=token\.js:12:34/);
   assert.doesNotMatch(logged.join("\n"), /sensitive-token|\/private\/path/);
   await provider.AccessToken.adapter.upsert("provider-test", {
     accountId: "test-account",

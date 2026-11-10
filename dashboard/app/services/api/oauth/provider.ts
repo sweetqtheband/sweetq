@@ -101,11 +101,23 @@ export function createMcpOAuthProvider(config: McpOAuthProviderConfig): Provider
   provider.proxy = true;
   provider.on("server_error", (_ctx, error) => {
     const name = /^[A-Za-z][A-Za-z0-9]{0,80}$/.test(error.name) ? error.name : "Error";
-    const frames = (error.stack ?? "").split("\n").slice(1).flatMap((line) => {
-      const location = line.match(/(?:^|\/)([A-Za-z0-9_.-]+\.[cm]?js):(\d+):(\d+)/);
+    const stack = typeof error.stack === "string" ? error.stack : "";
+    const frames = stack.split("\n").slice(1).flatMap((line) => {
+      const location = line.match(/(?:^|\/)([A-Za-z0-9_.-]+\.(?:[cm]?js|ts)):(\d+):(\d+)/);
       return location ? [`${location[1]}:${location[2]}:${location[3]}`] : [];
     }).slice(0, 5);
-    console.error("[MCP OAuth] Provider server error", name, frames.join(" "));
+    const message = typeof error.message === "string" ? error.message : "";
+    const fingerprint = createHash("sha256").update(message).digest("hex").slice(0, 16);
+    const knownMessages = new Set([
+      "OAuth grant already consumed or expired",
+      "scope cannot be assigned after mask has been set",
+      "response too large",
+      "fetch failed",
+      "not implemented",
+    ]);
+    const category = knownMessages.has(message) ? message : "unclassified";
+    console.error("[MCP OAuth] Provider server error", name, `category=${category}`,
+      `fingerprint=${fingerprint}`, `stack=${frames.length ? frames.join(",") : "unavailable"}`);
   });
   return provider;
 }
