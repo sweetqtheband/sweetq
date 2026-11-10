@@ -1,7 +1,4 @@
 import { timingSafeEqual } from "node:crypto";
-import type { AuthInfo } from "@modelcontextprotocol/server";
-import { createMcpHandler, withMcpAuth } from "mcp-handler";
-import { z } from "zod";
 import type { InstagramPost } from "@/types/instagram-post";
 import { getCollection } from "@/app/services/api/_db";
 import { FactorySvc } from "@/app/services/api/factory";
@@ -12,409 +9,19 @@ import {
   GetAccountInsightsInput,
   SearchPostsInput,
 } from "@/app/services/api/instagram/validators";
-import {
-  listInstagramPosts,
-  getInstagramPost,
-  getPostInsights,
-  getAccountInsights,
-} from "@/app/services/api/instagram/media";
-import { instagramSyncSvc } from "@/app/services/api/instagram/sync";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-const handler = createMcpHandler((server) => {
-  /**
-   * List Instagram posts with pagination and optional filtering
-   */
-  server.registerTool(
-    "instagram_list_posts",
-    {
-      title: "Publicaciones de Sweet Q",
-      description:
-        "Consulta publicaciones y reels de Sweet Q. " +
-        "Úsala para analizar textos, fechas y contenido del Instagram de la banda. " +
-        "Soporta paginación mediante cursor y filtrado por tipo de contenido.",
-      inputSchema: ListPostsInput,
-    },
-    async (input) => {
-      try {
-        const parsed = ListPostsInput.parse(input);
-        const collection = await getCollection("instagram");
-        const instagramSvc = FactorySvc("instagram", collection);
-
-        const tokenData = await instagramSvc.getAccessToken(instagramSvc);
-        if (!tokenData) {
-          return {
-            isError: true,
-            content: [
-              {
-                type: "text",
-                text: "No Instagram token found. Please authorize Instagram first.",
-              },
-            ],
-          };
-        }
-
-        if (!tokenData.user_id) {
-          return {
-            isError: true,
-            content: [
-              {
-                type: "text",
-                text: "No Instagram User ID found. Please re-authorize.",
-              },
-            ],
-          };
-        }
-
-        // Filter posts by date range if provided
-        let posts = await instagramSvc.listInstagramPosts(
-          tokenData.long_live_access_token,
-          tokenData.user_id,
-          parsed.limit,
-          parsed.cursor,
-          parsed.media_type
-        );
-
-        // Apply date filtering if specified
-        if (parsed.start_date || parsed.end_date) {
-          const startDate = parsed.start_date ? new Date(parsed.start_date) : null;
-          const endDate = parsed.end_date ? new Date(parsed.end_date) : null;
-
-          posts.posts = posts.posts.filter((post: InstagramPost) => {
-            const postDate = new Date(post.timestamp);
-            if (startDate && postDate < startDate) return false;
-            if (endDate && postDate > endDate) return false;
-            return true;
-          });
-        }
-
-        return {
-          content: [
-            {
-              type: "text",
-              text: JSON.stringify(posts, null, 2),
-            },
-          ],
-        };
-      } catch (error) {
-        console.error("[MCP] instagram_list_posts error:", error);
-
-        return {
-          isError: true,
-          content: [
-            {
-              type: "text",
-              text:
-                error instanceof Error
-                  ? `Error: ${error.message}`
-                  : "Error listing posts. Check server logs.",
-            },
-          ],
-        };
-      }
-    }
-  );
-
-  /**
-   * Get a specific Instagram post by ID
-   */
-  server.registerTool(
-    "instagram_get_post",
-    {
-      title: "Obtener una publicación",
-      description:
-        "Recupera los detalles completos de una publicación específica de Instagram. " +
-        "Incluye información de carruseles si aplica.",
-      inputSchema: GetPostInput,
-    },
-    async (input) => {
-      try {
-        const parsed = GetPostInput.parse(input);
-        const collection = await getCollection("instagram");
-        const instagramSvc = FactorySvc("instagram", collection);
-
-        const tokenData = await instagramSvc.getAccessToken(instagramSvc);
-        if (!tokenData) {
-          return {
-            isError: true,
-            content: [
-              {
-                type: "text",
-                text: "No Instagram token found.",
-              },
-            ],
-          };
-        }
-
-        const post = await getInstagramPost(tokenData.long_live_access_token, parsed.post_id);
-
-        return {
-          content: [
-            {
-              type: "text",
-              text: JSON.stringify(post, null, 2),
-            },
-          ],
-        };
-      } catch (error) {
-        console.error("[MCP] instagram_get_post error:", error);
-
-        return {
-          isError: true,
-          content: [
-            {
-              type: "text",
-              text:
-                error instanceof Error
-                  ? `Error: ${error.message}`
-                  : "Error retrieving post. Check server logs.",
-            },
-          ],
-        };
-      }
-    }
-  );
-
-  /**
-   * Get insights for a specific post
-   */
-  server.registerTool(
-    "instagram_get_insights",
-    {
-      title: "Métricas de una publicación",
-      description:
-        "Recupera las métricas disponibles de una publicación específica. " +
-        "Las métricas varían según el tipo de contenido (imagen, video, reel). " +
-        "Incluye alcance, visualizaciones, likes, comentarios, etc.",
-      inputSchema: GetInsightsInput,
-    },
-    async (input) => {
-      try {
-        const parsed = GetInsightsInput.parse(input);
-        const collection = await getCollection("instagram");
-        const instagramSvc = FactorySvc("instagram", collection);
-
-        const tokenData = await instagramSvc.getAccessToken(instagramSvc);
-        if (!tokenData) {
-          return {
-            isError: true,
-            content: [
-              {
-                type: "text",
-                text: "No Instagram token found.",
-              },
-            ],
-          };
-        }
-
-        const insights = await getPostInsights(tokenData.long_live_access_token, parsed.post_id);
-
-        if (insights.error) {
-          return {
-            isError: true,
-            content: [
-              {
-                type: "text",
-                text: `Could not retrieve insights: ${insights.error}. This post may not have insights available.`,
-              },
-            ],
-          };
-        }
-
-        return {
-          content: [
-            {
-              type: "text",
-              text: JSON.stringify(
-                {
-                  post_id: parsed.post_id,
-                  available_metrics: insights.available,
-                  data: insights.data,
-                },
-                null,
-                2
-              ),
-            },
-          ],
-        };
-      } catch (error) {
-        console.error("[MCP] instagram_get_insights error:", error);
-
-        return {
-          isError: true,
-          content: [
-            {
-              type: "text",
-              text:
-                error instanceof Error
-                  ? `Error: ${error.message}`
-                  : "Error retrieving insights.",
-            },
-          ],
-        };
-      }
-    }
-  );
-
-  /**
-   * Get account-level insights
-   */
-  server.registerTool(
-    "instagram_get_account_insights",
-    {
-      title: "Métricas de la cuenta",
-      description:
-        "Recupera las estadísticas generales de la cuenta de Instagram de Sweet Q. " +
-        "Incluye seguidores, alcance, visualizaciones de perfil y otros datos globales.",
-      inputSchema: GetAccountInsightsInput,
-    },
-    async (input) => {
-      try {
-        const parsed = GetAccountInsightsInput.parse(input);
-        const collection = await getCollection("instagram");
-        const instagramSvc = FactorySvc("instagram", collection);
-
-        const tokenData = await instagramSvc.getAccessToken(instagramSvc);
-        if (!tokenData || !tokenData.user_id) {
-          return {
-            isError: true,
-            content: [
-              {
-                type: "text",
-                text: "No Instagram token or user ID found.",
-              },
-            ],
-          };
-        }
-
-        const insights = await getAccountInsights(
-          tokenData.long_live_access_token,
-          tokenData.user_id,
-          parsed.period
-        );
-
-        if (insights.error) {
-          return {
-            isError: true,
-            content: [
-              {
-                type: "text",
-                text: `Could not retrieve account insights: ${insights.error}. Make sure the account has the required permissions.`,
-              },
-            ],
-          };
-        }
-
-        return {
-          content: [
-            {
-              type: "text",
-              text: JSON.stringify(
-                {
-                  period: parsed.period,
-                  available_metrics: insights.available,
-                  data: insights.data,
-                },
-                null,
-                2
-              ),
-            },
-          ],
-        };
-      } catch (error) {
-        console.error("[MCP] instagram_get_account_insights error:", error);
-
-        return {
-          isError: true,
-          content: [
-            {
-              type: "text",
-              text:
-                error instanceof Error
-                  ? `Error: ${error.message}`
-                  : "Error retrieving account insights.",
-            },
-          ],
-        };
-      }
-    }
-  );
-
-  /**
-   * Search posts by caption
-   */
-  server.registerTool(
-    "instagram_search_posts",
-    {
-      title: "Buscar publicaciones",
-      description:
-        "Busca publicaciones por palabras clave en sus captions. " +
-        "Permite combinar búsqueda con filtros de tipo de contenido. " +
-        "Nota: Los resultados provienen de publicaciones ya sincronizadas en la base de datos.",
-      inputSchema: SearchPostsInput,
-    },
-    async (input) => {
-      try {
-        const parsed = SearchPostsInput.parse(input);
-        const collection = await getCollection("instagramPosts");
-        const postsSvc = FactorySvc("instagramPosts", collection);
-
-        let results = await postsSvc.findByCaption(parsed.query, parsed.limit, parsed.skip);
-
-        // Additional media type filter if specified
-        if (parsed.media_type) {
-          results.posts = results.posts.filter((post: any) => post.media_type === parsed.media_type);
-        }
-
-        return {
-          content: [
-            {
-              type: "text",
-              text: JSON.stringify(
-                {
-                  query: parsed.query,
-                  limit: parsed.limit,
-                  skip: parsed.skip,
-                  total: results.total,
-                  results: results.posts,
-                  hasMore: results.hasMore,
-                },
-                null,
-                2
-              ),
-            },
-          ],
-        };
-      } catch (error) {
-        console.error("[MCP] instagram_search_posts error:", error);
-
-        return {
-          isError: true,
-          content: [
-            {
-              type: "text",
-              text:
-                error instanceof Error
-                  ? `Error: ${error.message}`
-                  : "Error searching posts. Make sure posts are synced.",
-            },
-          ],
-        };
-      }
-    }
-  );
-});
-
-const verifyToken = async (
-  _request: Request,
-  bearerToken?: string
-): Promise<AuthInfo | undefined> => {
+// Verify Bearer token
+function verifyToken(authHeader: string | null): boolean {
   const secret = process.env.MCP_READ_TOKEN;
+  if (!secret || !authHeader) return false;
 
-  if (!secret || !bearerToken) return undefined;
+  const parts = authHeader.split(" ");
+  if (parts.length !== 2 || parts[0] !== "Bearer") return false;
 
+  const bearerToken = parts[1];
   const expected = Buffer.from(secret);
   const received = Buffer.from(bearerToken);
 
@@ -422,26 +29,429 @@ const verifyToken = async (
     expected.length !== received.length ||
     !timingSafeEqual(expected, received)
   ) {
-    return undefined;
+    return false;
   }
 
-  return {
-    token: bearerToken,
-    clientId: "sweet-q-private",
-    scopes: ["instagram:read"],
-  };
-};
+  return true;
+}
 
-const protectedHandler = withMcpAuth(
-  handler,
-  verifyToken,
-  {
-    required: true,
-    requiredScopes: ["instagram:read"],
+// Send SSE message
+function sendSSE(message: Record<string, unknown>): string {
+  return `data: ${JSON.stringify(message)}\n\n`;
+}
+
+// Main MCP handler
+export async function POST(request: Request) {
+  try {
+    // Verify authentication
+    const authHeader = request.headers.get("authorization");
+    if (!verifyToken(authHeader)) {
+      return new Response(
+        sendSSE({
+          jsonrpc: "2.0",
+          error: { code: -32600, message: "Unauthorized" },
+          id: null,
+        }),
+        {
+          status: 401,
+          headers: { "Content-Type": "text/event-stream" },
+        }
+      );
+    }
+
+    const body = (await request.json()) as any;
+    const { jsonrpc, method, params, id } = body;
+
+    // Tools/call RPC
+    if (method === "tools/call") {
+      const { name, arguments: args } = params;
+
+      try {
+        const collection = await getCollection("instagram");
+        const instagramSvc = FactorySvc("instagram", collection);
+        const tokenData = await instagramSvc.getAccessToken(instagramSvc);
+
+        if (!tokenData?.long_live_access_token) {
+          return new Response(
+            sendSSE({
+              jsonrpc,
+              result: {
+                content: [
+                  {
+                    type: "text",
+                    text: "Error: No Instagram token found",
+                  },
+                ],
+                isError: true,
+              },
+              id,
+            }),
+            {
+              status: 200,
+              headers: { "Content-Type": "text/event-stream" },
+            }
+          );
+        }
+
+        let result: unknown;
+
+        switch (name) {
+          case "instagram_list_posts": {
+            const input = ListPostsInput.parse(args);
+            const posts = await instagramSvc.listInstagramPosts(
+              tokenData.long_live_access_token,
+              tokenData.user_id,
+              input.limit,
+              input.cursor,
+              input.media_type
+            );
+
+            // Apply date filtering
+            let filteredPosts = posts.posts;
+            if (input.start_date || input.end_date) {
+              const startDate = input.start_date
+                ? new Date(input.start_date)
+                : null;
+              const endDate = input.end_date ? new Date(input.end_date) : null;
+
+              filteredPosts = filteredPosts.filter((post: InstagramPost) => {
+                const postDate = new Date(post.timestamp);
+                if (startDate && postDate < startDate) return false;
+                if (endDate && postDate > endDate) return false;
+                return true;
+              });
+            }
+
+            result = {
+              posts: filteredPosts,
+              paging: {
+                next_cursor: posts.nextCursor,
+                has_more: posts.hasMore,
+              },
+            };
+            break;
+          }
+
+          case "instagram_get_post": {
+            const input = GetPostInput.parse(args);
+            const post = await instagramSvc.getInstagramPost(
+              tokenData.long_live_access_token,
+              input.post_id
+            );
+            result = post;
+            break;
+          }
+
+          case "instagram_get_insights": {
+            const input = GetInsightsInput.parse(args);
+            const metrics = input.metrics || [
+              "engagement",
+              "impressions",
+              "reach",
+            ];
+            const insights = await instagramSvc.getPostInsights(
+              tokenData.long_live_access_token,
+              input.post_id,
+              metrics
+            );
+            result = insights;
+            break;
+          }
+
+          case "instagram_get_account_insights": {
+            const input = GetAccountInsightsInput.parse(args);
+            const insights = await instagramSvc.getAccountInsights(
+              tokenData.long_live_access_token,
+              tokenData.user_id,
+              input.period || "lifetime"
+            );
+            result = insights;
+            break;
+          }
+
+          case "instagram_search_posts": {
+            const input = SearchPostsInput.parse(args);
+            const posts = await instagramSvc.searchPosts(
+              input.query,
+              input.limit || 50,
+              input.skip || 0,
+              input.media_type
+            );
+            result = {
+              posts: posts.posts,
+              count: posts.count,
+            };
+            break;
+          }
+
+          default:
+            return new Response(
+              sendSSE({
+                jsonrpc,
+                error: { code: -32601, message: `Unknown method: ${name}` },
+                id,
+              }),
+              {
+                status: 200,
+                headers: { "Content-Type": "text/event-stream" },
+              }
+            );
+        }
+
+        return new Response(
+          sendSSE({
+            jsonrpc,
+            result: {
+              content: [
+                {
+                  type: "text",
+                  text: JSON.stringify(result, null, 2),
+                },
+              ],
+            },
+            id,
+          }),
+          {
+            status: 200,
+            headers: { "Content-Type": "text/event-stream" },
+          }
+        );
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        return new Response(
+          sendSSE({
+            jsonrpc,
+            result: {
+              content: [
+                {
+                  type: "text",
+                  text: `Error: ${message}`,
+                },
+              ],
+              isError: true,
+            },
+            id,
+          }),
+          {
+            status: 200,
+            headers: { "Content-Type": "text/event-stream" },
+          }
+        );
+      }
+    }
+
+    // List tools (discovery)
+    if (method === "tools/list") {
+      return new Response(
+        sendSSE({
+          jsonrpc,
+          result: {
+            tools: [
+              {
+                name: "instagram_list_posts",
+                description:
+                  "List Instagram posts with pagination and optional filtering by media type and date range",
+                inputSchema: {
+                  type: "object",
+                  properties: {
+                    limit: {
+                      type: "number",
+                      description: "Number of posts to return (1-50)",
+                      default: 20,
+                    },
+                    cursor: {
+                      type: "string",
+                      description: "Cursor for pagination",
+                    },
+                    media_type: {
+                      type: "string",
+                      enum: ["IMAGE", "VIDEO", "CAROUSEL_ALBUM", "REELS"],
+                      description: "Filter by media type",
+                    },
+                    start_date: {
+                      type: "string",
+                      description: "Filter posts from this date (ISO 8601)",
+                    },
+                    end_date: {
+                      type: "string",
+                      description: "Filter posts until this date (ISO 8601)",
+                    },
+                  },
+                  required: [],
+                },
+              },
+              {
+                name: "instagram_get_post",
+                description:
+                  "Get detailed information about a specific Instagram post",
+                inputSchema: {
+                  type: "object",
+                  properties: {
+                    post_id: {
+                      type: "string",
+                      description: "The Instagram post ID",
+                    },
+                  },
+                  required: ["post_id"],
+                },
+              },
+              {
+                name: "instagram_get_insights",
+                description:
+                  "Get metrics and insights for a specific Instagram post",
+                inputSchema: {
+                  type: "object",
+                  properties: {
+                    post_id: {
+                      type: "string",
+                      description: "The Instagram post ID",
+                    },
+                    metrics: {
+                      type: "array",
+                      items: { type: "string" },
+                      description:
+                        "Specific metrics to retrieve (engagement, impressions, reach, etc.)",
+                    },
+                  },
+                  required: ["post_id"],
+                },
+              },
+              {
+                name: "instagram_get_account_insights",
+                description: "Get account-level metrics and statistics",
+                inputSchema: {
+                  type: "object",
+                  properties: {
+                    period: {
+                      type: "string",
+                      enum: ["lifetime", "day"],
+                      description: "Time period for the insights",
+                      default: "lifetime",
+                    },
+                  },
+                  required: [],
+                },
+              },
+              {
+                name: "instagram_search_posts",
+                description: "Search Instagram posts by text in captions",
+                inputSchema: {
+                  type: "object",
+                  properties: {
+                    query: {
+                      type: "string",
+                      description: "Search term or phrase",
+                    },
+                    limit: {
+                      type: "number",
+                      description: "Max results (default 50)",
+                      default: 50,
+                    },
+                    skip: {
+                      type: "number",
+                      description: "Skip results (for pagination)",
+                      default: 0,
+                    },
+                    media_type: {
+                      type: "string",
+                      enum: ["IMAGE", "VIDEO", "CAROUSEL_ALBUM", "REELS"],
+                      description: "Filter by media type (optional)",
+                    },
+                  },
+                  required: ["query"],
+                },
+              },
+            ],
+          },
+          id,
+        }),
+        {
+          status: 200,
+          headers: { "Content-Type": "text/event-stream" },
+        }
+      );
+    }
+
+    return new Response(
+      sendSSE({
+        jsonrpc,
+        error: {
+          code: -32601,
+          message: `Method not implemented: ${method}`,
+        },
+        id,
+      }),
+      {
+        status: 200,
+        headers: { "Content-Type": "text/event-stream" },
+      }
+    );
+  } catch (error) {
+    console.error("[MCP Error]", error);
+    return new Response(
+      `data: ${JSON.stringify({
+        jsonrpc: "2.0",
+        error: {
+          code: -32603,
+          message: error instanceof Error ? error.message : "Internal error",
+        },
+        id: null,
+      })}\n\n`,
+      {
+        status: 500,
+        headers: { "Content-Type": "text/event-stream" },
+      }
+    );
   }
-);
+}
 
-export {
-  protectedHandler as GET,
-  protectedHandler as POST,
-};
+// GET request for discovery
+export async function GET(request: Request) {
+  // Verify authentication
+  const authHeader = request.headers.get("authorization");
+  if (!verifyToken(authHeader)) {
+    return new Response(
+      JSON.stringify({
+        error: "Unauthorized",
+      }),
+      {
+        status: 401,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+  }
+
+  // Return tool list for discovery
+  return new Response(
+    JSON.stringify({
+      tools: [
+        {
+          name: "instagram_list_posts",
+          description:
+            "List Instagram posts with pagination and optional filtering",
+        },
+        {
+          name: "instagram_get_post",
+          description:
+            "Get detailed information about a specific Instagram post",
+        },
+        {
+          name: "instagram_get_insights",
+          description: "Get metrics and insights for a specific Instagram post",
+        },
+        {
+          name: "instagram_get_account_insights",
+          description: "Get account-level metrics and statistics",
+        },
+        {
+          name: "instagram_search_posts",
+          description: "Search Instagram posts by text in captions",
+        },
+      ],
+    }),
+    {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    }
+  );
+}

@@ -39,6 +39,10 @@ export const GetPostInput = z.object({
 
 export const GetInsightsInput = z.object({
   post_id: z.string().describe("Instagram post ID"),
+  metrics: z
+    .array(z.string())
+    .optional()
+    .describe("Specific metrics to retrieve (engagement, impressions, reach, etc.)"),
 });
 
 export const GetAccountInsightsInput = z.object({
