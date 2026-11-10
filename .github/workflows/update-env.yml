@@ -40,6 +40,8 @@ jobs:
               echo "GRAPH_INSTAGRAM=${{ vars.GRAPH_INSTAGRAM }}"
               echo "API_INSTAGRAM_VERSION=${{ vars.API_INSTAGRAM_VERSION }}"
               echo "PLACES_API_KEY=${{ secrets.PLACES_API_KEY }}"
+              echo "MCP_READ_TOKEN=${{ secrets.MCP_READ_TOKEN }}"
+              echo "INSTAGRAM_SYNC_ADMIN_TOKEN=${{ secrets.INSTAGRAM_SYNC_ADMIN_TOKEN }}"
               echo "NODE_ENV=${{ vars.NODE_ENV }}"
               echo "NEXT_PUBLIC_URL=${{ vars.NEXT_PUBLIC_URL }}"
               echo "NEXT_PUBLIC_API_URI=${{ vars.NEXT_PUBLIC_API_URI }}"
