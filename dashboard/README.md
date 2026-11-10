@@ -34,3 +34,66 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+---
+
+## 🎸 Instagram MCP Integration (NEW)
+
+### ✨ What's New
+
+La aplicación ahora incluye una integración completa con Instagram mediante un servidor MCP privado que permite a ChatGPT consultar publicaciones, analizar estadísticas y ayudar a planificar la estrategia de redes sociales.
+
+### 🚀 Quick Start
+
+```bash
+# 1. Generar tokens
+MCP_READ_TOKEN=$(openssl rand -base64 32)
+INSTAGRAM_SYNC_ADMIN_TOKEN=$(openssl rand -base64 32)
+
+# 2. Agregar a .env.local
+echo "MCP_READ_TOKEN=$MCP_READ_TOKEN" >> .env.local
+echo "INSTAGRAM_SYNC_ADMIN_TOKEN=$INSTAGRAM_SYNC_ADMIN_TOKEN" >> .env.local
+
+# 3. Compilar
+pnpm build
+
+# 4. Probar
+./scripts/test-instagram-mcp.sh $MCP_READ_TOKEN
+```
+
+### 📚 Documentación
+
+- **[INSTAGRAM_MCP_SETUP.md](./INSTAGRAM_MCP_SETUP.md)** — Setup en 5 minutos
+- **[INSTAGRAM_MCP.md](./INSTAGRAM_MCP.md)** — Guía completa
+- **[DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)** — Producción
+
+### 🔧 Herramientas MCP Disponibles
+
+1. `instagram_list_posts` — Listar publicaciones
+2. `instagram_get_post` — Detalles de un post
+3. `instagram_get_insights` — Métricas de post
+4. `instagram_get_account_insights` — Estadísticas de cuenta
+5. `instagram_search_posts` — Buscar en MongoDB
+
+### 🔐 Seguridad
+
+✅ Bearer token authentication
+✅ Lectura exclusiva (sin publicación)
+✅ Validación con Zod
+✅ Rate limiting
+✅ Logs sin credenciales
+
+### 📊 Archivos Modificados
+
+- Nuevos: 14 archivos
+- Modificados: 2 archivos
+- Documentación: 4 archivos
+- Tests: 2 archivos
+
+### 🎯 Status
+
+✅ Build: Compilación exitosa
+✅ Endpoints: /api/mcp y /api/instagram/sync
+✅ Tests: 20+ casos
+✅ Documentación: Completa
+✅ Listo: Producción

@@ -10,6 +10,7 @@ import { citiesSvc } from "./cities";
 import { statesSvc } from "./states";
 import { tagsSvc } from "./tags";
 import { instagramSvc } from "./instagram";
+import { instagramPostsSvc } from "./instagramPosts";
 import { usersSvc } from "./users";
 import { userProfilesSvc } from "./userProfiles";
 import { countriesSvc } from "./countries";
@@ -35,6 +36,7 @@ let factory: FactoryType = {
   followings: followingsSvc,
   gigs: gigsSvc,
   instagram: instagramSvc,
+  instagramPosts: instagramPostsSvc,
   layouts: layoutsSvc,
   messages: messagesSvc,
   news: newsSvc,
