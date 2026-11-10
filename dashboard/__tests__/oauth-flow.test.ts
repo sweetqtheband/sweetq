@@ -110,6 +110,7 @@ test("OAuth discovery, login, PKCE exchange and MCP authorization", async () => 
   let location = new URL(start.headers.get("location")!, "https://example.test").toString();
   const login = await interactionHandler(new Request(location, { headers: { cookie: cookieHeader() } }));
   assert.equal(login.status, 200, await login.clone().text());
+  assert.equal(login.headers.get("referrer-policy"), "same-origin");
   const csrf = await interactionHandler(new Request(location, {
     method: "POST",
     headers: {
@@ -119,6 +120,18 @@ test("OAuth discovery, login, PKCE exchange and MCP authorization", async () => 
     body: new URLSearchParams({ username: "test-user", password: "test-password" }),
   }));
   assert.equal(csrf.status, 403);
+  for (const origin of ["null", undefined]) {
+    const invalidOrigin = await interactionHandler(new Request(location, {
+      method: "POST",
+      headers: {
+        cookie: cookieHeader(),
+        ...(origin === undefined ? {} : { origin }),
+        "content-type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({ username: "test-user", password: "test-password" }),
+    }));
+    assert.equal(invalidOrigin.status, 403);
+  }
   const badLogin = await interactionHandler(new Request(location, {
     method: "POST",
     headers: {

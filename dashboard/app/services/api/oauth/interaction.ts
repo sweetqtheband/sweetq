@@ -11,7 +11,7 @@ const securityHeaders = {
   "content-security-policy": "default-src 'none'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'",
   "x-content-type-options": "nosniff",
   "x-frame-options": "DENY",
-  "referrer-policy": "no-referrer",
+  "referrer-policy": "same-origin",
 };
 
 export async function interactionHandler(request: Request): Promise<Response> {
