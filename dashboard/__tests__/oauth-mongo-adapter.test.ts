@@ -26,8 +26,24 @@ test("OAuth models persist, expire, consume, and revoke by grant", async () => {
   assert.equal((await codes.findByUserCode("user-1"))?.uid, "uid-1");
   await codes.consume("code-1");
   assert.equal(typeof (await codes.find("code-1"))?.consumed, "number");
+  await assert.rejects(() => codes.consume("code-1"));
+  await codes.upsert("null-consumed", {}, 60);
+  await db.collection<{ _id: string; payload: { consumed?: number | null } }>("mcp_oauth_AuthorizationCode").updateOne(
+    { _id: "null-consumed" },
+    { $set: { "payload.consumed": null } },
+  );
+  await codes.consume("null-consumed");
+  assert.equal(typeof (await codes.find("null-consumed"))?.consumed, "number");
+  await codes.upsert("no-expiry", {});
+  await codes.consume("no-expiry");
+  assert.equal(typeof (await codes.find("no-expiry"))?.consumed, "number");
+  await codes.upsert("concurrent", {}, 60);
+  const concurrent = await Promise.allSettled([codes.consume("concurrent"), codes.consume("concurrent")]);
+  assert.equal(concurrent.filter((result) => result.status === "fulfilled").length, 1);
+  assert.equal(concurrent.filter((result) => result.status === "rejected").length, 1);
   await codes.upsert("expired", { grantId: "grant-1" }, -1);
   assert.equal(await codes.find("expired"), undefined);
+  await assert.rejects(() => codes.consume("expired"));
   await codes.revokeByGrantId("grant-1");
   assert.equal(await codes.find("code-1"), undefined);
   await codes.upsert("destroyed", {}, 60);

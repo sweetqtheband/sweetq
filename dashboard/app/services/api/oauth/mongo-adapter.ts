@@ -1,4 +1,5 @@
 import type { Adapter, AdapterPayload } from "oidc-provider";
+import { errors } from "oidc-provider";
 import type { Collection, Db, Filter } from "mongodb";
 import { getDb } from "@/app/services/api/_db";
 
@@ -74,10 +75,25 @@ export function createMongoAdapter(connect: () => Promise<Db> = getDb, namespace
     async consume(id) {
       const store = await collection(name);
       const result = await store.updateOne(
-        { _id: id, "payload.consumed": { $exists: false }, expiresAt: { $gt: new Date() } },
+        {
+          _id: id,
+          "payload.consumed": null,
+          $or: [{ expiresAt: { $exists: false } }, { expiresAt: { $gt: new Date() } }],
+        },
         { $set: { "payload.consumed": Math.floor(Date.now() / 1000) } },
       );
-      if (result.modifiedCount !== 1) throw new Error("OAuth grant already consumed or expired");
+      if (result.modifiedCount !== 1) {
+        const current = await store.findOne({ _id: id }, { projection: { expiresAt: 1, "payload.consumed": 1 } });
+        const reason = !current
+          ? "not_found"
+          : current.expiresAt && current.expiresAt <= new Date()
+            ? "expired"
+            : current.payload?.consumed != null
+              ? "already_consumed"
+              : "concurrent_change";
+        console.error("[MCP OAuth] Grant consumption rejected", name, reason);
+        throw new errors.InvalidGrant("OAuth grant already consumed or expired");
+      }
     },
     async destroy(id) {
       await (await collection(name)).deleteOne({ _id: id });

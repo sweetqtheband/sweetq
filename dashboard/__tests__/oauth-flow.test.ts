@@ -224,6 +224,13 @@ test("OAuth discovery, login, PKCE exchange and MCP authorization", async () => 
   }));
   assert.equal(invalidExchange.status, 400);
   assert.equal((await invalidExchange.json()).error, "invalid_grant");
+  const { getOAuthProvider, verifyOAuthAccessToken } = await import("../app/services/api/oauth/runtime");
+  const storedCode = await getOAuthProvider().AuthorizationCode.find(code);
+  assert.ok(storedCode);
+  const issuerHash = createHash("sha256").update("https://example.test").digest("hex").slice(0, 24);
+  await db.collection<{ _id: string; payload: { consumed?: number | null } }>(
+    `mcp_oauth_${issuerHash}_AuthorizationCode`,
+  ).updateOne({ _id: storedCode.jti }, { $set: { "payload.consumed": null } });
   tokenBody.set("client_assertion", jwt.sign({}, clientKeys.privateKey, {
     algorithm: "RS256", keyid: "test-client-key",
     issuer: "https://chatgpt.com/oauth/client.json", subject: "https://chatgpt.com/oauth/client.json",
@@ -258,7 +265,6 @@ test("OAuth discovery, login, PKCE exchange and MCP authorization", async () => 
   }));
   assert.equal(toolCall.status, 200, await toolCall.clone().text());
   assert.match(await toolCall.text(), /No Instagram token found/);
-  const { getOAuthProvider, verifyOAuthAccessToken } = await import("../app/services/api/oauth/runtime");
   const store = getOAuthProvider().AccessToken.adapter;
   const now = Math.floor(Date.now() / 1000);
   const base = { jti: "invalid-token", kind: "AccessToken", iat: now, exp: now + 60, accountId: "test-account" };
