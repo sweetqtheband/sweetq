@@ -76,6 +76,11 @@ test("OAuth discovery, login, PKCE exchange and MCP authorization", async () => 
   assert.ok(doc.code_challenge_methods_supported.includes("S256"));
   const oauthDiscovery = await oauthHandler(new Request("https://example.test/.well-known/oauth-authorization-server"));
   assert.equal(oauthDiscovery.status, 200, await oauthDiscovery.clone().text());
+  const proxiedDiscovery = await oauthHandler(new Request(
+    "https://example.test/.well-known/oauth-authorization-server",
+    { headers: { connection: "upgrade, x-proxy-hop", upgrade: "websocket", "x-proxy-hop": "test" } },
+  ));
+  assert.equal(proxiedDiscovery.status, 200, await proxiedDiscovery.clone().text());
 
   const verifier = randomBytes(32).toString("base64url");
   const challenge = createHash("sha256").update(verifier).digest("base64url");

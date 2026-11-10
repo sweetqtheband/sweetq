@@ -42,6 +42,16 @@ export async function oauthHandler(request: Request): Promise<Response> {
     const path = new URL(request.url);
     const { port, secret } = await getInternalServer();
     const headers = new Headers(request.headers);
+    const connectionHeaders = headers.get("connection")?.split(",") ?? [];
+    for (const name of connectionHeaders) {
+      if (name.trim()) headers.delete(name.trim());
+    }
+    for (const name of [
+      "connection", "keep-alive", "proxy-authenticate", "proxy-authorization",
+      "te", "trailer", "transfer-encoding", "upgrade",
+    ]) {
+      headers.delete(name);
+    }
     headers.set("host", issuer.host);
     headers.set("x-forwarded-host", issuer.host);
     headers.set("x-forwarded-proto", "https");
