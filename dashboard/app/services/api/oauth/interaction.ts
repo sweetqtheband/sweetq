@@ -8,7 +8,7 @@ import { USER_PROFILES } from "@/app/constants";
 const securityHeaders = {
   "content-type": "text/html; charset=utf-8",
   "cache-control": "no-store",
-  "content-security-policy": "default-src 'none'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'",
+  "content-security-policy": "default-src 'none'; style-src 'self'; img-src 'self'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'",
   "x-content-type-options": "nosniff",
   "x-frame-options": "DENY",
   "referrer-policy": "same-origin",
@@ -48,9 +48,10 @@ export async function interactionHandler(request: Request): Promise<Response> {
           }
           const login = details.prompt.name === "login";
           const fields = login
-            ? '<label>Usuario <input name="username" autocomplete="username" required></label><br><label>Contraseña <input type="password" name="password" autocomplete="current-password" required></label><br>'
+            ? `<div class="cds--form-item cds--text-input-wrapper"><label class="cds--label" for="username">Usuario</label><div class="cds--text-input__field-outer-wrapper"><div class="cds--text-input__field-wrapper"><input class="cds--text-input cds--text-input--md cds--layout--size-md" id="username" name="username" placeholder="Usuario" autocomplete="username" required></div></div></div>
+              <div class="cds--form-item cds--text-input-wrapper cds--password-input-wrapper"><label class="cds--label" for="password">Contraseña</label><div class="cds--text-input__field-outer-wrapper"><div class="cds--text-input__field-wrapper"><input class="cds--text-input cds--password-input cds--text-input--md cds--layout--size-md" id="password" name="password" type="password" placeholder="Contraseña" autocomplete="current-password" required></div></div></div>`
             : "<p>Autorizar a ChatGPT a consultar Instagram en modo lectura.</p>";
-          res.writeHead(200, securityHeaders).end(`<!doctype html><html lang="es"><meta charset="utf-8"><title>Sweet Q - autorización</title><h1>Sweet Q - Instagram</h1><form method="post">${fields}<button type="submit">${login ? "Iniciar sesión" : "Autorizar"}</button></form></html>`);
+          res.writeHead(200, securityHeaders).end(`<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Sweet Q - autorización</title><link rel="stylesheet" href="/api/oauth/styles"><link rel="stylesheet" href="/login.css"></head><body class="oauth-login"><main class="login-wrapper"><form class="login" method="post"><header><img src="/logo.svg" alt="Sweet Q" width="200" height="80"></header><section>${fields}</section><footer><button class="cds--btn cds--btn--secondary" type="submit">${login ? "Iniciar sesión" : "Autorizar"}</button></footer></form></main></body></html>`);
           return;
         }
         if (details.prompt.name === "login") {

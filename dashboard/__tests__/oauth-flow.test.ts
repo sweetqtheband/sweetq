@@ -63,7 +63,9 @@ test("OAuth discovery, login, PKCE exchange and MCP authorization", async () => 
   };
   try {
   const { oauthHandler } = await import("../app/services/api/oauth/http");
+  const { GET: resumeAuthorization } = await import("../app/(pages)/api/oauth/authorize/[uid]/route");
   const { interactionHandler } = await import("../app/services/api/oauth/interaction");
+  const { GET: oauthStyles } = await import("../app/(pages)/api/oauth/styles/route");
   const { GET: resourceMetadata } = await import("../app/.well-known/oauth-protected-resource/api/mcp/route");
   const { POST: mcp } = await import("../app/(pages)/api/mcp/route");
   const metadata = await resourceMetadata();
@@ -111,6 +113,17 @@ test("OAuth discovery, login, PKCE exchange and MCP authorization", async () => 
   const login = await interactionHandler(new Request(location, { headers: { cookie: cookieHeader() } }));
   assert.equal(login.status, 200, await login.clone().text());
   assert.equal(login.headers.get("referrer-policy"), "same-origin");
+  assert.match(login.headers.get("content-security-policy") ?? "", /style-src 'self'/);
+  const loginHtml = await login.text();
+  assert.match(loginHtml, /href="\/login\.css"/);
+  assert.match(loginHtml, /href="\/api\/oauth\/styles"/);
+  assert.match(loginHtml, /name="username"/);
+  assert.match(loginHtml, /name="password"/);
+  const styles = await oauthStyles();
+  assert.equal(styles.status, 200);
+  const css = await styles.text();
+  assert.match(css, /\.cds--text-input/);
+  assert.doesNotMatch(css, /@font-face/);
   const csrf = await interactionHandler(new Request(location, {
     method: "POST",
     headers: {
@@ -152,12 +165,18 @@ test("OAuth discovery, login, PKCE exchange and MCP authorization", async () => 
   assert.equal(loginSubmit.status, 303, await loginSubmit.clone().text());
   saveCookies(loginSubmit);
   location = new URL(loginSubmit.headers.get("location")!, "https://example.test").toString();
-  let resumed = await oauthHandler(new Request(location, { headers: { cookie: cookieHeader() } }));
+  assert.match(new URL(location).pathname, /^\/api\/oauth\/authorize\/[^/]+$/);
+  let resumed = await resumeAuthorization(new Request(location, { headers: { cookie: cookieHeader() } }));
   assert.equal(resumed.status, 303, await resumed.clone().text());
   saveCookies(resumed);
   saveCookies(resumed);
   location = new URL(resumed.headers.get("location")!, "https://example.test").toString();
   if (new URL(location).pathname.startsWith("/api/oauth/interaction/")) {
+    const consentPage = await interactionHandler(new Request(location, { headers: { cookie: cookieHeader() } }));
+    assert.equal(consentPage.status, 200);
+    const consentHtml = await consentPage.text();
+    assert.match(consentHtml, /href="\/login\.css"/);
+    assert.match(consentHtml, /Autorizar/);
     const consent = await interactionHandler(new Request(location, {
       method: "POST",
       headers: {
@@ -168,7 +187,7 @@ test("OAuth discovery, login, PKCE exchange and MCP authorization", async () => 
     }));
     assert.equal(consent.status, 303, await consent.clone().text());
     saveCookies(consent);
-    resumed = await oauthHandler(new Request(
+    resumed = await resumeAuthorization(new Request(
       new URL(consent.headers.get("location")!, "https://example.test"),
       { headers: { cookie: cookieHeader() } },
     ));
