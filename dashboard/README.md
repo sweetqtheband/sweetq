@@ -99,6 +99,19 @@ publicados en `chatgpt.com`. Se exige PKCE S256 y se comprueban expiración,
 audiencia y scope de los tokens persistidos para el issuer configurado. No
 hay una integración ChatGPT real verificada hasta probarla tras el despliegue.
 
+Para probar el intercambio completo con el build de producción de Next.js,
+utiliza una instancia MongoDB local aislada sin autenticación y ejecuta desde
+`dashboard`:
+
+```bash
+npm run build
+OAUTH_TEST_MONGO_URI=mongodb://127.0.0.1:37139 node --test __tests__/oauth-production.test.cjs
+```
+
+La prueba crea y elimina una base y un usuario de prueba: no apuntes
+`OAUTH_TEST_MONGO_URI` a la base de producción. Simula los documentos y
+claves del cliente ChatGPT; no sustituye la prueba con ChatGPT real.
+
 ### ✨ What's New
 
 La aplicación ahora incluye una integración completa con Instagram mediante un servidor MCP privado que permite a ChatGPT consultar publicaciones, analizar estadísticas y ayudar a planificar la estrategia de redes sociales.

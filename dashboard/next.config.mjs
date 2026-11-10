@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // oidc-provider relies on model class names to resolve token lifetimes.
+  serverExternalPackages: ["oidc-provider"],
   images: {
     unoptimized: true,
     remotePatterns: [
