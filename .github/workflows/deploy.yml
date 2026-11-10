@@ -11,6 +11,9 @@ jobs:
     environment: production
     env:
       VPS_HOST: ${{ secrets.VPS_HOST }}
+      MCP_OAUTH_ISSUER: ${{ vars.MCP_OAUTH_ISSUER }}
+      MCP_OAUTH_COOKIE_KEY: ${{ secrets.MCP_OAUTH_COOKIE_KEY }}
+      MCP_OAUTH_JWKS: ${{ secrets.MCP_OAUTH_JWKS }}
     steps:
       - name: Conectar al VPS y actualizar contenedor
         uses: appleboy/ssh-action@master
@@ -18,12 +21,19 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
+          envs: MCP_OAUTH_ISSUER,MCP_OAUTH_COOKIE_KEY,MCP_OAUTH_JWKS
           script: |
             set -e
+            if [ -n "$MCP_OAUTH_ISSUER$MCP_OAUTH_COOKIE_KEY$MCP_OAUTH_JWKS" ] &&
+               { [ -z "$MCP_OAUTH_ISSUER" ] || [ -z "$MCP_OAUTH_COOKIE_KEY" ] || [ -z "$MCP_OAUTH_JWKS" ]; }; then
+              echo "OAuth MCP: configura las tres variables o deja las tres vacías." >&2
+              exit 1
+            fi
             cd /var/www/sweetq
             git fetch origin main
             git reset --hard origin/main
             cd /var/www/sweetq/dashboard
+            umask 077
             {
               echo "MONGODB_URI=${{ secrets.MONGODB_URI }}"
               echo "MONGODB_DATABASE=${{ secrets.MONGODB_DATABASE }}"
@@ -57,7 +67,13 @@ jobs:
               echo "NEXT_PUBLIC_INSTAGRAM_USERNAME=${{ vars.NEXT_PUBLIC_INSTAGRAM_USERNAME }}"
               echo "NEXT_PUBLIC_INSTAGRAM_REDIRECT_URI=${{ vars.NEXT_PUBLIC_INSTAGRAM_REDIRECT_URI }}"
               echo "NEXT_PUBLIC_EMBED_MAPS_API_KEY=${{ vars.NEXT_PUBLIC_EMBED_MAPS_API_KEY }}"
+              if [ -n "$MCP_OAUTH_ISSUER" ]; then
+                printf "MCP_OAUTH_ISSUER=%s\n" "$MCP_OAUTH_ISSUER"
+                printf "MCP_OAUTH_COOKIE_KEY=%s\n" "$MCP_OAUTH_COOKIE_KEY"
+                printf "MCP_OAUTH_JWKS='%s'\n" "$MCP_OAUTH_JWKS"
+              fi
             } > .env.production
+            chmod 600 .env.production
             
             # Optimización: Solo limpiar contenedores, preservar caché de Docker
             docker-compose down --remove-orphans

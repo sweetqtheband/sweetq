@@ -2,7 +2,9 @@ import { timingSafeEqual } from "node:crypto";
 import type { InstagramPost } from "@/types/instagram-post";
 import { getCollection } from "@/app/services/api/_db";
 import { FactorySvc } from "@/app/services/api/factory";
-import { OAuthService } from "@/app/services/api/oauth/service";
+import { createMcpHandler } from "mcp-handler";
+import { z } from "zod";
+import { verifyOAuthAccessToken, oauthMetadata } from "@/app/services/api/oauth/runtime";
 import {
   ListPostsInput,
   GetPostInput,
@@ -45,23 +47,9 @@ function verifyBearerToken(authHeader: string | null): boolean {
 }
 
 /**
- * Verify OAuth access token
+ * Authenticate requests using the existing MCP token.
  */
-function verifyOAuthToken(authHeader: string | null): boolean {
-  if (!authHeader) return false;
-
-  const parts = authHeader.split(" ");
-  if (parts.length !== 2 || parts[0] !== "Bearer") return false;
-
-  const token = parts[1];
-  const oauthToken = OAuthService.verifyToken(token);
-  return !!oauthToken;
-}
-
-/**
- * Authenticate request with OAuth or Bearer token
- */
-function authenticate(authHeader: string | null): AuthResult {
+async function authenticate(authHeader: string | null): Promise<AuthResult> {
   if (!authHeader) {
     return {
       valid: false,
@@ -69,14 +57,15 @@ function authenticate(authHeader: string | null): AuthResult {
     };
   }
 
-  // Try OAuth token first
-  if (verifyOAuthToken(authHeader)) {
-    return { valid: true, method: "oauth" };
-  }
-
   // Fall back to Bearer token (legacy)
   if (verifyBearerToken(authHeader)) {
     return { valid: true, method: "bearer" };
+  }
+  const parts = authHeader.split(" ");
+  if (parts.length === 2 && parts[0] === "Bearer" &&
+      process.env.MCP_OAUTH_ISSUER && process.env.MCP_OAUTH_COOKIE_KEY &&
+      process.env.MCP_OAUTH_JWKS && await verifyOAuthAccessToken(parts[1])) {
+    return { valid: true, method: "oauth" };
   }
 
   return {
@@ -96,23 +85,26 @@ function sendSSE(message: Record<string, unknown>): string {
  * Build WWW-Authenticate header for 401 responses
  */
 function getWWWAuthenticateHeader(): string {
-  const baseUrl =
-    process.env.NEXT_PUBLIC_URL || "https://srv659934.hstgr.cloud";
-  return `Bearer realm="Instagram MCP", error="invalid_token", error_description="The access token is invalid or expired", error_uri="${baseUrl}/.well-known/oauth-protected-resource"`;
+  if (process.env.MCP_OAUTH_ISSUER && process.env.MCP_OAUTH_COOKIE_KEY && process.env.MCP_OAUTH_JWKS) {
+    try {
+      return `Bearer resource_metadata="${oauthMetadata().metadata}", scope="instagram:read"`;
+    } catch (error) {
+      console.error("[MCP] OAuth configuration unavailable", error instanceof Error ? error.name : "unknown error");
+    }
+  }
+  return 'Bearer realm="Instagram MCP"';
 }
 
 /**
  * Main MCP POST handler - processes tool calls
  */
-export async function POST(request: Request) {
+async function legacyPost(request: Request) {
   try {
     // Verify authentication
     const authHeader = request.headers.get("authorization");
-    const auth = authenticate(authHeader);
+    const auth = await authenticate(authHeader);
 
     if (!auth.valid) {
-      const baseUrl =
-        process.env.NEXT_PUBLIC_URL || "https://srv659934.hstgr.cloud";
       return new Response(
         sendSSE({
           jsonrpc: "2.0",
@@ -286,7 +278,7 @@ export async function POST(request: Request) {
           }
         );
       } catch (error) {
-        const message = error instanceof Error ? error.message : String(error);
+        console.error("[MCP] Instagram tool request failed", error instanceof Error ? error.name : "unknown error");
         return new Response(
           sendSSE({
             jsonrpc,
@@ -294,7 +286,7 @@ export async function POST(request: Request) {
               content: [
                 {
                   type: "text",
-                  text: `Error: ${message}`,
+                  text: "Error: Instagram request failed",
                 },
               ],
               isError: true,
@@ -462,7 +454,7 @@ export async function POST(request: Request) {
         jsonrpc: "2.0",
         error: {
           code: -32603,
-          message: error instanceof Error ? error.message : "Internal error",
+          message: "Internal error",
         },
         id: null,
       })}\n\n`,
@@ -474,13 +466,94 @@ export async function POST(request: Request) {
   }
 }
 
+const toolResultSchema = z.object({
+  result: z.object({
+    content: z.array(z.object({ type: z.literal("text"), text: z.string() })),
+    isError: z.boolean().optional(),
+  }).optional(),
+  error: z.object({ message: z.string() }).optional(),
+});
+
+export async function POST(request: Request) {
+  const authorization = request.headers.get("authorization");
+  let valid = false;
+  try {
+    valid = !!authorization && (await authenticate(authorization)).valid;
+  } catch (error) {
+    console.error("[MCP] Authentication unavailable", error instanceof Error ? error.message : "unknown error");
+    return Response.json({ error: "Authentication unavailable" }, { status: 503 });
+  }
+  if (!authorization || !valid) {
+    return new Response(JSON.stringify({ error: "Unauthorized" }), {
+      status: 401,
+      headers: {
+        "Content-Type": "application/json",
+        "WWW-Authenticate": getWWWAuthenticateHeader(),
+      },
+    });
+  }
+
+  const tools = [
+    { name: "instagram_list_posts", description: "List Instagram posts with pagination and filters", schema: ListPostsInput },
+    { name: "instagram_get_post", description: "Get an Instagram post by ID", schema: GetPostInput },
+    { name: "instagram_get_insights", description: "Get insights for an Instagram post", schema: GetInsightsInput },
+    { name: "instagram_get_account_insights", description: "Get account-level insights", schema: GetAccountInsightsInput },
+    { name: "instagram_search_posts", description: "Search Instagram post captions", schema: SearchPostsInput },
+  ];
+
+  const handler = createMcpHandler((server) => {
+    for (const tool of tools) {
+      server.registerTool(tool.name, {
+        description: tool.description,
+        inputSchema: tool.schema,
+        annotations: { readOnlyHint: true },
+      }, async (args: unknown) => {
+        const response = await legacyPost(new Request(request.url, {
+          method: "POST",
+          headers: {
+            authorization,
+            "content-type": "application/json",
+          },
+          body: JSON.stringify({
+            jsonrpc: "2.0",
+            id: 1,
+            method: "tools/call",
+            params: { name: tool.name, arguments: args },
+          }),
+        }));
+        const event = await response.text();
+        const data = event.startsWith("data: ") ? event.slice(6).trim() : event;
+        const result = toolResultSchema.parse(JSON.parse(data));
+        if (result.result) return result.result;
+        return {
+          content: [{ type: "text" as const, text: result.error?.message ?? "MCP tool failed" }],
+          isError: true,
+        };
+      });
+    }
+  }, { serverInfo: { name: "Sweet Q – Instagram", version: "1.0.0" } });
+
+  if (!request.headers.has("accept")) {
+    const headers = new Headers(request.headers);
+    headers.set("accept", "application/json, text/event-stream");
+    return handler(new Request(request, { headers }));
+  }
+  return handler(request);
+}
+
 /**
  * GET request for tool discovery (for direct HTTP clients)
  */
 export async function GET(request: Request) {
   // Verify authentication
   const authHeader = request.headers.get("authorization");
-  const auth = authenticate(authHeader);
+  let auth: AuthResult;
+  try {
+    auth = await authenticate(authHeader);
+  } catch (error) {
+    console.error("[MCP] Authentication unavailable", error instanceof Error ? error.message : "unknown error");
+    return Response.json({ error: "Authentication unavailable" }, { status: 503 });
+  }
 
   if (!auth.valid) {
     return new Response(
