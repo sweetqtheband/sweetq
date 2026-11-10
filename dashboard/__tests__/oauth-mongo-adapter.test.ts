@@ -45,6 +45,18 @@ test("the OAuth provider persists its models in the configured MongoDB database"
     jwks: { keys: [{ ...jwk, kid: "test-key", use: "sig", alg: "RS256" }] },
     connect: async () => db,
   });
+  const logged: string[] = [];
+  const originalError = console.error;
+  console.error = (...args: unknown[]) => logged.push(args.join(" "));
+  try {
+    const error = new Error("sensitive-token");
+    error.stack = "Error: sensitive-token\n    at handler (/private/path/token.js:12:34)";
+    provider.emit("server_error", null, error);
+  } finally {
+    console.error = originalError;
+  }
+  assert.match(logged.join("\n"), /Provider server error Error token\.js:12:34/);
+  assert.doesNotMatch(logged.join("\n"), /sensitive-token|\/private\/path/);
   await provider.AccessToken.adapter.upsert("provider-test", {
     accountId: "test-account",
   }, 60);

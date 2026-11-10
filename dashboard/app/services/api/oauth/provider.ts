@@ -99,5 +99,13 @@ export function createMcpOAuthProvider(config: McpOAuthProviderConfig): Provider
     }),
   });
   provider.proxy = true;
+  provider.on("server_error", (_ctx, error) => {
+    const name = /^[A-Za-z][A-Za-z0-9]{0,80}$/.test(error.name) ? error.name : "Error";
+    const frames = (error.stack ?? "").split("\n").slice(1).flatMap((line) => {
+      const location = line.match(/(?:^|\/)([A-Za-z0-9_.-]+\.[cm]?js):(\d+):(\d+)/);
+      return location ? [`${location[1]}:${location[2]}:${location[3]}`] : [];
+    }).slice(0, 5);
+    console.error("[MCP OAuth] Provider server error", name, frames.join(" "));
+  });
   return provider;
 }
