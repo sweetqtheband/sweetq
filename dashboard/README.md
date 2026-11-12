@@ -195,6 +195,25 @@ Por ejemplo, busca `type: "country", query: "España"`; usa el `id` devuelto en
 `type: "state", query: "Madrid", country_id: "<id>"`; después consulta los
 seguidores con `filters: { country: "<id país>", state: "<id provincia>" }`.
 
+12. `instagram_get_users_to_catalog` — Prepara el análisis por ChatGPT sin usar
+    Gemini ni modificar usuarios. Con `action: "list"` y `origin: "followers"`
+    o `"followings"` devuelve candidatos paginados (`limit` 1–25, por defecto 5,
+    y `cursor`): tienen conversación, etiqueta `Responde`, no tienen `catalogued`
+    y su provincia no existe o es `NaN`. Con `action: "messages"`, `origin` y
+    `user_id` devuelve los mensajes de texto enviados por ese usuario, en orden
+    cronológico, tras comprobar que sigue siendo candidato. Se consultan los
+    mensajes existentes mediante el servicio de Instagram, incluida su caché;
+    no se envían mensajes ni se registra el análisis automáticamente.
+    ChatGPT puede buscar los IDs en los catálogos y proponer los cambios para
+    `instagram_update_users`, incluido `catalogued: 1` cuando corresponda.
+    `country`, `state` y `city` se guardan como números y las etiquetas como
+    arrays de IDs de texto. Conservar las etiquetas previas al añadir `fan` o
+    `superfan`; no asignar ninguna si no se ha determinado provincia o ciudad.
+    No deducir residencia por una visita o un festival. Revisar y confirmar
+    antes de guardar; no marcar como catalogado si falló la consulta o falta
+    información suficiente para analizar. Esos mensajes pueden incluir
+    información privada y no están paginados.
+
 ### 🔐 Seguridad
 
 ✅ Bearer token authentication
@@ -203,6 +222,8 @@ seguidores con `filters: { country: "<id país>", state: "<id provincia>" }`.
 Por decisión de configuración, tanto `MCP_READ_TOKEN` como los tokens OAuth actuales
 con scope `instagram:read` pueden invocar esta operación de escritura; protege y
 revoca esas credenciales en consecuencia. No se publican contenidos.
+⚠️ Esas mismas credenciales permiten consultar mensajes privados mediante
+`instagram_get_users_to_catalog`; ChatGPT recibirá los textos solicitados.
 ✅ Validación con Zod
 ✅ Rate limiting
 ✅ Logs sin credenciales

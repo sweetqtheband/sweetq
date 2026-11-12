@@ -267,7 +267,8 @@ const getMessages = async (
   conversationMessages: any[] = [],
   maxDate: any = null,
   nonCached: boolean = false,
-  onlyCache: boolean = false
+  onlyCache: boolean = false,
+  strict: boolean = false
 ): Promise<any[]> => {
   if (!accessToken) {
     await getHeaders(instance);
@@ -281,6 +282,9 @@ const getMessages = async (
       });
       if (cachedMessages.data) {
         conversationMessages = JSON.parse(cachedMessages.data.data);
+        if (strict && !Array.isArray(conversationMessages)) {
+          throw new Error("Invalid cached Instagram messages");
+        }
         maxDate = conversationMessages.length ? conversationMessages[0].created_time : null;
       }
     }
@@ -310,7 +314,11 @@ const getMessages = async (
       {}
     );
 
-    const { data = [], paging } = (next ? response?.data : response?.data?.messages) || {};
+    const messagePage = next ? response?.data : response?.data?.messages;
+    if (strict && !Array.isArray(messagePage?.data)) {
+      throw new Error("Invalid Instagram messages response");
+    }
+    const { data = [], paging } = messagePage || {};
 
     const messages = await Promise.all(
       data
@@ -318,7 +326,7 @@ const getMessages = async (
           const createdTime = new Date(item.created_time);
           return !maxDate || createdTime > new Date(maxDate);
         })
-        .map((message: Record<string, any>) => getMessage(instance, message.id))
+        .map((message: Record<string, any>) => getMessage(instance, message.id, strict))
     );
 
     if (messages.length && maxDate) {
@@ -349,13 +357,17 @@ const getMessages = async (
         limit,
         paging.next,
         conversationMessages,
-        maxDate
+        maxDate,
+        false,
+        false,
+        strict
       );
       return nextMessages ? [...messages, ...nextMessages] : [...messages];
     }
 
     return messages || [];
   } catch (error) {
+    if (strict) throw error;
     if (IGError.isExpired(error as IGErrorType)) {
       await deleteAccessToken(instance);
       return ["REVOKED"];
@@ -364,7 +376,7 @@ const getMessages = async (
   }
 };
 
-const getMessage = async (instance: any, messageId: string) => {
+const getMessage = async (instance: any, messageId: string, strict: boolean = false) => {
   if (!accessToken) {
     await getHeaders(instance);
   }
@@ -376,6 +388,7 @@ const getMessage = async (instance: any, messageId: string) => {
     const response = await GET(graph, `/${messageId}`, params);
     return response.data;
   } catch (error) {
+    if (strict) throw error;
     console.error(error);
   }
 };

@@ -6,6 +6,7 @@ import { instagramSvc as createInstagramService } from "@/app/services/api/insta
 import { updatePendingUsers } from "@/app/services/api/instagram/pending-update";
 import { updateUsers, UpdateUsersInputError } from "@/app/services/api/instagram/update-users";
 import { filterDefinitions, listUsers, searchFilterOptions } from "@/app/services/api/instagram/user-list";
+import { getCatalogUsers } from "@/app/services/api/instagram/catalog-users";
 import { createMcpHandler } from "mcp-handler";
 import type { Page } from "puppeteer";
 import { z } from "zod";
@@ -23,6 +24,7 @@ import {
   ListUsersInput,
   FilterDefinitionsInput,
   FilterOptionsInput,
+  CatalogUsersInput,
 } from "@/app/services/api/instagram/validators";
 
 export const runtime = "nodejs";
@@ -141,6 +143,28 @@ async function legacyPost(request: Request) {
       const { name, arguments: args } = params;
 
       try {
+        if (name === "instagram_get_users_to_catalog") {
+          const input = CatalogUsersInput.parse(args);
+          const [users, tags] = await Promise.all([
+            getCollection(input.origin),
+            getCollection("tags"),
+          ]);
+          const result = await getCatalogUsers(input, users, tags, async (conversationId) => {
+            const instagram = createInstagramService(await getCollection("instagram"));
+            const token = await instagram.getAccessToken(instagram);
+            if (!token?.long_live_access_token) throw new Error("Instagram access token unavailable");
+            return instagram.getMessages(instagram, conversationId, undefined, null, [], null, false, false, true);
+          });
+          return new Response(
+            sendSSE({
+              jsonrpc,
+              result: { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] },
+              id,
+            }),
+            { status: 200, headers: { "Content-Type": "text/event-stream" } }
+          );
+        }
+
         if (["instagram_get_followers", "instagram_get_followings", "instagram_get_filter_definitions", "instagram_search_filter_options"].includes(name)) {
           let result: unknown;
           if (name === "instagram_get_filter_definitions") {
@@ -480,6 +504,7 @@ async function legacyPost(request: Request) {
           result: {
             tools: [
               ...[
+                { name: "instagram_get_users_to_catalog", description: "List catalog candidates or retrieve a candidate's private incoming messages", inputSchema: z.toJSONSchema(CatalogUsersInput) },
                 { name: "instagram_get_followers", description: "List filtered followers", inputSchema: z.toJSONSchema(ListUsersInput) },
                 { name: "instagram_get_followings", description: "List filtered followings", inputSchema: z.toJSONSchema(ListUsersInput) },
                 { name: "instagram_get_filter_definitions", description: "Describe user filters and their options", inputSchema: z.toJSONSchema(FilterDefinitionsInput) },
@@ -709,6 +734,7 @@ export async function POST(request: Request) {
   }
 
   const tools = [
+    { name: "instagram_get_users_to_catalog", description: "List catalog candidates or retrieve a selected candidate's private incoming messages for AI analysis", schema: CatalogUsersInput, readOnly: true },
     { name: "instagram_get_followers", description: "List filtered followers with pagination; find IDs using instagram_search_filter_options", schema: ListUsersInput, readOnly: true },
     { name: "instagram_get_followings", description: "List filtered followings with pagination; find IDs using instagram_search_filter_options", schema: ListUsersInput, readOnly: true },
     { name: "instagram_get_filter_definitions", description: "Describe available follower and following filters", schema: FilterDefinitionsInput, readOnly: true },
@@ -798,6 +824,7 @@ export async function GET(request: Request) {
   return new Response(
     JSON.stringify({
       tools: [
+        { name: "instagram_get_users_to_catalog", description: "List catalog candidates or retrieve a candidate's private incoming messages" },
         { name: "instagram_get_followers", description: "List filtered followers with pagination" },
         { name: "instagram_get_followings", description: "List filtered followings with pagination" },
         { name: "instagram_get_filter_definitions", description: "Describe available user filters" },

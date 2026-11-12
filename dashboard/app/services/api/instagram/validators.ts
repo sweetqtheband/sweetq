@@ -104,6 +104,24 @@ export const ListUsersInput = z.object({
 
 export const FilterDefinitionsInput = z.object({}).strict();
 
+export const CatalogUsersInput = z.object({
+  action: z.enum(["list", "messages"]).describe("List candidates or retrieve the selected candidate's incoming messages"),
+  origin: z.enum(["followers", "followings"]),
+  user_id: z.string().regex(/^[0-9a-fA-F]{24}$/).optional().describe("MongoDB _id required for messages"),
+  limit: z.number().int().min(1).max(25).default(5).describe("Candidates per page; only used by list"),
+  cursor: z.string().regex(/^[0-9a-fA-F]{24}$/).optional().describe("Candidate list next_cursor"),
+}).strict().superRefine((input, ctx) => {
+  if (input.action === "messages" && !input.user_id) {
+    ctx.addIssue({ code: "custom", path: ["user_id"], message: "user_id is required for messages" });
+  }
+  if (input.action === "list" && input.user_id) {
+    ctx.addIssue({ code: "custom", path: ["user_id"], message: "user_id is only valid for messages" });
+  }
+  if (input.action === "messages" && input.cursor) {
+    ctx.addIssue({ code: "custom", path: ["cursor"], message: "cursor is only valid for list" });
+  }
+});
+
 export const FilterOptionsInput = z.object({
   type: z.enum(["country", "state", "city", "tag"]),
   query: z.string().min(1).max(100).optional().describe("Literal name search, in Spanish or English"),
