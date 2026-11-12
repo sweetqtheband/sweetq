@@ -49,6 +49,14 @@ test("MCP still requires the existing bearer token", async () => {
       "instagram_get_insights",
       "instagram_get_account_insights",
       "instagram_search_posts",
+      "instagram_get_pending_update_users",
+      "instagram_get_unnamed_users",
+      "instagram_update_pending_users",
+      "instagram_update_users",
+      "instagram_get_followers",
+      "instagram_get_followings",
+      "instagram_get_filter_definitions",
+      "instagram_search_filter_options",
     ]) {
       assert.ok(body.includes(name), `Missing tool: ${name}`);
     }

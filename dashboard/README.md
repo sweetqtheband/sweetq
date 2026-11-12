@@ -91,7 +91,7 @@ Las primeras dos respuestas deben ser 200 con JSON; la última debe ser 401
 con `WWW-Authenticate` que apunta a la metadata. Después crea la conexión
 MCP en ChatGPT con `https://srv659934.hstgr.cloud/api/mcp` y selecciona
 OAuth si se solicita. Inicia sesión con un usuario **administrador existente**
-del dashboard y confirma el acceso de lectura. La disponibilidad de conectores
+del dashboard y confirma el acceso. La disponibilidad de conectores
 privados depende de la cuenta de ChatGPT.
 
 El cliente ChatGPT se identifica con CIMD; solo se aceptan sus documentos
@@ -147,11 +147,62 @@ pnpm build
 3. `instagram_get_insights` — Métricas de post
 4. `instagram_get_account_insights` — Estadísticas de cuenta
 5. `instagram_search_posts` — Buscar en MongoDB
+6. `instagram_get_pending_update_users` — Devuelve `{ followers, followings }` con los
+   documentos de ambas colecciones que tienen `extracted: true` y `short_name`
+   inexistente o `null`. No requiere parámetros ni token de Instagram; sí requiere
+   autenticación MCP. Los valores `short_name: ""` no se incluyen.
+7. `instagram_update_pending_users` — Recibe ese mismo objeto `{ followers, followings }`,
+   consulta los perfiles actuales en Instagram con Puppeteer y ejecuta la actualización
+   de perfil e imagen existente. Los documentos se identifican por `_id` y se
+   vuelven a comprobar en MongoDB; los que ya no están pendientes se omiten.
+   Devuelve el estado `updated`, `skipped` o `error` por usuario y marca la
+   respuesta MCP como error si falla alguno. No genera ni actualiza `short_name`.
+   La operación es secuencial y puede tardar según el número de usuarios.
+8. `instagram_get_unnamed_users` — Devuelve `{ followers, followings }` con los
+   documentos cuyo `username` y `full_name` son cadenas no vacías (con algún
+   carácter distinto de espacio) y cuyo `short_name` es `null`, vacío o inexistente.
+   No filtra por `extracted`, no requiere parámetros ni token de Instagram y sí
+   requiere autenticación MCP.
+9. `instagram_update_users` — Recibe `{ followers?, followings? }`, con uno o ambos
+   arrays de objetos. Cada usuario debe incluir `_id` y al menos un campo para
+   actualizar. Escribe los campos recibidos sin reemplazar los demás, acepta valores
+   `null` y no crea usuarios. Devuelve por colección el estado `updated`,
+   `not_found` o `error`; cualquier usuario no actualizado marca la respuesta MCP
+   como error. Los `_id` duplicados en una misma colección y los nombres de campo
+   con `.` o prefijo `$` se rechazan antes de escribir.
+10. `instagram_get_filter_definitions` — Describe los filtros compartidos con el
+    dashboard y sus valores fijos. `instagram_search_filter_options` busca IDs
+    en los catálogos: `type` es `country`, `state`, `city` o `tag`; acepta
+    `query` y, respectivamente para provincias o ciudades, `country_id` o
+    `state_id`. Busca nombres en español e inglés. Ante varias coincidencias,
+    comprueba el país o provincia antes de elegir.
+11. `instagram_get_followers` y `instagram_get_followings` — Aceptan `filters`
+    con `country`, `state`, `city`, `tags`, `withoutTags`, `treatment` y `show`,
+    y opcionalmente `query` (texto literal en nombre o usuario). Los filtros se
+    combinan con AND; las etiquetas incluidas o excluidas coinciden con cualquiera
+    de las indicadas. `show` es `"0"` (activos, predeterminado), `"1"`
+    (unfollow) o `"2"` (todos). `treatment` admite `1` (persona) y `2`
+    (colectivo). Usa los IDs obtenidos de los catálogos, no sus nombres.
+
+Las búsquedas de opciones y usuarios devuelven `{ items, has_more, next_cursor }`;
+aceptan `limit` (1–100, predeterminado 50) y `cursor`. Repite la llamada con los
+mismos filtros y el `next_cursor` hasta que `has_more` sea `false`. Las páginas
+se ordenan por `_id`; no son una instantánea si los datos cambian durante el
+recorrido. Los usuarios se devuelven como documentos de MongoDB, sin las
+relaciones ni los mensajes calculados del dashboard.
+
+Por ejemplo, busca `type: "country", query: "España"`; usa el `id` devuelto en
+`type: "state", query: "Madrid", country_id: "<id>"`; después consulta los
+seguidores con `filters: { country: "<id país>", state: "<id provincia>" }`.
 
 ### 🔐 Seguridad
 
 ✅ Bearer token authentication
-✅ Lectura exclusiva (sin publicación)
+⚠️ El MCP puede modificar datos mediante `instagram_update_pending_users` e
+`instagram_update_users`.
+Por decisión de configuración, tanto `MCP_READ_TOKEN` como los tokens OAuth actuales
+con scope `instagram:read` pueden invocar esta operación de escritura; protege y
+revoca esas credenciales en consecuencia. No se publican contenidos.
 ✅ Validación con Zod
 ✅ Rate limiting
 ✅ Logs sin credenciales

@@ -1,7 +1,7 @@
 import axios from "../_db";
 import { POST, GET, DELETE } from "../_api";
 import { BaseSvc } from "./_base";
-import { Collection, Document } from "mongodb";
+import { Collection, Document, Filter } from "mongodb";
 import { Model } from "@/app/models/instagram";
 import { Model as CacheModel } from "@/app/models/cache";
 import { getFormData, getMeta } from "@/app/utils";
@@ -44,7 +44,7 @@ const MAX_LIMITS = {
 const CONCURRENCY = 5;
 const TIMEOUT = 15_000;
 
-const browserInstance: Record<string, Page | Browser | null> = {
+const browserInstance: { browser: Browser | null; page: Page | null } = {
   browser: null,
   page: null,
 };
@@ -749,7 +749,7 @@ export const getUserImage = async (user: any) => {
   }
 };
 
-const updateUser = async (user: Record<string, any>, users: any[], col: any, match: any[] = [], logProcess = (str: string) => { }) => {
+const updateUser = async (user: Record<string, any>, users: any[], col: any, match: any[] = [], logProcess = (str: string) => { }, options?: { filter: Filter<Document>; upsert: boolean }) => {
 
   if (!user || !user.username) {
     throw new Error("Invalid user or missing username");
@@ -775,6 +775,7 @@ const updateUser = async (user: Record<string, any>, users: any[], col: any, mat
           user.profile_pic_url = `/imgs/users/${file.name}`;
           user.hasS3Image = true;
         } else {
+          if (options) throw new Error("Unable to download Instagram profile image");
           logProcess(`USER: ${user.username} IMAGE NOT UPLOADED TO S3`);
           user.hasS3Image = false;
         }
@@ -784,16 +785,22 @@ const updateUser = async (user: Record<string, any>, users: any[], col: any, mat
     } else if (fol.hasS3Image && fol.instagram_profile_pic_url !== user.profile_pic_url) {
       const file = await getUserImage(user);
       if (file) {
-        try {
-          await uploadSvc.deleteS3(fol.profile_pic_url);
-        } catch { }
+        if (!options) {
+          try {
+            await uploadSvc.deleteS3(fol.profile_pic_url);
+          } catch { }
+        }
         await uploadSvc.uploadS3(file, "/imgs/users");
+        if (options) user.instagram_profile_pic_url = user.profile_pic_url;
         user.profile_pic_url = `/imgs/users/${file.name}`;
         logProcess(`USER: ${user.username} IMAGE UPDATED TO S3`);
       } else {
+        if (options) throw new Error("Unable to download Instagram profile image");
         fol.hasS3Image = false;
         logProcess(`USER: ${user.username} IMAGE NOT UPDATED TO S3`);
       }
+    } else if (options && fol?.hasS3Image) {
+      user.profile_pic_url = fol.profile_pic_url;
     }
 
     if (match.length) {
@@ -803,8 +810,8 @@ const updateUser = async (user: Record<string, any>, users: any[], col: any, mat
       }
     }
 
-    await col.updateOne(
-      { username: user.username },
+    const result = await col.updateOne(
+      { username: user.username, ...options?.filter },
       {
         $set: Object.keys(user).reduce((acc: Record<string, any>, key) => {
           acc[key] = user[key];
@@ -812,8 +819,12 @@ const updateUser = async (user: Record<string, any>, users: any[], col: any, mat
           return acc;
         }, {}),
       },
-      { upsert: true }
+      { upsert: options?.upsert ?? true }
     );
+
+    if (options && !result.matchedCount && !result.upsertedCount) {
+      throw new Error("User no longer matches the update filter");
+    }
 
     return await col.findOne({ username: user.username });
   } catch (error: any) {

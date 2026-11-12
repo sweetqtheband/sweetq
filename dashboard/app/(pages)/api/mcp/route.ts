@@ -2,7 +2,12 @@ import { timingSafeEqual } from "node:crypto";
 import type { InstagramPost } from "@/types/instagram-post";
 import { getCollection } from "@/app/services/api/_db";
 import { FactorySvc } from "@/app/services/api/factory";
+import { instagramSvc as createInstagramService } from "@/app/services/api/instagram";
+import { updatePendingUsers } from "@/app/services/api/instagram/pending-update";
+import { updateUsers, UpdateUsersInputError } from "@/app/services/api/instagram/update-users";
+import { filterDefinitions, listUsers, searchFilterOptions } from "@/app/services/api/instagram/user-list";
 import { createMcpHandler } from "mcp-handler";
+import type { Page } from "puppeteer";
 import { z } from "zod";
 import { verifyOAuthAccessToken, oauthMetadata } from "@/app/services/api/oauth/runtime";
 import {
@@ -11,6 +16,13 @@ import {
   GetInsightsInput,
   GetAccountInsightsInput,
   SearchPostsInput,
+  GetPendingUpdateUsersInput,
+  GetUnnamedUsersInput,
+  UpdatePendingUsersInput,
+  UpdateUsersInput,
+  ListUsersInput,
+  FilterDefinitionsInput,
+  FilterOptionsInput,
 } from "@/app/services/api/instagram/validators";
 
 export const runtime = "nodejs";
@@ -129,6 +141,165 @@ async function legacyPost(request: Request) {
       const { name, arguments: args } = params;
 
       try {
+        if (["instagram_get_followers", "instagram_get_followings", "instagram_get_filter_definitions", "instagram_search_filter_options"].includes(name)) {
+          let result: unknown;
+          if (name === "instagram_get_filter_definitions") {
+            FilterDefinitionsInput.parse(args);
+            result = filterDefinitions;
+          } else if (name === "instagram_search_filter_options") {
+            const input = FilterOptionsInput.parse(args);
+            const collections = { country: "countries", state: "states", city: "cities", tag: "tags" };
+            result = await searchFilterOptions(await getCollection(collections[input.type]), input);
+          } else {
+            const input = ListUsersInput.parse(args);
+            const collection = name === "instagram_get_followers" ? "followers" : "followings";
+            result = await listUsers(await getCollection(collection), input);
+          }
+          return new Response(
+            sendSSE({
+              jsonrpc,
+              result: { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] },
+              id,
+            }),
+            { status: 200, headers: { "Content-Type": "text/event-stream" } }
+          );
+        }
+
+        if (name === "instagram_update_users") {
+          const input = UpdateUsersInput.parse(args);
+          const [followers, followings] = await Promise.all([
+            getCollection("followers"),
+            getCollection("followings"),
+          ]);
+          const result = await updateUsers(input, { followers, followings });
+          return new Response(
+            sendSSE({
+              jsonrpc,
+              result: {
+                content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
+                isError: [...result.followers, ...result.followings].some((user) => user.status !== "updated"),
+              },
+              id,
+            }),
+            { status: 200, headers: { "Content-Type": "text/event-stream" } }
+          );
+        }
+
+        if (name === "instagram_get_unnamed_users") {
+          GetUnnamedUsersInput.parse(args);
+          const [followersCollection, followingsCollection] = await Promise.all([
+            getCollection("followers"),
+            getCollection("followings"),
+          ]);
+          const filter = {
+            username: { $regex: "\\S" },
+            full_name: { $regex: "\\S" },
+            $expr: {
+              $and: [
+                { $eq: [{ $type: "$username" }, "string"] },
+                { $eq: [{ $type: "$full_name" }, "string"] },
+                {
+                  $or: [
+                    { $in: [{ $type: "$short_name" }, ["null", "missing"]] },
+                    { $and: [
+                      { $eq: [{ $type: "$short_name" }, "string"] },
+                      { $eq: ["$short_name", ""] },
+                    ] },
+                  ],
+                },
+              ],
+            },
+          };
+          const [followers, followings] = await Promise.all([
+            followersCollection.find(filter).toArray(),
+            followingsCollection.find(filter).toArray(),
+          ]);
+          return new Response(
+            sendSSE({
+              jsonrpc,
+              result: {
+                content: [{
+                  type: "text",
+                  text: JSON.stringify({ followers, followings }, null, 2),
+                }],
+              },
+              id,
+            }),
+            { status: 200, headers: { "Content-Type": "text/event-stream" } }
+          );
+        }
+
+        if (name === "instagram_update_pending_users") {
+          const input = UpdatePendingUsersInput.parse(args);
+          const [followers, followings] = await Promise.all([
+            getCollection("followers"),
+            getCollection("followings"),
+          ]);
+          const instagram = createInstagramService(followers);
+          let page: Page | undefined;
+          try {
+            const result = await updatePendingUsers(input, { followers, followings }, {
+              getProfile: async (username) => {
+                if (!page) {
+                  const { browser } = await instagram.getPuppeteerEnvironment();
+                  if (!browser) throw new Error("Instagram browser unavailable");
+                  page = await browser.newPage();
+                  await page.setRequestInterception(true);
+                  page.on("request", (request) => {
+                    if (["image", "font", "stylesheet", "media"].includes(request.resourceType())) {
+                      void request.abort();
+                    } else {
+                      void request.continue();
+                    }
+                  });
+                }
+                return instagram.getInstagramProfile(page, username);
+              },
+              updateUser: (profile, current, collection, matches, filter) =>
+                instagram.updateUser(profile, current, collection, matches, undefined, { filter, upsert: false }),
+            });
+            return new Response(
+              sendSSE({
+                jsonrpc,
+                result: {
+                  content: [{ type: "text", text: JSON.stringify(result, null, 2) }],
+                  isError: [...result.followers, ...result.followings].some((user) => user.status === "error"),
+                },
+                id,
+              }),
+              { status: 200, headers: { "Content-Type": "text/event-stream" } }
+            );
+          } finally {
+            if (page) await page.close();
+          }
+        }
+
+        if (name === "instagram_get_pending_update_users") {
+          GetPendingUpdateUsersInput.parse(args);
+          const [followersCollection, followingsCollection] = await Promise.all([
+            getCollection("followers"),
+            getCollection("followings"),
+          ]);
+          const filter = { extracted: true, short_name: null };
+          const [followers, followings] = await Promise.all([
+            followersCollection.find(filter).toArray(),
+            followingsCollection.find(filter).toArray(),
+          ]);
+          return new Response(
+            sendSSE({
+              jsonrpc,
+              result: {
+                content: [{
+                  type: "text",
+                  text: JSON.stringify({ followers, followings }, null, 2),
+                }],
+              },
+              id,
+            }),
+            { status: 200, headers: { "Content-Type": "text/event-stream" } }
+          );
+        }
+
         const collection = await getCollection("instagram");
         const instagramSvc = FactorySvc("instagram", collection);
         const tokenData = await instagramSvc.getAccessToken(instagramSvc);
@@ -286,7 +457,7 @@ async function legacyPost(request: Request) {
               content: [
                 {
                   type: "text",
-                  text: "Error: Instagram request failed",
+                  text: error instanceof UpdateUsersInputError ? `Error: ${error.message}` : "Error: Instagram request failed",
                 },
               ],
               isError: true,
@@ -308,6 +479,50 @@ async function legacyPost(request: Request) {
           jsonrpc,
           result: {
             tools: [
+              ...[
+                { name: "instagram_get_followers", description: "List filtered followers", inputSchema: z.toJSONSchema(ListUsersInput) },
+                { name: "instagram_get_followings", description: "List filtered followings", inputSchema: z.toJSONSchema(ListUsersInput) },
+                { name: "instagram_get_filter_definitions", description: "Describe user filters and their options", inputSchema: z.toJSONSchema(FilterDefinitionsInput) },
+                { name: "instagram_search_filter_options", description: "Search filter option catalogs", inputSchema: z.toJSONSchema(FilterOptionsInput) },
+              ],
+              {
+                name: "instagram_update_users",
+                description: "Update supplied fields for existing followers and followings identified by _id",
+                inputSchema: {
+                  type: "object",
+                  properties: {
+                    followers: { type: "array", items: { type: "object" } },
+                    followings: { type: "array", items: { type: "object" } },
+                  },
+                },
+              },
+              {
+                name: "instagram_get_unnamed_users",
+                description: "List followers and followings with a username and full name whose short name is null, empty, or missing",
+                inputSchema: { type: "object", properties: {}, required: [] },
+              },
+              {
+                name: "instagram_update_pending_users",
+                description: "Fetch Instagram profiles and update the supplied pending followers and followings",
+                inputSchema: {
+                  type: "object",
+                  properties: {
+                    followers: { type: "array", items: { type: "object" } },
+                    followings: { type: "array", items: { type: "object" } },
+                  },
+                  required: ["followers", "followings"],
+                },
+              },
+              {
+                name: "instagram_get_pending_update_users",
+                description:
+                  "List extracted followers and followings without a short name",
+                inputSchema: {
+                  type: "object",
+                  properties: {},
+                  required: [],
+                },
+              },
               {
                 name: "instagram_list_posts",
                 description:
@@ -494,11 +709,19 @@ export async function POST(request: Request) {
   }
 
   const tools = [
-    { name: "instagram_list_posts", description: "List Instagram posts with pagination and filters", schema: ListPostsInput },
-    { name: "instagram_get_post", description: "Get an Instagram post by ID", schema: GetPostInput },
-    { name: "instagram_get_insights", description: "Get insights for an Instagram post", schema: GetInsightsInput },
-    { name: "instagram_get_account_insights", description: "Get account-level insights", schema: GetAccountInsightsInput },
-    { name: "instagram_search_posts", description: "Search Instagram post captions", schema: SearchPostsInput },
+    { name: "instagram_get_followers", description: "List filtered followers with pagination; find IDs using instagram_search_filter_options", schema: ListUsersInput, readOnly: true },
+    { name: "instagram_get_followings", description: "List filtered followings with pagination; find IDs using instagram_search_filter_options", schema: ListUsersInput, readOnly: true },
+    { name: "instagram_get_filter_definitions", description: "Describe available follower and following filters", schema: FilterDefinitionsInput, readOnly: true },
+    { name: "instagram_search_filter_options", description: "Search countries, states, cities, and tags for filter IDs; disambiguate by parent", schema: FilterOptionsInput, readOnly: true },
+    { name: "instagram_list_posts", description: "List Instagram posts with pagination and filters", schema: ListPostsInput, readOnly: true },
+    { name: "instagram_get_post", description: "Get an Instagram post by ID", schema: GetPostInput, readOnly: true },
+    { name: "instagram_get_insights", description: "Get insights for an Instagram post", schema: GetInsightsInput, readOnly: true },
+    { name: "instagram_get_account_insights", description: "Get account-level insights", schema: GetAccountInsightsInput, readOnly: true },
+    { name: "instagram_search_posts", description: "Search Instagram post captions", schema: SearchPostsInput, readOnly: true },
+    { name: "instagram_get_pending_update_users", description: "List extracted followers and followings without a short name", schema: GetPendingUpdateUsersInput, readOnly: true },
+    { name: "instagram_get_unnamed_users", description: "List followers and followings with a username and full name whose short name is null, empty, or missing", schema: GetUnnamedUsersInput, readOnly: true },
+    { name: "instagram_update_pending_users", description: "Fetch Instagram profiles and update the supplied pending followers and followings", schema: UpdatePendingUsersInput, readOnly: false },
+    { name: "instagram_update_users", description: "Update supplied fields for existing followers and followings identified by _id", schema: UpdateUsersInput, readOnly: false },
   ];
 
   const handler = createMcpHandler((server) => {
@@ -506,7 +729,7 @@ export async function POST(request: Request) {
       server.registerTool(tool.name, {
         description: tool.description,
         inputSchema: tool.schema,
-        annotations: { readOnlyHint: true },
+        annotations: { readOnlyHint: tool.readOnly },
       }, async (args: unknown) => {
         const response = await legacyPost(new Request(request.url, {
           method: "POST",
@@ -575,6 +798,26 @@ export async function GET(request: Request) {
   return new Response(
     JSON.stringify({
       tools: [
+        { name: "instagram_get_followers", description: "List filtered followers with pagination" },
+        { name: "instagram_get_followings", description: "List filtered followings with pagination" },
+        { name: "instagram_get_filter_definitions", description: "Describe available user filters" },
+        { name: "instagram_search_filter_options", description: "Search filter option catalogs" },
+        {
+          name: "instagram_update_users",
+          description: "Update supplied fields for existing followers and followings identified by _id",
+        },
+        {
+          name: "instagram_get_unnamed_users",
+          description: "List followers and followings with a username and full name whose short name is null, empty, or missing",
+        },
+        {
+          name: "instagram_update_pending_users",
+          description: "Fetch Instagram profiles and update the supplied pending followers and followings",
+        },
+        {
+          name: "instagram_get_pending_update_users",
+          description: "List extracted followers and followings without a short name",
+        },
         {
           name: "instagram_list_posts",
           description:
