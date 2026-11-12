@@ -44,22 +44,22 @@ test("MCP returns users with names and null, empty or missing short names", { sk
         { username: `${name}_yes`, full_name: "Full Name", short_name: null, extracted: true },
         { username: `${name}_other`, full_name: "Other Name", short_name: null, extracted: false },
         { username: `${name}_no_extracted`, full_name: "Another Name", short_name: null },
-        { username: `${name}_missing_short`, full_name: "Name" },
-        { username: `${name}_empty_short`, full_name: "Name", short_name: "" },
-        { username: `${name}_named`, full_name: "Name", short_name: "Short" },
-        { username: `${name}_array_short`, full_name: "Name", short_name: [null] },
-        { username: `${name}_array_empty`, full_name: "Name", short_name: [""] },
-        { username: `${name}_blank_short`, full_name: "Name", short_name: " " },
-        { username: `${name}_missing_full`, short_name: null },
-        { username: `${name}_empty_full`, full_name: "", short_name: null },
-        { username: `${name}_blank_full`, full_name: " \t", short_name: null },
-        { username: `${name}_null_full`, full_name: null, short_name: null },
-        { username: `${name}_array_full`, full_name: ["Name"], short_name: null },
-        { username: "", full_name: "Name", short_name: null },
-        { username: "  ", full_name: "Name", short_name: null },
-        { username: null, full_name: "Name", short_name: null },
-        { username: ["array"], full_name: "Name", short_name: null },
-        { full_name: "Name", short_name: null },
+        { username: `${name}_missing_short`, full_name: "Name", extracted: true },
+        { username: `${name}_empty_short`, full_name: "Name", short_name: "", extracted: true },
+        { username: `${name}_named`, full_name: "Name", short_name: "Short", extracted: true },
+        { username: `${name}_array_short`, full_name: "Name", short_name: [null], extracted: true },
+        { username: `${name}_array_empty`, full_name: "Name", short_name: [""], extracted: true },
+        { username: `${name}_blank_short`, full_name: "Name", short_name: " ", extracted: true },
+        { username: `${name}_missing_full`, short_name: null, extracted: true },
+        { username: `${name}_empty_full`, full_name: "", short_name: null, extracted: true },
+        { username: `${name}_blank_full`, full_name: " \t", short_name: null, extracted: true },
+        { username: `${name}_null_full`, full_name: null, short_name: null, extracted: true },
+        { username: `${name}_array_full`, full_name: ["Name"], short_name: null, extracted: true },
+        { username: "", full_name: "Name", short_name: null, extracted: true },
+        { username: "  ", full_name: "Name", short_name: null, extracted: true },
+        { username: null, full_name: "Name", short_name: null, extracted: true },
+        { username: ["array"], full_name: "Name", short_name: null, extracted: true },
+        { full_name: "Name", short_name: null, extracted: true },
       ]);
     }
 
@@ -75,7 +75,7 @@ test("MCP returns users with names and null, empty or missing short names", { sk
     for (const name of ["followers", "followings"]) {
       assert.deepEqual(
         users[name].map((user: { username: string }) => user.username).sort(),
-        [`${name}_empty_short`, `${name}_missing_short`, `${name}_no_extracted`, `${name}_other`, `${name}_yes`],
+        [`${name}_empty_short`, `${name}_missing_short`, `${name}_yes`],
       );
       assert.equal(users[name].find((user: { username: string }) => user.username === `${name}_yes`).short_name, null);
       assert.ok(users[name][0]._id);

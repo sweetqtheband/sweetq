@@ -45,13 +45,13 @@ test("pending update users are exposed through MCP and filtered in MongoDB", { s
   try {
     for (const name of ["followers", "followings"]) {
       await db.collection(name).insertMany([
-        { username: `${name}_missing`, extracted: true, full_name: "Missing Name" },
-        { username: `${name}_null`, extracted: true, short_name: null },
-        { username: `${name}_empty`, extracted: true, short_name: "" },
-        { username: `${name}_named`, extracted: true, short_name: "Name" },
-        { username: `${name}_false`, extracted: false },
+        { username: `${name}_missing`, extracted: false, full_name: "Missing Name" },
+        { username: `${name}_null`, extracted: false, short_name: null },
+        { username: `${name}_empty`, extracted: false, short_name: "" },
+        { username: `${name}_named`, extracted: false, short_name: "Name" },
+        { username: `${name}_true`, extracted: true },
         { username: `${name}_not_extracted` },
-        { username: `${name}_string`, extracted: "true" },
+        { username: `${name}_string`, extracted: "false" },
       ]);
     }
 
@@ -68,7 +68,7 @@ test("pending update users are exposed through MCP and filtered in MongoDB", { s
     for (const name of ["followers", "followings"]) {
       assert.deepEqual(
         users[name].map((user: { username: string }) => user.username).sort(),
-        [`${name}_missing`, `${name}_null`],
+        [`${name}_empty`, `${name}_missing`, `${name}_named`, `${name}_null`],
       );
       assert.equal(users[name].find((user: { username: string }) => user.username.endsWith("_missing")).full_name, "Missing Name");
     }
@@ -94,7 +94,7 @@ test("pending update users are exposed through MCP and filtered in MongoDB", { s
     const stored = await followers.findOne({ username: "followers_missing" });
     assert.ok(stored);
     const failed = users.followers.find((user: { username: string }) => user.username === "followers_null");
-    const skipped = await followers.findOne({ username: "followers_empty" });
+    const skipped = await followers.findOne({ username: "followers_true" });
     assert.ok(skipped);
     const touched: string[] = [];
     const results = await updatePendingUsers({
@@ -117,10 +117,18 @@ test("pending update users are exposed through MCP and filtered in MongoDB", { s
     assert.equal(updated?.instagram_profile_pic_url, imageUrl);
     assert.equal(updated?.extracted, true);
     assert.equal((await followers.findOne({ username: "followers_null" }))?.short_name, null);
+    const unnamedAfterUpdate = JSON.parse((await call({}, "instagram_get_unnamed_users")).content[0].text);
+    assert.ok(unnamedAfterUpdate.followers.some((user: { _id: string }) => user._id === stored._id.toString()));
+    const pendingAfterUpdate = JSON.parse((await call()).content[0].text);
+    assert.ok(!pendingAfterUpdate.followers.some((user: { _id: string }) => user._id === stored._id.toString()));
 
     await followers.insertOne({ username: "followings_missing", extracted: true, short_name: "Already named" });
+    await followers.updateOne({ _id: stored._id }, { $set: { extracted: false } });
     await followings.updateOne({ username: "followings_missing" }, {
       $set: { hasS3Image: true, profile_pic_url: "/imgs/users/followings_missing.jpg", instagram_profile_pic_url: imageUrl },
+    });
+    await followings.updateOne({ username: "followings_named" }, {
+      $set: { hasS3Image: true, profile_pic_url: "/imgs/users/followings_named.jpg", instagram_profile_pic_url: imageUrl },
     });
     const originalLaunch = puppeteer.launch;
     let activeUsername = "";
@@ -142,14 +150,20 @@ test("pending update users are exposed through MCP and filtered in MongoDB", { s
     try {
       const update = await call({
         followers: [users.followers.find((user: { username: string }) => user.username === "followers_missing"), failed],
-        followings: [users.followings.find((user: { username: string }) => user.username === "followings_missing")],
+        followings: [
+          users.followings.find((user: { username: string }) => user.username === "followings_missing"),
+          users.followings.find((user: { username: string }) => user.username === "followings_named"),
+        ],
       }, "instagram_update_pending_users");
       assert.equal(update.isError, true);
       const outcome = JSON.parse(update.content[0].text);
       assert.deepEqual(outcome.followers.map((user: { status: string }) => user.status), ["updated", "error"]);
-      assert.deepEqual(outcome.followings.map((user: { status: string }) => user.status), ["updated"]);
+      assert.deepEqual(outcome.followings.map((user: { status: string }) => user.status), ["updated", "updated"]);
       assert.equal((await followers.findOne({ _id: stored._id }))?.full_name, "From Instagram");
       assert.equal((await followings.findOne({ username: "followings_missing" }))?.followed_back, true);
+      const namedFollowing = await followings.findOne({ username: "followings_named" });
+      assert.equal(namedFollowing?.short_name, "Name");
+      assert.equal(namedFollowing?.extracted, true);
       assert.equal(closed, true);
     } finally {
       puppeteer.launch = originalLaunch;
@@ -166,6 +180,7 @@ test("pending update users are exposed through MCP and filtered in MongoDB", { s
     uploadSvc.deleteS3 = async () => { throw new Error("Old image must not be deleted before updating"); };
     try {
       const newImage = "https://example.test/new.jpg";
+      await followers.updateOne({ _id: stored._id }, { $set: { extracted: false } });
       const imageResult = await updatePendingUsers({ followers: [{ _id: stored._id.toString() }], followings: [] }, { followers, followings }, {
         getProfile: async (username) => ({
           id: null, username, full_name: "New image", biography: null,
@@ -180,6 +195,7 @@ test("pending update users are exposed through MCP and filtered in MongoDB", { s
       assert.equal(imageUpdated?.instagram_profile_pic_url, newImage);
       assert.equal(imageUpdated?.id, "123");
       assert.equal(imageUpdated?.biography, "Bio");
+      await followers.updateOne({ _id: stored._id }, { $set: { extracted: false } });
       globalThis.fetch = async () => new Response(null, { status: 503 });
       const failedImage = await updatePendingUsers({ followers: [{ _id: stored._id.toString() }], followings: [] }, { followers, followings }, {
         getProfile: async (username) => ({
@@ -191,10 +207,11 @@ test("pending update users are exposed through MCP and filtered in MongoDB", { s
       });
       assert.equal(failedImage.followers[0].status, "error");
       assert.equal((await followers.findOne({ _id: stored._id }))?.full_name, "New image");
+      assert.equal((await followers.findOne({ _id: stored._id }))?.extracted, false);
 
       const concurrent = await updatePendingUsers({ followers: [{ _id: stored._id.toString() }], followings: [] }, { followers, followings }, {
         getProfile: async (username) => {
-          await followers.updateOne({ _id: stored._id }, { $set: { short_name: "Completed elsewhere" } });
+          await followers.updateOne({ _id: stored._id }, { $set: { extracted: true } });
           return {
             id: "123", username, full_name: "Must not overwrite", biography: null,
             profile_pic_url: newImage, isPrivate: null, isVerified: null,
@@ -206,7 +223,7 @@ test("pending update users are exposed through MCP and filtered in MongoDB", { s
       assert.equal(concurrent.followers[0].status, "error");
       const concurrentUser = await followers.findOne({ _id: stored._id });
       assert.equal(concurrentUser?.full_name, "New image");
-      assert.equal(concurrentUser?.short_name, "Completed elsewhere");
+      assert.equal(concurrentUser?.extracted, true);
     } finally {
       globalThis.fetch = originalFetch;
       uploadSvc.uploadS3 = originalUpload;

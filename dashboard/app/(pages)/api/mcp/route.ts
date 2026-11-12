@@ -216,6 +216,7 @@ async function legacyPost(request: Request) {
             getCollection("followings"),
           ]);
           const filter = {
+            extracted: true,
             username: { $regex: "\\S" },
             full_name: { $regex: "\\S" },
             $expr: {
@@ -304,7 +305,7 @@ async function legacyPost(request: Request) {
             getCollection("followers"),
             getCollection("followings"),
           ]);
-          const filter = { extracted: true, short_name: null };
+          const filter = { extracted: false };
           const [followers, followings] = await Promise.all([
             followersCollection.find(filter).toArray(),
             followingsCollection.find(filter).toArray(),
@@ -523,7 +524,7 @@ async function legacyPost(request: Request) {
               },
               {
                 name: "instagram_get_unnamed_users",
-                description: "List followers and followings with a username and full name whose short name is null, empty, or missing",
+                description: "List extracted followers and followings with a username and full name whose short name is null, empty, or missing",
                 inputSchema: { type: "object", properties: {}, required: [] },
               },
               {
@@ -541,7 +542,7 @@ async function legacyPost(request: Request) {
               {
                 name: "instagram_get_pending_update_users",
                 description:
-                  "List extracted followers and followings without a short name",
+                  "List followers and followings pending Instagram profile extraction",
                 inputSchema: {
                   type: "object",
                   properties: {},
@@ -744,8 +745,8 @@ export async function POST(request: Request) {
     { name: "instagram_get_insights", description: "Get insights for an Instagram post", schema: GetInsightsInput, readOnly: true },
     { name: "instagram_get_account_insights", description: "Get account-level insights", schema: GetAccountInsightsInput, readOnly: true },
     { name: "instagram_search_posts", description: "Search Instagram post captions", schema: SearchPostsInput, readOnly: true },
-    { name: "instagram_get_pending_update_users", description: "List extracted followers and followings without a short name", schema: GetPendingUpdateUsersInput, readOnly: true },
-    { name: "instagram_get_unnamed_users", description: "List followers and followings with a username and full name whose short name is null, empty, or missing", schema: GetUnnamedUsersInput, readOnly: true },
+    { name: "instagram_get_pending_update_users", description: "List followers and followings pending Instagram profile extraction", schema: GetPendingUpdateUsersInput, readOnly: true },
+    { name: "instagram_get_unnamed_users", description: "List extracted followers and followings with a username and full name whose short name is null, empty, or missing", schema: GetUnnamedUsersInput, readOnly: true },
     { name: "instagram_update_pending_users", description: "Fetch Instagram profiles and update the supplied pending followers and followings", schema: UpdatePendingUsersInput, readOnly: false },
     { name: "instagram_update_users", description: "Update supplied fields for existing followers and followings identified by _id", schema: UpdateUsersInput, readOnly: false },
   ];
@@ -835,7 +836,7 @@ export async function GET(request: Request) {
         },
         {
           name: "instagram_get_unnamed_users",
-          description: "List followers and followings with a username and full name whose short name is null, empty, or missing",
+          description: "List extracted followers and followings with a username and full name whose short name is null, empty, or missing",
         },
         {
           name: "instagram_update_pending_users",
@@ -843,7 +844,7 @@ export async function GET(request: Request) {
         },
         {
           name: "instagram_get_pending_update_users",
-          description: "List extracted followers and followings without a short name",
+          description: "List followers and followings pending Instagram profile extraction",
         },
         {
           name: "instagram_list_posts",

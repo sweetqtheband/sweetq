@@ -148,21 +148,22 @@ pnpm build
 4. `instagram_get_account_insights` — Estadísticas de cuenta
 5. `instagram_search_posts` — Buscar en MongoDB
 6. `instagram_get_pending_update_users` — Devuelve `{ followers, followings }` con los
-   documentos de ambas colecciones que tienen `extracted: true` y `short_name`
-   inexistente o `null`. No requiere parámetros ni token de Instagram; sí requiere
-   autenticación MCP. Los valores `short_name: ""` no se incluyen.
+   documentos de ambas colecciones que tienen `extracted: false`, independientemente
+   de `short_name`. No requiere parámetros ni token de Instagram; sí requiere
+   autenticación MCP.
 7. `instagram_update_pending_users` — Recibe ese mismo objeto `{ followers, followings }`,
    consulta los perfiles actuales en Instagram con Puppeteer y ejecuta la actualización
    de perfil e imagen existente. Los documentos se identifican por `_id` y se
    vuelven a comprobar en MongoDB; los que ya no están pendientes se omiten.
    Devuelve el estado `updated`, `skipped` o `error` por usuario y marca la
-   respuesta MCP como error si falla alguno. No genera ni actualiza `short_name`.
+   respuesta MCP como error si falla alguno. Marca `extracted: true` tras una
+   actualización correcta, pero no genera ni actualiza `short_name`.
    La operación es secuencial y puede tardar según el número de usuarios.
 8. `instagram_get_unnamed_users` — Devuelve `{ followers, followings }` con los
    documentos cuyo `username` y `full_name` son cadenas no vacías (con algún
-   carácter distinto de espacio) y cuyo `short_name` es `null`, vacío o inexistente.
-   No filtra por `extracted`, no requiere parámetros ni token de Instagram y sí
-   requiere autenticación MCP.
+   carácter distinto de espacio), `extracted: true` y `short_name` `null`, vacío
+   o inexistente. No requiere parámetros ni token de Instagram; sí requiere
+   autenticación MCP.
 9. `instagram_update_users` — Recibe `{ followers?, followings? }`, con uno o ambos
    arrays de objetos. Cada usuario debe incluir `_id` y al menos un campo para
    actualizar. Escribe los campos recibidos sin reemplazar los demás, acepta valores

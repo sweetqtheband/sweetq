@@ -13,7 +13,7 @@ type UpdateService = {
     current: Document[],
     collection: Collection<Document>,
     matches: string[],
-    filter: { _id: ObjectId; extracted: true; short_name: null },
+    filter: { _id: ObjectId; extracted: false },
   ) => Promise<unknown>;
 };
 
@@ -37,7 +37,7 @@ export async function updatePendingUsers(
   for (const origin of ["followers", "followings"] as const) {
     const collection = collections[origin];
     for (const entry of input[origin]) {
-      const filter = { _id: new ObjectId(entry._id), extracted: true as const, short_name: null };
+      const filter = { _id: new ObjectId(entry._id), extracted: false as const };
       try {
         const current = await collection.findOne(filter);
         if (!current) {
@@ -59,6 +59,7 @@ export async function updatePendingUsers(
           ...Object.fromEntries(Object.entries(profile).filter(([, value]) => value != null)),
           username: current.username,
           profile_pic_url: profile.profile_pic_url,
+          extracted: true,
         };
         const matchedFollower = origin === "followings"
           ? await collections.followers.findOne({ username: current.username }, { projection: { _id: 1 } })
