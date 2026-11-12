@@ -1,6 +1,7 @@
 import { ObjectId, type Collection, type Document } from "mongodb";
 import type { z } from "zod";
 import type { CatalogUsersInput } from "./validators";
+import { visibleInstagramUserFilter } from "./user-visibility";
 
 type CatalogInput = z.infer<typeof CatalogUsersInput>;
 
@@ -15,6 +16,7 @@ export async function getCatalogUsers(
     throw new Error("Expected exactly one Responde tag");
   }
   const filter: Document = {
+    ...visibleInstagramUserFilter,
     instagram_conversation_id: { $type: "string", $ne: "" },
     catalogued: { $exists: false },
     tags: String(responseTags[0]._id),

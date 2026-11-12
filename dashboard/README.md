@@ -142,6 +142,10 @@ pnpm build
 
 ### 🔧 Herramientas MCP Disponibles
 
+Los seguidores y seguidos con `extracted: true` y `deleted: true` se excluyen
+de las consultas MCP y de las listas, métricas e importaciones del dashboard.
+Los demás registros siguen siendo visibles según los filtros aplicados.
+
 1. `instagram_list_posts` — Listar publicaciones
 2. `instagram_get_post` — Detalles de un post
 3. `instagram_get_insights` — Métricas de post

@@ -7,6 +7,7 @@ import { updatePendingUsers } from "@/app/services/api/instagram/pending-update"
 import { updateUsers, UpdateUsersInputError } from "@/app/services/api/instagram/update-users";
 import { filterDefinitions, listUsers, searchFilterOptions } from "@/app/services/api/instagram/user-list";
 import { getCatalogUsers } from "@/app/services/api/instagram/catalog-users";
+import { visibleInstagramUserFilter } from "@/app/services/api/instagram/user-visibility";
 import { createMcpHandler } from "mcp-handler";
 import type { Page } from "puppeteer";
 import { z } from "zod";
@@ -216,6 +217,7 @@ async function legacyPost(request: Request) {
             getCollection("followings"),
           ]);
           const filter = {
+            ...visibleInstagramUserFilter,
             extracted: true,
             username: { $regex: "\\S" },
             full_name: { $regex: "\\S" },
@@ -305,7 +307,7 @@ async function legacyPost(request: Request) {
             getCollection("followers"),
             getCollection("followings"),
           ]);
-          const filter = { extracted: false };
+          const filter = { ...visibleInstagramUserFilter, extracted: false };
           const [followers, followings] = await Promise.all([
             followersCollection.find(filter).toArray(),
             followingsCollection.find(filter).toArray(),

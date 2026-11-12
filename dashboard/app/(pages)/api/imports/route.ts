@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { ERRORS, HTTP_STATUS_CODES } from "@/app/constants";
 import { formDataToObject } from "@/app/utils";
 import { FactorySvc } from "@/app/services/api/factory";
-import { processInstagramImport, startInstagramImport } from "@/app/services/api/imports";
+import { processInstagramImport, startInstagramImport, reconcileHiddenImportUsers } from "@/app/services/api/imports";
 
 const followersCol = await getCollection("followers");
 const followingsCol = await getCollection("followings");
@@ -26,6 +26,8 @@ export async function POST(req: NextRequest) {
 
   const formData = await req.formData();
   const data = formDataToObject(formData, {});
+
+  await reconcileHiddenImportUsers(data, followersCol, followingsCol);
 
   const importId = uuidv4();
 

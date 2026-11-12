@@ -7,6 +7,28 @@ import { Import } from "@/types/import";
 
 import { getImportFromStore, setImportInStore } from "./importStore";
 import { revalidatePath } from "next/cache";
+import { hiddenInstagramUserFilter, visibleInstagramUserFilter } from "./instagram/user-visibility";
+
+export async function reconcileHiddenImportUsers(
+    data: Import,
+    followers: Collection,
+    followings: Collection,
+): Promise<void> {
+    for (const [newKey, sameKey, collection] of [
+        ["newFollowers", "sameFollowers", followers],
+        ["newFollowings", "sameFollowings", followings],
+    ] as const) {
+        const newUsers = data[newKey];
+        if (!newUsers?.length) continue;
+        const existing = await collection.find(
+            { ...hiddenInstagramUserFilter, username: { $in: newUsers } },
+            { projection: { username: 1 } },
+        ).toArray();
+        const hiddenNames = new Set(existing.map((user) => user.username));
+        data[newKey] = newUsers.filter((username) => !hiddenNames.has(username));
+        data[sameKey] = [...new Set([...(data[sameKey] ?? []), ...newUsers.filter((username) => hiddenNames.has(username))])];
+    }
+}
 
 export const getImport = (importId: string) => {
     return getImportFromStore(importId);
@@ -367,18 +389,18 @@ export const getPipeObject = async ({ data, logProcess = () => { } }: { data: Im
 };
 
 export const updateFollowedBacks = async ({ data, followersCol, followingsCol, logProcess = () => { } }: { data: Import, followersCol: Collection, followingsCol: Collection, logProcess?: (str: string) => void }) => {
-    const followerUsernames = (await followersCol.distinct("username"))
+    const followerUsernames = (await followersCol.distinct("username", visibleInstagramUserFilter))
         .filter((username): username is string => typeof username === "string");
     const matchedFollowings = followerUsernames.length
         ? await followingsCol.find(
-            { username: { $in: followerUsernames } },
+            { ...visibleInstagramUserFilter, username: { $in: followerUsernames } },
             { projection: { username: 1, _id: 0 } }
         ).toArray()
         : [];
 
     if (matchedFollowings.length) {
         await followingsCol.updateMany(
-            { username: { $in: matchedFollowings.map(({ username }) => username) } },
+            { ...visibleInstagramUserFilter, username: { $in: matchedFollowings.map(({ username }) => username) } },
             { $set: { followed_back: true } }
         );
 

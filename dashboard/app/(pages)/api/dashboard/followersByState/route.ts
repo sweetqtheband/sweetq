@@ -3,6 +3,7 @@ import { corsOptions, getCollection } from "@/app/services/api/_db";
 import { ERRORS } from "@/app/constants";
 import { FactorySvc } from "@/app/services/api/factory";
 import { Follower } from "@/types/follower";
+import { visibleInstagramUserFilter } from "@/app/services/api/instagram/user-visibility";
 
 export async function GET(req: NextRequest) {
   const [message, corsParams] = corsOptions(req);
@@ -14,7 +15,7 @@ export async function GET(req: NextRequest) {
   const statesSvc = FactorySvc("states", await getCollection("states"));
   const followersSvc = FactorySvc("followers", await getCollection("followers"));
 
-  const followers = await followersSvc.findAll();
+  const followers = await followersSvc.findAll(visibleInstagramUserFilter);
 
   const data = followers
     .filter((follower: Follower) => !follower?.unfollow)

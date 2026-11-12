@@ -3,6 +3,7 @@ import { TREATMENTS } from "@/app/constants";
 import es from "@/app/locales/es.json";
 import en from "@/app/locales/en.json";
 import { buildUserFilters } from "./user-filters";
+import { visibleInstagramUserFilter } from "./user-visibility";
 import type { z } from "zod";
 import type { FilterOptionsInput, ListUsersInput } from "./validators";
 
@@ -42,6 +43,7 @@ export const filterDefinitions = {
 
 export async function listUsers(collection: Collection<Document>, input: ListInput) {
   const clauses = buildUserFilters(input.filters);
+  clauses.push(visibleInstagramUserFilter);
   if (input.query) {
     const term = escapeRegex(input.query);
     clauses.push({ $or: [

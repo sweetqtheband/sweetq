@@ -2,6 +2,7 @@ import i18n from "@/app/services/translate";
 import { getTranslation } from "@/app/services/_list";
 import ImportsView from "./view";
 import { getCollection } from "@/app/services/api/_db";
+import { visibleInstagramUserFilter } from "@/app/services/api/instagram/user-visibility";
 import "./imports.scss";
 
 
@@ -25,8 +26,8 @@ export default async function ImportsPage({
     const followingsCol = await getCollection("followings");
 
 
-    const followers = (await followersCol.find().toArray()).map(follower => follower.username);
-    const followings = (await followingsCol.find().toArray()).map(following => following.username);
+    const followers = (await followersCol.find(visibleInstagramUserFilter).toArray()).map(follower => follower.username);
+    const followings = (await followingsCol.find(visibleInstagramUserFilter).toArray()).map(following => following.username);
 
     return (
         <ImportsView translations={translations} followers={followers} followings={followings}>

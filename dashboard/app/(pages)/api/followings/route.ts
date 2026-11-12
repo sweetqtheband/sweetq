@@ -3,6 +3,7 @@ import { getList, corsOptions, getCollection } from "@/app/services/api/_db";
 import { ERRORS, SORT } from "@/app/constants";
 import { FactorySvc } from "@/app/services/api/factory";
 import { buildUserFilters } from "@/app/services/api/instagram/user-filters";
+import { visibleInstagramUserFilter } from "@/app/services/api/instagram/user-visibility";
 
 const collection = "followings";
 const idx = "created";
@@ -28,6 +29,7 @@ export async function GET(req: NextRequest) {
 
   const filterItem = filterKey ? await filtersSvc.findOne({ key: filterKey }) : undefined;
   const filters = buildUserFilters(filterKey ? filterItem.filters : undefined);
+  filters.push(visibleInstagramUserFilter);
 
   const query = qp.get("query");
 
