@@ -13,7 +13,9 @@ test("concurrent story workers coordinate and persist a single snapshot", { skip
   const db = client.db(database);
   const server = createServer((request, response) => {
     const url = new URL(request.url!, "http://localhost");
-    const payload = url.pathname.endsWith("/stories")
+    const payload = url.pathname === "/me"
+      ? { user_id: "123" }
+      : url.pathname.endsWith("/stories")
       ? { data: [{ id: "456", media_type: "IMAGE", timestamp: new Date().toISOString() }] }
       : { data: [{ name: url.searchParams.get("metric"), values: [{ value: 3 }] }] };
     response.writeHead(200, { "Content-Type": "application/json" });

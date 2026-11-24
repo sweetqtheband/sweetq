@@ -373,7 +373,7 @@ async function legacyPost(request: Request) {
         switch (name) {
           case "instagram_list_stories": {
             const input = ListStoriesInput.parse(args);
-            result = await listStories(tokenData.long_live_access_token, tokenData.user_id, input.limit, input.cursor);
+            result = await listStories(tokenData.long_live_access_token, input.limit, input.cursor);
             break;
           }
           case "instagram_list_posts": {
@@ -431,7 +431,7 @@ async function legacyPost(request: Request) {
                 let cursor: string | undefined;
                 const seen = new Set<string>();
                 do {
-                  const page = await listStories(tokenData.long_live_access_token, tokenData.user_id, 50, cursor);
+                  const page = await listStories(tokenData.long_live_access_token, 50, cursor);
                   isStory = page.stories.some((item) => item.id === input.post_id);
                   if (page.paging.has_more && (!page.paging.next_cursor || seen.has(page.paging.next_cursor))) {
                     throw new Error("Invalid stories pagination");

@@ -261,7 +261,11 @@ documenta Facebook Login: su funcionamiento con el token actual queda pendiente
 de comprobación en la cuenta. Se necesitan `instagram_business_basic` e
 `instagram_business_manage_insights`. La detección usa las stories activas y
 las ya almacenadas; una story expirada no registrada no se puede identificar de
-forma fiable. Véase la documentación de
+forma fiable. Para listar stories se obtiene el ID de la cuenta profesional
+mediante `/me?fields=user_id`, que no debe confundirse con el ID de aplicación
+obtenido en OAuth. El error `object_not_found_or_inaccessible` indica que Meta no pudo
+acceder al objeto o a la operación; no significa que la story haya expirado.
+Véase la documentación de
 [métricas de Meta](https://developers.facebook.com/documentation/instagram-platform/reference/instagram-media/insights).
 
 ### 🔐 Seguridad

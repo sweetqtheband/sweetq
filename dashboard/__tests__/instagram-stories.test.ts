@@ -1,13 +1,17 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import axios, { AxiosError } from "axios";
-import { getStoryInsights, listStories } from "../app/services/api/instagram/stories";
+import { classifyMetaError, getStoryInsights, listStories } from "../app/services/api/instagram/stories";
 
 test("story listing preserves optional fields and returns pagination and expiration", async () => {
   const adapter = axios.defaults.adapter;
   process.env.GRAPH_INSTAGRAM = "https://graph.example.test/v27.0";
   axios.defaults.adapter = async (config) => {
-    assert.equal(config.url, "/123/stories");
+    if (config.url === "/me") {
+      assert.equal(config.params.fields, "user_id");
+      return { status: 200, statusText: "OK", headers: {}, config, data: { id: "123", user_id: "987" } };
+    }
+    assert.equal(config.url, "/987/stories");
     assert.equal(config.params.after, "previous");
     return {
       status: 200, statusText: "OK", headers: {}, config,
@@ -15,10 +19,47 @@ test("story listing preserves optional fields and returns pagination and expirat
     };
   };
   try {
-    const result = await listStories("token", "123", 10, "previous");
+    const result = await listStories("token", 10, "previous");
     assert.equal(result.stories[0].expires_at, "2026-01-02T00:00:00.000Z");
     assert.equal(result.stories[0].remaining_seconds, 0);
     assert.deepEqual(result.paging, { next_cursor: "cursor", has_more: true });
+  } finally {
+    axios.defaults.adapter = adapter;
+  }
+});
+
+test("ambiguous Meta object errors are not classified as expired stories", () => {
+  const error = new AxiosError("failed", "ERR_BAD_REQUEST", undefined, undefined, {
+    status: 400, statusText: "Bad Request", headers: {},
+    config: { headers: new axios.AxiosHeaders() },
+    data: { error: { code: 100, error_subcode: 33, message: "Unsupported get request. Object does not exist, cannot be loaded due to missing permissions, or does not support this operation" } },
+  });
+  assert.equal(classifyMetaError(error, "token"), "object_not_found_or_inaccessible");
+});
+
+test("story listing fails explicitly when the professional account ID is missing", async () => {
+  const adapter = axios.defaults.adapter;
+  axios.defaults.adapter = async (config) => ({
+    status: 200, statusText: "OK", headers: {}, config, data: { id: "123" },
+  });
+  try {
+    await assert.rejects(listStories("token"), /stories request failed: account_id_unavailable/);
+  } finally {
+    axios.defaults.adapter = adapter;
+  }
+});
+
+test("story listing accepts Meta's documented account response shape", async () => {
+  const adapter = axios.defaults.adapter;
+  axios.defaults.adapter = async (config) => {
+    if (config.url === "/me") {
+      return { status: 200, statusText: "OK", headers: {}, config, data: { data: [{ user_id: "987" }] } };
+    }
+    assert.equal(config.url, "/987/stories");
+    return { status: 200, statusText: "OK", headers: {}, config, data: { data: [] } };
+  };
+  try {
+    assert.deepEqual((await listStories("token")).stories, []);
   } finally {
     axios.defaults.adapter = adapter;
   }

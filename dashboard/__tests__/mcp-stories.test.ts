@@ -16,7 +16,9 @@ test("MCP lists stories, detects story insights, and reads history without an In
   process.env.NEXT_PUBLIC_AWS_REGION = "us-east-1";
   const adapter = axios.defaults.adapter;
   axios.defaults.adapter = async (config) => {
-    const data = config.url === "/123/stories"
+    const data = config.url === "/me"
+      ? { user_id: "123" }
+      : config.url === "/123/stories"
       ? { data: [{ id: "456", media_type: "IMAGE", timestamp: "2026-01-01T00:00:00Z" }] }
       : { data: [{ name: config.params.metric, values: [{ value: 3 }] }] };
     return { data, status: 200, statusText: "OK", headers: {}, config };

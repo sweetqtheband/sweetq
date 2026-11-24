@@ -32,17 +32,28 @@ export function classifyMetaError(error: unknown, token: string): string {
   if ([4, 17, 32, 613].includes(code ?? 0) || error.response?.status === 429) return "rate_limited";
   if (code === 10 && /not enough viewers/i.test(message ?? "")) return "insufficient_viewers";
   if ([10, 190, 200].includes(code ?? 0)) return "permission";
-  if (code === 100 && /expired|unavailable|does not exist/i.test(message ?? "")) return "expired_or_not_found";
+  if (code === 100 && /expired/i.test(message ?? "")) return "expired_or_not_found";
+  if (code === 100 && (subcode === 33 || /does not exist|cannot be loaded|does not support this operation/i.test(message ?? ""))) return "object_not_found_or_inaccessible";
+  if (code === 100 && /unavailable/i.test(message ?? "")) return "incompatible_or_unavailable";
   if (code === 100 && /metric|insight|parameter/i.test(message ?? "")) return "incompatible_or_unavailable";
   return "request_failed";
 }
 
-export async function listStories(token: string, userId: string, limit = 25, cursor?: string) {
-  if (!userId) throw new Error("Instagram user ID unavailable");
+export async function listStories(token: string, limit = 25, cursor?: string) {
   try {
-    const response = await graph().get<{ data: Story[]; paging?: { cursors?: { after?: string }; next?: string } }>(
-      `/${encodeURIComponent(userId)}/stories`,
-      { params: { fields: "id,media_type,timestamp,media_url,thumbnail_url,permalink", limit, ...(cursor ? { after: cursor } : {}) }, headers: { Authorization: `Bearer ${token}` } }
+    const client = graph();
+    const headers = { Authorization: `Bearer ${token}` };
+    const account = await client.get<{ user_id?: unknown; data?: Array<{ user_id?: unknown }> }>("/me", {
+      params: { fields: "user_id" }, headers,
+    });
+    const accountId = account.data.user_id ?? account.data.data?.[0]?.user_id;
+    if (typeof accountId !== "string" || !/^\d+$/.test(accountId)) {
+      console.error("[Instagram stories] Professional account ID unavailable in /me response");
+      throw new Error("account_id_unavailable");
+    }
+    const response = await client.get<{ data: Story[]; paging?: { cursors?: { after?: string }; next?: string } }>(
+      `/${encodeURIComponent(accountId)}/stories`,
+      { params: { fields: "id,media_type,timestamp,media_url,thumbnail_url,permalink", limit, ...(cursor ? { after: cursor } : {}) }, headers }
     );
     if (!Array.isArray(response.data.data)) throw new Error("Invalid stories response");
     return {
@@ -55,6 +66,9 @@ export async function listStories(token: string, userId: string, limit = 25, cur
       paging: { next_cursor: response.data.paging?.cursors?.after ?? null, has_more: Boolean(response.data.paging?.next) },
     };
   } catch (error) {
+    if (error instanceof Error && error.message === "account_id_unavailable") {
+      throw new Error("Instagram stories request failed: account_id_unavailable");
+    }
     throw new Error(`Instagram stories request failed: ${classifyMetaError(error, token)}`);
   }
 }
@@ -84,7 +98,7 @@ export async function getStoryInsights(token: string, id: string, metrics = stor
     } catch (error) {
       const reason = classifyMetaError(error, token);
       unavailable.push({ metric, reason });
-      if (["permission", "rate_limited", "expired_or_not_found", "request_failed"].includes(reason)) stopReason = reason;
+      if (["permission", "rate_limited", "expired_or_not_found", "object_not_found_or_inaccessible", "request_failed"].includes(reason)) stopReason = reason;
     }
   }
   return { data, available: data.map((item) => String(item.name)), unavailable };

@@ -45,7 +45,7 @@ async function run() {
         if (result.matchedCount !== 1) throw new Error("Stories sync lease lost");
       };
       const tokenData = await instagram.findOne({ id: "instagram" });
-      if (!tokenData?.long_live_access_token || !tokenData.user_id) throw new Error("Instagram credentials unavailable");
+      if (!tokenData?.long_live_access_token) throw new Error("Instagram credentials unavailable");
       const token: string = tokenData.long_live_access_token;
       await stories.updateMany({ status: "active", expires_at: { $lte: now } }, { $set: { status: "expired" } });
       const hourly = !lock.last_poll || now.getTime() - new Date(lock.last_poll).getTime() >= 3600000;
@@ -54,7 +54,7 @@ async function run() {
         const seen = new Set<string>();
         do {
           await renew();
-          const page = await listStories(token, tokenData.user_id, 50, cursor);
+          const page = await listStories(token, 50, cursor);
           for (const story of page.stories) await saveStory(stories, story);
           if (page.paging.has_more && (!page.paging.next_cursor || seen.has(page.paging.next_cursor))) throw new Error("Invalid stories pagination");
           cursor = page.paging.has_more ? page.paging.next_cursor ?? undefined : undefined;
@@ -91,7 +91,7 @@ async function run() {
       const safeMessage = /^(Instagram credentials unavailable|Instagram stories request failed: [a-z_]+|Stories insights stopped due to rate limit or permission error|Stories sync lease lost|Invalid stories pagination)$/.test(message)
         ? message : error instanceof Error ? error.name : "unknown error";
       console.error("[stories sync] Failed", safeMessage);
-      const backoff = /rate.limit|permission/i.test(message);
+      const backoff = /rate.limit|permission|object_not_found_or_inaccessible|account_id_unavailable/i.test(message);
       await locks.updateOne({ key: lockId, owner }, { $set: { lease_until: new Date(0), ...(backoff ? { backoff_until: new Date(Date.now() + 3600000) } : {}) } });
     }
     await pause(60000);
