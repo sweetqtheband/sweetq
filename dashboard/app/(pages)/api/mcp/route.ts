@@ -403,15 +403,10 @@ async function legacyPost(request: Request) {
 
           case "instagram_get_insights": {
             const input = GetInsightsInput.parse(args);
-            const metrics = input.metrics || [
-              "engagement",
-              "impressions",
-              "reach",
-            ];
             const insights = await instagramSvc.getPostInsights(
               tokenData.long_live_access_token,
               input.post_id,
-              metrics
+              input.metrics
             );
             result = insights;
             break;
@@ -484,7 +479,11 @@ async function legacyPost(request: Request) {
               content: [
                 {
                   type: "text",
-                  text: error instanceof UpdateUsersInputError ? `Error: ${error.message}` : "Error: Instagram request failed",
+                  text: error instanceof UpdateUsersInputError
+                    ? `Error: ${error.message}`
+                    : name === "instagram_get_insights"
+                      ? "Error: Instagram insights request failed. Check the post ID, requested metrics, and insights permission."
+                      : "Error: Instagram request failed",
                 },
               ],
               isError: true,
@@ -614,7 +613,7 @@ async function legacyPost(request: Request) {
                       type: "array",
                       items: { type: "string" },
                       description:
-                        "Specific metrics to retrieve (engagement, impressions, reach, etc.)",
+                        "Specific metrics to retrieve (reach, views, total_interactions, etc.)",
                     },
                   },
                   required: ["post_id"],

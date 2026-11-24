@@ -104,56 +104,30 @@ export async function getInstagramPost(accessToken: string, postId: string) {
  * Get insights for a specific post
  * Available metrics vary by media type and Instagram permissions
  */
-export async function getPostInsights(accessToken: string, postId: string) {
-  try {
-    const graph = dbApi.create({
-      baseURL: process.env.GRAPH_INSTAGRAM,
-    });
+export async function getPostInsights(
+  accessToken: string,
+  postId: string,
+  metrics: string[] = ["reach", "views", "total_interactions", "shares"]
+) {
+  const graph = dbApi.create({
+    baseURL: process.env.GRAPH_INSTAGRAM,
+  });
+  const response = await GET(
+    graph,
+    `/${postId}/insights`,
+    { metric: metrics.join(",") },
+    { Authorization: `Bearer ${accessToken}` }
+  );
 
-    // Request all possible metrics; Instagram will return only available ones
-    const metricsFields = [
-      "engagement",
-      "impressions",
-      "reach",
-      "saved",
-      "video_views",
-      "plays",
-      "shares",
-      "comments",
-      "likes",
-      "taps_forward",
-      "taps_back",
-      "answers",
-    ].join(",");
-
-    const params: Record<string, any> = {
-      fields: metricsFields,
-    };
-
-    const headers = {
-      Authorization: `Bearer ${accessToken}`,
-    };
-
-    console.log("[getPostInsights] Fetching insights", { postId });
-
-    const response = await GET(graph, `/${postId}/insights`, params, headers);
-
-    if (!response.data) {
-      return { data: [], available: [] };
-    }
-
-    const result = response.data as InstagramInsightsResponse;
-    const available = (result.data || []).map((insight) => insight.name);
-
-    return {
-      data: result.data || [],
-      available,
-    };
-  } catch (error) {
-    console.error("[getPostInsights] Error:", error);
-    // Don't throw for insights - they might not be available
-    return { data: [], available: [], error: error instanceof Error ? error.message : "Unknown error" };
+  if (!response.data || !Array.isArray(response.data.data)) {
+    throw new Error("Invalid Instagram insights response");
   }
+
+  const result = response.data as InstagramInsightsResponse;
+  return {
+    data: result.data,
+    available: result.data.map((insight) => insight.name),
+  };
 }
 
 /**

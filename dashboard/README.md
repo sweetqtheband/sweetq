@@ -149,6 +149,11 @@ Los demás registros siguen siendo visibles según los filtros aplicados.
 1. `instagram_list_posts` — Listar publicaciones
 2. `instagram_get_post` — Detalles de un post
 3. `instagram_get_insights` — Métricas de post
+   (por defecto `reach`, `views`, `total_interactions` y `shares`). Es posible
+   indicar `metrics`; las métricas disponibles dependen del tipo de publicación.
+   Requiere el permiso `instagram_business_manage_insights`. Meta puede devolver
+   datos vacíos si aún no están disponibles y las métricas de los elementos
+   individuales de un carrusel no están disponibles.
 4. `instagram_get_account_insights` — Estadísticas de cuenta
 5. `instagram_search_posts` — Buscar en MongoDB
 6. `instagram_get_pending_update_users` — Devuelve `{ followers, followings }` con los
