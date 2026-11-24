@@ -154,6 +154,11 @@ Los demás registros siguen siendo visibles según los filtros aplicados.
    Requiere el permiso `instagram_business_manage_insights`. Meta puede devolver
    datos vacíos si aún no están disponibles y las métricas de los elementos
    individuales de un carrusel no están disponibles.
+   También acepta IDs de stories: para stories detectadas solicita `reach`,
+   `views`, `replies`, `shares`, `total_interactions` y `navigation`. Este último
+   incluye el desglose `story_navigation_action_type` devuelto por Meta. Las
+   métricas no disponibles aparecen en `unavailable`; si falla la detección de
+   stories se informa mediante `warning` al consultar como publicación.
 4. `instagram_get_account_insights` — Estadísticas de cuenta
 5. `instagram_search_posts` — Buscar en MongoDB
 6. `instagram_get_pending_update_users` — Devuelve `{ followers, followings }` con los
@@ -223,6 +228,41 @@ seguidores con `filters: { country: "<id país>", state: "<id provincia>" }`.
     antes de guardar; no marcar como catalogado si falló la consulta o falta
     información suficiente para analizar. Esos mensajes pueden incluir
     información privada y no están paginados.
+
+13. `instagram_list_stories` — Lista stories activas de Instagram con `limit` y
+    `cursor`; devuelve `stories` y `paging`, fecha de expiración y segundos
+    restantes. Meta puede omitir URLs y no devuelve reshares ni vídeos en directo.
+14. `instagram_list_story_history` — Consulta MongoDB sin requerir el token de
+    Instagram. Admite `start_date` y `end_date` ISO 8601, `media_type` (`IMAGE`
+    o `VIDEO`), `status` (`active` o `expired`), `limit` (1–100) y `cursor`.
+    Devuelve metadatos y últimas métricas con `paging.next_cursor`.
+15. `instagram_get_story_history` — Con `story_id`, devuelve la story almacenada
+    y todos los snapshots de métricas con su fecha de captura.
+
+#### Sincronización de stories
+
+Docker Compose incluye `stories-worker`: tras reconstruir y desplegar los
+servicios, consulta las stories activas aproximadamente cada hora, captura
+métricas y vuelve a intentarlo en los últimos diez minutos. Una concesión en
+MongoDB evita que dos trabajadores sincronicen simultáneamente; tras errores
+de permisos o límites de Meta espera una hora. Los datos se guardan en
+`instagram_stories` sin borrado automático. Solo se conserva lo que el
+trabajador haya podido observar: no recupera stories anteriores al despliegue.
+La captura final es de mejor esfuerzo; caídas, límites o retrasos de Meta pueden
+impedirla. Las métricas de stories solo están disponibles durante 24 horas;
+Meta puede devolver datos vacíos o un error si hay menos de cinco espectadores.
+En Europa `replies` puede ser cero.
+
+La aplicación usa Instagram Login y `GRAPH_INSTAGRAM` no fija una versión en la
+URL; el operador indicó v27.0 para la aplicación de Meta. La documentación de
+Meta confirma insights de stories con Instagram Login, pero el endpoint de
+[stories](https://developers.facebook.com/documentation/instagram-platform/instagram-graph-api/reference/ig-user/stories)
+documenta Facebook Login: su funcionamiento con el token actual queda pendiente
+de comprobación en la cuenta. Se necesitan `instagram_business_basic` e
+`instagram_business_manage_insights`. La detección usa las stories activas y
+las ya almacenadas; una story expirada no registrada no se puede identificar de
+forma fiable. Véase la documentación de
+[métricas de Meta](https://developers.facebook.com/documentation/instagram-platform/reference/instagram-media/insights).
 
 ### 🔐 Seguridad
 

@@ -79,6 +79,7 @@
     "react-terminal-ui": "^1.4.0",
     "sass-loader": "^16.0.5",
     "sharp": "^0.35.5",
+    "tsx": "^4.20.5",
     "ua-parser-js": "^2.0.10",
     "user-agents": "^2.1.183",
     "uuid": "^11.0.0",
@@ -103,7 +104,6 @@
     "prettier": "^3.6.2",
     "sass": "^1.92.1",
     "ts-node": "^10.9.2",
-    "tsx": "^4.20.5",
     "typescript": "^5.9.2",
     "yargs": "^17.7.2"
   }

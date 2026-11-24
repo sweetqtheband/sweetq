@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { test } from "node:test";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { MongoClient } from "mongodb";
 
 const uri = process.env.MCP_TEST_MONGO_URI;
@@ -17,6 +17,7 @@ test("MCP post insights requests default and custom metrics and reports failures
 
   const originalAdapter = axios.defaults.adapter;
   let shouldFail = false;
+  let invalidMetric = false;
   let responseData: unknown = { data: [{ name: "reach", values: [{ value: 42 }] }] };
   const requests: { url?: string; metric: string; authorization?: string }[] = [];
   axios.defaults.adapter = async (config) => {
@@ -26,6 +27,15 @@ test("MCP post insights requests default and custom metrics and reports failures
       authorization: config.headers.Authorization as string,
     });
     if (shouldFail) throw new Error("synthetic-secret");
+    if (invalidMetric) {
+      if (config.params.metric.includes(",") || config.params.metric === "bogus") {
+        throw new AxiosError("failed", "ERR_BAD_REQUEST", config, undefined, {
+          status: 400, statusText: "Bad Request", headers: {}, config,
+          data: { error: { code: 100, message: "Invalid metric" } },
+        });
+      }
+      return { data: { data: [{ name: config.params.metric, values: [{ value: 7 }] }] }, status: 200, statusText: "OK", headers: {}, config };
+    }
     return { data: responseData, status: 200, statusText: "OK", headers: {}, config };
   };
 
@@ -59,6 +69,11 @@ test("MCP post insights requests default and custom metrics and reports failures
     assert.deepEqual(JSON.parse(first.content[0].text), {
       data: [{ name: "reach", values: [{ value: 42 }] }],
       available: ["reach"],
+      unavailable: [
+        { metric: "views", reason: "unavailable" },
+        { metric: "total_interactions", reason: "unavailable" },
+        { metric: "shares", reason: "unavailable" },
+      ],
     });
     assert.deepEqual(requests[0], {
       url: "/17917827669510653/insights",
@@ -68,8 +83,19 @@ test("MCP post insights requests default and custom metrics and reports failures
 
     responseData = { data: [] };
     const empty = await call({ post_id: "123", metrics: ["likes", "saved"] });
-    assert.deepEqual(JSON.parse(empty.content[0].text), { data: [], available: [] });
+    assert.deepEqual(JSON.parse(empty.content[0].text), {
+      data: [], available: [], unavailable: [
+        { metric: "likes", reason: "unavailable" },
+        { metric: "saved", reason: "unavailable" },
+      ],
+    });
     assert.equal(requests[1].metric, "likes,saved");
+
+    invalidMetric = true;
+    const partial = await call({ post_id: "123", metrics: ["likes", "bogus"] });
+    assert.deepEqual(JSON.parse(partial.content[0].text).available, ["likes"]);
+    assert.deepEqual(JSON.parse(partial.content[0].text).unavailable, [{ metric: "bogus", reason: "incompatible_or_unavailable" }]);
+    invalidMetric = false;
 
     shouldFail = true;
     const failure = await call({ post_id: "123" });

@@ -38,13 +38,33 @@ export const GetPostInput = z.object({
 });
 
 export const GetInsightsInput = z.object({
-  post_id: z.string().describe("Instagram post ID"),
+  post_id: z.string().describe("Instagram post, reel, carousel or story ID"),
   metrics: z
     .array(z.string().trim().min(1))
     .min(1)
     .optional()
     .describe("Specific metrics to retrieve (reach, views, total_interactions, etc.); availability depends on the media type"),
 });
+
+export const ListStoriesInput = z.object({
+  limit: z.number().int().min(1).max(50).default(25),
+  cursor: z.string().min(1).optional().describe("Cursor returned by the previous page"),
+}).strict();
+
+export const ListStoryHistoryInput = z.object({
+  start_date: z.string().datetime().optional(),
+  end_date: z.string().datetime().optional(),
+  media_type: z.enum(["IMAGE", "VIDEO"]).optional(),
+  status: z.enum(["active", "expired"]).optional(),
+  limit: z.number().int().min(1).max(100).default(25),
+  cursor: z.string().min(1).optional().describe("Cursor returned by the previous page"),
+}).strict().refine((value) => !value.start_date || !value.end_date || Date.parse(value.start_date) <= Date.parse(value.end_date), {
+  message: "start_date must be before end_date",
+});
+
+export const GetStoryHistoryInput = z.object({
+  story_id: z.string().regex(/^\d+$/).describe("Instagram story ID"),
+}).strict();
 
 export const GetAccountInsightsInput = z.object({
   period: z

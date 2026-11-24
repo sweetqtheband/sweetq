@@ -8,12 +8,16 @@ import { updateUsers, UpdateUsersInputError } from "@/app/services/api/instagram
 import { filterDefinitions, listUsers, searchFilterOptions } from "@/app/services/api/instagram/user-list";
 import { getCatalogUsers } from "@/app/services/api/instagram/catalog-users";
 import { visibleInstagramUserFilter } from "@/app/services/api/instagram/user-visibility";
+import { classifyMetaError, getStoryInsights, listStories, listStoryHistory } from "@/app/services/api/instagram/stories";
 import { createMcpHandler } from "mcp-handler";
 import type { Page } from "puppeteer";
 import { z } from "zod";
 import { verifyOAuthAccessToken, oauthMetadata } from "@/app/services/api/oauth/runtime";
 import {
   ListPostsInput,
+  ListStoriesInput,
+  ListStoryHistoryInput,
+  GetStoryHistoryInput,
   GetPostInput,
   GetInsightsInput,
   GetAccountInsightsInput,
@@ -327,6 +331,17 @@ async function legacyPost(request: Request) {
           );
         }
 
+        if (name === "instagram_list_story_history" || name === "instagram_get_story_history") {
+          const stories = await getCollection("instagram_stories");
+          const result = name === "instagram_list_story_history"
+            ? await listStoryHistory(stories, ListStoryHistoryInput.parse(args))
+            : await stories.findOne({ id: GetStoryHistoryInput.parse(args).story_id });
+          if (result === null) throw new Error("Story not found");
+          return new Response(sendSSE({ jsonrpc, result: { content: [{ type: "text", text: JSON.stringify(result, null, 2) }] }, id }), {
+            status: 200, headers: { "Content-Type": "text/event-stream" },
+          });
+        }
+
         const collection = await getCollection("instagram");
         const instagramSvc = FactorySvc("instagram", collection);
         const tokenData = await instagramSvc.getAccessToken(instagramSvc);
@@ -356,6 +371,11 @@ async function legacyPost(request: Request) {
         let result: unknown;
 
         switch (name) {
+          case "instagram_list_stories": {
+            const input = ListStoriesInput.parse(args);
+            result = await listStories(tokenData.long_live_access_token, tokenData.user_id, input.limit, input.cursor);
+            break;
+          }
           case "instagram_list_posts": {
             const input = ListPostsInput.parse(args);
             const posts = await instagramSvc.listInstagramPosts(
@@ -403,12 +423,42 @@ async function legacyPost(request: Request) {
 
           case "instagram_get_insights": {
             const input = GetInsightsInput.parse(args);
-            const insights = await instagramSvc.getPostInsights(
-              tokenData.long_live_access_token,
-              input.post_id,
-              input.metrics
-            );
-            result = insights;
+            const stories = await getCollection("instagram_stories");
+            let isStory = Boolean(await stories.findOne({ id: input.post_id }));
+            let storyLookupWarning: string | undefined;
+            if (!isStory && tokenData.user_id) {
+              try {
+                let cursor: string | undefined;
+                const seen = new Set<string>();
+                do {
+                  const page = await listStories(tokenData.long_live_access_token, tokenData.user_id, 50, cursor);
+                  isStory = page.stories.some((item) => item.id === input.post_id);
+                  if (page.paging.has_more && (!page.paging.next_cursor || seen.has(page.paging.next_cursor))) {
+                    throw new Error("Invalid stories pagination");
+                  }
+                  cursor = page.paging.has_more ? page.paging.next_cursor ?? undefined : undefined;
+                  if (cursor) seen.add(cursor);
+                } while (!isStory && cursor);
+              } catch (error) {
+                storyLookupWarning = error instanceof Error ? error.message : "Story type detection failed";
+                console.error("[MCP] Story type detection failed", storyLookupWarning);
+              }
+            }
+            if (isStory) {
+              result = await getStoryInsights(tokenData.long_live_access_token, input.post_id, input.metrics);
+            } else {
+              try {
+                const postInsights = await instagramSvc.getPostInsights(tokenData.long_live_access_token, input.post_id, input.metrics);
+                const requested = input.metrics ?? ["reach", "views", "total_interactions", "shares"];
+                const unavailable = requested.filter((metric) => !postInsights.available.includes(metric)).map((metric) => ({ metric, reason: "unavailable" }));
+                result = { ...postInsights, ...(unavailable.length ? { unavailable } : {}), ...(storyLookupWarning ? { warning: storyLookupWarning } : {}) };
+              } catch (error) {
+                const reason = classifyMetaError(error, tokenData.long_live_access_token);
+                if (reason !== "incompatible_or_unavailable") throw error;
+                const partial = await getStoryInsights(tokenData.long_live_access_token, input.post_id, input.metrics ?? ["reach", "views", "total_interactions", "shares"]);
+                result = storyLookupWarning ? { ...partial, warning: storyLookupWarning } : partial;
+              }
+            }
             break;
           }
 
@@ -483,6 +533,8 @@ async function legacyPost(request: Request) {
                     ? `Error: ${error.message}`
                     : name === "instagram_get_insights"
                       ? "Error: Instagram insights request failed. Check the post ID, requested metrics, and insights permission."
+                      : name === "instagram_list_stories" && error instanceof Error && error.message.startsWith("Instagram stories request failed:")
+                        ? `Error: ${error.message}`
                       : "Error: Instagram request failed",
                 },
               ],
@@ -506,6 +558,9 @@ async function legacyPost(request: Request) {
           result: {
             tools: [
               ...[
+                { name: "instagram_list_stories", description: "List active Instagram stories", inputSchema: z.toJSONSchema(ListStoriesInput) },
+                { name: "instagram_list_story_history", description: "List saved stories and latest metrics", inputSchema: z.toJSONSchema(ListStoryHistoryInput) },
+                { name: "instagram_get_story_history", description: "Get a saved story with metric snapshots", inputSchema: z.toJSONSchema(GetStoryHistoryInput) },
                 { name: "instagram_get_users_to_catalog", description: "List catalog candidates or retrieve a candidate's private incoming messages", inputSchema: z.toJSONSchema(CatalogUsersInput) },
                 { name: "instagram_get_followers", description: "List filtered followers", inputSchema: z.toJSONSchema(ListUsersInput) },
                 { name: "instagram_get_followings", description: "List filtered followings", inputSchema: z.toJSONSchema(ListUsersInput) },
@@ -601,7 +656,7 @@ async function legacyPost(request: Request) {
               {
                 name: "instagram_get_insights",
                 description:
-                  "Get metrics and insights for a specific Instagram post",
+                  "Get metrics and insights for a post, reel, carousel or story",
                 inputSchema: {
                   type: "object",
                   properties: {
@@ -742,8 +797,11 @@ export async function POST(request: Request) {
     { name: "instagram_get_filter_definitions", description: "Describe available follower and following filters", schema: FilterDefinitionsInput, readOnly: true },
     { name: "instagram_search_filter_options", description: "Search countries, states, cities, and tags for filter IDs; disambiguate by parent", schema: FilterOptionsInput, readOnly: true },
     { name: "instagram_list_posts", description: "List Instagram posts with pagination and filters", schema: ListPostsInput, readOnly: true },
+    { name: "instagram_list_stories", description: "List active stories with pagination and expiration", schema: ListStoriesInput, readOnly: true },
+    { name: "instagram_list_story_history", description: "List stored stories and latest metrics with filters and pagination", schema: ListStoryHistoryInput, readOnly: true },
+    { name: "instagram_get_story_history", description: "Get a stored story and all metric snapshots by ID", schema: GetStoryHistoryInput, readOnly: true },
     { name: "instagram_get_post", description: "Get an Instagram post by ID", schema: GetPostInput, readOnly: true },
-    { name: "instagram_get_insights", description: "Get insights for an Instagram post", schema: GetInsightsInput, readOnly: true },
+    { name: "instagram_get_insights", description: "Get insights for an Instagram post, reel, carousel or story", schema: GetInsightsInput, readOnly: true },
     { name: "instagram_get_account_insights", description: "Get account-level insights", schema: GetAccountInsightsInput, readOnly: true },
     { name: "instagram_search_posts", description: "Search Instagram post captions", schema: SearchPostsInput, readOnly: true },
     { name: "instagram_get_pending_update_users", description: "List followers and followings pending Instagram profile extraction", schema: GetPendingUpdateUsersInput, readOnly: true },
@@ -826,6 +884,9 @@ export async function GET(request: Request) {
   return new Response(
     JSON.stringify({
       tools: [
+        { name: "instagram_list_stories", description: "List active Instagram stories" },
+        { name: "instagram_list_story_history", description: "List saved stories and latest metrics" },
+        { name: "instagram_get_story_history", description: "Get a saved story with all metric snapshots" },
         { name: "instagram_get_users_to_catalog", description: "List catalog candidates or retrieve a candidate's private incoming messages" },
         { name: "instagram_get_followers", description: "List filtered followers with pagination" },
         { name: "instagram_get_followings", description: "List filtered followings with pagination" },

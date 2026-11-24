@@ -1,6 +1,15 @@
 version: "3.8"
 
 services:
+  stories-worker:
+    build: .
+    command: ["node", "--env-file=.env.production", "--import", "tsx", "updates/stories.ts"]
+    restart: always
+    environment:
+      - IS_RUNTIME=true
+    extra_hosts:
+      - "srv659934.hstgr.cloud:46.202.168.61"
+
   nextjs:
     container_name: sweetq
     build: .

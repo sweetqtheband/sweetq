@@ -40,6 +40,10 @@ RUN pnpm install --prod --frozen-lockfile
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/.env.production ./
+COPY --from=builder /app/app ./app
+COPY --from=builder /app/types ./types
+COPY --from=builder /app/updates/stories.ts ./updates/stories.ts
+COPY --from=builder /app/tsconfig.json ./
 
 EXPOSE 3000
 
